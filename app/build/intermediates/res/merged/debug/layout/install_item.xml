@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="5dp"
+              android:background="@color/unchecked"
+              android:orientation="vertical"
+              android:padding="15dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_item"
+            android:text="物资名称:"/>
+
+        <TextView
+            android:layout_weight="4"
+            android:id="@+id/tv_contract_num"
+            style="@style/text_item"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_item"
+            android:text="出厂编码:"/>
+
+        <TextView
+            android:layout_weight="4"
+            android:id="@+id/tv_gysmc"
+            style="@style/text_item"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_item"
+            android:text="品牌:"/>
+
+        <TextView
+            android:id="@+id/et_name"
+            style="@style/text_item"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_item"
+            android:text="编号:"/>
+
+        <TextView
+            android:id="@+id/et_department"
+            style="@style/text_item"
+            android:layout_weight="1"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView3"
+            style="@style/text_item"
+            android:text="旧编号:"/>
+        <TextView
+            android:id="@+id/tv_old"
+            style="@style/text_item"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>

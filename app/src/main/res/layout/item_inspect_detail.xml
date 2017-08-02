@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="87px"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:singleLine="true"
+            android:id="@+id/rb"
+            android:layout_width="0dp"
+            android:layout_height="48px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="23px"
+            android:layout_weight="1"
+            android:text="信息科"
+            android:textSize="27px"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/line"></include>
+
+</LinearLayout>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    >
+
+    <include layout="@layout/include_big_title"></include>
+
+    <include layout="@layout/include_scan"></include>
+
+    <include layout="@layout/include_search"></include>
+
+    <include layout="@layout/include_config"></include>
+
+    <include layout="@layout/icon_back"></include>
+
+    <include
+        layout="@layout/include_title_text"></include>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="127px"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="335px"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_yd"
+            android:layout_height="57px"
+            style="@style/btn_four_style"
+            android:layout_marginLeft="21px"
+            android:layout_marginRight="31px"
+            android:text="已点"/>
+
+        <TextView
+            android:id="@+id/tv_wd"
+            style="@style/btn_four_style"
+            android:layout_width="145px"
+            android:layout_height="57px"
+            android:layout_marginRight="31px"
+            android:background="@drawable/btn_normal"
+            android:text="未点"/>
+
+        <TextView
+            android:layout_height="57px"
+            android:id="@+id/tv_bd"
+            style="@style/btn_four_style"
+            android:layout_marginRight="31px"
+            android:background="@drawable/btn_normal"
+            android:text="变动"/>
+
+        <TextView
+            android:id="@+id/tv_zk"
+            style="@style/btn_four_style"
+            android:layout_width="145px"
+            android:layout_height="57px"
+            android:background="@drawable/btn_normal"
+            android:text="转科"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="673px"
+        android:layout_height="195px"
+        android:background="@drawable/ic_zhengfangxing"
+        android:orientation="vertical"
+        android:layout_marginTop="159px"
+
+        android:layout_centerHorizontal="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24px"
+            android:layout_marginTop="32px">
+
+            <ImageView
+                android:layout_width="18px"
+                android:layout_height="26px"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/ic_dlwz"/>
+            <TextView
+                android:layout_marginLeft="16px"
+                android:id="@+id/tv_dlwz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="地理位子"
+                android:textColor="@color/textGrey"
+                android:textSize="28px"/>
+        </LinearLayout>
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="36px"
+                android:layout_marginTop="43px"
+                android:text="500"
+                android:textSize="28px"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30px"
+                android:layout_marginTop="77px"
+                android:text="总台数"
+                android:textSize="23px"/>
+
+            <TextView
+                android:id="@+id/tv_yqd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="313px"
+                android:layout_marginTop="43px"
+                android:text="500"
+                android:textSize="28px"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="302px"
+                android:layout_marginTop="77px"
+                android:text="已清点"
+                android:textSize="23px"/>
+
+            <TextView
+                android:id="@+id/tv_wqd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="583px"
+                android:layout_marginTop="43px"
+                android:text="500"
+                android:textSize="28px"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="569px"
+                android:layout_marginTop="77px"
+                android:text="未清点"
+                android:textSize="23px"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/iv_devide"
+        android:layout_width="match_parent"
+        android:layout_height="8px"
+        android:layout_below="@+id/linearLayout2"
+        android:background="#F5F5F5"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/linearLayout"
+        android:layout_below="@+id/iv_devide">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+
+
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
+
+
+    <include layout="@layout/include_bottom_choose"/>
+
+
+    <ProgressBar
+        android:id="@+id/pb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+
+</RelativeLayout>

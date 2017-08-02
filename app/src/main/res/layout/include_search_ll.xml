@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="673px"
+    android:layout_height="88px"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="159px"
+    android:background="@drawable/ic_zhengfangxing"
+    android:orientation="horizontal"
+    tools:showIn="@layout/activity_asset_query">
+
+    <Spinner
+        android:id="@+id/sp_search"
+        android:layout_width="134px"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="15px"
+        android:background="@drawable/ic_zhengfangxing"
+        android:entries="@array/assetquerycheck"
+        android:spinnerMode="dialog"></Spinner>
+
+    <include
+        layout="@layout/hline"
+        android:layout_width="1px"
+        android:layout_height="56px"
+        android:layout_gravity="center_vertical"></include>
+
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/ic_zhengfangxing"
+        />
+
+    <TextView
+        android:id="@+id/tv_search"
+        android:layout_width="122px"
+        android:layout_height="match_parent"
+        android:background="#EBF1FE"
+        android:gravity="center"
+        android:text="搜索"
+        android:textColor="@color/editBlue"/>
+</LinearLayout>

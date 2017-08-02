@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="72px">
+
+        <TextView
+            android:id="@+id/textView4"
+            style="@style/text_item_start_lf21"
+            android:text="添加配件"
+            android:textColor="#3c6cdc"
+            android:textSize="32px"
+            android:typeface="serif"/>
+
+        <TextView
+            android:id="@+id/et_id"
+            style="@style/edit_item"
+            android:layout_width="match_parent"
+            android:inputType="number"
+            android:textColor="#3c6cdc"
+            android:textSize="32px"
+            android:typeface="serif"/>
+    </LinearLayout>
+
+
+    <ImageView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#3e6cdc"
+        />
+
+    <LinearLayout
+        style="@style/item_linerlayout_margin_5">
+
+        <TextView
+            style="@style/text_item_start_lf21"
+            android:text="名称:"/>
+
+        <EditText
+            android:id="@+id/et_pjmc"
+            style="@style/edit_item"
+            android:background="@color/white"
+            />
+    </LinearLayout>
+
+    <include
+        layout="@layout/line"
+
+        ></include>
+
+    <LinearLayout
+        style="@style/item_linerlayout_margin_5">
+
+        <TextView
+            style="@style/text_item_start_lf21"
+            android:text="生产编号:"/>
+
+        <EditText
+            android:id="@+id/et_code"
+            style="@style/edit_item"
+            />
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/line"
+
+        ></include>
+
+    <LinearLayout
+        style="@style/item_linerlayout_margin_5">
+
+        <TextView
+            android:id="@+id/textView5"
+            style="@style/text_item_start_lf21"
+
+            android:text="型号:"/>
+
+        <EditText
+            android:id="@+id/et_ggxh"
+            style="@style/edit_item"
+            />
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/line"
+
+        ></include>
+
+    <LinearLayout
+        style="@style/item_linerlayout_margin_5">
+
+        <TextView
+            style="@style/text_item_start_lf21"
+            android:text="品牌:"/>
+
+        <EditText
+            android:id="@+id/et_brand"
+            style="@style/edit_item"
+            />
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/line"
+
+        ></include>
+
+    <LinearLayout
+        style="@style/item_linerlayout_margin_5">
+
+        <TextView
+            style="@style/text_item_start_lf21"
+            android:text="保修期:"/>
+
+        <TextView
+            android:id="@+id/et_bxq"
+            style="@style/edit_item"
+
+            android:inputType="date"/>
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/line"
+
+        ></include>
+
+    <LinearLayout
+        style="@style/item_linerlayout_margin_5">
+
+        <TextView
+            style="@style/text_item_start_lf21"
+            android:text="数量:"/>
+
+        <EditText
+            android:id="@+id/et_num"
+            style="@style/edit_item"
+            android:layout_width="70dp"
+
+            android:inputType="number"/>
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/line"
+
+        ></include>
+
+    <LinearLayout
+        style="@style/item_linerlayout_margin_5">
+
+        <TextView
+            style="@style/text_item_start_lf21"
+            android:text="单位"/>
+
+        <EditText
+            android:id="@+id/et_unit"
+            style="@style/edit_item"
+            android:layout_width="70dp"
+
+            />
+    </LinearLayout>
+
+    <include
+        layout="@layout/line"
+
+        ></include>
+
+    <LinearLayout
+        style="@style/item_linerlayout_margin_5">
+
+        <TextView
+            style="@style/text_item_start_lf21"
+            android:text="单价"/>
+
+        <EditText
+            android:id="@+id/et_prize"
+            style="@style/edit_item"
+            android:layout_width="70dp"
+
+            />
+    </LinearLayout>
+
+    <include
+        layout="@layout/line"
+
+        ></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="88px">
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#bfbfbf"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/white"
+            android:textSize="32px"/>
+
+        <TextView
+            android:id="@+id/tv_add"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#3e6cdc"
+            android:gravity="center"
+            android:text="添加"
+            android:textColor="@color/white"
+            android:textSize="32px"/>
+
+
+    </LinearLayout>
+
+
+    <!--    <LinearLayout
+            android:visibility="gone"
+            style="@style/item_linerlayout_margin_5"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <EditText
+                android:padding="5dp"
+                android:id="@+id/et_remark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_normal"
+                android:gravity="top"
+                android:textSize="13sp"
+                android:hint="请填写备注...."
+                android:textColor="@color/textcolor"
+                android:textColorHint="@color/textcolor"/>
+        </LinearLayout>-->
+
+</LinearLayout>

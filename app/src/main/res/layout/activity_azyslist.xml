@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="coder.aihui.ui.azys.AzysListActivity">
+
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/include_morebig_title"></include>
+
+    <include layout="@layout/icon_back"></include>
+
+    <include layout="@layout/include_title_text"></include>
+
+    <include layout="@layout/huge_title_content"/>
+
+    <include layout="@layout/include_pxgl"/>
+
+    <coder.aihui.widget.autoview.AutoRecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title">
+    </coder.aihui.widget.autoview.AutoRecyclerView>
+
+
+    <TextView
+        android:id="@+id/tv_ys"
+        android:layout_width="match_parent"
+        android:layout_height="97px"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_gradient"
+        android:gravity="center"
+        android:text="验 收"
+        android:textColor="@color/white"
+        android:textSize="36px"/>
+</RelativeLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="coder.aihui.ui.assetquery.AssetQueryActivity">
+
+
+    <include layout="@layout/include_mid_title"></include>
+
+    <include layout="@layout/include_scan"></include>
+
+    <include layout="@layout/include_search"></include>
+
+    <include layout="@layout/include_config"></include>
+
+    <include layout="@layout/icon_back"></include>
+
+    <include
+        layout="@layout/include_title_text"></include>
+
+    <include layout="@layout/include_search_ll"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tb"
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:layout_marginTop="269px"
+        app:tabGravity="center"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="@color/editBlue">
+    </android.support.design.widget.TabLayout>
+
+    <TextView
+
+        android:layout_width="122px"
+        android:layout_height="48px"
+        android:layout_marginLeft="574px"
+        android:layout_marginTop="273px"
+        android:background="@drawable/shape_button_pressed"
+        android:gravity="center"
+        android:text="上传修改"
+        android:textColor="@color/white"
+        android:textSize="23px"/>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tb">
+    </android.support.v4.view.ViewPager>
+</RelativeLayout>

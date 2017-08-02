@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="coder.aihui.ui.inspectxj.InspectDetailActivity">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/include_morebig_title"></include>
+
+    <include
+        layout="@layout/icon_back"></include>
+
+    <include layout="@layout/include_title_text"></include>
+
+    <include layout="@layout/huge_title_content"/>
+
+    <include
+        android:id="@+id/tv_ok"
+        layout="@layout/include_tv_ok"></include>
+
+    <TextView
+        android:id="@+id/tv_add_pic"
+        style="@style/top_title"
+        android:layout_width="wrap_content"
+        android:layout_height="106px"
+        android:layout_alignBottom="@+id/tv_ok"
+        android:layout_marginLeft="471px"
+        android:text="添加图片"
+
+        android:textColor="@color/white"
+        android:textSize="34px"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/ll95">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="计划时间"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_planTime"
+                    style="@style/text_item_start_lf21"
+                    android:text="计划时间"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                style="@style/ll95">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="本次时间"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_currentTime"
+                    style="@style/text_item_start_lf21"
+                    android:text="计划时间"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/line8"></include>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+          android:id="@+id/rv"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <include layout="@layout/include_bottom_choose"/>
+
+</RelativeLayout>

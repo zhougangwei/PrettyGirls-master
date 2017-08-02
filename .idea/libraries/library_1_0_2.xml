@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="library-1.0.2">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/fe39b8d9820d890e45b2dc3f4ae95c811e17d375/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/fe39b8d9820d890e45b2dc3f4ae95c811e17d375/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/it.sephiroth.android.library.easing/library/1.0.2/ec57cc90bf4046b7c86639179dd18a769d97bc8b/library-1.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

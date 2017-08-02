@@ -1,0 +1,433 @@
+-- Merging decision tree log ---
+manifest
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:2:1-181:12
+	package
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:3:11-32
+		INJECTED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml
+		INJECTED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml
+		INJECTED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml
+		INJECTED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:5:5-78
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:5:22-76
+uses-permission#android.permission.INTERNET
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:6:5-66
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:6:22-64
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:7:5-80
+MERGED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:11:5-81
+MERGED from [com.zhihu.android:matisse:0.4.3] C:\Users\Administrator\.android\build-cache\46e5e5cd47989d2a37ead46d9dac744aeb77db5b\output\AndroidManifest.xml:24:5-81
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:7:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:8:5-79
+MERGED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:12:5-80
+MERGED from [com.zhihu.android:matisse:0.4.3] C:\Users\Administrator\.android\build-cache\46e5e5cd47989d2a37ead46d9dac744aeb77db5b\output\AndroidManifest.xml:25:5-80
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:8:22-77
+uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:9:5-83
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:9:22-81
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:10:5-74
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:10:22-72
+uses-permission#android.permission.GET_ACCOUNTS
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:13:5-70
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:13:22-68
+uses-permission#android.permission.READ_PROFILE
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:14:5-70
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:14:22-68
+uses-permission#android.permission.READ_CONTACTS
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:15:5-71
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:15:22-69
+uses-permission#android.permission.CAMERA
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:16:5-64
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:16:22-62
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:17:5-77
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:17:22-75
+uses-permission#android.permission.SYSTEM_OVERLAY_WINDOW
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:18:5-79
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:18:22-77
+application
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:20:5-179:19
+MERGED from [com.jzxiang.pickerview:TimePickerDialog:1.0.1] C:\Users\Administrator\.android\build-cache\d5a1cd54089cb080e55f0c59772bddbb8300e3ec\output\AndroidManifest.xml:11:5-14:19
+MERGED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:14:5-33:19
+MERGED from [com.github.razerdp:BasePopup:v1.8.0] C:\Users\Administrator\.android\build-cache\94ee907a3c7bd49da43ac7ec9c574ef536033dd9\output\AndroidManifest.xml:11:5-15:19
+MERGED from [com.android.support:palette-v7:25.3.1] C:\Users\Administrator\.android\build-cache\28835677e8d6ed8fe7a4e6a7fc42d8d7c04993af\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:cardview-v7:25.3.1] C:\Users\Administrator\.android\build-cache\e22668f596914ff37d303a503a2dc6e06ddbb21f\output\AndroidManifest.xml:26:5-20
+MERGED from [com.ashokvarma.android:bottom-navigation-bar:1.3.1] C:\Users\Administrator\.android\build-cache\97ed056a26ec5ea81e2475d812235c5758f48d65\output\AndroidManifest.xml:11:5-13:38
+MERGED from [com.android.support:design:25.3.1] C:\Users\Administrator\.android\build-cache\6f6f3bf43ac436ebfb3683f0bd89179ccefded2b\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:transition:25.3.1] C:\Users\Administrator\.android\build-cache\d7c13752dba210086dd09c301db36b615611c2ff\output\AndroidManifest.xml:26:5-20
+MERGED from [com.jaeger.statusbaruitl:library:1.1.0] C:\Users\Administrator\.android\build-cache\ded5cbc02dd392e804d7a4b991af149990188c47\output\AndroidManifest.xml:11:5-20
+MERGED from [com.zhihu.android:matisse:0.4.3] C:\Users\Administrator\.android\build-cache\46e5e5cd47989d2a37ead46d9dac744aeb77db5b\output\AndroidManifest.xml:27:5-31:19
+MERGED from [it.sephiroth.android.library.imagezoom:library:1.0.4] C:\Users\Administrator\.android\build-cache\e31d5c215cdedf0d915a33db9c3862b448629a5a\output\AndroidManifest.xml:5:5-19
+MERGED from [it.sephiroth.android.library.easing:library:1.0.2] C:\Users\Administrator\.android\build-cache\fe39b8d9820d890e45b2dc3f4ae95c811e17d375\output\AndroidManifest.xml:5:5-6:19
+MERGED from [com.github.mcxtzhang:SuspensionIndexBar:V1.0.0] C:\Users\Administrator\.android\build-cache\bc70e1cb4d34135f45f20bae93a0996d8c01a93a\output\AndroidManifest.xml:11:5-20
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Administrator\.android\build-cache\b0b413a334b3f7eeef331a7053515d5f7bca0910\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\Administrator\.android\build-cache\016128b09f90b974fff43b6fc2bea0121679c293\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\Administrator\.android\build-cache\cc320f624feef855c7c25d561827fad34612111f\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\Administrator\.android\build-cache\9d9285a44ccd47600658884a1c0eb6ad8f5456f3\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\Administrator\.android\build-cache\3be186b8c9a5566969bedc3cdb7534a3c550609b\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\Administrator\.android\build-cache\8a6796cb4f0edb2a460b7658a4610989f4431f83\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\Administrator\.android\build-cache\bc084985d12a9ee62e2eb2df37d53abd45f5a430\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\Administrator\.android\build-cache\6d228e3bba743f9ead3f17fa5d01360b0e662849\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\Administrator\.android\build-cache\2f05ce1d9c2a40ea2d34241bbaac7f0c3c741cd3\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\Administrator\.android\build-cache\49159aaa5a1e2c121904cc5a17b5a88ca9f090d1\output\AndroidManifest.xml:9:5-20
+MERGED from [com.squareup.leakcanary:leakcanary-android:1.3] C:\Users\Administrator\.android\build-cache\357b9e6ff35d150c9b6752ff313a8d2a82fcadac\output\AndroidManifest.xml:24:5-46:19
+	android:label
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:24:9-41
+	android:supportsRtl
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:25:9-35
+	android:allowBackup
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:22:9-35
+	android:icon
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:23:9-43
+	android:theme
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:26:9-40
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:21:9-42
+meta-data#coder.aihui.app.CustomCachingGlideModule
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:27:9-29:42
+	android:value
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:29:13-40
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:28:13-68
+activity#coder.aihui.ui.home.HomeActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:31:9-34:20
+	android:label
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:33:13-45
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:32:13-49
+activity#coder.aihui.ui.girl.GirlActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:35:9-57
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:35:19-55
+activity#coder.aihui.ui.main.MainActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:36:9-39:20
+	android:windowSoftInputMode
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:38:13-54
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:37:13-49
+activity#coder.aihui.ui.splash.SplashActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:40:9-41:20
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:40:19-59
+activity#coder.aihui.ui.login.LoginActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:42:9-50:20
+	android:label
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:43:13-31
+	android:windowSoftInputMode
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:45:13-54
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:44:13-51
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:46:13-49:29
+action#android.intent.action.MAIN
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:47:17-68
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:47:25-66
+category#android.intent.category.LAUNCHER
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:48:17-76
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:48:27-74
+meta-data#design_width
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:52:9-54:34
+	android:value
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:54:13-32
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:53:13-40
+meta-data#design_height
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:55:9-57:35
+	android:value
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:57:13-33
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:56:13-41
+activity#coder.aihui.ui.login.ConfigActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:59:9-62:20
+	android:windowSoftInputMode
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:61:13-54
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:60:13-52
+activity#coder.aihui.aaaa
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:63:9-66:20
+	android:label
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:65:13-56
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:64:13-33
+activity#coder.aihui.ui.assetcheck.AssetCheckActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:67:9-76:20
+	android:label
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:69:13-33
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:70:13-61
+activity#coder.aihui.ui.assetcheck.AssetQueryConfigActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:77:9-78:20
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:77:19-73
+activity#coder.aihui.ui.assetcheck.AssetDetailEditActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:79:9-80:20
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:79:19-72
+activity#coder.aihui.zxing.decoding.MipcaActivityCapture
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:81:9-82:20
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:81:19-70
+provider#android.support.v4.content.FileProvider
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:84:9-92:20
+	android:authorities
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:86:13-69
+	android:grantUriPermissions
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:88:13-47
+	android:exported
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:87:13-37
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:85:13-67
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:89:13-91:60
+	android:resource
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:91:17-58
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:90:17-67
+activity#coder.aihui.ui.assetquery.AssetQueryActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:94:9-103:20
+	android:label
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:95:13-33
+	android:windowSoftInputMode
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:97:13-54
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:96:13-61
+activity#coder.aihui.widget.contact.ContactActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:104:9-107:20
+	android:windowSoftInputMode
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:106:13-54
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:105:13-59
+activity#coder.aihui.widget.contact.SysUserActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:108:9-111:20
+	android:windowSoftInputMode
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:110:13-54
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:109:13-59
+activity#coder.aihui.ui.assetcheck.AssetDetailActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:112:9-113:20
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:112:19-68
+activity#coder.aihui.ui.inspectxj.InspectXJActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:114:9-117:20
+	android:windowSoftInputMode
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:116:13-54
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:115:13-59
+activity#coder.aihui.ui.inspectxj.InspectStartActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:118:9-121:20
+	android:windowSoftInputMode
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:120:13-54
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:119:13-62
+activity#coder.aihui.widget.contact.LessUserActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:122:9-131:20
+	android:label
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:124:13-34
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:125:13-60
+activity#coder.aihui.ui.azys.AzysActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:132:9-140:20
+	android:label
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:133:13-33
+	android:windowSoftInputMode
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:135:13-54
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:134:13-49
+activity#coder.aihui.ui.azys.AzysConfigActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:141:9-144:20
+	android:windowSoftInputMode
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:143:13-54
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:142:13-55
+activity#coder.aihui.ui.azys.AzysListActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:145:9-148:20
+	android:windowSoftInputMode
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:147:13-54
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:146:13-53
+activity#coder.aihui.ui.azys.AzysDetailActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:149:9-150:20
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:149:19-61
+activity#coder.aihui.ui.azys.PjmxActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:151:9-159:20
+	android:label
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:152:13-34
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:153:13-49
+activity#coder.aihui.ui.bz.BzActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:160:9-161:20
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:160:19-51
+activity#coder.aihui.widget.contact.WzActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:162:9-163:20
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:162:19-60
+activity#coder.aihui.ui.pxgl.PxglDetailActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:164:9-172:20
+	android:label
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:165:13-35
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:166:13-55
+activity#coder.aihui.ui.assetcheck.YzkActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:173:9-174:20
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:173:19-60
+activity#coder.aihui.ui.inspectxj.InspectDetailActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:175:9-176:20
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:175:19-69
+activity#coder.aihui.ui.inspectxj.InspectDetail2Activity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:177:9-178:20
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:177:19-70
+uses-sdk
+INJECTED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.jzxiang.pickerview:TimePickerDialog:1.0.1] C:\Users\Administrator\.android\build-cache\d5a1cd54089cb080e55f0c59772bddbb8300e3ec\output\AndroidManifest.xml:7:5-9:41
+MERGED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.razerdp:BasePopup:v1.8.0] C:\Users\Administrator\.android\build-cache\94ee907a3c7bd49da43ac7ec9c574ef536033dd9\output\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:palette-v7:25.3.1] C:\Users\Administrator\.android\build-cache\28835677e8d6ed8fe7a4e6a7fc42d8d7c04993af\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:cardview-v7:25.3.1] C:\Users\Administrator\.android\build-cache\e22668f596914ff37d303a503a2dc6e06ddbb21f\output\AndroidManifest.xml:20:5-43
+MERGED from [com.jakewharton:butterknife:8.1.0] C:\Users\Administrator\.android\build-cache\333028900651585908ea3a16f0136e2e0c652b6f\output\AndroidManifest.xml:5:5-43
+MERGED from [com.jude:easyrecyclerview:4.0.2] C:\Users\Administrator\.android\build-cache\272bb9aa98583887ac7fd31e644054d967880e48\output\AndroidManifest.xml:7:5-9:41
+MERGED from [jp.wasabeef:glide-transformations:2.0.1] C:\Users\Administrator\.android\build-cache\cddf670850db41e22200136034d47dce9b4003da\output\AndroidManifest.xml:8:5-10:41
+MERGED from [com.zhy:base-rvadapter:3.0.3] C:\Users\Administrator\.android\build-cache\bc3cba3fe44fb1fac8da05d9485e27db33073191\output\AndroidManifest.xml:8:5-10:41
+MERGED from [com.trello:rxlifecycle-components:1.0] C:\Users\Administrator\.android\build-cache\feedd766447e676e804e7526196887586fcb2eb1\output\AndroidManifest.xml:17:5-44
+MERGED from [com.trello:rxlifecycle-android:1.0] C:\Users\Administrator\.android\build-cache\0642afa8409fcbf7bbe2bfaa564f912c743e0f56\output\AndroidManifest.xml:17:5-44
+MERGED from [com.jakewharton.rxbinding:rxbinding:0.4.0] C:\Users\Administrator\.android\build-cache\7f8dc59bd00045de0b1f4f5b202d4ae5d0e6255a\output\AndroidManifest.xml:6:5-44
+MERGED from [io.reactivex:rxandroid:1.2.1] C:\Users\Administrator\.android\build-cache\9beb3023e7ce5aa4f82865d32d99f25f9be8e200\output\AndroidManifest.xml:19:5-43
+MERGED from [com.zhy:autolayout:1.4.5] C:\Users\Administrator\.android\build-cache\3b023765b2fb22e787d82358b624533c2789bee8\output\AndroidManifest.xml:8:5-10:41
+MERGED from [com.ashokvarma.android:bottom-navigation-bar:1.3.1] C:\Users\Administrator\.android\build-cache\97ed056a26ec5ea81e2475d812235c5758f48d65\output\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:design:25.3.1] C:\Users\Administrator\.android\build-cache\6f6f3bf43ac436ebfb3683f0bd89179ccefded2b\output\AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:transition:25.3.1] C:\Users\Administrator\.android\build-cache\d7c13752dba210086dd09c301db36b615611c2ff\output\AndroidManifest.xml:20:5-44
+MERGED from [com.blankj:utilcode:1.3.4] C:\Users\Administrator\.android\build-cache\5e677ebffcb10928c5cc41ca4a288e6fee383f80\output\AndroidManifest.xml:8:5-10:41
+MERGED from [com.daimajia.numberprogressbar:library:1.4] C:\Users\Administrator\.android\build-cache\77f8c9109644fe92d3d8418ce9e2dd561ad85031\output\AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.lzyzsd:circleprogress:1.2.1] C:\Users\Administrator\.android\build-cache\687d7aa5c45df1755297869d655dcd81b7099101\output\AndroidManifest.xml:8:5-10:41
+MERGED from [com.jaeger.statusbaruitl:library:1.1.0] C:\Users\Administrator\.android\build-cache\ded5cbc02dd392e804d7a4b991af149990188c47\output\AndroidManifest.xml:7:5-9:41
+MERGED from [com.zhihu.android:matisse:0.4.3] C:\Users\Administrator\.android\build-cache\46e5e5cd47989d2a37ead46d9dac744aeb77db5b\output\AndroidManifest.xml:20:5-22:41
+MERGED from [it.sephiroth.android.library.imagezoom:library:1.0.4] C:\Users\Administrator\.android\build-cache\e31d5c215cdedf0d915a33db9c3862b448629a5a\output\AndroidManifest.xml:3:5-72
+MERGED from [it.sephiroth.android.library.easing:library:1.0.2] C:\Users\Administrator\.android\build-cache\fe39b8d9820d890e45b2dc3f4ae95c811e17d375\output\AndroidManifest.xml:3:5-72
+MERGED from [com.github.mcxtzhang:SuspensionIndexBar:V1.0.0] C:\Users\Administrator\.android\build-cache\bc70e1cb4d34135f45f20bae93a0996d8c01a93a\output\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Administrator\.android\build-cache\b0b413a334b3f7eeef331a7053515d5f7bca0910\output\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\Administrator\.android\build-cache\016128b09f90b974fff43b6fc2bea0121679c293\output\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\Administrator\.android\build-cache\cc320f624feef855c7c25d561827fad34612111f\output\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\Administrator\.android\build-cache\9d9285a44ccd47600658884a1c0eb6ad8f5456f3\output\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\Administrator\.android\build-cache\3be186b8c9a5566969bedc3cdb7534a3c550609b\output\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\Administrator\.android\build-cache\8a6796cb4f0edb2a460b7658a4610989f4431f83\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\Administrator\.android\build-cache\bc084985d12a9ee62e2eb2df37d53abd45f5a430\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\Administrator\.android\build-cache\4b7bbc3eb780e9ef386128ede43e83242ccefb72\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\Administrator\.android\build-cache\6d228e3bba743f9ead3f17fa5d01360b0e662849\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\Administrator\.android\build-cache\2f05ce1d9c2a40ea2d34241bbaac7f0c3c741cd3\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\Administrator\.android\build-cache\49159aaa5a1e2c121904cc5a17b5a88ca9f090d1\output\AndroidManifest.xml:5:5-7:41
+MERGED from [com.squareup.leakcanary:leakcanary-android:1.3] C:\Users\Administrator\.android\build-cache\357b9e6ff35d150c9b6752ff313a8d2a82fcadac\output\AndroidManifest.xml:20:5-22:41
+	tools:overrideLibrary
+		ADDED from [com.android.support:design:25.3.1] C:\Users\Administrator\.android\build-cache\6f6f3bf43ac436ebfb3683f0bd89179ccefded2b\output\AndroidManifest.xml:23:9-59
+	android:targetSdkVersion
+		INJECTED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml
+		INJECTED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml
+		INJECTED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml
+activity#droidninja.filepicker.FilePickerActivity
+ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:17:9-19:62
+	android:configChanges
+		ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:19:13-59
+	android:name
+		ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:18:13-68
+activity#droidninja.filepicker.MediaDetailsActivity
+ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:20:9-22:62
+	android:configChanges
+		ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:22:13-59
+	android:name
+		ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:21:13-70
+provider#droidninja.filepicker.utils.FilePickerProvider
+ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:24:9-32:20
+	android:authorities
+		ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:26:13-82
+	android:grantUriPermissions
+		ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:28:13-47
+	android:exported
+		ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:25:13-74
+meta-data#android.support.VERSION
+ADDED from [com.android.support:palette-v7:25.3.1] C:\Users\Administrator\.android\build-cache\28835677e8d6ed8fe7a4e6a7fc42d8d7c04993af\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:cardview-v7:25.3.1] C:\Users\Administrator\.android\build-cache\e22668f596914ff37d303a503a2dc6e06ddbb21f\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:design:25.3.1] C:\Users\Administrator\.android\build-cache\6f6f3bf43ac436ebfb3683f0bd89179ccefded2b\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:transition:25.3.1] C:\Users\Administrator\.android\build-cache\d7c13752dba210086dd09c301db36b615611c2ff\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\Administrator\.android\build-cache\b0b413a334b3f7eeef331a7053515d5f7bca0910\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\Administrator\.android\build-cache\016128b09f90b974fff43b6fc2bea0121679c293\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\Administrator\.android\build-cache\cc320f624feef855c7c25d561827fad34612111f\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\Administrator\.android\build-cache\9d9285a44ccd47600658884a1c0eb6ad8f5456f3\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\Administrator\.android\build-cache\3be186b8c9a5566969bedc3cdb7534a3c550609b\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\Administrator\.android\build-cache\8a6796cb4f0edb2a460b7658a4610989f4431f83\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\Administrator\.android\build-cache\bc084985d12a9ee62e2eb2df37d53abd45f5a430\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\Administrator\.android\build-cache\4b7bbc3eb780e9ef386128ede43e83242ccefb72\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\Administrator\.android\build-cache\6d228e3bba743f9ead3f17fa5d01360b0e662849\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\Administrator\.android\build-cache\2f05ce1d9c2a40ea2d34241bbaac7f0c3c741cd3\output\AndroidManifest.xml:25:5-27:34
+	android:value
+		ADDED from [com.android.support:palette-v7:25.3.1] C:\Users\Administrator\.android\build-cache\28835677e8d6ed8fe7a4e6a7fc42d8d7c04993af\output\AndroidManifest.xml:24:9-31
+	android:name
+		ADDED from [com.android.support:palette-v7:25.3.1] C:\Users\Administrator\.android\build-cache\28835677e8d6ed8fe7a4e6a7fc42d8d7c04993af\output\AndroidManifest.xml:23:9-47
+activity#com.zhihu.matisse.ui.MatisseActivity
+ADDED from [com.zhihu.android:matisse:0.4.3] C:\Users\Administrator\.android\build-cache\46e5e5cd47989d2a37ead46d9dac744aeb77db5b\output\AndroidManifest.xml:28:9-73
+	android:name
+		ADDED from [com.zhihu.android:matisse:0.4.3] C:\Users\Administrator\.android\build-cache\46e5e5cd47989d2a37ead46d9dac744aeb77db5b\output\AndroidManifest.xml:28:19-70
+activity#com.zhihu.matisse.internal.ui.AlbumPreviewActivity
+ADDED from [com.zhihu.android:matisse:0.4.3] C:\Users\Administrator\.android\build-cache\46e5e5cd47989d2a37ead46d9dac744aeb77db5b\output\AndroidManifest.xml:29:9-87
+	android:name
+		ADDED from [com.zhihu.android:matisse:0.4.3] C:\Users\Administrator\.android\build-cache\46e5e5cd47989d2a37ead46d9dac744aeb77db5b\output\AndroidManifest.xml:29:19-84
+activity#com.zhihu.matisse.internal.ui.SelectedPreviewActivity
+ADDED from [com.zhihu.android:matisse:0.4.3] C:\Users\Administrator\.android\build-cache\46e5e5cd47989d2a37ead46d9dac744aeb77db5b\output\AndroidManifest.xml:30:9-90
+	android:name
+		ADDED from [com.zhihu.android:matisse:0.4.3] C:\Users\Administrator\.android\build-cache\46e5e5cd47989d2a37ead46d9dac744aeb77db5b\output\AndroidManifest.xml:30:19-87
+service#com.squareup.leakcanary.internal.HeapAnalyzerService
+ADDED from [com.squareup.leakcanary:leakcanary-android:1.3] C:\Users\Administrator\.android\build-cache\357b9e6ff35d150c9b6752ff313a8d2a82fcadac\output\AndroidManifest.xml:25:9-28:45
+	android:enabled
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.3] C:\Users\Administrator\.android\build-cache\357b9e6ff35d150c9b6752ff313a8d2a82fcadac\output\AndroidManifest.xml:27:13-36
+	android:process
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.3] C:\Users\Administrator\.android\build-cache\357b9e6ff35d150c9b6752ff313a8d2a82fcadac\output\AndroidManifest.xml:28:13-42
+	android:name
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.3] C:\Users\Administrator\.android\build-cache\357b9e6ff35d150c9b6752ff313a8d2a82fcadac\output\AndroidManifest.xml:26:13-80
+service#com.squareup.leakcanary.DisplayLeakService
+ADDED from [com.squareup.leakcanary:leakcanary-android:1.3] C:\Users\Administrator\.android\build-cache\357b9e6ff35d150c9b6752ff313a8d2a82fcadac\output\AndroidManifest.xml:29:9-31:39
+	android:enabled
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.3] C:\Users\Administrator\.android\build-cache\357b9e6ff35d150c9b6752ff313a8d2a82fcadac\output\AndroidManifest.xml:31:13-36
+	android:name
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.3] C:\Users\Administrator\.android\build-cache\357b9e6ff35d150c9b6752ff313a8d2a82fcadac\output\AndroidManifest.xml:30:13-70
+activity#com.squareup.leakcanary.internal.DisplayLeakActivity
+ADDED from [com.squareup.leakcanary:leakcanary-android:1.3] C:\Users\Administrator\.android\build-cache\357b9e6ff35d150c9b6752ff313a8d2a82fcadac\output\AndroidManifest.xml:33:9-45:20
+	android:enabled
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.3] C:\Users\Administrator\.android\build-cache\357b9e6ff35d150c9b6752ff313a8d2a82fcadac\output\AndroidManifest.xml:35:13-36
+	android:label
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.3] C:\Users\Administrator\.android\build-cache\357b9e6ff35d150c9b6752ff313a8d2a82fcadac\output\AndroidManifest.xml:37:13-73
+	android:icon
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.3] C:\Users\Administrator\.android\build-cache\357b9e6ff35d150c9b6752ff313a8d2a82fcadac\output\AndroidManifest.xml:36:13-56
+	android:theme
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.3] C:\Users\Administrator\.android\build-cache\357b9e6ff35d150c9b6752ff313a8d2a82fcadac\output\AndroidManifest.xml:39:13-53
+	android:taskAffinity
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.3] C:\Users\Administrator\.android\build-cache\357b9e6ff35d150c9b6752ff313a8d2a82fcadac\output\AndroidManifest.xml:38:13-59
+	android:name
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.3] C:\Users\Administrator\.android\build-cache\357b9e6ff35d150c9b6752ff313a8d2a82fcadac\output\AndroidManifest.xml:34:13-80

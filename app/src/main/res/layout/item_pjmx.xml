@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="21px"
+                android:paddingRight="21px"
+                android:paddingTop="21px"
+                android:id="@+id/rl"
+    >
+
+
+    <TextView
+        android:textColor="@color/black"
+        android:gravity="start"
+        android:id="@+id/tv_mcpp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="XX配件(xx品牌)"
+        android:textSize="32px"/>
+
+    <TextView
+        android:gravity="start"
+        android:id="@+id/tv_ggxh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_mcpp"
+        android:layout_marginTop="11px"
+        android:text="GTX1050"
+        android:textSize="26px"/>
+
+
+    <TextView
+        android:gravity="start"
+        android:id="@+id/tv_scbh"
+        android:textSize="24px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_ggxh"
+        android:layout_marginTop="20px"
+        android:text="生产编号"/>
+
+    <TextView
+        android:textSize="22px"
+        android:gravity="start"
+        android:id="@+id/tv_bxsj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_scbh"
+        android:layout_marginTop="20px"
+        android:text="1991-10-10"/>
+
+
+    <TextView
+        android:id="@+id/tv_pjdh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="7px"
+        android:text="PJ101"
+        android:textSize="32px"/>
+
+    <TextView
+        android:id="@+id/tv_num"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_pjdh"
+        android:layout_marginTop="34px"
+        android:text="200只"
+        android:textSize="36px"/>
+
+    <TextView
+        android:id="@+id/tv_prize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_num"
+        android:layout_marginTop="30px"
+        android:text="200/只"/>
+
+    <include
+        layout="@layout/include_devide"
+        android:layout_width="match_parent"
+        android:layout_height="9px"
+        android:layout_below="@+id/tv_prize"
+        android:layout_marginTop="20px"/>
+</RelativeLayout>

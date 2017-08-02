@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:id="@+id/ll_choose"
+        android:layout_width="match_parent"
+        android:layout_height="95px"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/tv_left22_w213"
+            android:layout_weight="1"
+            android:text="名称"
+            />
+        <TextView
+            android:id="@+id/tv_result"
+            style="@style/text_item_start_lf21"
+            android:text="是"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <include layout="@layout/include_detail"></include>
+    </LinearLayout>
+
+    <include layout="@layout/line"></include>
+
+</LinearLayout>

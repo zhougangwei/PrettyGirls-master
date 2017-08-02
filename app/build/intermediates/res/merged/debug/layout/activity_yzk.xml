@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="coder.aihui.ui.assetcheck.YzkActivity">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/include_small_title"></include>
+
+    <include layout="@layout/include_title_text"></include>
+
+    <include layout="@layout/icon_back"></include>
+
+    <include
+        android:id="@+id/tv_ok"
+        layout="@layout/include_tv_ok"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/ll95">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="预科转科台数"/>
+
+                <TextView
+                    android:id="@+id/tv_num"
+                    style="@style/tv_weight1"
+                    android:text="10"/>
+            </LinearLayout>
+
+            <coder.aihui.widget.ScrollViewWithExpandListView
+                android:id="@+id/el"
+                android:layout_marginLeft="22px"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="95px">
+            </coder.aihui.widget.ScrollViewWithExpandListView>
+
+            <LinearLayout
+                style="@style/ll95"
+                android:visibility="gone">
+                <TextView
+                    style="@style/tv_left22"
+                    android:layout_weight="1"
+                    android:text="位置变更前"/>
+                <include
+                    layout="@layout/include_arrow_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"></include>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/ll_dept"
+                style="@style/ll95">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="转科位置"/>
+
+                <TextView
+                    android:id="@+id/tv_changeDept"
+                    style="@style/tv_weight1"
+                    android:text="转科后"/>
+
+                <include
+                    layout="@layout/include_detail"
+                    android:layout_width="14px"
+                    android:layout_height="24px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="29px"></include>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

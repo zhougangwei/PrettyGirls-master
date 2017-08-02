@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="coder.aihui.ui.assetcheck.AssetDetailActivity">
+
+    <ScrollView
+        android:id="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="90px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textColor="@color/black"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="23px"
+                    android:layout_weight="1"
+                    android:text="基本信息"
+                    android:textSize="30px"/>
+
+                <TextView
+                    android:id="@+id/tv_synx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="23px"
+                    android:layout_marginRight="24px"
+                    android:text="此设备已使用A年"
+                    android:textColor="@color/editBlue"
+                    android:textSize="30px"/>
+
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_kpbh"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/asset_tv_left22"
+                    android:text="编号"/>
+
+                <TextView
+                    android:id="@+id/tv_kpbh"
+                    style="@style/tv_weight1_right22"
+                    android:text="1111111111111"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_wzmc"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/asset_tv_left22"
+                    android:text="名称"/>
+
+                <TextView
+                    android:id="@+id/tv_wzmc"
+                    style="@style/tv_weight1_right22"
+                    android:text="1111111111111"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_ppmc"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/asset_tv_left22"
+                    android:text="品牌"/>
+
+                <TextView
+                    android:id="@+id/tv_ppmc"
+                    style="@style/tv_weight1_right22"
+                    android:text="1111111111111"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_ggxh"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/asset_tv_left22"
+                    android:text="规格"/>
+
+                <TextView
+                    android:id="@+id/tv_ggxh"
+                    style="@style/tv_weight1_right22"
+                    android:text="1111111111111"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_dept"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/asset_tv_left22"
+                    android:text="科室"/>
+
+                <TextView
+                    android:id="@+id/tv_dept"
+                    style="@style/tv_weight1_right22"
+                    android:text="1111111111111"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_location"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/asset_tv_left22"
+                    android:text="位置"/>
+
+                <TextView
+                    android:id="@+id/tv_location"
+                    style="@style/tv_weight1_right22"
+                    android:text="1111111111111"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_bxdw"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/asset_tv_left22"
+                    android:text="保修单位"/>
+
+                <TextView
+                    android:id="@+id/tv_bxdw"
+                    style="@style/tv_weight1_right22"
+                    android:text="1111111111111"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_bxjzrq"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/asset_tv_left22"
+                    android:text="保修截止日期"/>
+
+                <TextView
+                    android:id="@+id/tv_bxjzrq"
+                    style="@style/tv_weight1_right22"
+                    android:text="1111111111111"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_bxlxr"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/asset_tv_left22"
+                    android:text="保修联系人"/>
+
+                <TextView
+                    android:id="@+id/tv_bxlxr"
+                    style="@style/tv_weight1_right22"
+                    android:text="1111111111111"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_ccbh"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/asset_tv_left22"
+                    android:text="出厂编号"/>
+
+                <TextView
+                    android:id="@+id/tv_ccbh"
+                    style="@style/tv_weight1_right22"
+                    android:text="1111111111111"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+
+            <coder.aihui.widget.ScrollViewWithExpandListView
+                android:id="@+id/el"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+              >
+
+            </coder.aihui.widget.ScrollViewWithExpandListView>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,51 @@
+Number of Packages:260
+
+Key Set Manager:
+  [com.soul]
+      Signing KeySets: 3
+
+Packages:
+  Package [com.soul] (418cd818):
+    userId=10010 gids=[1028, 1015, 1023, 3001, 3002]
+    pkg=Package{41897208 com.soul}
+    codePath=/system/priv-app/4.4.2SoulService.apk
+    resourcePath=/system/priv-app/4.4.2SoulService.apk
+    nativeLibraryPath=/data/app-lib/4.4.2SoulService
+    versionCode=2 targetSdk=14
+    versionName=2.0
+    applicationInfo=ApplicationInfo{418972c8 com.soul}
+    flags=[ SYSTEM DEBUGGABLE HAS_CODE PERSISTENT ALLOW_CLEAR_USER_DATA ALLOW_BACKUP PRIVILEGED ]
+    dataDir=/data/data/com.soul
+    supportsScreens=[small, medium, large, xlarge, resizeable, anyDensity]
+    timeStamp=2008-08-01 20:00:00
+    firstInstallTime=2008-08-01 20:00:00
+    lastUpdateTime=2008-08-01 20:00:00
+    signatures=PackageSignatures{419a4b28 [4191ae00]}
+    permissionsFixed=false haveGids=true installStatus=1
+    pkgFlags=[ SYSTEM DEBUGGABLE HAS_CODE PERSISTENT ALLOW_CLEAR_USER_DATA ALLOW_BACKUP PRIVILEGED ]
+    User 0:  installed=true blocked=false stopped=false notLaunched=false enabled=0
+    grantedPermissions:
+      android.permission.READ_EXTERNAL_STORAGE
+      android.permission.GET_TASKS
+      com.htc.sense.permission.album.GENERAL
+      android.permission.INTERACT_ACROSS_USERS_FULL
+      android.permission.WRITE_EXTERNAL_STORAGE
+      com.htc.permission.APP_MEDIA
+      android.permission.REMOVE_TASKS
+      android.permission.SET_ORIENTATION
+      android.permission.ACCESS_WIFI_STATE
+      com.htc.permission.APP_SHARED
+      com.htc.permission.APP_PLATFORM
+      android.permission.FORCE_STOP_PACKAGES
+      android.permission.READ_PHONE_STATE
+      android.permission.SYSTEM_ALERT_WINDOW
+      android.permission.MODIFY_PHONE_STATE
+      android.permission.WRITE_SETTINGS
+      android.permission.BLUETOOTH
+      android.permission.CHANGE_WIFI_STATE
+      com.htc.permission.APP_DEFAULT
+      android.permission.VIBRATE
+      android.permission.BLUETOOTH_ADMIN
+      android.permission.CHANGE_NETWORK_STATE
+      android.permission.DEVICE_POWER
+      android.permission.ACCESS_NETWORK_STATE

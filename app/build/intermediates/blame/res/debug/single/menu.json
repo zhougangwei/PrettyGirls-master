@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu_girl.xml",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\menu\\menu_girl.xml"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\menu\\picker_menu.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\ac18f56987730515cdd4cfd610e85b43f36ca527\\output\\res\\menu\\picker_menu.xml"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\menu\\main.xml",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\menu\\main.xml"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu_home.xml",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\menu\\menu_home.xml"
+    }
+]

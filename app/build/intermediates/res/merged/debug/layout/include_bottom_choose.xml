@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="99px"
+    android:layout_alignParentBottom="true"
+    android:background="@drawable/ic_shadowup"
+    tools:showIn="@layout/activity_asset_check">
+
+    <RadioButton
+        android:id="@+id/rb_all"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+
+        android:gravity="center"
+        android:text="全选"
+        android:textColor="@color/greyblack"
+        android:textSize="30px"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="206px">
+
+        <TextView
+            android:id="@+id/tv_yzk"
+            android:layout_width="193px"
+            android:layout_height="match_parent"
+            android:background="#2ED0DF"
+            android:gravity="center"
+            android:text="预转科"
+            android:textColor="@color/white"
+            android:textSize="30px"/>
+
+        <TextView
+            android:id="@+id/tv_lsyd"
+            android:layout_width="193px"
+            android:layout_height="match_parent"
+            android:background="#5684EB"
+            android:gravity="center"
+            android:text="临时移动"
+            android:textColor="@color/white"
+            android:textSize="30px"/>
+    </LinearLayout>
+</LinearLayout>

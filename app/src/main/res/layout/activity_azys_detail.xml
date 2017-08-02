@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="coder.aihui.ui.azys.AzysDetailActivity">
+
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/include_small_title"></include>
+
+    <include layout="@layout/include_title_text"></include>
+
+    <include layout="@layout/icon_back"></include>
+
+    <include
+        android:id="@+id/tv_ok"
+        layout="@layout/include_tv_ok"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/azys_ll">
+
+                <TextView
+                    style="@style/tv_left22_w213"
+                    android:text="设备名称"/>
+
+                <TextView
+                    android:id="@+id/tv_wzmc"
+                    style="@style/tv_weight1_rt25"
+                    android:text="打印机"/>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+
+                style="@style/azys_ll"
+                >
+                <TextView
+                    android:id="@+id/textView2"
+                    style="@style/tv_left22_w213"
+                    android:text="使用科室"/>
+
+                <TextView
+                    android:id="@+id/tv_dept"
+                    style="@style/tv_weight1_rt25"
+                    android:text="门诊"/>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                style="@style/azys_ll"
+                >
+
+                <TextView
+                    style="@style/tv_left22_w213"
+                    android:text="规格型号"/>
+
+                <TextView
+                    android:id="@+id/tv_ggxh"
+                    style="@style/tv_weight1_rt25"
+                    android:text="HP1020"/>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                style="@style/azys_ll">
+
+                <TextView
+                    style="@style/tv_left22_w213"
+                    android:text="当前验收人"/>
+
+                <TextView
+                    android:id="@+id/tv_ysr"
+                    style="@style/tv_weight1_rt25"
+                    android:text="ADMIN"/>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                style="@style/azys_ll">
+
+                <TextView
+                    style="@style/tv_left22_w213"
+                    android:text="出厂编号"/>
+
+                <EditText
+                    android:id="@+id/et_ccbh"
+                    style="@style/et_weight1_rt25_start"
+                    android:text="11111111"/>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_zczh"
+                style="@style/azys_ll"
+                >
+
+                <TextView
+                    style="@style/tv_left22_w213"
+                    android:text="注册证号"/>
+
+                <EditText
+                    android:id="@+id/et_zczh"
+                    style="@style/et_weight1_rt25_start"
+                    android:text="打印机"/>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_zczyxq"
+                style="@style/azys_ll"
+                >
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="注册证有效期"/>
+
+                <TextView
+                    android:id="@+id/tv_zczyxq"
+                    style="@style/tv_weight1_rt25"
+                    android:text="2013-10-10"/>
+
+                <include layout="@layout/include_detail"></include>
+
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_jysynx"
+                style="@style/azys_ll"
+                >
+
+                <TextView
+                    style="@style/tv_left22_w213"
+                    android:text="建议使用年限"/>
+
+                <TextView
+                    android:id="@+id/tv_jysynx"
+                    style="@style/tv_weight1_rt25"
+                    android:text="3"/>
+
+                <include layout="@layout/include_detail"></include>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_azgcs"
+                style="@style/azys_ll"
+                >
+
+                <TextView
+                    style="@style/tv_left22_w213"
+                    android:text="安装工程师"/>
+
+                <EditText
+                    android:id="@+id/et_azgcs"
+                    style="@style/et_weight1_rt25_start"
+                    android:text="李某某"/>
+            </LinearLayout>
+
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_gcsdh"
+
+                style="@style/azys_ll"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_left22_w213"
+                    android:text="工程师电话"/>
+
+                <EditText
+                    android:id="@+id/et_gcsdh"
+                    style="@style/et_weight1_rt25_start"
+                    android:text="1838381232"/>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_bxdw"
+
+                style="@style/azys_ll"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_left22_w213"
+                    android:text="保修单位"/>
+
+                <EditText
+                    android:id="@+id/et_bxdw"
+                    style="@style/et_weight1_rt25_start"
+                    android:text="1838381232"/>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_bxlxr"
+
+                style="@style/azys_ll"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_left22_w213"
+                    android:text="保修联系人"/>
+
+                <EditText
+                    android:id="@+id/et_bxlxr"
+                    style="@style/et_weight1_rt25_start"
+                    android:text="1838381232"/>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_tv_bxdh"
+
+                style="@style/azys_ll"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_left22_w213"
+                    android:text="报修电话"/>
+
+                <EditText
+                    android:id="@+id/et_bxdh"
+                    style="@style/et_weight1_rt25_start"
+                    android:text="1838381232"/>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <coder.aihui.widget.ScrollViewWithListView
+                android:id="@+id/sl_dt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </coder.aihui.widget.ScrollViewWithListView>
+
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_bz"
+                style="@style/azys_ll"
+                >
+                <TextView
+                    android:layout_weight="1"
+                    style="@style/tv_left22_w213"
+                    android:text="备注"/>
+
+
+
+                <include layout="@layout/include_detail"></include>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="256px">
+
+                <include
+                    android:id="@+id/rl_zmz"
+                    layout="@layout/include_photo"
+                    android:layout_width="208px"
+                    android:layout_height="208px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="24px"
+                    android:layout_marginRight="12px"></include>
+
+                <include
+                    android:id="@+id/rl_cmz"
+                    layout="@layout/include_photo"></include>
+
+                <include
+                    android:id="@+id/rl_mpz"
+                    layout="@layout/include_photo"></include>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_pjmx"
+
+                style="@style/azys_ll"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_left22_w213"
+                    android:text="配件明细"/>
+
+                <TextView
+                    android:id="@+id/tv_pjmx"
+                    style="@style/tv_weight1_rt25"
+                    android:text="3"/>
+
+                <include layout="@layout/include_detail"></include>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                style="@style/azys_ll"
+
+                android:layout_width="match_parent"
+                android:layout_height="473px"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/tv_left22_w213"
+                        android:layout_width="wrap_content"
+                        android:layout_height="95px"
+                        android:gravity="center_vertical"
+                        android:text="科室负责人工号:"/>
+
+                    <EditText
+                        android:id="@+id/et_inputId"
+                        style="@style/et_weight1_rt25_start"
+                        android:gravity="center_vertical"
+                        />
+
+                </LinearLayout>
+
+                <include layout="@layout/line"></include>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:scaleType="center"
+                    android:src="@mipmap/dzqm"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:tools="http://schemas.android.com/tools"
+       xmlns:android="http://schemas.android.com/apk/res/android"
+       tools:showIn="@layout/activity_azyslist">
+
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="37px"
+        android:layout_marginTop="186px"
+        android:text="打印机"
+        android:textColor="@color/white"
+        android:textSize="64px"/>
+
+    <TextView
+        android:id="@+id/tv_ggxh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="37px"
+        android:layout_marginTop="267px"
+        android:text="EXCLL_350MC"
+        android:textColor="@color/white"
+        android:textSize="30px"/>
+
+    <TextView
+        android:id="@+id/tv_dept"
+        android:text="所有科室"
+        style="@style/huge_title_content"/>
+
+    <LinearLayout
+        android:id="@+id/ll_names"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="39px"
+        android:layout_marginTop="331px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="二狗"
+            android:textColor="@color/white"
+            android:textSize="26px"/>
+
+
+    </LinearLayout>
+</merge>

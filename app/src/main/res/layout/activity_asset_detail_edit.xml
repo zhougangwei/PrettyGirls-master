@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="coder.aihui.ui.assetcheck.AssetDetailEditActivity">
+
+
+    <include
+        android:id="@+id/ll_back"
+        layout="@layout/include_small_title"></include>
+
+    <include layout="@layout/icon_back"/>
+
+    <include
+        android:id="@+id/tv_title"
+        layout="@layout/include_title_text"></include>
+
+    <include layout="@layout/include_save"/>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_back">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="设备名称"/>
+
+                <TextView
+                    android:textColor="@color/textGrey"
+                    android:id="@+id/tv_wzmc"
+                    style="@style/tv_weight1"
+                    android:layout_marginLeft="56px"
+                    android:gravity="start"
+                    android:text="打印机"/>
+
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="品牌"/>
+
+                <TextView
+                    android:textColor="@color/textGrey"
+                    android:layout_marginLeft="123px"
+                    android:gravity="start"
+                    android:id="@+id/tv_brand"
+                    style="@style/tv_weight1"
+                    android:text="HP"/>
+
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="型号"/>
+
+                <TextView
+                    android:textColor="@color/textGrey"
+                    android:layout_marginLeft="124px"
+                    android:gravity="start"
+                    android:id="@+id/tv_ggxh"
+                    style="@style/tv_weight1"
+                    android:text="HP10"/>
+
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="生产编号"/>
+
+                <TextView
+                    android:textColor="@color/textGrey"
+                    android:layout_marginLeft="59px"
+                    android:gravity="start"
+                    android:id="@+id/tv_scbh"
+                    style="@style/tv_weight1"
+                    android:text="CNCFR"/>
+
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_scrq"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="生产日期"/>
+
+                <TextView
+                    android:id="@+id/tv_scrq"
+                    style="@style/tv_weight1"
+                    android:text="2009-05-20"/>
+
+                <include
+                    android:id="@+id/iv_wz_detail"
+                    layout="@layout/include_detail"></include>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_location"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="地理位置"/>
+
+                <TextView
+                    android:id="@+id/tv_location"
+                    style="@style/tv_weight1"
+                    android:text="住院-一楼"/>
+
+                <include
+                    android:id="@+id/iv_wz_detail"
+                    layout="@layout/include_detail"></include>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_ghdw"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="供货单位"/>
+
+                <TextView
+                    android:id="@+id/tv_ghdw"
+                    style="@style/tv_weight1"
+                    android:text="XX单位"/>
+
+                <include
+                    android:id="@+id/iv_wz_detail"
+                    layout="@layout/include_detail"></include>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_sccj"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="生产厂家"/>
+
+                <TextView
+                    android:id="@+id/tv_sccj"
+                    style="@style/tv_weight1"
+                    android:text="HP公司"/>
+
+                <include
+                    android:id="@+id/iv_wz_detail"
+                    layout="@layout/include_detail"></include>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_bgks"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="保管科室"/>
+
+                <TextView
+                    android:id="@+id/tv_bgks"
+                    style="@style/tv_weight1"
+                    android:text="产三病区"/>
+
+                <include
+                    android:id="@+id/iv_wz_detail"
+                    layout="@layout/include_detail"></include>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_bgr"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="保管人"/>
+
+                <TextView
+                    android:id="@+id/tv_bgr"
+                    style="@style/tv_weight1"
+                    android:text="周二狗"/>
+
+                <include
+                    android:id="@+id/iv_wz_detail"
+                    layout="@layout/include_detail"></include>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_bqlx"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="标签类型"/>
+
+                <TextView
+                    android:id="@+id/tv_bqlx"
+                    style="@style/tv_weight1"
+                    android:text="非抗金属"/>
+
+                <include
+                    android:id="@+id/iv_wz_detail"
+                    layout="@layout/include_detail"></include>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_scqr"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="是否首次确认"/>
+
+                <TextView
+                    android:id="@+id/tv_scqr"
+                    style="@style/tv_weight1"
+                    android:text="已确认"/>
+
+                <include
+                    android:id="@+id/iv_wz_detail"
+                    layout="@layout/include_detail"></include>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="256px">
+
+                <include
+                    android:id="@+id/rl_zmz"
+                    layout="@layout/include_photo"
+                    android:layout_width="208px"
+                    android:layout_height="208px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="24px"
+                    android:layout_marginRight="12px"></include>
+
+                <include
+                    android:id="@+id/rl_cmz"
+                    layout="@layout/include_photo"></include>
+
+                <include
+                    android:id="@+id/rl_mpz"
+                    layout="@layout/include_photo"></include>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

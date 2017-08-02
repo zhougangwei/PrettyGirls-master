@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="coder.aihui.ui.inspectxj.InspectXJActivity">
+
+
+    <include layout="@layout/include_mid_title"></include>
+
+    <include layout="@layout/icon_back"></include>
+
+    <include
+        layout="@layout/include_people"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="559px"
+        android:layout_marginTop="66px"
+        android:padding="21px"></include>
+
+    <include
+        layout="@layout/include_scan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="407px"
+        android:layout_marginTop="66px"
+        android:padding="21px"></include>
+
+    <include
+        layout="@layout/include_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="483px"
+        android:layout_marginTop="66px"
+        android:padding="21px"></include>
+
+    <include
+
+
+        layout="@layout/include_search_ll"></include>
+
+
+    <LinearLayout
+        android:id="@+id/ll_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="270px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25px"
+            android:layout_weight="1"
+            android:text="周期开始时间:"
+
+            android:textColor="#fbac46"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25px"
+            android:text="周期结束时间:"
+            android:textColor="#fbac46"/>
+
+    </LinearLayout>
+
+    <android.support.design.widget.TabLayout
+        android:layout_below="@id/ll_time"
+
+        android:id="@+id/tb"
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        app:tabSelectedTextColor="@color/textBlue">
+    </android.support.design.widget.TabLayout>
+
+
+    <LinearLayout
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="8px"
+        android:layout_below="@+id/tb"
+        android:background="#F5F5F5"
+        android:orientation="horizontal">
+    </LinearLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/line">
+        </android.support.v4.view.ViewPager>
+
+ <android.support.design.widget.FloatingActionButton
+    android:id="@+id/fab_backToTop"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="576px"
+    android:layout_marginTop="879px"/>
+
+
+
+</RelativeLayout>

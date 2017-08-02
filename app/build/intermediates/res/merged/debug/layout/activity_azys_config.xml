@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="coder.aihui.ui.azys.AzysConfigActivity">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/include_small_title"></include>
+
+    <include layout="@layout/icon_back"></include>
+
+    <include
+        layout="@layout/include_title_text"></include>
+
+    <LinearLayout
+        android:id="@+id/ll_bd"
+        android:layout_width="match_parent"
+        android:layout_height="103px"
+        android:layout_below="@+id/title"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/tv_left22"
+            android:layout_weight="1"
+            android:text="表单"/>
+
+        <include
+            android:id="@+id/iv_ks_detail"
+            layout="@layout/include_detail"></include>
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/line1"
+        layout="@layout/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/ll_bd"></include>
+
+    <LinearLayout
+        android:id="@+id/pxgl"
+        android:layout_width="match_parent"
+        android:layout_height="103px"
+        android:layout_below="@+id/line1"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/tv_left22"
+            android:layout_weight="1"
+            android:text="培训管理"/>
+
+        <include
+            android:id="@+id/iv_ks_detail"
+            layout="@layout/include_detail"></include>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/line2"
+        layout="@layout/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/pxgl"></include>
+</RelativeLayout>

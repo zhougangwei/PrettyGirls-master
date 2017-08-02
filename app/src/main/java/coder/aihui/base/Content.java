@@ -1,0 +1,105 @@
+package coder.aihui.base;
+
+/**
+ * @ 创建者   zhou
+ * @ 创建时间   2017/3/23 11:57
+ * @ 描述    ${TODO}
+ * @ 更新者  $AUTHOR$
+ * @ 更新时间    2017/3/23$
+ * @ 更新描述  ${TODO}
+ */
+
+public class Content {
+    public static final String IS_REMEMBER_PW = "isrememberpw";     //是否记住密码
+    public static final String UnDownDatas    = "undowndatas";     //没有下载的数据 用于sp存储
+
+    public static final String PASSWORD     = "password";             //密码
+    public static final String USER_ACCOUNT = "user_account";      //账号
+    public static final String WS_ADDRESS = "wsAddress";      //账号
+
+    //资产清点配置
+    public static final int REQUEST_CONFIG        = 1;
+    //照片的
+    public static final int REQUEST_PIC_CHOOSE    = 2;
+    //相机的
+    public static final int SCANNIN_GREQUEST_CODE = 3;
+    //选公司的
+    public static final int COMPANY_REQUEST_CODE  = 4;
+
+    //用户
+    public static final int SYSUSER_REQUEST_CODE = 5;
+
+    //巡检人员
+    public static final int XJ_USER_REQUEST_CODE = 6;
+
+    //培训管理
+    public static final int PXGL_PXF_REQUEST_CODE  = 7;
+    public static final int PXGL_PXRY_REQUEST_CODE = 8;
+    //培训管理设备
+    public static final int PXGL_WZ_REQUEST_CODE   = 9;
+
+
+    public static final int AZYS_LIST_REQUEST_CODE = 10;
+
+    //备注
+    public static final int BZ_REQUEST_CODE = 11;
+
+    //配件明细
+    public static final int PJMX_REQUEST_CODE = 12;
+
+    //预转科
+    public static final int YZK_REQUEST_CODE = 13;
+
+
+
+
+    //供货单位1 生产厂家2 保修单位3
+    public static final int COMPANY_GHDW = 1;
+    public static final int COMPANY_SCCJ = 2;
+    public static final int COMPANY_BXDW = 3;
+
+
+    /**
+     * 跳往选取供货单位的名称
+     */
+    public static final String COMPANY_TYPE = "companyType";
+    public static final String COMPANY_ID   = "companyId";
+
+
+    //那个跳往配置界面的
+    public static final int    AZYS_CONFIG          = 1;
+    public static final int    INSPECT_REQUEST_CODE = 2;
+    public static final int    ASSET_QUERY          = 3;
+    public static final int    ASSET_CHECK          = 4;
+    public static final String INSPECT_PNAME        = "inspect_pname";
+
+
+
+
+    /**
+     * 是否是多选
+     */
+    public static String IS_MULTISELECT = "IS_MULTISELECT";
+
+    /**
+     * 选择人物返回的id的集合
+     */
+    public static String CHECKED_USER_IDS   = "checkedUser";
+    public static String CHECKED_USER_NAMES = "checkedUserNames";
+
+    /**
+     * 设备
+     */
+    public static String CHECKED_SB_IDS   = "checkedSb";
+    public static String CHECKED_SB_NAMES = "checkedSbNames";
+
+
+    /**
+     * 设备的ID的集合
+     */
+    public static String SB_IDS   = "sb_ids";
+    public static String SB_NAMES = "sb_names";
+
+
+
+}

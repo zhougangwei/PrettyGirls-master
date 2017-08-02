@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="coder.aihui.ui.assetcheck.AssetQueryConfigActivity">
+
+
+    <include layout="@layout/include_small_title"></include>
+
+    <include layout="@layout/icon_back"></include>
+
+    <include
+        layout="@layout/include_title_text"></include>
+
+    <include layout="@layout/include_save"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="159px">
+
+        <LinearLayout
+            android:id="@+id/ll_location"
+            android:layout_width="match_parent"
+            android:layout_height="95px"
+            android:orientation="horizontal">
+            <TextView
+                android:text="位置"
+                style="@style/tv_left22"/>
+            <TextView
+                android:id="@+id/tv_location"
+                android:text="地理位子"
+                style="@style/tv_weight1"/>
+            
+           <include
+               android:id="@+id/iv_wz_detail"
+               layout="@layout/include_detail"></include>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_dept"
+            android:layout_width="match_parent"
+            android:layout_height="95px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="科室"
+                style="@style/tv_left22"/>
+
+            <TextView
+                android:id="@+id/tv_dept"
+                style="@style/tv_weight1"
+                android:text="急诊"
+                />
+
+            <include
+                android:id="@+id/iv_ks_detail"
+                layout="@layout/include_detail"></include>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="95px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="锁定地理位子"
+                style="@style/tv_left22"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_way"
+            android:layout_width="match_parent"
+            android:layout_height="95px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="使用二维码"
+                style="@style/tv_left22"/>
+
+            <TextView
+                android:id="@+id/tv_way"
+                style="@style/tv_weight1"
+
+                android:text="RFID"
+                />
+
+            <include
+                android:id="@+id/iv_ks_detail"
+                layout="@layout/include_detail"></include>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

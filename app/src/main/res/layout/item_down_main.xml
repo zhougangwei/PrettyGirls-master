@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150px"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="23px"
+            android:layout_marginTop="56px"
+            android:text="台账下载(2000)"
+            android:textColor="#333333"
+            android:textSize="34px"/>
+
+        <TextView
+            android:id="@+id/tv_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="546px"
+            android:layout_marginTop="70px"
+            android:text="下载中"
+            android:textColor="#416FDE"
+            android:textSize="23px"/>
+
+        <ImageView
+            android:id="@+id/im_detail"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="20px"
+            android:scaleType="center"
+            android:src="@mipmap/tree_ex"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/bt_down"
+            android:layout_width="65px"
+            android:layout_height="65px"
+            android:layout_marginLeft="631px"
+            android:layout_marginTop="49px"
+            android:background="@mipmap/about"/>
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="23px"
+            android:layout_marginTop="101px"
+            android:text="2017-11-30"
+            android:textColor="#808080"
+            android:textSize="23px"/>
+
+        <ProgressBar
+
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            />
+
+        <com.daimajia.numberprogressbar.NumberProgressBar
+            android:id="@+id/number_progress_bar"
+            style="@style/NumberProgressBar_Default"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            />
+
+        <include layout="@layout/line"></include>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_detail"
+        android:layout_width="match_parent"
+        android:layout_height="150px"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <Button
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_normal"
+            android:text="开始下载"/>
+
+        <Button
+            android:id="@+id/bt_clear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_normal"
+            android:text="清空数据"/>
+    </LinearLayout>
+
+</LinearLayout>

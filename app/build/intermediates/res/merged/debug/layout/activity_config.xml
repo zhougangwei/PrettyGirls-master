@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+    <include
+        android:id="@+id/ll_title"
+        layout="@layout/include_small_title"></include>
+
+    <include layout="@layout/icon_back"></include>
+
+    <include layout="@layout/include_title_text"></include>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_title"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="70px"
+            android:layout_margin="25px"
+            android:gravity="center_vertical"
+            android:text="移动用户资产管理数据库(IP)"
+            android:textSize="@dimen/text_big"/>
+        <EditText
+            android:id="@+id/et_address"
+            android:layout_width="match_parent"
+            android:layout_height="113px"
+            android:singleLine="true"
+            />
+
+        <coder.aihui.widget.CancelAbleRadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="是否切换子地理位子"
+            android:textColor="@color/greyblack"
+            android:textSize="28px"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_sure"
+        style="@style/btn_blue_big"
+        android:layout_alignParentBottom="true"
+        android:text="保 存"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+       >
+
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="220px"
+            android:text="数据下载..."
+            android:textColor="@color/white"
+            android:textSize="30px"
+            />
+
+        <com.github.lzyzsd.circleprogress.DonutProgress
+            android:visibility="gone"
+            android:id="@+id/donut_progress"
+            android:layout_width="166dp"
+            android:layout_height="166dp"
+            app:donut_text_color="#3E6CDC"
+            app:donut_text_size="70px"
+            custom:donut_finished_color="@color/white"
+            custom:donut_finished_stroke_width="@dimen/progress_30"
+            custom:donut_unfinished_color="#91A9DC"
+            custom:donut_unfinished_stroke_width="@dimen/progress_10"
+            />
+    </RelativeLayout>
+</RelativeLayout>

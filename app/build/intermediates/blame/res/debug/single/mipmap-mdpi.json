@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi\\tree_ex.png",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-mdpi\\tree_ex.png"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi\\ic_launcher.png",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi\\tree_ec.png",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-mdpi\\tree_ec.png"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi\\ic_up.png",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-mdpi\\ic_up.png"
+    }
+]

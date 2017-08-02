@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:background="@drawable/btn_normal"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+
+    <TextView
+        style="@style/item_pjmx"
+        android:id="@+id/tv_name"
+        android:layout_width="100dp"
+        android:gravity="center"
+        android:text="名称"/>
+
+    <TextView
+        android:layout_weight="1"
+        style="@style/item_pjmx"
+        android:id="@+id/tv_rfid"
+        android:text="RFID"/>
+
+</LinearLayout>

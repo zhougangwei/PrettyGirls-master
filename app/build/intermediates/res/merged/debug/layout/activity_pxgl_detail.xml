@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="coder.aihui.ui.pxgl.PxglDetailActivity">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/include_small_title"></include>
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/include_title_text"></include>
+
+    <include layout="@layout/icon_back"></include>
+
+    <include
+        layout="@layout/include_updown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="512px"
+        android:layout_marginTop="66px"
+        android:padding="21px"
+        ></include>
+
+    <include layout="@layout/include_tv_ok"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_pxry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="95px"
+                android:orientation="horizontal"
+                android:padding="24px">
+
+                <TextView
+                    android:layout_width="280px"
+                    android:layout_height="match_parent"
+                    android:text="培训人员"
+                    android:textColor="@color/black"
+                    android:textSize="32px"/>
+
+
+                <TextView
+                    android:id="@+id/tv_pxry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <include
+                    layout="@layout/include_detail"
+                    android:layout_width="14px"
+                    android:layout_height="24px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="29px"></include>
+            </LinearLayout>
+
+            <include layout="@layout/line8"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_pxsb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="95px"
+                android:orientation="horizontal"
+                android:padding="24px">
+
+                <TextView
+                    android:layout_width="280px"
+                    android:layout_height="match_parent"
+                    android:text="培训设备"
+                    android:textColor="@color/black"
+                    android:textSize="32px"/>
+
+                <TextView
+                    android:id="@+id/tv_pxsb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <include
+                    layout="@layout/include_detail"
+                    android:layout_width="14px"
+                    android:layout_height="24px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="29px"></include>
+            </LinearLayout>
+
+            <include layout="@layout/line8"></include>
+
+            <LinearLayout
+                style="@style/azys_ll">
+
+                <TextView
+                    style="@style/tv_left22_w213"
+                    android:text="主题"/>
+
+                <EditText
+                    android:id="@+id/et_zt"
+                    style="@style/et_weight1_rt25_start"
+                    android:text="11111111"/>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                style="@style/azys_ll">
+
+                <TextView
+                    style="@style/tv_left22_w213"
+                    android:text="主讲人"/>
+
+                <EditText
+                    android:id="@+id/et_zjr"
+                    style="@style/et_weight1_rt25_start"
+                    android:text="11111111"/>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                style="@style/azys_ll">
+
+                <TextView
+                    style="@style/tv_left22_w213"
+                    android:text="记录人"/>
+
+                <EditText
+                    android:id="@+id/et_jlr"
+                    style="@style/et_weight1_rt25_start"
+                    android:text="11111111"/>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_pxlx"
+                style="@style/azys_ll">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="培训类型"/>
+
+                <TextView
+                    android:id="@+id/tv_pxlx"
+                    style="@style/tv_weight1"
+                    android:text="维护保养培训"/>
+
+                <include
+                    android:id="@+id/iv_wz_detail"
+                    layout="@layout/include_detail"></include>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_pxf"
+                style="@style/azys_ll">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="培训方"/>
+
+                <TextView
+                    android:id="@+id/tv_pxf"
+                    style="@style/tv_weight1"
+                    android:text="阿里巴巴"/>
+
+                <include
+                    android:id="@+id/iv_wz_detail"
+                    layout="@layout/include_detail"></include>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_pxrq"
+                style="@style/azys_ll">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    style="@style/tv_left22"
+                    android:text="培训日期"/>
+
+                <TextView
+                    android:id="@+id/tv_pxrq"
+                    style="@style/tv_weight1"
+                    android:text="2009-05-20"/>
+
+                <include
+                    android:id="@+id/iv_wz_detail"
+                    layout="@layout/include_detail"></include>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/ll_time"
+                style="@style/azys_ll">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="时长"/>
+
+                <TextView
+                    android:id="@+id/tv_scrq"
+                    style="@style/tv_weight1"
+                    android:text="1:33"/>
+
+                <include
+                    android:id="@+id/iv_wz_detail"
+                    layout="@layout/include_detail"></include>
+            </LinearLayout>
+
+            <include layout="@layout/line8"></include>
+
+            <EditText
+                android:id="@+id/et_content"
+                android:layout_width="match_parent"
+                android:layout_height="241px"
+                android:layout_margin="21px"
+                android:background="@drawable/btn_normal"
+                android:gravity="start"
+                android:hint="请填写培训主要内容..."
+                android:padding="14px"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <include
+                    android:id="@+id/ll_fj"
+                    layout="@layout/include_file"></include>
+
+                <include
+                    android:id="@+id/ll_jc"
+                    layout="@layout/include_file"></include>
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="coder.aihui">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_PROFILE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW"/>
+
+    <application
+        android:name=".app.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="coder.aihui.app.CustomCachingGlideModule"
+            android:value="GlideModule"/>
+
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:label="@string/app_name">
+        </activity>
+        <activity android:name=".ui.girl.GirlActivity"/>
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity android:name=".ui.splash.SplashActivity">
+        </activity>
+        <activity
+            android:label="登录"
+            android:name=".ui.login.LoginActivity"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="design_width"
+            android:value="720"/>
+        <meta-data
+            android:name="design_height"
+            android:value="1280"/>
+
+        <activity
+            android:name=".ui.login.ConfigActivity"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity
+            android:name=".aaaa"
+            android:label="@string/title_activity_aaaa">
+        </activity>
+        <activity
+
+            android:label="资产清点"
+            android:name=".ui.assetcheck.AssetCheckActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.assetcheck.AssetQueryConfigActivity">
+        </activity>
+        <activity android:name=".ui.assetcheck.AssetDetailEditActivity">
+        </activity>
+        <activity android:name=".zxing.decoding.MipcaActivityCapture">
+        </activity>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="coder.aihui.ui.assetcheck.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths_public"/>
+        </provider>
+
+        <activity
+            android:label="台账查询"
+            android:name=".ui.assetquery.AssetQueryActivity"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".widget.contact.ContactActivity"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity
+            android:name=".widget.contact.SysUserActivity"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity android:name=".ui.assetcheck.AssetDetailActivity">
+        </activity>
+        <activity
+            android:name=".ui.inspectxj.InspectXJActivity"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity
+            android:name=".ui.inspectxj.InspectStartActivity"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity
+
+            android:label="少量联系人"
+            android:name=".widget.contact.LessUserActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:label="安装验收"
+            android:name=".ui.azys.AzysActivity"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.azys.AzysConfigActivity"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity
+            android:name=".ui.azys.AzysListActivity"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity android:name=".ui.azys.AzysDetailActivity">
+        </activity>
+        <activity
+            android:label="培训管理主"
+            android:name=".ui.azys.PjmxActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.bz.BzActivity">
+        </activity>
+        <activity android:name=".widget.contact.WzActivity">
+        </activity>
+        <activity
+            android:label="培训管理明细"
+            android:name=".ui.pxgl.PxglDetailActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.assetcheck.YzkActivity">
+        </activity>
+        <activity android:name=".ui.inspectxj.InspectDetailActivity">
+        </activity>
+        <activity android:name=".ui.inspectxj.InspectDetail2Activity">
+        </activity>
+    </application>
+
+</manifest>

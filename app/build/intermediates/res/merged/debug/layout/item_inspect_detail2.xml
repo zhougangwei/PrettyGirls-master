@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+
+    <LinearLayout
+        style="@style/ll95">
+
+        <TextView
+            style="@style/tv_lt0_wt1"
+            android:text="供电状况"/>
+
+        <TextView
+            style="@style/asset_tv_left22"
+            android:background="@drawable/shape_blue_normal"
+            android:paddingBottom="7px"
+            android:paddingLeft="20px"
+            android:paddingRight="20px"
+            android:paddingTop="7px"
+            android:text="添加备注"
+            />
+
+    </LinearLayout>
+
+    <include layout="@layout/line"></include>
+
+    <LinearLayout
+        android:id="@+id/ll_value"
+        style="@style/ll95">
+
+        <TextView
+            style="@style/tv_left0"
+            android:text="实测值"/>
+
+        <EditText
+            android:id="@+id/et_value"
+            android:visibility="invisible"
+            android:textSize="30px"
+            android:layout_marginLeft="25px"
+            android:background="@color/white"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:hint="请输入实测值"
+            />
+
+        <include
+            layout="@layout/include_detail"
+            android:layout_width="14px"
+            android:layout_height="24px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="29px"></include>
+
+
+    </LinearLayout>
+
+    <include layout="@layout/line"></include>
+
+    <LinearLayout
+        style="@style/ll95">
+
+        <TextView
+            style="@style/tv_lt0_wt1"
+            android:text="结果"/>
+
+        <RadioGroup
+            android:layout_width="320px"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_hg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="合格"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="　"/>
+
+            <RadioButton
+                android:id="@+id/rb_hhg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="不合格"/>
+
+        </RadioGroup>
+
+
+    </LinearLayout>
+
+    <include layout="@layout/line"></include>
+
+    <LinearLayout
+        style="@style/ll95">
+
+        <TextView
+            style="@style/tv_lt0_wt1"
+            android:text="是否报修"/>
+
+        <RadioGroup
+            android:layout_width="320px"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_bx_hg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="是"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="　　"/>
+
+            <RadioButton
+                android:id="@+id/rb_bx_bhg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="否"/>
+
+        </RadioGroup>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
