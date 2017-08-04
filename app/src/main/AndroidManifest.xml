@@ -40,11 +40,12 @@
         <activity android:name=".ui.splash.SplashActivity">
         </activity>
         <activity
-            android:label="登录"
             android:name=".ui.login.LoginActivity"
+            android:label="登录"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -65,9 +66,8 @@
             android:label="@string/title_activity_aaaa">
         </activity>
         <activity
-
-            android:label="资产清点"
-            android:name=".ui.assetcheck.AssetCheckActivity">
+            android:name=".ui.assetcheck.AssetCheckActivity"
+            android:label="资产清点">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -92,8 +92,8 @@
         </provider>
 
         <activity
-            android:label="台账查询"
             android:name=".ui.assetquery.AssetQueryActivity"
+            android:label="台账查询"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -120,9 +120,8 @@
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
-
-            android:label="少量联系人"
-            android:name=".widget.contact.LessUserActivity">
+            android:name=".widget.contact.LessUserActivity"
+            android:label="少量联系人">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -130,11 +129,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:label="安装验收"
             android:name=".ui.azys.AzysActivity"
+            android:label="安装验收"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -149,8 +149,8 @@
         <activity android:name=".ui.azys.AzysDetailActivity">
         </activity>
         <activity
-            android:label="培训管理主"
-            android:name=".ui.azys.PjmxActivity">
+            android:name=".ui.azys.PjmxActivity"
+            android:label="培训管理主">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -162,8 +162,8 @@
         <activity android:name=".widget.contact.WzActivity">
         </activity>
         <activity
-            android:label="培训管理明细"
-            android:name=".ui.pxgl.PxglDetailActivity">
+            android:name=".ui.pxgl.PxglDetailActivity"
+            android:label="培训管理明细">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -175,6 +175,10 @@
         <activity android:name=".ui.inspectxj.InspectDetailActivity">
         </activity>
         <activity android:name=".ui.inspectxj.InspectDetail2Activity">
+        </activity>
+        <activity android:name=".ui.bd.FormActivity">
+        </activity>
+        <activity android:name=".ui.pxgl.PxglListActivity">
         </activity>
     </application>
 

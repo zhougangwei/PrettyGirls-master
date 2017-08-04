@@ -787,7 +787,6 @@ public class AssetCheckActivity extends AppActivity implements AssetQueryView {
                     public void onError(Throwable e) {
                         ToastUtil.showToast("出现错误" + e.getMessage());
                     }
-
                     @Override
                     public void onNext(String s) {
 

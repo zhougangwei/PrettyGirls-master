@@ -186,6 +186,10 @@
         </activity>
         <activity android:name="coder.aihui.ui.inspectxj.InspectDetail2Activity" >
         </activity>
+        <activity android:name="coder.aihui.ui.bd.FormActivity" >
+        </activity>
+        <activity android:name="coder.aihui.ui.pxgl.PxglListActivity" >
+        </activity>
         <activity
             android:name="droidninja.filepicker.FilePickerActivity"
             android:configChanges="orientation|screenSize" />

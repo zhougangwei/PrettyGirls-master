@@ -12,10 +12,10 @@ public final class R {
         public static final int snackbar_action_bg_focused = 0x7f020093;
     }
     public static final class id {
-        public static final int snackbar_action = 0x7f10016c;
-        public static final int snackbar_text = 0x7f10016b;
+        public static final int snackbar_action = 0x7f10016d;
+        public static final int snackbar_text = 0x7f10016c;
     }
     public static final class layout {
-        public static final int design_layout_snackbar_include = 0x7f040049;
+        public static final int design_layout_snackbar_include = 0x7f04004b;
     }
 }
