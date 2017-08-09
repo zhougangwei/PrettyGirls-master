@@ -49,6 +49,11 @@ public class Content {
 
     //预转科
     public static final int YZK_REQUEST_CODE = 13;
+    //培训管理明细
+    public static final int PXGL_DETAIL_REQUEST_CODE = 14;
+
+    //文件选择器
+    public static final int FILE_PICK_REQUEST_CODE = 15;
 
 
 
@@ -94,12 +99,13 @@ public class Content {
     public static String CHECKED_SB_NAMES = "checkedSbNames";
 
 
+
+    public static String AZYS_DETAIL_IDS = "azys_detail_ids";
     /**
      * 设备的ID的集合
      */
-    public static String SB_IDS   = "sb_ids";
-    public static String SB_NAMES = "sb_names";
+    public static String SB_IDS = "sb_ids";
 
 
-
+    public static String FJ_PATH = "paths";
 }

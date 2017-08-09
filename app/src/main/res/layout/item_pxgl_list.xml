@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:id="@+id/rl"
+                android:layout_height="152px"
+                android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/text_item_start_lf21"
+        android:layout_marginTop="24px"
+        android:text="培训主题"
+        android:textColor="@color/black"
+        android:textSize="30px"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/text_item_start_lf21"
+        android:layout_width="305px"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginTop="12px"
+        android:singleLine="true"
+        android:text="钱文杰;钱文杰;钱文杰;钱文杰;"
+        android:textSize="27px"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        style="@style/text_item_start_lf21"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginTop="12px"
+        android:text="2017-03-12"
+        android:textSize="22px"/>
+
+    <TextView
+        android:id="@+id/tv_sb"
+        android:layout_width="250px"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="25px"
+        android:layout_marginTop="60px"
+        android:singleLine="true"
+        android:text="B超,电刀,工坊机器"
+        android:textSize="36px"/>
+
+
+</RelativeLayout>

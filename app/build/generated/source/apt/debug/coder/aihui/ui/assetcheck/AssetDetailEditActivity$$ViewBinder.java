@@ -20,7 +20,7 @@ public class AssetDetailEditActivity$$ViewBinder<T extends AssetDetailEditActivi
   protected static class InnerUnbinder<T extends AssetDetailEditActivity> implements Unbinder {
     protected T target;
 
-    private View view2131755414;
+    private View view2131755422;
 
     private View view2131755238;
 
@@ -38,7 +38,7 @@ public class AssetDetailEditActivity$$ViewBinder<T extends AssetDetailEditActivi
 
     private View view2131755250;
 
-    private View view2131755428;
+    private View view2131755436;
 
     private View view2131755252;
 
@@ -50,9 +50,9 @@ public class AssetDetailEditActivity$$ViewBinder<T extends AssetDetailEditActivi
       this.target = target;
 
       View view;
-      view = finder.findRequiredView(source, 2131755414, "field 'mIvBack' and method 'onViewClicked'");
-      target.mIvBack = finder.castView(view, 2131755414, "field 'mIvBack'");
-      view2131755414 = view;
+      view = finder.findRequiredView(source, 2131755422, "field 'mIvBack' and method 'onViewClicked'");
+      target.mIvBack = finder.castView(view, 2131755422, "field 'mIvBack'");
+      view2131755422 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
@@ -144,9 +144,9 @@ public class AssetDetailEditActivity$$ViewBinder<T extends AssetDetailEditActivi
           target.onViewClicked(p0);
         }
       });
-      view = finder.findRequiredView(source, 2131755428, "field 'mTvSave' and method 'onViewClicked'");
-      target.mTvSave = finder.castView(view, 2131755428, "field 'mTvSave'");
-      view2131755428 = view;
+      view = finder.findRequiredView(source, 2131755436, "field 'mTvSave' and method 'onViewClicked'");
+      target.mTvSave = finder.castView(view, 2131755436, "field 'mTvSave'");
+      view2131755436 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
@@ -214,8 +214,8 @@ public class AssetDetailEditActivity$$ViewBinder<T extends AssetDetailEditActivi
       target.mRlCmz = null;
       target.mRlMpz = null;
 
-      view2131755414.setOnClickListener(null);
-      view2131755414 = null;
+      view2131755422.setOnClickListener(null);
+      view2131755422 = null;
       view2131755238.setOnClickListener(null);
       view2131755238 = null;
       view2131755207.setOnClickListener(null);
@@ -232,8 +232,8 @@ public class AssetDetailEditActivity$$ViewBinder<T extends AssetDetailEditActivi
       view2131755248 = null;
       view2131755250.setOnClickListener(null);
       view2131755250 = null;
-      view2131755428.setOnClickListener(null);
-      view2131755428 = null;
+      view2131755436.setOnClickListener(null);
+      view2131755436 = null;
       view2131755252.setOnClickListener(null);
       view2131755252 = null;
       view2131755253.setOnClickListener(null);

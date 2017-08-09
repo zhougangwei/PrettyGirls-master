@@ -1,9 +1,12 @@
 package coder.aihui.ui.azys;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,8 +29,10 @@ import coder.aihui.R;
 import coder.aihui.base.AppActivity;
 import coder.aihui.base.BaseFragment;
 import coder.aihui.base.Content;
+import coder.aihui.data.bean.DHBean;
 import coder.aihui.data.bean.PUR_CONTRACT_PLAN;
 import coder.aihui.data.bean.PUR_CONTRACT_PLAN_DETAIL;
+import coder.aihui.data.bean.gen.DHBeanDao;
 import coder.aihui.data.bean.gen.PUR_CONTRACT_PLAN_DETAILDao;
 import coder.aihui.data.normalbean.PartsBean;
 import coder.aihui.data.normalbean.PjmxBean;
@@ -38,7 +43,9 @@ import coder.aihui.util.ToastUtil;
 import coder.aihui.widget.autoview.AutoRecyclerView;
 
 import static coder.aihui.R.id.tv_ys;
+import static coder.aihui.base.Content.AZYS_DETAIL_IDS;
 import static coder.aihui.base.Content.SB_IDS;
+
 
 public class AzysListActivity extends AppActivity {
 
@@ -60,7 +67,7 @@ public class AzysListActivity extends AppActivity {
     TextView         mTvYs;
 
     @BindView(R.id.iv_pxgl)
-    ImageView     mIvPxgl;
+    ImageView mIvPxgl;
 
 
     ArrayList<PUR_CONTRACT_PLAN_DETAIL> mDatas      = new ArrayList();
@@ -73,6 +80,9 @@ public class AzysListActivity extends AppActivity {
     //哪些设备是需要跳往下一个页面的
     ArrayList<String> sonBeanIdList = new ArrayList();
     private CommonAdapter<PUR_CONTRACT_PLAN_DETAIL> mAdapter;
+    private AlertDialog                             mDialog;
+    private List<DHBean> mDHList = new ArrayList<>();
+    private CommonAdapter<DHBean> mDhAdapter;
 
 
     @Override
@@ -89,6 +99,8 @@ public class AzysListActivity extends AppActivity {
     @Override
     protected void initView() {
         initGetIntent();
+        initRecycleView();
+        initDatas();
     }
 
     private void initGetIntent() {
@@ -102,10 +114,6 @@ public class AzysListActivity extends AppActivity {
         mTvGgxh.setText(mFatherBean.getGGXH());
         mTvDept.setText(mFatherBean.getDEPT_NAME());
 
-        initRecycleView();
-        initDatas();
-
-
     }
 
 
@@ -113,6 +121,9 @@ public class AzysListActivity extends AppActivity {
     private void initDatas() {
         List<PUR_CONTRACT_PLAN_DETAIL> list = mDaoSession.getPUR_CONTRACT_PLAN_DETAILDao().queryBuilder().
                 where(PUR_CONTRACT_PLAN_DETAILDao.Properties.HTMX_ID.eq(mHtmxId)).list();
+
+        updateDh();
+
         if (list != null && list.size() != 0) {
             mDatas.addAll(list);
             IsFirstTime = false;
@@ -128,7 +139,6 @@ public class AzysListActivity extends AppActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 7);
 
         mRv.setLayoutManager(gridLayoutManager);
-
 
 
         mAdapter = new CommonAdapter<PUR_CONTRACT_PLAN_DETAIL>(this, R.layout.item_text_num_point, mDatas) {
@@ -169,7 +179,7 @@ public class AzysListActivity extends AppActivity {
         mDatas.addAll(mList);
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_ys,R.id.iv_pxgl})
+    @OnClick({R.id.iv_back, R.id.tv_ys, R.id.iv_pxgl})
     public void onViewClicked(View view) {
 
         switch (view.getId()) {
@@ -177,7 +187,7 @@ public class AzysListActivity extends AppActivity {
                 finish();
                 break;
             case R.id.tv_ys:
-                gotoYs();
+                gotoChooseForm();
                 break;
             case R.id.iv_pxgl:
                 gotoPxgl();
@@ -189,36 +199,114 @@ public class AzysListActivity extends AppActivity {
         if (sonBeanIdList.size() == 0) {
             return;
         }
-        String ids = ListUtils.listToStrings(sonBeanIdList);
+        Integer mcggid = mDaoSession.getPUR_CONTRACT_PLAN_DETAILDao().load(Long.valueOf(sonBeanIdList.get(0)))
+                .getMCGGID();
         Intent intent = new Intent(this, PxglDetailActivity.class);
-               intent.putExtra(SB_IDS,ids);
+        intent.putExtra(SB_IDS, mcggid + "");
+
         startActivity(intent);
 
 
     }
 
-    private void gotoYs() {
+    private void gotoChooseForm() {
 
         if (sonBeanIdList.size() == 0) {
             ToastUtil.showToast("请选择设备!");
             return;
         }
+        if (!IsFirstTime) {
+            gotoChooseList();
+        } else {
+            gotoYs();
+        }
 
 
+    }
+
+    //跳转到验收页面
+    private void gotoYs() {
         Intent intent = new Intent(this, AzysDetailActivity.class);
         String ids = ListUtils.listToStrings(sonBeanIdList);
-        intent.putExtra(SB_IDS, ids);
+        intent.putExtra(AZYS_DETAIL_IDS, ids);
         intent.putExtra("isFirstTime", IsFirstTime);
         startActivityForResult(intent, Content.AZYS_LIST_REQUEST_CODE);
+    }
 
+
+    //选择框的条目选择
+    private void gotoChooseList() {
+
+        //跳窗的dialog
+        View view = View.inflate(this, R.layout.installlist_numlist, null);
+
+
+        RecyclerView rv = (RecyclerView) view.findViewById(R.id.rv);
+        TextView add = (TextView) view.findViewById(R.id.add);
+
+        rv.setLayoutManager(new LinearLayoutManager(this));
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer contract_id = mFatherBean.getCONTRACT_ID();
+                DHBean dhBean = new DHBean();
+                dhBean.setDh(contract_id + "-" + (mDHList.size() + 1));
+                dhBean.setWzmc(mFatherBean.getWZMC());
+                dhBean.setContractId(mFatherBean.getCONTRACT_ID() + "");
+                mDaoSession.insertOrReplace(dhBean);
+                updateDh();
+                mDhAdapter.notifyDataSetChanged();
+
+            }
+        });
+
+        mDhAdapter = new CommonAdapter<DHBean>(this, R.layout.item_text_pd30, mDHList) {
+            @Override
+            protected void convert(ViewHolder holder, DHBean dhBean, int position) {
+                holder.setText(R.id.tv_name, dhBean.getDh());
+                holder.setOnClickListener(R.id.tv_name, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        gotoYs();
+                    }
+                });
+            }
+        };
+        rv.setAdapter(mDhAdapter);
+
+        if (mDHList.size() != 0) {
+            //只要不是空 则跳出
+            mDialog = new AlertDialog.Builder(this)
+                    .setView(view).create();
+            mDialog.show();
+        } else {
+            Integer con_id = mFatherBean.getCONTRACT_ID();
+            DHBean dhBean = new DHBean();
+            dhBean.setDh(con_id + "-1");
+            dhBean.setWzmc(mFatherBean.getWZMC());
+            dhBean.setContractId(mFatherBean.getCONTRACT_ID() + "");
+            mDaoSession.insertOrReplace(dhBean);
+            updateDh();
+            mDhAdapter.notifyDataSetChanged();
+        }
+
+    }
+
+    private void updateDh() {
+        mDHList.clear();
+        //单号的
+        List<DHBean> dhBeanList = mDaoSession.getDHBeanDao().queryBuilder().where(DHBeanDao.Properties.ContractId.eq(mFatherBean.getCONTRACT_ID() + ""))
+                .list();
+        mDHList.addAll(dhBeanList);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==RESULT_OK){
+        if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case  Content.AZYS_LIST_REQUEST_CODE:
+                case Content.AZYS_LIST_REQUEST_CODE:
                     int num = data.getIntExtra("num", 0);       //验收了几台
                     mFatherBean.setCHECK_SL(num);
                     break;

@@ -22,9 +22,9 @@ public class SettingActivity$$ViewBinder<T extends SettingActivity> implements V
     protected InnerUnbinder(T target, Finder finder, Object source) {
       this.target = target;
 
-      target.mIvBack = finder.findRequiredViewAsType(source, 2131755414, "field 'mIvBack'", ImageView.class);
+      target.mIvBack = finder.findRequiredViewAsType(source, 2131755422, "field 'mIvBack'", ImageView.class);
       target.mTb = finder.findRequiredViewAsType(source, 2131755255, "field 'mTb'", LinearLayout.class);
-      target.mLlSet = finder.findRequiredViewAsType(source, 2131755412, "field 'mLlSet'", LinearLayout.class);
+      target.mLlSet = finder.findRequiredViewAsType(source, 2131755419, "field 'mLlSet'", LinearLayout.class);
     }
 
     @Override

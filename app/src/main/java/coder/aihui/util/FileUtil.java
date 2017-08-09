@@ -171,4 +171,22 @@ public class FileUtil {
         }
         return cachePath;
     }
+
+    /**
+     * 判断是否是图片类型文件
+     *
+     * @param fileurl
+     * @return
+     */
+    public static boolean isImageFile(String fileurl) {
+
+        if (fileurl.endsWith(".jpg") || fileurl.endsWith(".png") || fileurl.endsWith(".bmp") || fileurl.endsWith(".gif") ||
+                fileurl.endsWith(".jpeg")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 }

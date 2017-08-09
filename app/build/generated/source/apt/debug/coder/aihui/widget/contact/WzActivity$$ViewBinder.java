@@ -2,9 +2,11 @@
 package coder.aihui.widget.contact;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.Unbinder;
+import butterknife.internal.DebouncingOnClickListener;
 import butterknife.internal.Finder;
 import butterknife.internal.ViewBinder;
 import com.mcxtzhang.indexlib.IndexBar.widget.IndexBar;
@@ -21,14 +23,27 @@ public class WzActivity$$ViewBinder<T extends WzActivity> implements ViewBinder<
   protected static class InnerUnbinder<T extends WzActivity> implements Unbinder {
     protected T target;
 
-    protected InnerUnbinder(T target, Finder finder, Object source) {
+    private View view2131755422;
+
+    protected InnerUnbinder(final T target, Finder finder, Object source) {
       this.target = target;
 
-      target.mRv = finder.findRequiredViewAsType(source, 2131755257, "field 'mRv'", RecyclerView.class);
+      View view;
+      target.mRv = finder.findRequiredViewAsType(source, 2131755258, "field 'mRv'", RecyclerView.class);
       target.mIndexBar = finder.findRequiredViewAsType(source, 2131755297, "field 'mIndexBar'", IndexBar.class);
       target.mTvSideBarHint = finder.findRequiredViewAsType(source, 2131755298, "field 'mTvSideBarHint'", TextView.class);
       target.mTvOk = finder.findRequiredViewAsType(source, 2131755263, "field 'mTvOk'", TextView.class);
       target.mEtSearch = finder.findRequiredViewAsType(source, 2131755296, "field 'mEtSearch'", EditText.class);
+      view = finder.findRequiredView(source, 2131755422, "field 'mIvBack' and method 'onViewClicked'");
+      target.mIvBack = finder.castView(view, 2131755422, "field 'mIvBack'");
+      view2131755422 = view;
+      view.setOnClickListener(new DebouncingOnClickListener() {
+        @Override
+        public void doClick(View p0) {
+          target.onViewClicked();
+        }
+      });
+      target.mTvTitle = finder.findRequiredViewAsType(source, 2131755235, "field 'mTvTitle'", TextView.class);
     }
 
     @Override
@@ -41,6 +56,11 @@ public class WzActivity$$ViewBinder<T extends WzActivity> implements ViewBinder<
       target.mTvSideBarHint = null;
       target.mTvOk = null;
       target.mEtSearch = null;
+      target.mIvBack = null;
+      target.mTvTitle = null;
+
+      view2131755422.setOnClickListener(null);
+      view2131755422 = null;
 
       this.target = null;
     }

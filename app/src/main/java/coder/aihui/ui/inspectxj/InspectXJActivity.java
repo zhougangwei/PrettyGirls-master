@@ -65,8 +65,7 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     TextView             mTvSearch;
     @BindView(R.id.tb)
     TabLayout            mTb;
-    @BindView(R.id.line)
-    LinearLayout         mLine;
+
     @BindView(R.id.vp)
     ViewPager            mVp;
     @BindView(R.id.fab_xj)
@@ -351,6 +350,7 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
                         if (!dataList.get(finalI).isLoading) {
                             dataList.get(finalI).isLoading = true;
                             queryAllCount(finalI, dataList.get(finalI).list.size(), 10);
+                            dataList.get(finalI).isLoading = false;
                         }
                     }
                 }
@@ -396,7 +396,12 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     //配置
     private void gotoPz() {
         if (mPzPopup == null) {
-            mPzPopup = new MenuPopup(this, mPzList);
+            mPzPopup = new MenuPopup(this, mPzList, new MenuPopup.BackReslut() {
+                @Override
+                public void onBackResult(String string) {
+
+                }
+            });
         }
         mPzPopup.showPopupWindow(mIvPz);
 
@@ -405,7 +410,12 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     //设置 上传下载
     private void gotoUpdown() {
         if (mUpdownPopup == null) {
-            mUpdownPopup = new MenuPopup(this, mUpDownList);
+            mUpdownPopup = new MenuPopup(this, mUpDownList, new MenuPopup.BackReslut() {
+                @Override
+                public void onBackResult(String string) {
+
+                }
+            });
         }
         mUpdownPopup.showPopupWindow(mIvUpdown);
     }
@@ -486,7 +496,7 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
                         case 0:
                             ((TextView) mTabViewList.get(which).findViewById(R.id.tv_name))
                                     .setText("已检(" + finalNum + ")");
-                            mCheckList.clear();
+
                             mCheckList.addAll(inspect_plen);
                             mCheckAdapter.notifyDataSetChanged();
                             break;
@@ -494,14 +504,14 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
                             ((TextView) mTabViewList.get(which).findViewById(R.id.tv_name))
                                     .setText("未检(" + finalNum + ")");
 
-                            mUnCheckList.clear();
+
                             mUnCheckList.addAll(inspect_plen);
                             mUncheckAdapter.notifyDataSetChanged();
                             break;
                         case 2:
                             ((TextView) mTabViewList.get(which).findViewById(R.id.tv_name))
                                     .setText("过期(" + finalNum + ")");
-                            mOverDueList.clear();
+
                             mOverDueList.addAll(inspect_plen);
                             mOverDueAdapter.notifyDataSetChanged();
                             break;

@@ -1,14 +1,6 @@
 [
     {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\mm_pre.png",
-        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\drawable-xxhdpi\\mm_pre.png"
-    },
-    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\__leak_canary_icon.png",
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\357b9e6ff35d150c9b6752ff313a8d2a82fcadac\\output\\res\\drawable-xxhdpi\\__leak_canary_icon.png"
-    },
-    {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_back.png",
-        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\drawable-xxhdpi\\ic_back.png"
     }
 ]

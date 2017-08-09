@@ -23,18 +23,18 @@ public class ContactActivity$$ViewBinder<T extends ContactActivity> implements V
   protected static class InnerUnbinder<T extends ContactActivity> implements Unbinder {
     protected T target;
 
-    private View view2131755414;
+    private View view2131755422;
 
     protected InnerUnbinder(final T target, Finder finder, Object source) {
       this.target = target;
 
       View view;
-      target.mRv = finder.findRequiredViewAsType(source, 2131755257, "field 'mRv'", RecyclerView.class);
+      target.mRv = finder.findRequiredViewAsType(source, 2131755258, "field 'mRv'", RecyclerView.class);
       target.mIndexBar = finder.findRequiredViewAsType(source, 2131755297, "field 'mIndexBar'", IndexBar.class);
       target.mTvSideBarHint = finder.findRequiredViewAsType(source, 2131755298, "field 'mTvSideBarHint'", TextView.class);
-      view = finder.findRequiredView(source, 2131755414, "field 'mIvBack' and method 'onViewClicked'");
-      target.mIvBack = finder.castView(view, 2131755414, "field 'mIvBack'");
-      view2131755414 = view;
+      view = finder.findRequiredView(source, 2131755422, "field 'mIvBack' and method 'onViewClicked'");
+      target.mIvBack = finder.castView(view, 2131755422, "field 'mIvBack'");
+      view2131755422 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
@@ -57,8 +57,8 @@ public class ContactActivity$$ViewBinder<T extends ContactActivity> implements V
       target.mTvTitle = null;
       target.mSearch = null;
 
-      view2131755414.setOnClickListener(null);
-      view2131755414 = null;
+      view2131755422.setOnClickListener(null);
+      view2131755422 = null;
 
       this.target = null;
     }

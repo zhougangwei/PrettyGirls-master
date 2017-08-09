@@ -14,7 +14,7 @@ buildscript {
 
 
 greendao {
-    schemaVersion 12
+    schemaVersion 13
     daoPackage 'coder.aihui.data.bean.gen'
     targetGenDir 'src/main/java'
 }
@@ -70,11 +70,16 @@ dependencies {
     //自适应
     //沉浸式状态栏
 
+
+    compile 'com.github.jiang111:CProgressButton:v1.2.7'
+
     //选择图片文件
     compile files('libs/zxing.jar')
     // compile 'com.facebook.react:react-native:+'
     compile 'com.jzxiang.pickerview:TimePickerDialog:1.0.1'
-    compile 'com.droidninja:filepicker:2.0.7'
+    //compile 'com.droidninja:filepicker:2.0.7'
+
+    compile 'com.leon:lfilepickerlibrary:1.2.0'
     compile 'com.github.razerdp:BasePopup:v1.8.0'
     compile 'com.github.ikidou:FragmentBackHandler:2.1'
     compile 'com.android.support:appcompat-v7:25.3.1'

@@ -433,4 +433,10 @@ public abstract class AppActivity extends BaseActivity implements DlwzView {
     }
 
 
+    public void gotoActivity(Class clazz) {
+        Intent intent = new Intent(this, clazz);
+        startActivity(intent);
+    }
+
+
 }

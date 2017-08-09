@@ -2,15 +2,6 @@
 <items version="2" >
 
     <item
-        is-multidex="false"
-        jar="H:\PrettyGirls-master\app\libs\zxing.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="e88c14e6e7daa0fa65172a62b54ee6a16ff4162d">
-        <dex dex="H:\PrettyGirls-master\app\build\intermediates\pre-dexed\debug\zxing_a35b38b885f239db2a751e1d70d3d4d94e7afb20.jar" />
-    </item>
-    <item
         is-multidex="true"
         jar="H:\PrettyGirls-master\app\libs\ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar"
         jumboMode="true"
@@ -18,24 +9,6 @@
         revision="25.0.0"
         sha1="62681b8212ca52278feafec31775fd0cb096d99a">
         <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\2\ksoap2-android-assembly-3.3.0-jar-with-dependencies_541203689b628c39a62efff82dd0331fdfa24765\classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="H:\PrettyGirls-master\app\libs\ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.0"
-        sha1="62681b8212ca52278feafec31775fd0cb096d99a">
-        <dex dex="H:\PrettyGirls-master\app\build\intermediates\pre-dexed\debug\ksoap2-android-assembly-3.3.0-jar-with-dependencies_541203689b628c39a62efff82dd0331fdfa24765.jar" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Administrator\.android\build-cache\d5a1cd54089cb080e55f0c59772bddbb8300e3ec\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="32c0bf3a62b3f92a29e778953d1929c378aab264">
-        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_c240997f5b10229599aadb807479719dc8028550\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -52,17 +25,8 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="f22ee0b966878b285177626f4543e15c931d529e">
+        sha1="1726e531c65d559741110a087acc4eac517df33a">
         <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_d6a329c67056f4f01a5e00fb959a3c4005bda331\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="7fda08bd1fa5d4a1b7d3e007b591ceddeec8dd72">
-        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f8df1f91ee062eb75e16744227508f3974399f87\classes.dex" />
     </item>
     <item
         is-multidex="true"

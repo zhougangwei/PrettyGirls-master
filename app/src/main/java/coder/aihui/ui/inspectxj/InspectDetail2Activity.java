@@ -1,16 +1,27 @@
 package coder.aihui.ui.inspectxj;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.text.method.DigitsKeyListener;
+import android.text.method.TextKeyListener;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.utils.TimeUtils;
+import com.jzxiang.pickerview.TimePickerDialog;
+import com.jzxiang.pickerview.data.Type;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +32,10 @@ import coder.aihui.R;
 import coder.aihui.base.AppActivity;
 import coder.aihui.base.BaseFragment;
 import coder.aihui.base.Content;
+import coder.aihui.data.bean.DialogBean;
 import coder.aihui.data.bean.INSPECT_REPS;
 import coder.aihui.data.bean.gen.INSPECT_REPSDao;
+import coder.aihui.widget.ListBottomDialog;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -65,11 +78,8 @@ public class InspectDetail2Activity extends AppActivity {
         String stringExtra = intent.getStringExtra(Content.INSPECT_PNAME);
         if (!TextUtils.isEmpty(stringExtra)) {
             mTvTitle.setText(stringExtra);  //标题设置为一级目录
-
             gotoInitRecyCleView();
             gotoInitData(stringExtra);
-
-
         }
     }
 
@@ -80,144 +90,116 @@ public class InspectDetail2Activity extends AppActivity {
 
         mAdapter = new CommonAdapter<INSPECT_REPS>(this, R.layout.item_inspect_detail2, mDatas) {
             @Override
-            protected void convert(ViewHolder holder, INSPECT_REPS inspect_reps, int position) {
+            protected void convert(final ViewHolder holder, final INSPECT_REPS inspect_reps, int position) {
 
-
-                String type = inspect_reps.getINSPR_VAL_TYPE();   //输入类型
-                if (TextUtils.isEmpty(type) || type.equals("Text")) {
-                    type = "Number";
-                }
-          //     showType(type,inspect_reps,holder.getView(R.id.et_value));
-
-
-
-
+                holder.setOnClickListener(R.id.et_value, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showType(inspect_reps, (TextView) holder.getView(R.id.et_value));         //渲染类型
+                    }
+                });
             }
         };
-
         mRv.setAdapter(mAdapter);
 
 
     }
 
-
-
-/*    public void showType(String type, final INSPECT_REPS bean, View view) {
-
-        final String defValue = bean.getINSPR_RE_VALUE();
+    private void showType(final INSPECT_REPS bean, TextView tvValue) {
+        String type = bean.getINSPR_VAL_TYPE();   //输入类型
+        if (TextUtils.isEmpty(type) || type.equals("Text")) {
+            type = "Number";
+        }
         switch (type) {
             //如果是数字
             case "Number":
-                EditText et_act =(EditText)view;
-                view.setVisibility(View.VISIBLE);
-                //todo 有空处理你  现在没法inputType了
-                //设置成只能数字   这破玩意儿中的singline 会和Listview冲突 搞得乱七八糟
+                EditText et_act = (EditText) View.inflate(this, R.layout.include_edittext, null);
                 if ("Number".equals(bean.getINSPR_VAL_TYPE())) {
                     String digits = "0123456789.";//
                     et_act.setKeyListener(DigitsKeyListener.getInstance(digits));
                 } else {
                     et_act.setKeyListener(TextKeyListener.getInstance());
                 }
-
                 if (!TextUtils.isEmpty(bean.getINSPR_EXAM_VALUE())) {
                     et_act.setText(bean.getINSPR_EXAM_VALUE());
                 } else {
                     et_act.setText("");
                 }
-
-
-                //实时保存 不然ListView不断的被复用数据会错误
-                et_act.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                //确定监听
+                et_act.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                     @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (!hasFocus) {
-                            Editable text = et_act.getText();
-                            if (!TextUtils.isEmpty(text)) {
-                                inspect_reps.setINSPR_EXAM_VALUE(text.toString());
-                            } else {
-                                inspect_reps.setINSPR_EXAM_VALUE("");       //变空是为了防止ListView的复用错误
-                            }
-                            gotoShowWc(inspect_reps, holder.et, holder.wc);
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                /*判断是否是“GO”键*/
+                        if ((event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) || actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
+                            bean.setINSPR_EXAM_VALUE(v.getText().toString());
+                            return true;
                         }
+                        return false;
                     }
                 });
-
-                gotoShowWc(inspect_reps, holder.et, holder.wc);
-
-
-
-
-
-
+                AlertDialog alertDialog = new AlertDialog.Builder(InspectDetail2Activity.this)
+                        .setView(et_act).create();
+                alertDialog.show();
                 break;
 
             //选择框的
             case "Select":
                 //"1-我的|2-你的"
                 String[] split = bean.getINSPR_SEL_VAL().split("\\|");
-
                 ArrayList<DialogBean> mSelectDatas = new ArrayList<>();
                 for (int i = 0; i < split.length; i++) {
-                    new DialogBean(split[i].split("-")[1],split[i].split("-")[0]);
+                    new DialogBean(split[i].split("-")[1], split[i].split("-")[0]);
                 }
-                new ListBottomDialog(this).showDialog(mSelectDatas, new ListBottomDialog.backResult() {
+                new ListBottomDialog(this).showDialog(mSelectDatas, new ListBottomDialog.onBackResult() {
                     @Override
                     public void backResult(DialogBean dialogBean) {
-                        bean.setINSPR_EXAM_VALUE(dialogBean.getObject()+"");
+                        bean.setINSPR_EXAM_VALUE(dialogBean.getObject() + "");
                     }
                 });
-
-
                 break;
             case "Date":
-
-                TextView tv_date = holder.date;
-                holder.select.setVisibility(GONE);
-                holder.date.setVisibility(VISIBLE);
-                holder.et.setVisibility(GONE);
-
-
-                if (!TextUtils.isEmpty(inspect_reps.getINSPR_EXAM_VALUE())) {
-                    tv_date.setText(inspect_reps.getINSPR_EXAM_VALUE());
-                }
-
-
-                DatePickUtil.getInstance().showDatePick(tv_date, (BaseActivity) context, new DatePickUtil.GetResult() {
-                    @Override
-                    public void getResult(String result) {
-                        inspect_reps.setINSPR_EXAM_VALUE(result);
-                    }
-                });
-
-                if (!TextUtils.isEmpty(inspect_reps.getINSPR_EXAM_VALUE())) {
-                    tv_date.setText(inspect_reps.getINSPR_EXAM_VALUE());
-                } else {
-                    tv_date.setText("");
-                }
-
+                final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                TimePickerDialog build = new TimePickerDialog.Builder()
+                        .setCurrentMillseconds(TimeUtils.string2Milliseconds(TextUtils.isEmpty(tvValue.getText().toString()) ? TimeUtils.getCurTimeString(format) : tvValue.getText().toString(), format))
+                        .setThemeColor(getResources().getColor(R.color.timepicker_dialog_bg))
+                        .setType(Type.YEAR_MONTH_DAY)
+                        .setWheelItemTextNormalColor(getResources().getColor(R.color.timetimepicker_default_text_color))
+                        .setWheelItemTextSelectorColor(getResources().getColor(R.color.timepicker_toolbar_bg))
+                        .setWheelItemTextSize(15)
+                        .build();
+                build.show(getSupportFragmentManager(), "1");
                 break;
-
             case "MultipleSelect":
                 break;
             default:
                 break;
-
         }
-    }*/
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        gotoSave();
+        finish();
+    }
+
+    private void gotoSave() {
+
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+
+        mDaoSession.insertOrReplace(mDatas);
 
 
-
-
-
-
+    }
 
 
 
 
     private void gotoInitData(String stringExtra) {
-        mDaoSession.getINSPECT_REPSDao().queryBuilder().where(INSPECT_REPSDao.Properties.INSPR_PNAME.like("%" + stringExtra + "%"))
+        mDaoSession.getINSPECT_REPSDao().queryBuilder().where(INSPECT_REPSDao.Properties.INSPR_PNAME.like(stringExtra))
                 .rx().list().filter(new Func1<List<INSPECT_REPS>, Boolean>() {
             @Override
             public Boolean call(List<INSPECT_REPS> inspect_repses) {
@@ -242,5 +224,6 @@ public class InspectDetail2Activity extends AppActivity {
 
     @OnClick(R.id.iv_back)
     public void onViewClicked() {
+        gotoSave();
     }
 }

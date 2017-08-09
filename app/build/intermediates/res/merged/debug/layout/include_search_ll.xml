@@ -27,6 +27,8 @@
         android:layout_gravity="center_vertical"></include>
 
     <EditText
+        android:imeOptions="actionSearch"
+        android:singleLine="true"
         android:id="@+id/et_search"
         android:layout_width="0dp"
         android:layout_height="match_parent"

@@ -20,49 +20,49 @@ public class MyFragment$$ViewBinder<T extends MyFragment> implements ViewBinder<
   protected static class InnerUnbinder<T extends MyFragment> implements Unbinder {
     protected T target;
 
-    private View view2131755412;
+    private View view2131755419;
 
-    private View view2131755409;
+    private View view2131755416;
 
-    private View view2131755410;
+    private View view2131755417;
 
-    private View view2131755411;
+    private View view2131755418;
 
     protected InnerUnbinder(final T target, Finder finder, Object source) {
       this.target = target;
 
       View view;
-      view = finder.findRequiredView(source, 2131755412, "field 'mLlSet' and method 'onClick'");
-      target.mLlSet = finder.castView(view, 2131755412, "field 'mLlSet'");
-      view2131755412 = view;
+      view = finder.findRequiredView(source, 2131755419, "field 'mLlSet' and method 'onClick'");
+      target.mLlSet = finder.castView(view, 2131755419, "field 'mLlSet'");
+      view2131755419 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onClick();
         }
       });
-      target.mTvSum = finder.findRequiredViewAsType(source, 2131755408, "field 'mTvSum'", TextView.class);
-      view = finder.findRequiredView(source, 2131755409, "field 'mRlUse' and method 'onViewClicked'");
-      target.mRlUse = finder.castView(view, 2131755409, "field 'mRlUse'");
-      view2131755409 = view;
+      target.mTvSum = finder.findRequiredViewAsType(source, 2131755415, "field 'mTvSum'", TextView.class);
+      view = finder.findRequiredView(source, 2131755416, "field 'mRlUse' and method 'onViewClicked'");
+      target.mRlUse = finder.castView(view, 2131755416, "field 'mRlUse'");
+      view2131755416 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
-      view = finder.findRequiredView(source, 2131755410, "field 'mRlVersion' and method 'onViewClicked'");
-      target.mRlVersion = finder.castView(view, 2131755410, "field 'mRlVersion'");
-      view2131755410 = view;
+      view = finder.findRequiredView(source, 2131755417, "field 'mRlVersion' and method 'onViewClicked'");
+      target.mRlVersion = finder.castView(view, 2131755417, "field 'mRlVersion'");
+      view2131755417 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
-      view = finder.findRequiredView(source, 2131755411, "field 'mTvExit' and method 'onViewClicked'");
-      target.mTvExit = finder.castView(view, 2131755411, "field 'mTvExit'");
-      view2131755411 = view;
+      view = finder.findRequiredView(source, 2131755418, "field 'mTvExit' and method 'onViewClicked'");
+      target.mTvExit = finder.castView(view, 2131755418, "field 'mTvExit'");
+      view2131755418 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
@@ -82,14 +82,14 @@ public class MyFragment$$ViewBinder<T extends MyFragment> implements ViewBinder<
       target.mRlVersion = null;
       target.mTvExit = null;
 
-      view2131755412.setOnClickListener(null);
-      view2131755412 = null;
-      view2131755409.setOnClickListener(null);
-      view2131755409 = null;
-      view2131755410.setOnClickListener(null);
-      view2131755410 = null;
-      view2131755411.setOnClickListener(null);
-      view2131755411 = null;
+      view2131755419.setOnClickListener(null);
+      view2131755419 = null;
+      view2131755416.setOnClickListener(null);
+      view2131755416 = null;
+      view2131755417.setOnClickListener(null);
+      view2131755417 = null;
+      view2131755418.setOnClickListener(null);
+      view2131755418 = null;
 
       this.target = null;
     }

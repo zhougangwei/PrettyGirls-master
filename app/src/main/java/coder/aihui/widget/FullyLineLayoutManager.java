@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 /**
  * @ 创建者   zhou
  * @ 创建时间   2017/7/28 10:47
- * @ 描述    ${TODO}
+ * @ 描述    ${ScrollView嵌套recycleView }
  * @ 更新者  $AUTHOR$
  * @ 更新时间    2017/7/28$
  * @ 更新描述  ${TODO}

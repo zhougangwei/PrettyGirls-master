@@ -9,7 +9,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -67,28 +69,28 @@ import static java.lang.Long.parseLong;
 public class InspectStartActivity extends AppActivity implements TabLayout.OnTabSelectedListener {
 
     @BindView(R.id.iv_back)
-    ImageView            mIvBack;
+    ImageView    mIvBack;
     @BindView(R.id.iv_people)
-    LinearLayout         mIvPeople;
+    LinearLayout mIvPeople;
     @BindView(R.id.iv_scan)
-    LinearLayout         mIvScan;
+    LinearLayout mIvScan;
     @BindView(R.id.iv_search)
-    LinearLayout         mIvSearch;
+    LinearLayout mIvSearch;
     @BindView(R.id.sp_search)
-    Spinner              mSpSearch;
+    Spinner      mSpSearch;
     @BindView(R.id.et_search)
-    EditText             mEtSearch;
+    EditText     mEtSearch;
     @BindView(R.id.tv_search)
-    TextView             mTvSearch;
+    TextView     mTvSearch;
     @BindView(R.id.tb)
-    TabLayout            mTb;
+    TabLayout    mTb;
     @BindView(R.id.vp)
-    ViewPager            mVp;
-    @BindView(R.id.line)
-    LinearLayout         mLine;
+    ViewPager    mVp;
+
     @BindView(R.id.fab_backToTop)
     FloatingActionButton mFabBackToTop;
-
+    @BindView(R.id.tv_title)
+    TextView             mTvTitle;
 
     private String mDeptName;
     private String mDeptIds;
@@ -132,7 +134,7 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
     private Integer pdaType    = 1;//PDA的状态，1、RFID，2、激光，3，摄像头
 
     private List<LoadingBean> mDataList = new ArrayList<>();
-    private int               modeType  = 1;           //普通巡检还是自动巡检
+    private int               modeType  = 0;           //普通巡检还是自动巡检
 
     //全部选择的人
     private ArrayList<Integer> userChooseIds   = new ArrayList<>();
@@ -161,11 +163,25 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
         mDataList.add(new LoadingBean(mPlanList, false));
         mDataList.add(new LoadingBean(mNoPlanList, false));
 
+        mTvTitle.setText("开始巡检");
+
         //第一次进来请求的时间
         getFirstTime();
         initRecycleView();
         //变更tab显示
         changeTextOfTab();
+        mEtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                /*判断是否是“GO”键*/
+                if ((event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) || actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
+                    doSearch();
+                }
+                return true;
+
+            }
+        });
+
 
     }
 
@@ -192,6 +208,8 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
         mAllAdapter = new CommonAdapter<INSPECT_PLAN>(this, R.layout.item_inspect, mAllList) {
             @Override
             protected void convert(ViewHolder holder, INSPECT_PLAN o, int position) {
+
+
                 showItemView(holder, o, REP_ALL);
             }
         };
@@ -267,7 +285,15 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
                 holder.setBackgroundColor(R.id.iv_label, R.color.planRed);
             }
         }
+        holder.setOnClickListener(R.id.ll, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Intent intent = new Intent(InspectStartActivity.this,InspectDetailActivity.class);
+
+                startActivity(intent);
+            }
+        });
 
         holder.setText(R.id.tv_wzmc, planBean.getWZMC());
         holder.setText(R.id.tv_kpbh, planBean.getKPBH());
@@ -302,6 +328,7 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
                         if (!dataList.get(finalI).isLoading) {
                             dataList.get(finalI).isLoading = true;
                             queryAllCount(finalI, dataList.get(finalI).list.size(), 10);
+                            dataList.get(finalI).isLoading = false;
                         }
                     }
                 }
@@ -371,7 +398,7 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
                         case 0:
                             ((TextView) mTabViewList.get(which).findViewById(R.id.tv_name))
                                     .setText("全部(" + finalNum + ")");
-                            mAllList.clear();
+
                             mAllList.addAll(inspect_plen);
                             mAllAdapter.notifyDataSetChanged();
                             break;
@@ -379,14 +406,14 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
                             ((TextView) mTabViewList.get(which).findViewById(R.id.tv_name))
                                     .setText("计划(" + finalNum + ")");
 
-                            mPlanList.clear();
+
                             mPlanList.addAll(inspect_plen);
                             mPlanAdapter.notifyDataSetChanged();
                             break;
                         case 2:
                             ((TextView) mTabViewList.get(which).findViewById(R.id.tv_name))
                                     .setText("临时(" + finalNum + ")");
-                            mNoPlanList.clear();
+
                             mNoPlanList.addAll(inspect_plen);
                             mNoPlanAdapter.notifyDataSetChanged();
                             break;
@@ -588,9 +615,8 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
                 if (modeType == 0) {            //普通巡检
                     //有计划
                     //计划表存在的时候，要判断这条计划
-                    Intent intent = new Intent();
+                    Intent intent = new Intent(this, InspectDetailActivity.class);
                     intent.putExtra("dicId", INSE_TEMPLATE_ID);//有用 了
-
                     intent.putExtra("rfidType", rfidType);//设备还是巡检点
                     intent.putExtra("isPlan", isPlan);
 
@@ -624,16 +650,12 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
                     if (groupRfid != null && !"".equals(groupRfid)) {
                         intent.putExtra("groupRfid", groupRfid);//巡检的是整个分组
                     }
-
-
+                    startActivity(intent);
                     break;
 
                 } else if (modeType == 1) {                 //自动巡检
-
                     INSPECT_REP inspectRep = new INSPECT_REP();
                     Long dicid = -1L;
-
-
                     //此处自动巡检需要区分是计划(临时，正常)还是任务
                     if (isPlan == 2 || isPlan == 1) {
                         //Todo 要更改

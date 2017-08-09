@@ -191,22 +191,9 @@
         <activity android:name="coder.aihui.ui.pxgl.PxglListActivity" >
         </activity>
         <activity
-            android:name="droidninja.filepicker.FilePickerActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="droidninja.filepicker.MediaDetailsActivity"
-            android:configChanges="orientation|screenSize" />
-
-        <provider
-            android:name="droidninja.filepicker.utils.FilePickerProvider"
-            android:authorities="coder.aihui.droidninja.filepicker.provider"
-            android:exported="false"
-            android:grantUriPermissions="true" >
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
-        </provider>
-
+            android:name="com.leon.lfilepickerlibrary.ui.LFilePickerActivity"
+            android:theme="@style/LibraryAppTheme" >
+        </activity>
         <activity android:name="com.zhihu.matisse.ui.MatisseActivity" />
         <activity android:name="com.zhihu.matisse.internal.ui.AlbumPreviewActivity" />
         <activity android:name="com.zhihu.matisse.internal.ui.SelectedPreviewActivity" />

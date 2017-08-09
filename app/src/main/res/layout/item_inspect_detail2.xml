@@ -32,28 +32,20 @@
 
         <TextView
             style="@style/tv_left0"
-            android:text="实测值"/>
+            android:text="实测值"
+            android:textColor="@color/textGrey"/>
 
-        <EditText
+        <TextView
             android:id="@+id/et_value"
-            android:visibility="invisible"
-            android:textSize="30px"
-            android:layout_marginLeft="25px"
-            android:background="@color/white"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_width="0px"
-            android:hint="请输入实测值"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="25px"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="点击输入"
+            android:textSize="30px"
+
             />
-
-        <include
-            layout="@layout/include_detail"
-            android:layout_width="14px"
-            android:layout_height="24px"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="29px"></include>
-
-
     </LinearLayout>
 
     <include layout="@layout/line"></include>

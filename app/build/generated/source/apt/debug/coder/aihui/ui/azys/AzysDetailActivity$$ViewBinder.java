@@ -24,7 +24,7 @@ public class AzysDetailActivity$$ViewBinder<T extends AzysDetailActivity> implem
   protected static class InnerUnbinder<T extends AzysDetailActivity> implements Unbinder {
     protected T target;
 
-    private View view2131755414;
+    private View view2131755422;
 
     private View view2131755269;
 
@@ -47,9 +47,9 @@ public class AzysDetailActivity$$ViewBinder<T extends AzysDetailActivity> implem
 
       View view;
       target.mTvTitle = finder.findRequiredViewAsType(source, 2131755235, "field 'mTvTitle'", TextView.class);
-      view = finder.findRequiredView(source, 2131755414, "field 'mIvBack' and method 'onViewClicked'");
-      target.mIvBack = finder.castView(view, 2131755414, "field 'mIvBack'");
-      view2131755414 = view;
+      view = finder.findRequiredView(source, 2131755422, "field 'mIvBack' and method 'onViewClicked'");
+      target.mIvBack = finder.castView(view, 2131755422, "field 'mIvBack'");
+      view2131755422 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
@@ -122,8 +122,8 @@ public class AzysDetailActivity$$ViewBinder<T extends AzysDetailActivity> implem
           target.onViewClicked(p0);
         }
       });
-      target.mIvPic = finder.findRequiredViewAsType(source, 2131755424, "field 'mIvPic'", ImageView.class);
-      target.mTvWord = finder.findRequiredViewAsType(source, 2131755425, "field 'mTvWord'", TextView.class);
+      target.mIvPic = finder.findRequiredViewAsType(source, 2131755432, "field 'mIvPic'", ImageView.class);
+      target.mTvWord = finder.findRequiredViewAsType(source, 2131755433, "field 'mTvWord'", TextView.class);
       target.mTvPjmx = finder.findRequiredViewAsType(source, 2131755284, "field 'mTvPjmx'", TextView.class);
       view = finder.findRequiredView(source, 2131755283, "field 'mLlPjmx' and method 'onViewClicked'");
       target.mLlPjmx = finder.castView(view, 2131755283, "field 'mLlPjmx'");
@@ -192,8 +192,8 @@ public class AzysDetailActivity$$ViewBinder<T extends AzysDetailActivity> implem
       target.mLlPjmx = null;
       target.mEtInputId = null;
 
-      view2131755414.setOnClickListener(null);
-      view2131755414 = null;
+      view2131755422.setOnClickListener(null);
+      view2131755422 = null;
       view2131755269.setOnClickListener(null);
       view2131755269 = null;
       view2131755282.setOnClickListener(null);

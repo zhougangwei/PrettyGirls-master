@@ -23,13 +23,11 @@ ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:6:5-66
 		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:6:22-64
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
 ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:7:5-80
-MERGED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:11:5-81
 MERGED from [com.zhihu.android:matisse:0.4.3] C:\Users\Administrator\.android\build-cache\46e5e5cd47989d2a37ead46d9dac744aeb77db5b\output\AndroidManifest.xml:24:5-81
 	android:name
 		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:7:22-78
 uses-permission#android.permission.READ_EXTERNAL_STORAGE
 ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:8:5-79
-MERGED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:12:5-80
 MERGED from [com.zhihu.android:matisse:0.4.3] C:\Users\Administrator\.android\build-cache\46e5e5cd47989d2a37ead46d9dac744aeb77db5b\output\AndroidManifest.xml:25:5-80
 	android:name
 		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:8:22-77
@@ -67,8 +65,9 @@ ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:18:5-79
 		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:18:22-77
 application
 ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:20:5-183:19
+MERGED from [com.github.jiang111:CProgressButton:v1.2.7] C:\Users\Administrator\.android\build-cache\120b9eb0768acaed967bf9bd5a29f274c6c84a42\output\AndroidManifest.xml:11:5-15:19
 MERGED from [com.jzxiang.pickerview:TimePickerDialog:1.0.1] C:\Users\Administrator\.android\build-cache\d5a1cd54089cb080e55f0c59772bddbb8300e3ec\output\AndroidManifest.xml:11:5-14:19
-MERGED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:14:5-33:19
+MERGED from [com.leon:lfilepickerlibrary:1.2.0] C:\Users\Administrator\.android\build-cache\d0b67e3cc23d50589919fd1b200a94b9766e8ed0\output\AndroidManifest.xml:12:5-20:19
 MERGED from [com.github.razerdp:BasePopup:v1.8.0] C:\Users\Administrator\.android\build-cache\94ee907a3c7bd49da43ac7ec9c574ef536033dd9\output\AndroidManifest.xml:11:5-15:19
 MERGED from [com.android.support:palette-v7:25.3.1] C:\Users\Administrator\.android\build-cache\28835677e8d6ed8fe7a4e6a7fc42d8d7c04993af\output\AndroidManifest.xml:26:5-20
 MERGED from [com.android.support:cardview-v7:25.3.1] C:\Users\Administrator\.android\build-cache\e22668f596914ff37d303a503a2dc6e06ddbb21f\output\AndroidManifest.xml:26:5-20
@@ -313,8 +312,9 @@ ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:181:9-182:20
 		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:181:19-59
 uses-sdk
 INJECTED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.github.jiang111:CProgressButton:v1.2.7] C:\Users\Administrator\.android\build-cache\120b9eb0768acaed967bf9bd5a29f274c6c84a42\output\AndroidManifest.xml:7:5-9:41
 MERGED from [com.jzxiang.pickerview:TimePickerDialog:1.0.1] C:\Users\Administrator\.android\build-cache\d5a1cd54089cb080e55f0c59772bddbb8300e3ec\output\AndroidManifest.xml:7:5-9:41
-MERGED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:7:5-9:41
+MERGED from [com.leon:lfilepickerlibrary:1.2.0] C:\Users\Administrator\.android\build-cache\d0b67e3cc23d50589919fd1b200a94b9766e8ed0\output\AndroidManifest.xml:8:5-10:41
 MERGED from [com.github.razerdp:BasePopup:v1.8.0] C:\Users\Administrator\.android\build-cache\94ee907a3c7bd49da43ac7ec9c574ef536033dd9\output\AndroidManifest.xml:7:5-9:41
 MERGED from [com.android.support:palette-v7:25.3.1] C:\Users\Administrator\.android\build-cache\28835677e8d6ed8fe7a4e6a7fc42d8d7c04993af\output\AndroidManifest.xml:20:5-43
 MERGED from [com.android.support:cardview-v7:25.3.1] C:\Users\Administrator\.android\build-cache\e22668f596914ff37d303a503a2dc6e06ddbb21f\output\AndroidManifest.xml:20:5-43
@@ -358,28 +358,12 @@ MERGED from [com.squareup.leakcanary:leakcanary-android:1.3] C:\Users\Administra
 	android:minSdkVersion
 		INJECTED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml
 		INJECTED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml
-activity#droidninja.filepicker.FilePickerActivity
-ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:17:9-19:62
-	android:configChanges
-		ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:19:13-59
+activity#com.leon.lfilepickerlibrary.ui.LFilePickerActivity
+ADDED from [com.leon:lfilepickerlibrary:1.2.0] C:\Users\Administrator\.android\build-cache\d0b67e3cc23d50589919fd1b200a94b9766e8ed0\output\AndroidManifest.xml:16:9-19:20
+	android:theme
+		ADDED from [com.leon:lfilepickerlibrary:1.2.0] C:\Users\Administrator\.android\build-cache\d0b67e3cc23d50589919fd1b200a94b9766e8ed0\output\AndroidManifest.xml:18:13-51
 	android:name
-		ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:18:13-68
-activity#droidninja.filepicker.MediaDetailsActivity
-ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:20:9-22:62
-	android:configChanges
-		ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:22:13-59
-	android:name
-		ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:21:13-70
-provider#droidninja.filepicker.utils.FilePickerProvider
-ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:24:9-32:20
-	android:authorities
-		ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:26:13-82
-	android:grantUriPermissions
-		ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:28:13-47
-	android:exported
-		ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:27:13-37
-	android:name
-		ADDED from [com.droidninja:filepicker:2.0.7] C:\Users\Administrator\.android\build-cache\ac18f56987730515cdd4cfd610e85b43f36ca527\output\AndroidManifest.xml:25:13-74
+		ADDED from [com.leon:lfilepickerlibrary:1.2.0] C:\Users\Administrator\.android\build-cache\d0b67e3cc23d50589919fd1b200a94b9766e8ed0\output\AndroidManifest.xml:17:13-78
 meta-data#android.support.VERSION
 ADDED from [com.android.support:palette-v7:25.3.1] C:\Users\Administrator\.android\build-cache\28835677e8d6ed8fe7a4e6a7fc42d8d7c04993af\output\AndroidManifest.xml:22:5-24:34
 MERGED from [com.android.support:cardview-v7:25.3.1] C:\Users\Administrator\.android\build-cache\e22668f596914ff37d303a503a2dc6e06ddbb21f\output\AndroidManifest.xml:22:5-24:34

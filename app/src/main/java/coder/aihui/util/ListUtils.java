@@ -1,5 +1,6 @@
 package coder.aihui.util;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,6 +41,38 @@ public class ListUtils {
         }
     }
 
+
+    //做一个转换 将集合中的每个个对象中的某一个字段取出来变成另一个集合
+    public static List<String> ListFiled2list(List list, String methodName, Class clazz) {
+        List<String> stringList = new ArrayList<>();
+        try {
+
+            for (int i = 0; i < list.size(); i++) {
+                Method method = clazz.getDeclaredMethod(methodName);
+                String invoke = (String) method.invoke(list.get(i));
+                stringList.add(invoke);
+            }
+        } catch (Exception e) {
+            return stringList;
+        }
+
+        return stringList;
+    }
+
+    //做一个转换 将集合中的每个个对象中的某一个字段取出来变成另一个集合
+    public static String ListFiled2String(List list, String methodName, Class clazz) {
+        List<String> stringList = new ArrayList<>();
+        try {
+            for (int i = 0; i < list.size(); i++) {
+                Method method = clazz.getDeclaredMethod(methodName);
+                String invoke = (String) method.invoke(list.get(i));
+                stringList.add(invoke);
+            }
+        } catch (Exception e) {
+            return "";
+        }
+        return listToStrings(stringList);
+    }
 
 
 }

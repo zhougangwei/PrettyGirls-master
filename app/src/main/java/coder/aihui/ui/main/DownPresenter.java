@@ -5,26 +5,21 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import coder.aihui.base.RxBusPresenter;
-import coder.aihui.data.bean.IN_ASSET;
 import coder.aihui.data.bean.gen.DaoSession;
 import coder.aihui.data.source.MyDataSource;
 import coder.aihui.data.source.remote.RemoteMyDataSource;
 import coder.aihui.rxbus.RxBus;
 import coder.aihui.rxbus.event.MainEvent;
 import coder.aihui.util.LogUtil;
-import coder.aihui.util.SPUtil;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-
-import static coder.aihui.app.MyApplication.mContext;
 
 /**
  * @ 创建者   zhou
@@ -50,13 +45,13 @@ public class DownPresenter implements RxBusPresenter {
     public static final int INSPECT_TEMPLETITEM_DOWN = 5;         //下载巡检模板
     public static final int PUR_CONTRACT_PLAN_DOWN   = 6;         //下载安装验收
     public static final int PXGL_SB_DOWN             = 7;         //下载培训管理设备
+    public static final int PUR_CONTRACT_PLAN_UP     = 8;         //上传安装验收
 
     public static final int SYS_USER_DOWN = 1001;         //下载人员
 
 
     public static final int WEB_SERVICE = 1;        //用webservie下载
     public static final int HTTP        = 2;               //用http下载
-
 
 
     //下载成功或者失败的信号
@@ -69,7 +64,7 @@ public class DownPresenter implements RxBusPresenter {
             String wrong = data.getString("wrong");
             switch (msg.what) {
                 case 1: //失败
-                    mView.showFault(type,wrong);
+                    mView.showFault(type, wrong);
                     // mView.dismissProgress();
                     break;
                 case 2://结束
@@ -112,57 +107,6 @@ public class DownPresenter implements RxBusPresenter {
     @Override
     public void unregisterRxBus() {
         mRxBus.unSubscribe(this);
-    }
-
-
-    public void showAsset() {
-        mDaossion.getIN_ASSETDao().queryBuilder().rx().list()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<IN_ASSET>>() {
-                    @Override
-                    public void call(List<IN_ASSET> in_assetList) {
-                        if (in_assetList.size() != 0) {
-
-                        }
-                    }
-                });
-
-    }
-
-
-    //下载台账
-    public void gotoDownAsset() {
-        String userId = SPUtil.getString(mContext, "userId", "1");
-        final String[] pars = new String[]{userId};
-
-
-        final List<String[]> parss = new ArrayList<>();
-
-        parss.add(pars);
-
-        Observable.just(parss)
-                .compose(mView.<List<String[]>>bindToLife())
-                .observeOn(Schedulers.io())
-                .subscribe(new Action1<List<String[]>>() {
-                    @Override
-                    public void call(List<String[]> parss) {
-                        mRemoteMyDataSource.<IN_ASSET>saveDatas(mView, new String[]{"coder.aihui.data.bean.IN_ASSET"}, new String[]{"getHrpInAssetDataJSON3"}, parss, new MyLoadDatasCallback(ASSET_DOWN) {
-                            @Override
-                            public void onDatasLoadedProgress(int t) {
-                                Observable.just(t)
-                                        .compose(mView.<Integer>bindToLife())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(new Action1<Integer>() {
-                                            @Override
-                                            public void call(Integer integer) {
-                                                mView.showProgress(integer, ASSET_DOWN);
-                                            }
-                                        });
-                            }
-                        });
-                    }
-                });
-
     }
 
 
@@ -230,10 +174,19 @@ public class DownPresenter implements RxBusPresenter {
     }
 
 
-
     //清空台账数据
     public void clearData(Class entie) {
         mDaossion.getDao(entie).deleteAll();
+    }
+
+    //上传数据
+    public void gotoUp(Map map) {
+        mRemoteMyDataSource.gotoUpJson(PUR_CONTRACT_PLAN_UP, map, new MyLoadDatasCallback(PUR_CONTRACT_PLAN_UP) {
+            @Override
+            public void onDatasLoadedProgress(int index) {
+
+            }
+        });
     }
 
     //简单抽取失败了的和结束了的

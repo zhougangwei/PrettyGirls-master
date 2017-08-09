@@ -44,6 +44,10 @@
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_back.png"
     },
     {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\icon_back.png",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xxhdpi\\icon_back.png"
+    },
+    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\shanchu.png",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xxhdpi\\shanchu.png"
     },
@@ -170,10 +174,6 @@
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\azys.png",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xxhdpi\\azys.png"
-    },
-    {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\back.png",
-        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xxhdpi\\back.png"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\sz.png",

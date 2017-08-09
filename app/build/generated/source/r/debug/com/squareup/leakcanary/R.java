@@ -29,13 +29,13 @@ public final class R {
         public static final int __leak_canary_ref_top_row = 0x7f040003;
     }
     public static final class string {
-        public static final int __leak_canary_class_has_leaked = 0x7f090039;
-        public static final int __leak_canary_display_activity_label = 0x7f09003a;
-        public static final int __leak_canary_leak_list_title = 0x7f09003b;
-        public static final int __leak_canary_notification_message = 0x7f09003c;
-        public static final int __leak_canary_share_heap_dump = 0x7f09003d;
-        public static final int __leak_canary_share_leak = 0x7f09003e;
-        public static final int __leak_canary_share_with = 0x7f09003f;
+        public static final int __leak_canary_class_has_leaked = 0x7f090029;
+        public static final int __leak_canary_display_activity_label = 0x7f09002a;
+        public static final int __leak_canary_leak_list_title = 0x7f09002b;
+        public static final int __leak_canary_notification_message = 0x7f09002c;
+        public static final int __leak_canary_share_heap_dump = 0x7f09002d;
+        public static final int __leak_canary_share_leak = 0x7f09002e;
+        public static final int __leak_canary_share_with = 0x7f09002f;
     }
     public static final class style {
         public static final int __LeakCanary_Base = 0x7f0b0032;

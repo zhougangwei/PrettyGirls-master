@@ -1,11 +1,21 @@
 package coder.aihui.widget.contact;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mcxtzhang.indexlib.IndexBar.widget.IndexBar;
@@ -17,14 +27,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import coder.aihui.R;
 import coder.aihui.base.AppActivity;
 import coder.aihui.base.BaseFragment;
 import coder.aihui.base.Content;
 import coder.aihui.data.bean.SYS_USER;
+import coder.aihui.data.bean.gen.DaoSession;
 import coder.aihui.data.bean.gen.SYS_USERDao;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 import static coder.aihui.base.Content.CHECKED_USER_IDS;
@@ -49,7 +63,15 @@ public class SysUserActivity extends AppActivity {
     TextView     mTvSideBarHint;
 
     @BindView(R.id.tv_ok)
-    TextView mTvOk;
+    TextView       mTvOk;
+    @BindView(R.id.iv_back)
+    ImageView      mIvBack;
+    @BindView(R.id.tv_title)
+    TextView       mTvTitle;
+    @BindView(R.id.et_search)
+    EditText       mEtSearch;
+    @BindView(R.id.search)
+    RelativeLayout mSearch;
 
 
     private SuspensionDecoration mDecoration;
@@ -155,6 +177,18 @@ public class SysUserActivity extends AppActivity {
                 intent.putStringArrayListExtra(CHECKED_USER_IDS, idList);
                 intent.putStringArrayListExtra(CHECKED_USER_NAMES, nameList);
                 setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
+
+
+        mEtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                /*判断是否是“GO”键*/
+                if ((event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) || actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE)
+                    return doSearch(v, mEtSearch, mDaoSession);
+                return false;
             }
         });
 
@@ -189,10 +223,66 @@ public class SysUserActivity extends AppActivity {
                 });
     }
 
+    //更新搜索数据
     public void updateDatas() {
         mIndexBar.setmSourceDatas(mDatas)
                 .invalidate();
         mCommonAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    private boolean doSearch(TextView v, EditText mEtSearch, DaoSession daoSession) {
+/*隐藏软键盘*/
+        InputMethodManager imm = (InputMethodManager) v
+                .getContext().getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+        if (imm.isActive()) {
+            imm.hideSoftInputFromWindow(
+                    v.getApplicationWindowToken(), 0);
+        }
+        Editable text = mEtSearch.getText();
+        if (!TextUtils.isEmpty(text)) {
+            daoSession.getSYS_USERDao().queryBuilder().where(SYS_USERDao.Properties.USER_NAME.like(text.toString() == null ? "" : "%" + text.toString() + "%"))
+
+                    .rx().list().filter(new Func1<List<SYS_USER>, Boolean>() {
+                @Override
+                public Boolean call(List<SYS_USER> user) {
+                    return user != null && user.size() != 0;
+                }
+            }).observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<List<SYS_USER>>() {
+                        @Override
+                        public void call(List<SYS_USER> users) {
+                            mDatas.clear();
+                            mDatas.addAll(users);
+                            updateDatas();
+
+                        }
+                    });
+
+        } else {
+            return true;
+        }
+        return false;
+    }
+
+    @OnClick({R.id.iv_back})
+    public void onViewClicked(View v) {
+        switch (v.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
+
+
+
+        }
+
     }
 }
 

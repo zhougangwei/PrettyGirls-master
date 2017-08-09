@@ -35,7 +35,8 @@ public class MySQLiteOpenHelper extends DaoMaster.OpenHelper {
     public void onUpgrade(Database db, int oldVersion, int newVersion) {
 
         Log.d("数据库升级", "oldVersion:" + oldVersion + "newVersion" + newVersion);
-        MigrationHelper.getInstance().migrate(db, INSPECT_PLANDao.class, InspectTempletItemDao.class, PUR_CONTRACT_PLANDao.class);
+        MigrationHelper.getInstance().migrate(db, INSPECT_PLANDao.class, InspectTempletItemDao.class, PUR_CONTRACT_PLANDao.class
+                );
 
     }
 

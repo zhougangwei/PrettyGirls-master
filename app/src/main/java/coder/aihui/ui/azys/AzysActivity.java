@@ -18,7 +18,11 @@ import com.zhy.adapter.recyclerview.base.ViewHolder;
 import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -27,11 +31,22 @@ import coder.aihui.base.AppActivity;
 import coder.aihui.base.BaseFragment;
 import coder.aihui.base.Content;
 import coder.aihui.data.bean.PUR_CONTRACT_PLAN;
+import coder.aihui.data.bean.PUR_CONTRACT_PLAN_DETAIL;
 import coder.aihui.data.bean.gen.PUR_CONTRACT_PLANDao;
+import coder.aihui.data.bean.gen.PUR_CONTRACT_PLAN_DETAILDao;
+import coder.aihui.ui.main.DownPresenter;
+import coder.aihui.ui.main.DownView;
+import coder.aihui.util.GsonUtil;
+import coder.aihui.util.ToastUtil;
 import coder.aihui.widget.contact.LessUserActivity;
 import coder.aihui.widget.popwindow.MenuPopup;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
-public class AzysActivity extends AppActivity {
+import static coder.aihui.app.MyApplication.daoSession;
+
+public class AzysActivity extends AppActivity implements DownView {
 
     @BindView(R.id.iv_updown)
     LinearLayout         mIvUpdown;
@@ -51,8 +66,7 @@ public class AzysActivity extends AppActivity {
     TextView             mTvSearch;
     @BindView(R.id.tb)
     TabLayout            mTb;
-    @BindView(R.id.line)
-    LinearLayout         mLine;
+
     @BindView(R.id.rv)
     RecyclerView         mRv;
     @BindView(R.id.back_top)
@@ -70,6 +84,7 @@ public class AzysActivity extends AppActivity {
     private final static int ALL       = 1;
     private final static int CHECKED   = 2;
     private final static int UNCHECKED = 3;
+    private DownPresenter mDownPresenter;
 
 
     @Override
@@ -85,10 +100,16 @@ public class AzysActivity extends AppActivity {
 
     @Override
     protected void initView() {
-        initRecycleView();
         mTvTitle.setText("安装验收");
+        mUpDownList.add("上传数据");
+        initRecycleView();
+
+        mDownPresenter = new DownPresenter(this, mDaoSession);
 
         initData();
+
+
+
     }
 
     private void initData() {
@@ -189,12 +210,89 @@ public class AzysActivity extends AppActivity {
 
     private void gotoUpdown() {
         if (mUpdownPopup == null) {
-            mUpdownPopup = new MenuPopup(this, mUpDownList);
+            mUpdownPopup = new MenuPopup(this, mUpDownList, new MenuPopup.BackReslut() {
+                @Override
+                public void onBackResult(String string) {
+                    if ("上传数据".equals(string)) {
+                        gotoUpdata();
+                    }
+                }
+            });
         }
         mUpdownPopup.showPopupWindow(mIvUpdown);
 
     }
 
+    //去上传数据
+    private void gotoUpdata() {
+        HashMap<String, String> map = new HashMap<>();
+        String json = getupJson();
+        map.put("dataJson", json);
+        mDownPresenter.gotoUp(map);
+
+    }
+
+    private String getupJson() {
+        List<PUR_CONTRACT_PLAN_DETAIL> ll = daoSession.getPUR_CONTRACT_PLAN_DETAILDao().queryBuilder()
+                .where((PUR_CONTRACT_PLAN_DETAILDao.Properties.CHECK_STATUS.eq(1)))
+                .where(PUR_CONTRACT_PLAN_DETAILDao.Properties.IS_UP.eq(2))
+                .orderAsc(PUR_CONTRACT_PLAN_DETAILDao.Properties.CONTRACT_ID)
+                .list();
+
+        TreeMap<String, String> treeMap = new TreeMap<String, String>();
+
+        for (int i = 0; i < ll.size(); i++) {
+
+            //一个单号对应几个验收人
+            ll.get(i).setYSSJ(new Date());
+
+            daoSession.update(ll.get(i));
+            treeMap.put(ll.get(i).getDH_ID(), ll.get(i).getYSR_IDS());
+
+
+        }
+
+        StringBuilder sb1 = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+
+
+        Iterator ite = treeMap.keySet().iterator();
+        while (ite.hasNext()) {
+            String string = (String) ite.next();
+            sb1.append(string).append(",");
+            sb2.append(treeMap.get(string)).append("|");
+        }
+
+        String string = sb1.toString();
+        //切掉最后一个
+        String substring = string.substring(0, string.length() - 1);        //单号
+
+        String string2 = sb2.toString();
+        //切掉最后一个
+        String substring2 = string2.substring(0, string2.length() - 1);        //验收人
+
+
+        //String url = "";
+
+
+        String json = GsonUtil.parseListToJson(ll);
+
+        String substring1 = json.substring(1);
+
+        StringBuilder sb = new StringBuilder();
+
+
+        // [{"TYPE":"81-1"},{"ALQJ":1,"CCBH":"1993-22-11","CHECK_ISCHECKED":false,"CHECK_STATUS":1,"CMZP_URL":"/storage/emulated/0/DCIM/IMG-675398161.jpg","CONTRACT_ID":81,"CONTRACT_NUM":"H0000081","DEPT_ID":1,"DEPT_NAME":"所有科室","DH_ID":"81-1","DQAQJC":1,"GGXH":"Thinkpad T420","GYSMC":"北京健峰生物技术有限公司","HTMX_ID":81,"HWQD":0,"IS_UP":2,"JDSQ_FILE_ID":1,"JLZM":1,"JQZP_FILE_ID":1,"JYSYNX":1.5,"MCGGID":585,"PLAN_ID":31,"PUR_YSR_ID":-1,"QSDQSJ":"1994-10-11 00:00:00","WGJC":0,"WZMC":"笔记本电脑","YQGZQK":0,"YSSJ":"2016-12-20 09:49:27","YSSL":1,"ZCZH":"1993-22-11","ZMZP_URL":"/storage/emulated/0/DCIM/100MEDIA/IMAG0484.jpg","_ID":3},{"ALQJ":1,"CCBH":"1993-22-11","CHECK_ISCHECKED":false,"CHECK_STATUS":1,"CMZP_URL":"/storage/emulated/0/DCIM/IMG-675398161.jpg","CONTRACT_ID":81,"CONTRACT_NUM":"H0000081","DEPT_ID":1,"DEPT_NAME":"所有科室","DH_ID":"81-1","DQAQJC":1,"GGXH":"Thinkpad T420","GYSMC":"北京健峰生物技术有限公司","HTMX_ID":81,"HWQD":0,"IS_UP":2,"JDSQ_FILE_ID":1,"JLZM":1,"JQZP_FILE_ID":1,"JYSYNX":1.5,"MCGGID":585,"PLAN_ID":31,"PUR_YSR_ID":-1,"QSDQSJ":"1994-10-11 00:00:00","WGJC":0,"WZMC":"笔记本电脑","YQGZQK":0,"YSSJ":"2016-12-20 09:49:27","YSSL":1,"ZCZH":"1993-22-11","ZMZP_URL":"/storage/emulated/0/DCIM/100MEDIA/IMAG0484.jpg","_ID":4},{"ALQJ":1,"CCBH":"1993-22-11","CHECK_ISCHECKED":false,"CHECK_STATUS":1,"CMZP_URL":"/storage/emulated/0/DCIM/IMG-675398161.jpg","CONTRACT_ID":81,"CONTRACT_NUM":"H0000081","DEPT_ID":1,"DEPT_NAME":"所有科室","DH_ID":"81-1","DQAQJC":1,"GGXH":"Thinkpad T420","GYSMC":"北京健峰生物技术有限公司","HTMX_ID":81,"HWQD":0,"IS_UP":2,"JDSQ_FILE_ID":1,"JLZM":1,"JQZP_FILE_ID":1,"JYSYNX":1.5,"MCGGID":585,"PLAN_ID":31,"PUR_YSR_ID":-1,"QSDQSJ":"1994-10-11 00:00:00","WGJC":0,"WZMC":"笔记本电脑","YQGZQK":0,"YSSJ":"2016-12-20 09:49:27","YSSL":1,"ZCZH":"1993-22-11","ZMZP_URL":"/storage/emulated/0/DCIM/100MEDIA/IMAG0484.jpg","_ID":5},{"ALQJ":1,"CCBH":"1993-22-11","CHECK_ISCHECKED":false,"CHECK_STATUS":1,"CMZP_URL":"/storage/emulated/0/DCIM/IMG-675398161.jpg","CONTRACT_ID":81,"CONTRACT_NUM":"H0000081","DEPT_ID":1,"DEPT_NAME":"所有科室","DH_ID":"81-1","DQAQJC":1,"GGXH":"Thinkpad T420","GYSMC":"北京健峰生物技术有限公司","HTMX_ID":81,"HWQD":0,"IS_UP":2,"JDSQ_FILE_ID":1,"JLZM":1,"JQZP_FILE_ID":1,"JYSYNX":1.5,"MCGGID":585,"PLAN_ID":31,"PUR_YSR_ID":-1,"QSDQSJ":"1994-10-11 00:00:00","WGJC":0,"WZMC":"笔记本电脑","YQGZQK":0,"YSSJ":"2016-12-20 09:49:27","YSSL":1,"ZCZH":"1993-22-11","ZMZP_URL":"/storage/emulated/0/DCIM/100MEDIA/IMAG0484.jpg","_ID":6},{"ALQJ":1,"CCBH":"1993-22-11","CHECK_ISCHECKED":false,"CHECK_STATUS":1,"CMZP_URL":"/storage/emulated/0/DCIM/IMG-675398161.jpg","CONTRACT_ID":81,"CONTRACT_NUM":"H0000081","DEPT_ID":1,"DEPT_NAME":"所有科室","DH_ID":"81-1","DQAQJC":1,"GGXH":"Thinkpad T420","GYSMC":"北京健峰生物技术有限公司","HTMX_ID":81,"HWQD":0,"IS_UP":2,"JDSQ_FILE_ID":1,"JLZM":1,"JQZP_FILE_ID":1,"JYSYNX":1.5,"MCGGID":585,"PLAN_ID":31,"PUR_YSR_ID":-1,"QSDQSJ":"1994-10-11 00:00:00","WGJC":0,"WZMC":"笔记本电脑","YQGZQK":0,"YSSJ":"2016-12-20 09:49:27","YSSL":1,"ZCZH":"1993-22-11","ZMZP_URL":"/storage/emulated/0/DCIM/100MEDIA/IMAG0484.jpg","_ID":7}]
+        // 231231
+        String finaljson = sb.append("[{\"TYPE\":\"")
+                .append(substring)                      //单号
+                .append("\"},")
+                .append("{\"YSR_IDS\":\"")
+                .append(substring2)
+                .append("\"},")
+                .append(substring1).toString();//大的json数据
+        return finaljson;
+    }
 
     //配置
     private void gotoPz() {
@@ -229,4 +327,41 @@ public class AzysActivity extends AppActivity {
         return 0L;
     }
 
+    @Override
+    public void showSuccess(int type) {
+        Observable.just(type)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        ToastUtil.showToast("上传成功!");
+                    }
+                });
+    }
+
+    @Override
+    public void showFault(int type, String wrong) {
+        Observable.just(type)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        ToastUtil.showToast("上传失败!");
+                    }
+                });
+    }
+
+    @Override
+    public void showProgress(int num, int type) {
+        Observable.just(num)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        //进度显示多少
+
+                    }
+                });
+
+    }
 }

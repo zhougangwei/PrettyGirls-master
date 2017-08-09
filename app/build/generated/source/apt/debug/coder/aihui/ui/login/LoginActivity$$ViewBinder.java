@@ -22,28 +22,28 @@ public class LoginActivity$$ViewBinder<T extends LoginActivity> implements ViewB
   protected static class InnerUnbinder<T extends LoginActivity> implements Unbinder {
     protected T target;
 
-    private View view2131755313;
+    private View view2131755321;
 
-    private View view2131755314;
+    private View view2131755322;
 
     protected InnerUnbinder(final T target, Finder finder, Object source) {
       this.target = target;
 
       View view;
-      target.mEtUser = finder.findRequiredViewAsType(source, 2131755310, "field 'mEtUser'", EditText.class);
-      target.mEtPassword = finder.findRequiredViewAsType(source, 2131755311, "field 'mEtPassword'", EditText.class);
-      view = finder.findRequiredView(source, 2131755313, "field 'mTvConfig' and method 'onViewClicked'");
-      target.mTvConfig = finder.castView(view, 2131755313, "field 'mTvConfig'");
-      view2131755313 = view;
+      target.mEtUser = finder.findRequiredViewAsType(source, 2131755318, "field 'mEtUser'", EditText.class);
+      target.mEtPassword = finder.findRequiredViewAsType(source, 2131755319, "field 'mEtPassword'", EditText.class);
+      view = finder.findRequiredView(source, 2131755321, "field 'mTvConfig' and method 'onViewClicked'");
+      target.mTvConfig = finder.castView(view, 2131755321, "field 'mTvConfig'");
+      view2131755321 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
-      view = finder.findRequiredView(source, 2131755314, "field 'mButton' and method 'onViewClicked'");
-      target.mButton = finder.castView(view, 2131755314, "field 'mButton'");
-      view2131755314 = view;
+      view = finder.findRequiredView(source, 2131755322, "field 'mButton' and method 'onViewClicked'");
+      target.mButton = finder.castView(view, 2131755322, "field 'mButton'");
+      view2131755322 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
@@ -66,10 +66,10 @@ public class LoginActivity$$ViewBinder<T extends LoginActivity> implements ViewB
       target.mProgressView = null;
       target.mLoginFormView = null;
 
-      view2131755313.setOnClickListener(null);
-      view2131755313 = null;
-      view2131755314.setOnClickListener(null);
-      view2131755314 = null;
+      view2131755321.setOnClickListener(null);
+      view2131755321 = null;
+      view2131755322.setOnClickListener(null);
+      view2131755322 = null;
 
       this.target = null;
     }

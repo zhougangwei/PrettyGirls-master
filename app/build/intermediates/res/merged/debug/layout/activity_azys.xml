@@ -28,7 +28,17 @@
 
     <include layout="@layout/include_search_ll"></include>
 
-    <include layout="@layout/include_tab"></include>
+    <include layout="@layout/include_tab"/>
+
+    <ImageView
+        android:layout_below="@+id/tb"
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="8px"
+        android:background="#F5F5F5"
+        />
+
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv"

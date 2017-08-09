@@ -1,1 +1,1 @@
-include ':app', ':horecycleview', ':qianming'
+include ':app', ':qianming'

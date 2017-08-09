@@ -22,13 +22,13 @@ public class InspectDetailActivity$$ViewBinder<T extends InspectDetailActivity> 
   protected static class InnerUnbinder<T extends InspectDetailActivity> implements Unbinder {
     protected T target;
 
-    private View view2131755414;
-
-    private View view2131755420;
-
-    private View view2131755421;
-
     private View view2131755422;
+
+    private View view2131755428;
+
+    private View view2131755429;
+
+    private View view2131755430;
 
     private View view2131755302;
 
@@ -38,9 +38,9 @@ public class InspectDetailActivity$$ViewBinder<T extends InspectDetailActivity> 
       this.target = target;
 
       View view;
-      view = finder.findRequiredView(source, 2131755414, "field 'mIvBack' and method 'onViewClicked'");
-      target.mIvBack = finder.castView(view, 2131755414, "field 'mIvBack'");
-      view2131755414 = view;
+      view = finder.findRequiredView(source, 2131755422, "field 'mIvBack' and method 'onViewClicked'");
+      target.mIvBack = finder.castView(view, 2131755422, "field 'mIvBack'");
+      view2131755422 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
@@ -48,33 +48,33 @@ public class InspectDetailActivity$$ViewBinder<T extends InspectDetailActivity> 
         }
       });
       target.mTvTitle = finder.findRequiredViewAsType(source, 2131755235, "field 'mTvTitle'", TextView.class);
-      target.mTvName = finder.findRequiredViewAsType(source, 2131755416, "field 'mTvName'", TextView.class);
-      target.mTvGgxh = finder.findRequiredViewAsType(source, 2131755224, "field 'mTvGgxh'", TextView.class);
-      target.mTvDept = finder.findRequiredViewAsType(source, 2131755211, "field 'mTvDept'", TextView.class);
-      target.mLlNames = finder.findRequiredViewAsType(source, 2131755417, "field 'mLlNames'", LinearLayout.class);
+      target.mTvName = finder.findRequiredViewAsType(source, 2131755424, "field 'mTvName'", TextView.class);
+      target.mTvKpbh = finder.findRequiredViewAsType(source, 2131755224, "field 'mTvKpbh'", TextView.class);
+      target.mTvDlwz = finder.findRequiredViewAsType(source, 2131755211, "field 'mTvType'", TextView.class);
+      target.mLlNames = finder.findRequiredViewAsType(source, 2131755425, "field 'mLlNames'", LinearLayout.class);
       target.mTvPlanTime = finder.findRequiredViewAsType(source, 2131755303, "field 'mTvPlanTime'", TextView.class);
       target.mTvCurrentTime = finder.findRequiredViewAsType(source, 2131755304, "field 'mTvCurrentTime'", TextView.class);
-      view = finder.findRequiredView(source, 2131755420, "field 'mRbAll' and method 'onViewClicked'");
-      target.mRbAll = finder.castView(view, 2131755420, "field 'mRbAll'");
-      view2131755420 = view;
+      view = finder.findRequiredView(source, 2131755428, "field 'mRbAll' and method 'onViewClicked'");
+      target.mRbAll = finder.castView(view, 2131755428, "field 'mRbAll'");
+      view2131755428 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
-      view = finder.findRequiredView(source, 2131755421, "field 'mTvMr' and method 'onViewClicked'");
-      target.mTvMr = finder.castView(view, 2131755421, "field 'mTvMr'");
-      view2131755421 = view;
+      view = finder.findRequiredView(source, 2131755429, "field 'mTvMr' and method 'onViewClicked'");
+      target.mTvMr = finder.castView(view, 2131755429, "field 'mTvMr'");
+      view2131755429 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
-      view = finder.findRequiredView(source, 2131755422, "field 'mTvZc' and method 'onViewClicked'");
-      target.mTvZc = finder.castView(view, 2131755422, "field 'mTvZc'");
-      view2131755422 = view;
+      view = finder.findRequiredView(source, 2131755430, "field 'mTvZc' and method 'onViewClicked'");
+      target.mTvZc = finder.castView(view, 2131755430, "field 'mTvZc'");
+      view2131755430 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
@@ -100,7 +100,7 @@ public class InspectDetailActivity$$ViewBinder<T extends InspectDetailActivity> 
           target.onViewClicked(p0);
         }
       });
-      target.mRv = finder.findRequiredViewAsType(source, 2131755257, "field 'mRv'", RecyclerView.class);
+      target.mRv = finder.findRequiredViewAsType(source, 2131755258, "field 'mRv'", RecyclerView.class);
     }
 
     @Override
@@ -111,8 +111,8 @@ public class InspectDetailActivity$$ViewBinder<T extends InspectDetailActivity> 
       target.mIvBack = null;
       target.mTvTitle = null;
       target.mTvName = null;
-      target.mTvGgxh = null;
-      target.mTvDept = null;
+      target.mTvKpbh = null;
+      target.mTvDlwz = null;
       target.mLlNames = null;
       target.mTvPlanTime = null;
       target.mTvCurrentTime = null;
@@ -124,14 +124,14 @@ public class InspectDetailActivity$$ViewBinder<T extends InspectDetailActivity> 
       target.mTvOk = null;
       target.mRv = null;
 
-      view2131755414.setOnClickListener(null);
-      view2131755414 = null;
-      view2131755420.setOnClickListener(null);
-      view2131755420 = null;
-      view2131755421.setOnClickListener(null);
-      view2131755421 = null;
       view2131755422.setOnClickListener(null);
       view2131755422 = null;
+      view2131755428.setOnClickListener(null);
+      view2131755428 = null;
+      view2131755429.setOnClickListener(null);
+      view2131755429 = null;
+      view2131755430.setOnClickListener(null);
+      view2131755430 = null;
       view2131755302.setOnClickListener(null);
       view2131755302 = null;
       view2131755263.setOnClickListener(null);

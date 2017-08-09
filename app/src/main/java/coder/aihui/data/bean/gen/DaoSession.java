@@ -9,6 +9,7 @@ import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
 import coder.aihui.data.bean.AZYS_MX;
+import coder.aihui.data.bean.DHBean;
 import coder.aihui.data.bean.DqxqOutBean;
 import coder.aihui.data.bean.gen.User;
 import coder.aihui.data.bean.InspectTempletItem;
@@ -28,12 +29,14 @@ import coder.aihui.data.bean.PUB_COMPANY;
 import coder.aihui.data.bean.PUB_DICTIONARY_ITEM;
 import coder.aihui.data.bean.PUR_CONTRACT_PLAN;
 import coder.aihui.data.bean.PUR_CONTRACT_PLAN_DETAIL;
+import coder.aihui.data.bean.PXGL_SAVE;
 import coder.aihui.data.bean.REPAIR_PLACE;
 import coder.aihui.data.bean.SYS_DEPT;
 import coder.aihui.data.bean.SYS_PARAM;
 import coder.aihui.data.bean.SYS_USER;
 
 import coder.aihui.data.bean.gen.AZYS_MXDao;
+import coder.aihui.data.bean.gen.DHBeanDao;
 import coder.aihui.data.bean.gen.DqxqOutBeanDao;
 import coder.aihui.data.bean.gen.UserDao;
 import coder.aihui.data.bean.gen.InspectTempletItemDao;
@@ -53,6 +56,7 @@ import coder.aihui.data.bean.gen.PUB_COMPANYDao;
 import coder.aihui.data.bean.gen.PUB_DICTIONARY_ITEMDao;
 import coder.aihui.data.bean.gen.PUR_CONTRACT_PLANDao;
 import coder.aihui.data.bean.gen.PUR_CONTRACT_PLAN_DETAILDao;
+import coder.aihui.data.bean.gen.PXGL_SAVEDao;
 import coder.aihui.data.bean.gen.REPAIR_PLACEDao;
 import coder.aihui.data.bean.gen.SYS_DEPTDao;
 import coder.aihui.data.bean.gen.SYS_PARAMDao;
@@ -68,6 +72,7 @@ import coder.aihui.data.bean.gen.SYS_USERDao;
 public class DaoSession extends AbstractDaoSession {
 
     private final DaoConfig aZYS_MXDaoConfig;
+    private final DaoConfig dHBeanDaoConfig;
     private final DaoConfig dqxqOutBeanDaoConfig;
     private final DaoConfig userDaoConfig;
     private final DaoConfig inspectTempletItemDaoConfig;
@@ -87,12 +92,14 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig pUB_DICTIONARY_ITEMDaoConfig;
     private final DaoConfig pUR_CONTRACT_PLANDaoConfig;
     private final DaoConfig pUR_CONTRACT_PLAN_DETAILDaoConfig;
+    private final DaoConfig pXGL_SAVEDaoConfig;
     private final DaoConfig rEPAIR_PLACEDaoConfig;
     private final DaoConfig sYS_DEPTDaoConfig;
     private final DaoConfig sYS_PARAMDaoConfig;
     private final DaoConfig sYS_USERDaoConfig;
 
     private final AZYS_MXDao aZYS_MXDao;
+    private final DHBeanDao dHBeanDao;
     private final DqxqOutBeanDao dqxqOutBeanDao;
     private final UserDao userDao;
     private final InspectTempletItemDao inspectTempletItemDao;
@@ -112,6 +119,7 @@ public class DaoSession extends AbstractDaoSession {
     private final PUB_DICTIONARY_ITEMDao pUB_DICTIONARY_ITEMDao;
     private final PUR_CONTRACT_PLANDao pUR_CONTRACT_PLANDao;
     private final PUR_CONTRACT_PLAN_DETAILDao pUR_CONTRACT_PLAN_DETAILDao;
+    private final PXGL_SAVEDao pXGL_SAVEDao;
     private final REPAIR_PLACEDao rEPAIR_PLACEDao;
     private final SYS_DEPTDao sYS_DEPTDao;
     private final SYS_PARAMDao sYS_PARAMDao;
@@ -123,6 +131,9 @@ public class DaoSession extends AbstractDaoSession {
 
         aZYS_MXDaoConfig = daoConfigMap.get(AZYS_MXDao.class).clone();
         aZYS_MXDaoConfig.initIdentityScope(type);
+
+        dHBeanDaoConfig = daoConfigMap.get(DHBeanDao.class).clone();
+        dHBeanDaoConfig.initIdentityScope(type);
 
         dqxqOutBeanDaoConfig = daoConfigMap.get(DqxqOutBeanDao.class).clone();
         dqxqOutBeanDaoConfig.initIdentityScope(type);
@@ -181,6 +192,9 @@ public class DaoSession extends AbstractDaoSession {
         pUR_CONTRACT_PLAN_DETAILDaoConfig = daoConfigMap.get(PUR_CONTRACT_PLAN_DETAILDao.class).clone();
         pUR_CONTRACT_PLAN_DETAILDaoConfig.initIdentityScope(type);
 
+        pXGL_SAVEDaoConfig = daoConfigMap.get(PXGL_SAVEDao.class).clone();
+        pXGL_SAVEDaoConfig.initIdentityScope(type);
+
         rEPAIR_PLACEDaoConfig = daoConfigMap.get(REPAIR_PLACEDao.class).clone();
         rEPAIR_PLACEDaoConfig.initIdentityScope(type);
 
@@ -194,6 +208,7 @@ public class DaoSession extends AbstractDaoSession {
         sYS_USERDaoConfig.initIdentityScope(type);
 
         aZYS_MXDao = new AZYS_MXDao(aZYS_MXDaoConfig, this);
+        dHBeanDao = new DHBeanDao(dHBeanDaoConfig, this);
         dqxqOutBeanDao = new DqxqOutBeanDao(dqxqOutBeanDaoConfig, this);
         userDao = new UserDao(userDaoConfig, this);
         inspectTempletItemDao = new InspectTempletItemDao(inspectTempletItemDaoConfig, this);
@@ -213,12 +228,14 @@ public class DaoSession extends AbstractDaoSession {
         pUB_DICTIONARY_ITEMDao = new PUB_DICTIONARY_ITEMDao(pUB_DICTIONARY_ITEMDaoConfig, this);
         pUR_CONTRACT_PLANDao = new PUR_CONTRACT_PLANDao(pUR_CONTRACT_PLANDaoConfig, this);
         pUR_CONTRACT_PLAN_DETAILDao = new PUR_CONTRACT_PLAN_DETAILDao(pUR_CONTRACT_PLAN_DETAILDaoConfig, this);
+        pXGL_SAVEDao = new PXGL_SAVEDao(pXGL_SAVEDaoConfig, this);
         rEPAIR_PLACEDao = new REPAIR_PLACEDao(rEPAIR_PLACEDaoConfig, this);
         sYS_DEPTDao = new SYS_DEPTDao(sYS_DEPTDaoConfig, this);
         sYS_PARAMDao = new SYS_PARAMDao(sYS_PARAMDaoConfig, this);
         sYS_USERDao = new SYS_USERDao(sYS_USERDaoConfig, this);
 
         registerDao(AZYS_MX.class, aZYS_MXDao);
+        registerDao(DHBean.class, dHBeanDao);
         registerDao(DqxqOutBean.class, dqxqOutBeanDao);
         registerDao(User.class, userDao);
         registerDao(InspectTempletItem.class, inspectTempletItemDao);
@@ -238,6 +255,7 @@ public class DaoSession extends AbstractDaoSession {
         registerDao(PUB_DICTIONARY_ITEM.class, pUB_DICTIONARY_ITEMDao);
         registerDao(PUR_CONTRACT_PLAN.class, pUR_CONTRACT_PLANDao);
         registerDao(PUR_CONTRACT_PLAN_DETAIL.class, pUR_CONTRACT_PLAN_DETAILDao);
+        registerDao(PXGL_SAVE.class, pXGL_SAVEDao);
         registerDao(REPAIR_PLACE.class, rEPAIR_PLACEDao);
         registerDao(SYS_DEPT.class, sYS_DEPTDao);
         registerDao(SYS_PARAM.class, sYS_PARAMDao);
@@ -246,6 +264,7 @@ public class DaoSession extends AbstractDaoSession {
     
     public void clear() {
         aZYS_MXDaoConfig.clearIdentityScope();
+        dHBeanDaoConfig.clearIdentityScope();
         dqxqOutBeanDaoConfig.clearIdentityScope();
         userDaoConfig.clearIdentityScope();
         inspectTempletItemDaoConfig.clearIdentityScope();
@@ -265,6 +284,7 @@ public class DaoSession extends AbstractDaoSession {
         pUB_DICTIONARY_ITEMDaoConfig.clearIdentityScope();
         pUR_CONTRACT_PLANDaoConfig.clearIdentityScope();
         pUR_CONTRACT_PLAN_DETAILDaoConfig.clearIdentityScope();
+        pXGL_SAVEDaoConfig.clearIdentityScope();
         rEPAIR_PLACEDaoConfig.clearIdentityScope();
         sYS_DEPTDaoConfig.clearIdentityScope();
         sYS_PARAMDaoConfig.clearIdentityScope();
@@ -273,6 +293,10 @@ public class DaoSession extends AbstractDaoSession {
 
     public AZYS_MXDao getAZYS_MXDao() {
         return aZYS_MXDao;
+    }
+
+    public DHBeanDao getDHBeanDao() {
+        return dHBeanDao;
     }
 
     public DqxqOutBeanDao getDqxqOutBeanDao() {
@@ -349,6 +373,10 @@ public class DaoSession extends AbstractDaoSession {
 
     public PUR_CONTRACT_PLAN_DETAILDao getPUR_CONTRACT_PLAN_DETAILDao() {
         return pUR_CONTRACT_PLAN_DETAILDao;
+    }
+
+    public PXGL_SAVEDao getPXGL_SAVEDao() {
+        return pXGL_SAVEDao;
     }
 
     public REPAIR_PLACEDao getREPAIR_PLACEDao() {

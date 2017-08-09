@@ -21,6 +21,7 @@ public class DownLoadBean {
         Integer        way;       //下载的方式 http还是webservice
         String         name;        //名称
         Integer        count;      //数目
+        String        bigType;      //主体是哪个模块的 如资产清点 巡检...
 
 
         public String[] getEnties() {
@@ -79,4 +80,11 @@ public class DownLoadBean {
             this.count = count;
         }
 
+    public String getBigType() {
+        return bigType;
+    }
+
+    public void setBigType(String bigType) {
+        this.bigType = bigType;
+    }
 }

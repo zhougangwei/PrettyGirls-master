@@ -11,6 +11,7 @@ import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -22,7 +23,8 @@ import coder.aihui.util.AndroidUtils;
 import coder.aihui.util.ColorsUtil;
 import coder.aihui.util.SPUtil;
 import coder.aihui.util.ToastUtil;
-import coder.aihui.util.viewutil.TextViewUtils;
+import coder.aihui.widget.MyProgressButton;
+import coder.aihui.widget.contact.MyDecoration;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -62,6 +64,8 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
     };
     private CommonAdapter<DownLoadBean> mMainAdapter;
     private List<String> mTextNameList = new ArrayList();     //文本名字
+    private String[] mBigType;
+    private List<String> mBigTypeList = new ArrayList<>();
 
 
     @Override
@@ -84,6 +88,8 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
         //初始话列表的下载
         initRecycle();
 
+        //初始进度条
+        MyProgressButton.initStatusString(new String[]{"下载", "暂停", "完成", "错误", "删除", "更新"});
     }
 
     private void initTextName() {
@@ -97,6 +103,12 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
         mTextNameList.add("安装验收下载");
         mTextNameList.add("培训管理下载");
 
+
+        mBigType = new String[]{"台账", "巡检", "安装验收"};
+
+
+        mBigTypeList = Arrays.asList(mBigType);
+
         //查询台账的已有数目
         mDatas.clear();
 
@@ -109,6 +121,7 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
         downLoadBean.methods = new String[]{"getHrpPubDictDataJSON2", "getHrpDeptDataJSON", "getHrpInStoreQcDataJSON", "getHrpPubDictDataJSON"};
         downLoadBean.way = WEB_SERVICE;
         downLoadBean.type = INIT_DOWN;
+        downLoadBean.bigType = mBigType[0];
 
         final String[] pars0 = new String[]{"007083"};
         final List<String[]> pars0List = new ArrayList<>();
@@ -132,6 +145,7 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
         assetBean.way = WEB_SERVICE;
         assetBean.type = ASSET_DOWN;
         assetBean.pars = parss;
+        assetBean.bigType = mBigType[0];
         mDatas.add(assetBean);
 
 
@@ -141,7 +155,9 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
         companyBean.count = mDaoSession.getIN_ASSETDao().count() == 0 ? 0 : Integer.parseInt(mDaoSession.getPUB_COMPANYDao().count() + "");
         companyBean.way = HTTP;
         companyBean.type = COMPANY_DOWN;
+        companyBean.bigType = mBigType[0];
         mDatas.add(companyBean);
+
 
         //下载巡检计划
         DownLoadBean planBean = new DownLoadBean();
@@ -154,6 +170,7 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
         planBean.way = WEB_SERVICE;
         planBean.type = INSPECT_PLAN_DOWN;
         planBean.pars = list;
+        planBean.bigType = mBigType[0];
         mDatas.add(planBean);
 
 
@@ -171,6 +188,7 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
         inspectInitBean.type = INSPECT_INIT_DOWN;
         inspectInitBean.way = WEB_SERVICE;
         inspectInitBean.pars = list2;
+        inspectInitBean.bigType = mBigType[0];
         mDatas.add(inspectInitBean);
 
 
@@ -186,6 +204,7 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
         inspectTempletItemBean.type = INSPECT_TEMPLETITEM_DOWN;
         inspectTempletItemBean.way = WEB_SERVICE;
         inspectTempletItemBean.pars = list2;
+        inspectTempletItemBean.bigType = mBigType[0];
         mDatas.add(inspectTempletItemBean);
 
         //下载安装验收
@@ -194,6 +213,7 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
         pubContractPlanBean.count = mDaoSession.getPUR_CONTRACT_PLANDao().count() == 0 ? 0 : Integer.parseInt(mDaoSession.getPUR_CONTRACT_PLANDao().count() + "");
         pubContractPlanBean.type = PUR_CONTRACT_PLAN_DOWN;
         pubContractPlanBean.way = HTTP;
+        pubContractPlanBean.bigType = mBigType[2];
         mDatas.add(pubContractPlanBean);
 
         //下载培训管理
@@ -202,12 +222,11 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
         pxsbBean.count = mDaoSession.getIN_MATERIALS_WZMCDao().count() == 0 ? 0 : Integer.parseInt(mDaoSession.getIN_MATERIALS_WZMCDao().count() + "");
         pxsbBean.type = PXGL_SB_DOWN;
         pxsbBean.way = HTTP;
+        pxsbBean.bigType = mBigType[2];
         mDatas.add(pxsbBean);
 
+
     }
-
-
-
 
 
     @Override
@@ -224,20 +243,13 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
             @Override
             public void call(Integer integer) {
                 View view = mRv.getChildAt(integer);//与前面添加集合对应
-                TextView mTvTitle = (TextView) view.findViewById(R.id.tv_detail);
-                Button bt_down = (Button) view.findViewById(R.id.bt_down);
-                Button bt_clear = (Button) view.findViewById(R.id.bt_clear);
-                changeButtton(bt_down, bt_clear, false);
-                NumberProgressBar mNumberProgressBar = (NumberProgressBar) view.findViewById(R.id.number_progress_bar);
-                mTvTitle.setText("下载(失败)");
-                mNumberProgressBar.setReachedBarColor(ColorsUtil.RED);
-                mNumberProgressBar.setMax(1);
-                mNumberProgressBar.setProgress(0);
-                TextViewUtils.changeTextColorRed(mTvTitle, 0, mTvTitle.getText().toString().length());
-
+                MyProgressButton mcp = (MyProgressButton) view.findViewById(R.id.CP_down);
+                //"下载","暂停","完成","错误","删除","更新"
+                mcp.setMorphingCircle(false);
+                mcp.setMorphingNormal(false);
+                mcp.normal(3);
                 //弹框显示错误原因
                 AndroidUtils.showErrorMsg("下载失败", wrong, getActivity());
-
             }
         });
 
@@ -254,23 +266,18 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
             @Override
             public void call(Integer type) {                        //根据Type来进行显示哪个
                 View view = mRv.getChildAt(type);//与前面添加集合对应
-                view.findViewById(R.id.ll_detail).setVisibility(View.GONE);             //收缩下载
-
-                Button bt_down = (Button) view.findViewById(R.id.bt_down);
-                Button bt_clear = (Button) view.findViewById(R.id.bt_clear);
-                //按钮颜色
-                changeButtton(bt_down, bt_clear, false);
-                TextView mTvTitle = (TextView) view.findViewById(R.id.tv_detail);
-
-                //下载完成的
-                NumberProgressBar mNumberProgressBar = (NumberProgressBar) view.findViewById(R.id.number_progress_bar);
-                showComplete(bt_down, mNumberProgressBar, mTvTitle);
-
+                MyProgressButton mcp = (MyProgressButton) view.findViewById(R.id.CP_down);
+                //"下载","暂停","完成","错误","删除","更新"
+                mcp.setMorphingCircle(false);
+                mcp.setMorphingNormal(false);
+                mcp.normal(2);
                 Integer anInt = SPUtil.getInt(mContext, Content.UnDownDatas, 10);
                 SPUtil.saveInt(mContext, Content.UnDownDatas, anInt - 1);
                 //更新主页面上的下载几个显示
                 ((MainActivity) mActivity).updateUnreadCount();
                 ToastUtil.showToast("下载完成");
+
+
             }
         });
     }
@@ -296,7 +303,7 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
     //显示错误的
     @Override
     public void showFault(int type, String wrong) {
-        showError(type,wrong);
+        showError(type, wrong);
     }
 
     //显示进度条
@@ -314,9 +321,9 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
                                 int num = ints[0];
                                 int type = ints[1];
                                 View view = mRv.getChildAt(type);//与前面添加集合对应
-                                NumberProgressBar mNumberProgressBar0 = (NumberProgressBar) view.findViewById(R.id.number_progress_bar);
-
-                                mNumberProgressBar0.setProgress(num);
+                                MyProgressButton mcp = (MyProgressButton) view.findViewById(R.id.CP_down);
+                                //"下载","暂停","完成","错误","删除","更新"
+                                mcp.download(num);
                             }
                         }
                 );
@@ -325,78 +332,73 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
 
     //关键下载逻辑入口
 
+
+    private MyDecoration mDecoration;
+
     private void initRecycle() {
         mRv.setLayoutManager(new LinearLayoutManager(mActivity));
 
+        mRv.addItemDecoration(mDecoration = new MyDecoration(getActivity(), new MyDecoration.DecorationCallback() {
+            @Override
+            public long getGroupId(int position) {
+                return mBigTypeList.indexOf(mDatas.get(position).bigType);
+            }
+
+            @Override
+            public String getGroupFirstLine(int position) {
+                return mDatas.get(position).bigType;
+            }
+        }));
+
+
         //下载
-        mMainAdapter = new CommonAdapter<DownLoadBean>(mActivity, R.layout.item_down_main, mDatas) {
+        mMainAdapter = new CommonAdapter<DownLoadBean>(mActivity, R.layout.item_down_main_ios, mDatas) {
             @Override
             protected void convert(final ViewHolder holder, final DownLoadBean bean, int position) {
-
+                final MyProgressButton cb = (MyProgressButton) holder.getView(R.id.CP_down);
+                //(new String[]{"下载","暂停","完成","错误","删除","更新"};
                 if (bean.count != null || bean.count != 0) {
-                    holder.setText(R.id.tv_detail, "已下载");
-                    //显示完成的
-                    showComplete((Button) holder.getView(R.id.bt_down), (NumberProgressBar) holder.getView(R.id.number_progress_bar)
-                            , (TextView) holder.getView(R.id.tv_detail));
+                    cb.normal(0); //max value is String[].length - 1;  call anytime;
                 } else {
-                    holder.setText(R.id.tv_detail, "未下载");
+                    cb.normal(4);
                 }
                 holder.setText(R.id.tv_title, bean.name);
-
-
-                //显示/隐藏
-                holder.setOnClickListener(R.id.im_detail, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (holder.getView(R.id.ll_detail).isShown()) {
-                            holder.getView(R.id.ll_detail).setVisibility(View.GONE);
-                        } else {
-                            holder.getView(R.id.ll_detail).setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-
                 //下载
-                holder.setOnClickListener(R.id.bt_down, new View.OnClickListener() {
+
+                cb.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        holder.setText(R.id.tv_detail, "下载中");
-                        ((NumberProgressBar) holder.getView(R.id.number_progress_bar)).setProgress(0);
-                        ((NumberProgressBar) holder.getView(R.id.number_progress_bar)).setMax(100);
-                        changeButtton((Button) holder.getView(R.id.bt_down), (Button) holder.getView(R.id.bt_clear), true);
-                        //下载之前先清空
-                        try {
-                            if (bean.enties != null && bean.enties.length != 0) {
-                                for (int i = 0; i < bean.enties.length; i++) {
-                                    mPresenter.clearData(Class.forName(bean.enties[i]));
+                        if ("下载".equals(cb.getText()) || "更新".equals(cb.getText()) || "错误".equals(cb.getText()) ||
+                                "完成".equals(cb.getText())
+                                ) {
+                            //视图
+                            cb.startDownLoad();
+                            //下载之前先清空
+                            try {
+                                if (bean.enties != null && bean.enties.length != 0) {
+                                    for (int i = 0; i < bean.enties.length; i++) {
+                                        mPresenter.clearData(Class.forName(bean.enties[i]));
+                                    }
                                 }
+                            } catch (ClassNotFoundException e) {
+                                e.printStackTrace();
                             }
-                        } catch (ClassNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        if (bean.way == WEB_SERVICE) {
-                            mPresenter.gotoDown(bean.methods, bean.enties, bean.pars, bean.type, bean.way);
-                        } else if (bean.way == HTTP) {
-                            //for (int i = 0; i < ; i++) {
-                            mPresenter.gotoDown( bean.type);
-                            //}
-                        }
-                    }
-                });
-
-                //清空
-                holder.setOnClickListener(R.id.bt_clear, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        holder.setText(R.id.tv_detail, "未下载");
-                        ((NumberProgressBar) holder.getView(R.id.number_progress_bar)).setProgress(0);
-                        try {
-                            for (int i = 0; i < bean.enties.length; i++) {
-                                mPresenter.clearData(Class.forName(bean.enties[i]));
+                            if (bean.way == WEB_SERVICE) {
+                                mPresenter.gotoDown(bean.methods, bean.enties, bean.pars, bean.type, bean.way);
+                            } else if (bean.way == HTTP) {
+                                mPresenter.gotoDown(bean.type);
                             }
-
-                        } catch (ClassNotFoundException e) {
-                            e.printStackTrace();
+                        } else if ("删除".equals(cb.getText())) {
+                            try {
+                                if (bean.enties != null && bean.enties.length != 0) {
+                                    for (int i = 0; i < bean.enties.length; i++) {
+                                        mPresenter.clearData(Class.forName(bean.enties[i]));
+                                    }
+                                }
+                                cb.normal(0);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 });

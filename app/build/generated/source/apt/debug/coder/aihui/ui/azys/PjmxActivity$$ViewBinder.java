@@ -21,17 +21,17 @@ public class PjmxActivity$$ViewBinder<T extends PjmxActivity> implements ViewBin
   protected static class InnerUnbinder<T extends PjmxActivity> implements Unbinder {
     protected T target;
 
-    private View view2131755414;
+    private View view2131755422;
 
-    private View view2131755418;
+    private View view2131755426;
 
     protected InnerUnbinder(final T target, Finder finder, Object source) {
       this.target = target;
 
       View view;
-      view = finder.findRequiredView(source, 2131755414, "field 'mIvBack' and method 'onViewClicked'");
-      target.mIvBack = finder.castView(view, 2131755414, "field 'mIvBack'");
-      view2131755414 = view;
+      view = finder.findRequiredView(source, 2131755422, "field 'mIvBack' and method 'onViewClicked'");
+      target.mIvBack = finder.castView(view, 2131755422, "field 'mIvBack'");
+      view2131755422 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
@@ -39,16 +39,16 @@ public class PjmxActivity$$ViewBinder<T extends PjmxActivity> implements ViewBin
         }
       });
       target.mTvTitle = finder.findRequiredViewAsType(source, 2131755235, "field 'mTvTitle'", TextView.class);
-      view = finder.findRequiredView(source, 2131755418, "field 'mIvAdd' and method 'onViewClicked'");
-      target.mIvAdd = finder.castView(view, 2131755418, "field 'mIvAdd'");
-      view2131755418 = view;
+      view = finder.findRequiredView(source, 2131755426, "field 'mIvAdd' and method 'onViewClicked'");
+      target.mIvAdd = finder.castView(view, 2131755426, "field 'mIvAdd'");
+      view2131755426 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
-      target.mRv = finder.findRequiredViewAsType(source, 2131755257, "field 'mRv'", RecyclerView.class);
+      target.mRv = finder.findRequiredViewAsType(source, 2131755258, "field 'mRv'", RecyclerView.class);
     }
 
     @Override
@@ -61,10 +61,10 @@ public class PjmxActivity$$ViewBinder<T extends PjmxActivity> implements ViewBin
       target.mIvAdd = null;
       target.mRv = null;
 
-      view2131755414.setOnClickListener(null);
-      view2131755414 = null;
-      view2131755418.setOnClickListener(null);
-      view2131755418 = null;
+      view2131755422.setOnClickListener(null);
+      view2131755422 = null;
+      view2131755426.setOnClickListener(null);
+      view2131755426 = null;
 
       this.target = null;
     }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        style="@style/text_item_install"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30px"
+        android:text="验收分组"
+        android:textColor="@color/textcolor"
+        android:textSize="15sp"/>
+
+    <include
+        layout="@layout/line"
+        ></include>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:divider="@color/colorLine"
+        android:dividerHeight="1dp"
+        android:padding="15px">
+    </android.support.v7.widget.RecyclerView>
+
+    <include
+        layout="@layout/line"
+        ></include>
+
+    <TextView
+        android:id="@+id/add"
+        style="@style/text_item_install"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30px"
+        android:text="添加新的单号"
+        android:textColor="@color/textcolor"
+        android:textSize="15sp"/>
+
+
+</LinearLayout>

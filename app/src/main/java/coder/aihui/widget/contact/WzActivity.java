@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mcxtzhang.indexlib.IndexBar.widget.IndexBar;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import coder.aihui.R;
 import coder.aihui.base.AppActivity;
 import coder.aihui.base.BaseFragment;
@@ -62,7 +64,11 @@ public class WzActivity extends AppActivity {
     TextView mTvOk;
 
     @BindView(R.id.et_search)
-    EditText mEtSearch;
+    EditText  mEtSearch;
+    @BindView(R.id.iv_back)
+    ImageView mIvBack;
+    @BindView(R.id.tv_title)
+    TextView  mTvTitle;
 
 
     private SuspensionDecoration mDecoration;
@@ -71,7 +77,6 @@ public class WzActivity extends AppActivity {
     private LinearLayoutManager mManager;
     private CommonAdapter       mCommonAdapter;
     private boolean IsMultiselect = false;       //是否是多选 根据是否多选 渲染不同的界面
-
 
 
     @Override
@@ -87,6 +92,8 @@ public class WzActivity extends AppActivity {
     @Override
     public void initView() {
 
+
+        mTvTitle.setText("设备选择");
         initGetIntent();
 
         mRv = (RecyclerView) findViewById(R.id.rv);
@@ -103,9 +110,9 @@ public class WzActivity extends AppActivity {
                         @Override
                         public void onClick(View v) {
 
-                           // if (bean.getIS_CHECKED()) {
-                                holder.setChecked(R.id.cb, !bean.getIS_CHECKED());
-                                bean.setIS_CHECKED(!bean.getIS_CHECKED());
+                            // if (bean.getIS_CHECKED()) {
+                            holder.setChecked(R.id.cb, !bean.getIS_CHECKED());
+                            bean.setIS_CHECKED(!bean.getIS_CHECKED());
                          /*   } else {
                                 holder.setChecked(R.id.cb, !bean.getIS_CHECKED());
                                 bean.setIS_CHECKED(!bean.getIS_CHECKED());
@@ -193,7 +200,6 @@ public class WzActivity extends AppActivity {
             imm.hideSoftInputFromWindow(
                     v.getApplicationWindowToken(), 0);
         }
-
         Editable text = mEtSearch.getText();
         if (!TextUtils.isEmpty(text)) {
             daoSession.getIN_MATERIALS_WZMCDao().queryBuilder().where(IN_MATERIALS_WZMCDao.Properties.WZMC.like(text.toString() == null ? "" : "%" + text.toString() + "%"))
@@ -209,10 +215,10 @@ public class WzActivity extends AppActivity {
                         public void call(List<IN_MATERIALS_WZMC> in_materials_wzmcs) {
                             mDatas.clear();
                             mDatas.addAll(in_materials_wzmcs);
-                            mCommonAdapter.notifyDataSetChanged();
+                            updateDatas();
+
                         }
                     });
-
         } else {
             return true;
         }
@@ -223,7 +229,7 @@ public class WzActivity extends AppActivity {
     private void initGetIntent() {
         Intent intent = getIntent();
         IsMultiselect = intent.getBooleanExtra(Content.IS_MULTISELECT, false);
-        String stringExtra = intent.getStringExtra(Content.SB_IDS);
+        String stringExtra = intent.getStringExtra(Content.AZYS_DETAIL_IDS);
         List<String> list = ListUtils.StringsTolist(stringExtra);
         for (IN_MATERIALS_WZMC data : mDatas) {
             if (list.contains(data.getID() + "")) {
@@ -255,6 +261,13 @@ public class WzActivity extends AppActivity {
         mIndexBar.setmSourceDatas(mDatas)
                 .invalidate();
         mCommonAdapter.notifyDataSetChanged();
+    }
+
+
+
+    @OnClick(R.id.iv_back)
+    public void onViewClicked() {
+        finish();
     }
 }
 

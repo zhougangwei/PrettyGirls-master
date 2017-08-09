@@ -13,7 +13,6 @@
         layout="@layout/include_small_title"></include>
 
     <include
-        android:id="@+id/title"
         layout="@layout/include_title_text"></include>
 
     <include layout="@layout/icon_back"></include>
@@ -27,7 +26,9 @@
         android:padding="21px"
         ></include>
 
-    <include layout="@layout/include_tv_ok"></include>
+    <include
+        android:id="@+id/tv_ok"
+        layout="@layout/include_tv_ok"></include>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -56,6 +57,8 @@
 
 
                 <TextView
+                    android:textSize="32px"
+                    android:gravity="start"
                     android:id="@+id/tv_pxry"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -87,6 +90,8 @@
                     android:textSize="32px"/>
 
                 <TextView
+                    android:textSize="32px"
+                    android:gravity="start"
                     android:id="@+id/tv_pxsb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -217,7 +222,7 @@
                     android:text="时长"/>
 
                 <TextView
-                    android:id="@+id/tv_scrq"
+                    android:id="@+id/tv_pxsc"
                     style="@style/tv_weight1"
                     android:text="1:33"/>
 
@@ -244,11 +249,11 @@
                 android:orientation="horizontal">
 
                 <include
-                    android:id="@+id/ll_fj"
+                    android:id="@+id/rl_fj"
                     layout="@layout/include_file"></include>
 
                 <include
-                    android:id="@+id/ll_jc"
+                    android:id="@+id/rl_jc"
                     layout="@layout/include_file"></include>
             </LinearLayout>
         </LinearLayout>

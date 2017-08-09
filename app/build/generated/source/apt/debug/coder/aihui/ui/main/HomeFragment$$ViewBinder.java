@@ -21,7 +21,7 @@ public class HomeFragment$$ViewBinder<T extends HomeFragment> implements ViewBin
     protected InnerUnbinder(T target, Finder finder, Object source) {
       this.target = target;
 
-      target.mRv = finder.findRequiredViewAsType(source, 2131755257, "field 'mRv'", RecyclerView.class);
+      target.mRv = finder.findRequiredViewAsType(source, 2131755258, "field 'mRv'", RecyclerView.class);
     }
 
     @Override

@@ -2,9 +2,5 @@
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\xml\\file_paths_public.xml",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\xml\\file_paths_public.xml"
-    },
-    {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\xml\\provider_paths.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\ac18f56987730515cdd4cfd610e85b43f36ca527\\output\\res\\xml\\provider_paths.xml"
     }
 ]

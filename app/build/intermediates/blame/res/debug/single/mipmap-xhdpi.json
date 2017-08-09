@@ -24,10 +24,6 @@
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\pxgl.png"
     },
     {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\back.png",
-        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\back.png"
-    },
-    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\czsm.png",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\czsm.png"
     },
@@ -190,6 +186,10 @@
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\crk.png",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\crk.png"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\icon_back.png",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\icon_back.png"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\fj.png",

@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import coder.aihui.app.BaseView;
 import coder.aihui.base.Content;
@@ -159,13 +160,11 @@ public class RemoteMyDataSource implements MyDataSource {
                             list2.add(i + 1);// 第一页
                             list2.add(downSize);            //几个
                             list2.add("");           //pdaId
-
                             if (pars != null && pars.size() > finalK && pars.get(finalK) != null && pars.get(finalK).length > 0) {
                                 for (String s : pars.get(finalK)) {
                                     list2.add(s);
                                 }
                             }
-
                             String recode2 = ws2.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url, methods[finalK], list2).get();
                             Log.d("RemoteMyDataSource2", recode2);
 
@@ -222,21 +221,30 @@ public class RemoteMyDataSource implements MyDataSource {
                     .subscribe(new Action1<List>() {
                         @Override
                         public void call(List datas) {
-                            //多线程下载保持 每一个 下载的数目 总数都是独立的
-                            int mDownNum = mCountHashMap.get(entitys[finalK]) == null ? 0 : mCountHashMap.get(entitys[finalK]);
-                            int mTotals = mTotalsHashMap.get(entitys[finalK]) == null ? 0 : mTotalsHashMap.get(entitys[finalK]);
 
-                            callback.onGetData();       //显示获取到数据
 
-                            for (int j = 0; j < datas.size(); j++) {
-                                mDaossion.insertOrReplace(datas.get(j));
-                                callback.onDatasLoadedProgress(100 * (mDownNum + j) / mTotals);
-                            }
-                            mDownNum += datas.size();
+                            synchronized (entitys[finalK]) {
 
-                            mCountHashMap.put(entitys[finalK], mDownNum);
-                            if (mDownNum == mTotals) {
-                                callback.onDataFinished();
+                                //多线程下载保持 每一个 下载的数目 总数都是独立的
+                                int mDownNum = mCountHashMap.get(entitys[finalK]) == null ? 0 : mCountHashMap.get(entitys[finalK]);
+                                int mTotals = mTotalsHashMap.get(entitys[finalK]) == null ? 0 : mTotalsHashMap.get(entitys[finalK]);
+
+                                callback.onGetData();       //显示获取到数据
+
+                                if (mTotals == 0) {
+                                    callback.onDataFinished();
+                                    return;
+                                }
+                                for (int j = 0; j < datas.size(); j++) {
+                                    mDaossion.insertOrReplace(datas.get(j));
+                                    callback.onDatasLoadedProgress(100 * (mDownNum + j) / mTotals);
+                                }
+                                mDownNum += datas.size();
+
+                                mCountHashMap.put(entitys[finalK], mDownNum);
+                                if (mDownNum == mTotals) {
+                                    callback.onDataFinished();
+                                }
                             }
                         }
                     });
@@ -303,6 +311,33 @@ public class RemoteMyDataSource implements MyDataSource {
 
     }
 
+    public void gotoUpJson(Integer type, Map<String, String> jsonMap, final LoadDatasCallback callback) {
+
+
+        MyRetrofit.getRetrofit()
+                .create(AiHuiLoginServices.class)
+                .upLoadPurPlan(jsonMap)
+                .observeOn(Schedulers.io())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+                        callback.onDataFinished();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onDataNotAvailable(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        Log.d("RemoteMyDataSource", s);
+                    }
+                });
+
+
+    }
+
 
     Observable getRetrofitObserbe(int type) {
         switch (type) {
@@ -312,10 +347,10 @@ public class RemoteMyDataSource implements MyDataSource {
                         .getComPanies(4);
             case PUR_CONTRACT_PLAN_DOWN:
                 return Observable.mergeDelayError(MyRetrofit.getRetrofit()
-                                .create(AiHuiLoginServices.class)
-                                .getAzysDatas("2010-10-25", 1), MyRetrofit.getRetrofit()
-                                .create(AiHuiLoginServices.class)
-                                .getAzysMx());
+                        .create(AiHuiLoginServices.class)
+                        .getAzysDatas("2010-10-25", 1), MyRetrofit.getRetrofit()
+                        .create(AiHuiLoginServices.class)
+                        .getAzysMx());
 
 
             case PXGL_SB_DOWN:
@@ -324,6 +359,8 @@ public class RemoteMyDataSource implements MyDataSource {
                         .getPpmc(), MyRetrofit.getRetrofit()
                         .create(AiHuiLoginServices.class)
                         .getWzmc());
+
+
         }
         return null;
 

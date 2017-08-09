@@ -54,7 +54,7 @@ import coder.aihui.widget.ScrollViewWithListView;
 import static coder.aihui.R.id.tv_zczyxq;
 import static coder.aihui.base.Content.BZ_REQUEST_CODE;
 import static coder.aihui.base.Content.PJMX_REQUEST_CODE;
-import static coder.aihui.base.Content.SB_IDS;
+import static coder.aihui.base.Content.AZYS_DETAIL_IDS;
 
 public class AzysDetailActivity extends AppActivity {
 
@@ -128,8 +128,8 @@ public class AzysDetailActivity extends AppActivity {
     @BindView(R.id.et_inputId)
     EditText     mEtInputId;
     private PUR_CONTRACT_PLAN_DETAIL bean;   //回显用 detailBean
-    private List<AZYS_MX>          mMXList  = new ArrayList<>();
-    private String                    whichPic;                //哪张图片
+    private List<AZYS_MX> mMXList = new ArrayList<>();
+    private String whichPic;                //哪张图片
     private Map<String, ImageView> ImageMap = new HashMap<>(); //ImageView的集合
 
     final static String ZMZ = "frontUrl";//正面照
@@ -198,8 +198,6 @@ public class AzysDetailActivity extends AppActivity {
     }
 
 
-
-
     private void gotoChooseNx() {
         NumberChooseDialog.getInstance().showNum(this, new ListBottomDialog.onBackResult() {
             @Override
@@ -235,7 +233,7 @@ public class AzysDetailActivity extends AppActivity {
                     List<Uri> uris = Matisse.obtainResult(data);
                     if (!TextUtils.isEmpty(whichPic)) {
                         Glide.with(this).load(uris.get(0)).into(ImageMap.get(whichPic));
-                        mPicMap.put(whichPic,uris.get(0).toString());
+                        mPicMap.put(whichPic, uris.get(0).toString());
                     }
                     break;
 
@@ -283,6 +281,9 @@ public class AzysDetailActivity extends AppActivity {
 
     //去保存
     private void gotoSave() {
+
+
+
 
 
         //安装工程师
@@ -374,7 +375,7 @@ public class AzysDetailActivity extends AppActivity {
         }
 
         Intent intent = new Intent();
-        intent.putExtra("num",mIdList.size());
+        intent.putExtra("num", mIdList.size());
         setResult(RESULT_OK, intent);
 
 
@@ -413,7 +414,7 @@ public class AzysDetailActivity extends AppActivity {
 
     private void initGetIntent() {
         Intent intent = getIntent();
-        String ids = intent.getStringExtra(SB_IDS);
+        String ids = intent.getStringExtra(AZYS_DETAIL_IDS);
         //区分是批量进来还是单次进来回显
         Boolean isFirstTime = intent.getBooleanExtra("isFirstTime", true);
         String[] split = ids.split(",");
@@ -498,7 +499,10 @@ public class AzysDetailActivity extends AppActivity {
 
 
             for (String s : mPicMap.keySet()) {
-                Glide.with(this).load(mPicMap.get(s)).into(ImageMap.get(s));
+                String url = mPicMap.get(s);
+                if (!TextUtils.isEmpty(url)) {
+                    Glide.with(this).load(url).into(ImageMap.get(s));
+                }
             }
 
         }

@@ -14,6 +14,23 @@
     <include layout="@layout/icon_back"></include>
 
     <include
+
+        layout="@layout/include_title_text"></include>
+
+    <TextView
+        android:id="@+id/tv_chooseMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="23px"
+        android:layout_marginTop="83px"
+        android:background="@drawable/shape_white_normal"
+        android:padding="8px"
+        android:text="普通"
+        android:textColor="@color/white"
+        android:textSize="22px"/>
+
+    <include
         layout="@layout/include_people"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,14 +85,22 @@
 
     </LinearLayout>
 
-    <android.support.design.widget.TabLayout
-        android:layout_below="@id/ll_time"
 
+    <android.support.design.widget.TabLayout
         android:id="@+id/tb"
         android:layout_width="match_parent"
         android:layout_height="80px"
+        android:layout_below="@+id/ll_time"
+        android:layout_marginTop="22px"
         app:tabSelectedTextColor="@color/textBlue">
     </android.support.design.widget.TabLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="8px"
+        android:layout_below="@+id/tb"
+        android:background="#F5F5F5"
+        />
 
 
     <LinearLayout
@@ -86,20 +111,20 @@
         android:background="#F5F5F5"
         android:orientation="horizontal">
     </LinearLayout>
-        <android.support.v4.view.ViewPager
-            android:id="@+id/vp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/line">
-        </android.support.v4.view.ViewPager>
 
- <android.support.design.widget.FloatingActionButton
-    android:id="@+id/fab_backToTop"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="576px"
-    android:layout_marginTop="879px"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/line">
+    </android.support.v4.view.ViewPager>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_backToTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="576px"
+        android:layout_marginTop="879px"/>
 
 
 </RelativeLayout>

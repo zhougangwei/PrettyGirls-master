@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 import coder.aihui.R;
 import coder.aihui.base.AppActivity;
 import coder.aihui.base.BaseFragment;
-import coder.aihui.data.bean.PUR_CONTRACT_PLAN_DETAIL;
+import coder.aihui.data.bean.DHBean;
 
 public class FormActivity extends AppActivity {
 
@@ -34,8 +34,8 @@ public class FormActivity extends AppActivity {
     TextView     mTvSearch;
     @BindView(R.id.rv)
     RecyclerView mRv;
-    private List<PUR_CONTRACT_PLAN_DETAIL> mDatas = new ArrayList<>();
-    private CommonAdapter<PUR_CONTRACT_PLAN_DETAIL> mAdapter;
+    private List<DHBean> mDatas = new ArrayList<>();
+    private CommonAdapter<DHBean> mAdapter;
 
     @Override
     protected int getContentViewId() {
@@ -54,13 +54,13 @@ public class FormActivity extends AppActivity {
     }
 
     private void initRecycleView() {
-        mAdapter = new CommonAdapter<PUR_CONTRACT_PLAN_DETAIL>(this
+        mAdapter = new CommonAdapter<DHBean>(this
                 , R.layout.item_form, mDatas) {
             @Override
-            protected void convert(ViewHolder holder, PUR_CONTRACT_PLAN_DETAIL bean, int position) {
-                holder.setText(R.id.tv_dh, bean.getDH_ID());
-                holder.setText(R.id.tv_mc, bean.getWZMC());
-                holder.setText(R.id.tv_num, bean.getCHECK_SL() + "");
+            protected void convert(ViewHolder holder, DHBean bean, int position) {
+                holder.setText(R.id.tv_dh, bean.getDh());
+                holder.setText(R.id.tv_mc, bean.getWzmc());
+                holder.setText(R.id.tv_num, bean.getNum() + "");
             }
         };
         mRv.setAdapter(mAdapter);

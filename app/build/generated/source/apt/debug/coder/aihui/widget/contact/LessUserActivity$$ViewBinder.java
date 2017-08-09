@@ -21,7 +21,7 @@ public class LessUserActivity$$ViewBinder<T extends LessUserActivity> implements
   protected static class InnerUnbinder<T extends LessUserActivity> implements Unbinder {
     protected T target;
 
-    private View view2131755414;
+    private View view2131755422;
 
     private View view2131755263;
 
@@ -29,9 +29,9 @@ public class LessUserActivity$$ViewBinder<T extends LessUserActivity> implements
       this.target = target;
 
       View view;
-      view = finder.findRequiredView(source, 2131755414, "field 'mIvBack' and method 'onViewClicked'");
-      target.mIvBack = finder.castView(view, 2131755414, "field 'mIvBack'");
-      view2131755414 = view;
+      view = finder.findRequiredView(source, 2131755422, "field 'mIvBack' and method 'onViewClicked'");
+      target.mIvBack = finder.castView(view, 2131755422, "field 'mIvBack'");
+      view2131755422 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
@@ -39,7 +39,7 @@ public class LessUserActivity$$ViewBinder<T extends LessUserActivity> implements
         }
       });
       target.mTvTitle = finder.findRequiredViewAsType(source, 2131755235, "field 'mTvTitle'", TextView.class);
-      target.mRv = finder.findRequiredViewAsType(source, 2131755257, "field 'mRv'", RecyclerView.class);
+      target.mRv = finder.findRequiredViewAsType(source, 2131755258, "field 'mRv'", RecyclerView.class);
       view = finder.findRequiredView(source, 2131755263, "field 'mTvOk' and method 'onViewClicked'");
       target.mTvOk = finder.castView(view, 2131755263, "field 'mTvOk'");
       view2131755263 = view;
@@ -61,8 +61,8 @@ public class LessUserActivity$$ViewBinder<T extends LessUserActivity> implements
       target.mRv = null;
       target.mTvOk = null;
 
-      view2131755414.setOnClickListener(null);
-      view2131755414 = null;
+      view2131755422.setOnClickListener(null);
+      view2131755422 = null;
       view2131755263.setOnClickListener(null);
       view2131755263 = null;
 

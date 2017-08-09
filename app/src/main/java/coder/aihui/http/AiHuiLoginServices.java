@@ -1,6 +1,7 @@
 package coder.aihui.http;
 
 import java.util.List;
+import java.util.Map;
 
 import coder.aihui.data.bean.AZYS_MX;
 import coder.aihui.data.bean.DqxqOutBean;
@@ -8,7 +9,10 @@ import coder.aihui.data.bean.IN_MATERIALS_PPMC;
 import coder.aihui.data.bean.IN_MATERIALS_WZMC;
 import coder.aihui.data.bean.PUB_COMPANY;
 import coder.aihui.data.bean.PUR_CONTRACT_PLAN;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -51,6 +55,10 @@ public interface AiHuiLoginServices {
     @GET("/pubDictionaryClass/getPurCheckItemJson.html?")
     Observable<List<AZYS_MX>> getAzysMx(
     );
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("/purContract/sendPurContractDetail.html")
+    Observable<String> upLoadPurPlan(@Body Map<String,String> jsonMap);
 
 
 }

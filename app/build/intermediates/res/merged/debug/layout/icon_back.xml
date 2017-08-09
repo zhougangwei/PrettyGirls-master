@@ -7,7 +7,7 @@
     android:layout_height="43px"
     android:layout_marginLeft="23px"
     android:layout_marginTop="85px"
-    android:src="@mipmap/back"/>-->
+    android:src="@mipmap/icon_back"/>-->
 <ImageView
 xmlns:android="http://schemas.android.com/apk/res/android"
 android:id="@+id/iv_back"
@@ -15,4 +15,4 @@ android:layout_width="99px"
 android:layout_height="112px"
 android:layout_marginTop="48px"
 android:scaleType="center"
-android:src="@mipmap/back"/>
+android:src="@mipmap/icon_back"/>

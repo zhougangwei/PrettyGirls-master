@@ -394,7 +394,7 @@ public class LazyViewPager extends ViewGroup {
      * on your pages, tweaking this setting can have benefits in perceived smoothness
      * of paging animations and interaction. If you have a small number of pages (3-4)
      * that you can keep active all at once, less time will be spent in include_tab for
-     * newly created view subtrees as the user pages back and forth.</p>
+     * newly created view subtrees as the user pages icon_back and forth.</p>
      *
      * <p>You should keep this limit low, especially if your pages have complex layouts.
      * This setting defaults to 1.</p>

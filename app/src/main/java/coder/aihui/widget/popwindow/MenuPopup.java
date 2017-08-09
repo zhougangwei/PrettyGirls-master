@@ -25,12 +25,12 @@ import razerdp.basepopup.BasePopupWindow;
  * Created by 大灯泡 on 2016/1/22.
  * 菜单。
  */
-public class MenuPopup extends BasePopupWindow  {
+public class MenuPopup extends BasePopupWindow {
 
 
     private List<String> mDataList;
 
-    public MenuPopup(Activity context, List dataList) {
+    public MenuPopup(Activity context, List dataList, final BackReslut backReslut) {
         super(context, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         setBackPressEnable(false);
         setDismissWhenTouchOuside(true);
@@ -42,11 +42,17 @@ public class MenuPopup extends BasePopupWindow  {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getContext(), mDataList.get(position), Toast.LENGTH_LONG).show();
+                backReslut.onBackResult(mDataList.get(position));
             }
         });
 
 
     }
+
+    public interface BackReslut {
+      void  onBackResult(String string);
+    }
+
 
     @Override
     protected Animation initShowAnimation() {
@@ -122,7 +128,7 @@ public class MenuPopup extends BasePopupWindow  {
             InnerPopupAdapter.ViewHolder vh = null;
             if (convertView == null) {
                 vh = new InnerPopupAdapter.ViewHolder();
-                convertView = View.inflate(mContext,R.layout.item_popup_list, null);
+                convertView = View.inflate(mContext, R.layout.item_popup_list, null);
                 vh.mTextView = (TextView) convertView.findViewById(R.id.item_tx);
                 convertView.setTag(vh);
             } else {
