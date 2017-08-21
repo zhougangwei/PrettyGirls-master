@@ -12,12 +12,14 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.blankj.utilcode.utils.TimeUtils;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
@@ -59,6 +61,7 @@ import coder.aihui.util.ListUtils;
 import coder.aihui.util.SPUtil;
 import coder.aihui.util.ToastUtil;
 import coder.aihui.widget.AlertListDialogUtil;
+import coder.aihui.widget.MyArrayAdapter;
 import coder.aihui.widget.contact.LessUserActivity;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -91,6 +94,10 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
     FloatingActionButton mFabBackToTop;
     @BindView(R.id.tv_title)
     TextView             mTvTitle;
+    @BindView(R.id.tv_start)
+    TextView             mTvStart;
+    @BindView(R.id.tv_end)
+    TextView             mTvEnd;
 
     private String mDeptName;
     private String mDeptIds;
@@ -101,12 +108,12 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
     private String mAllDlwzIds  = "";//所有的子地理位置
     private String mAllDeptIds  = "";//所有科室
 
-    private List<String>       mTitleList = new ArrayList<>();
-    private List<RecyclerView> mViewList  = new ArrayList<>();
 
-    public static final int REP_ALL     = 0;//全部
-    public static final int REP_CHECKED = 1;//
-    public static final int REP_NOPLAN  = 2;//过期
+    private             List<String>       mTitleList  = new ArrayList<>();
+    private             List<RecyclerView> mViewList   = new ArrayList<>();
+    public static final int                REP_ALL     = 0;//全部
+    public static final int                REP_CHECKED = 1;//
+    public static final int                REP_NOPLAN  = 2;//过期
 
     private InspectPagerAdapter mPagerAdapter;
     private CommonAdapter       mAllAdapter;
@@ -125,13 +132,15 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
     private String insrType    = "XJ";//默认巡检   新增JL
     private String dicType     = "";//字典ID 字典类别,巡检分类 0 查询全部
     private int    searchCycle = 1;//查询周期  1 今天，2本周 3 本月 4当天向前15天 5当天向前三十天 6当天向前45天 7一个周期 目前是两个月
-    private int    searchType  = 1;//"1">RFID "2">二维码 "3">名称  默认1  "6">摄像头
 
 
-    private Date startDate;//查询开始日期00:00
-    private Date endDate;//查询结束日期23:59
-    private String  searchText = "";//内容，优先级最高
-    private Integer pdaType    = 1;//PDA的状态，1、RFID，2、激光，3，摄像头
+    private int CurrentWhich = 0;   //当前选中的是哪个
+
+
+    private Date mStartDate;//查询开始日期00:00
+    private Date mEndDate;//查询结束日期23:59
+    private String  mSearchText = "";//内容，优先级最高
+    private Integer pdaType     = 1;//PDA的状态，1、RFID，2、激光，3，摄像头
 
     private List<LoadingBean> mDataList = new ArrayList<>();
     private int               modeType  = 0;           //普通巡检还是自动巡检
@@ -139,6 +148,17 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
     //全部选择的人
     private ArrayList<Integer> userChooseIds   = new ArrayList<>();
     private ArrayList<String>  userChooseNames = new ArrayList<>();
+    private MyArrayAdapter<String> mSearchAdapter;
+
+
+    /**
+     * <item>品牌|名称|规格</item>
+     * <item>名称</item>
+     * <item>新资产编号</item>
+     * <item>老资产编号</item>
+     */
+    private String mSearchType;
+
 
     @Override
     protected int getContentViewId() {
@@ -153,6 +173,7 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
 
     @Override
     protected void initView() {
+        mSearchType = getResources().getStringArray(R.array.inspect)[0];
         mPagerAdapter = new InspectPagerAdapter(mTitleList, mViewList, this);
         mVp.setAdapter(mPagerAdapter);
 
@@ -165,8 +186,11 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
 
         mTvTitle.setText("开始巡检");
 
-        //第一次进来请求的时间
-        getFirstTime();
+        initGetIntent();
+
+        //初始化Spinner数据
+        initSpinner();
+        //初始化列表视图
         initRecycleView();
         //变更tab显示
         changeTextOfTab();
@@ -185,6 +209,37 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
 
     }
 
+    private void initSpinner() {
+        mSearchAdapter = new MyArrayAdapter<String>(this, R.layout.mysimple_spinner_item, getResources().getStringArray(R.array.inspect));
+        mSearchAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpSearch.setAdapter(mSearchAdapter);
+
+        mSpSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mSearchType = InspectStartActivity.this.getResources().getStringArray(R.array.inspect)[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                mSearchType = InspectStartActivity.this.getResources().getStringArray(R.array.inspect)[0];
+            }
+        });
+    }
+
+    private void initGetIntent() {
+        Intent intent = getIntent();
+        mStartDate = (Date) intent.getSerializableExtra("mStartDate");
+        mEndDate = (Date) intent.getSerializableExtra("mEndDate");
+        setTime();
+    }
+
+
+    private void setTime() {
+
+        mTvStart.setText("周期开始时间:" + TimeUtils.date2String(mStartDate, mFormat));
+        mTvEnd.setText("周期结束时间:" + TimeUtils.date2String(mEndDate, mFormat));
+    }
 
     private void initRecycleView() {
 
@@ -240,10 +295,10 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
             TabLayout.Tab tab = mTb.getTabAt(i);
             int position = tab.getPosition();
             //还没数据的 去加载数据 有数据的 就直接显示
-
             if (position == 0) {
                 mALLTabView = View.inflate(this, R.layout.tab_view0, null);
                 View viewById = mALLTabView.findViewById(R.id.iv_showmore);
+                viewById.setVisibility(View.GONE);
                 mTabViewList.add(mALLTabView);
             } else if (position == 1) {
                 mPlanView = View.inflate(this, R.layout.tab_view1, null);
@@ -253,8 +308,6 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
                 mTabViewList.add(mNoplanTabView);
             }
             tab.setCustomView(mTabViewList.get(i));
-
-
             //查询数据 渲染
             queryAllCount(position, 0, 10);
 
@@ -270,7 +323,7 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
      * @param type
      */
     //显示明细的页面
-    private void showItemView(ViewHolder holder, INSPECT_PLAN planBean, int type) {
+    private void showItemView(ViewHolder holder, final INSPECT_PLAN planBean, int type) {
 
         //说明是临时的 任务 更改视图
 
@@ -288,10 +341,10 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
         holder.setOnClickListener(R.id.ll, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(InspectStartActivity.this,InspectDetailActivity.class);
-
-                startActivity(intent);
+                Intent intent = new Intent(InspectStartActivity.this, InspectDetailActivity.class);
+                intent.putExtra("isNew", 1);
+                intent.putExtra("planId", planBean.getINSP_ID());//如果isPlan是3，就是设备或者巡检的ID(对应的是台账或者Rp的Id)
+                startActivityForResult(intent, Content.INSPECT_DETAIL_REQUESET_CODE);
             }
         });
 
@@ -304,7 +357,6 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
         holder.setText(R.id.tv_dept, planBean.getKSMC());
         holder.setText(R.id.tv_location, planBean.getDDMC());
     }
-
 
     /**
      * @param viewList 图的列表
@@ -320,7 +372,7 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
-                    int lastVisibleItem = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
+                    int lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
                     int totalItemCount = mLayoutManager.getItemCount();
                     //lastVisibleItem >= totalItemCount - 4 表示剩下4个item自动加载，各位自由选择
                     // dy>0 表示向下滑动
@@ -335,9 +387,10 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
             });
         }
     }
-
     public void queryAllCount(final int which, int i_start, int i_count) {
+        mSearchText = mEtSearch.getText().toString();
         try {
+
             INSPECT_PLANDao planDao = mDaoSession.getINSPECT_PLANDao();
             QueryBuilder<INSPECT_PLAN> qb2 = planDao.queryBuilder();
             //用户ID
@@ -361,26 +414,30 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
 
 
             qb2.where(INSPECT_PLANDao.Properties.INSP_TYPE.eq(insrType));
-            if (!"".equals(searchText) && searchType == 3) {
-                qb2.where(INSPECT_REPDao.Properties.WZMC
-                        .like("%" + searchText + "%"));
+            if (!TextUtils.isEmpty(mSearchText)) {
+                if ("名称".equals(mSearchType)) {
+                    qb2.where(INSPECT_PLANDao.Properties.WZMC
+                            .like("%" + mSearchText + "%"));
+                } else if ("新资产编号".equals(mSearchType)) {
+                    qb2.where(INSPECT_PLANDao.Properties.KPBH
+                            .like("%" + mSearchText + "%"));
+                }
             }
             long num = -1;
 
             switch (which) {
-
                 case 0:
                     //1是已检
                     num = qb2.where(INSPECT_PLANDao.Properties.ISCHECK.eq(1)).count();
                     break;
                 case 1:
                     num = qb2.where(INSPECT_PLANDao.Properties.ISCHECK.eq(1))
-                            .where(INSPECT_PLANDao.Properties.INSP_ID.notEq(0L))
+                            .where(INSPECT_PLANDao.Properties.INSP_ID.notEq(-1L))
                             .count();
                     break;
                 case 2:
                     num = qb2.where(INSPECT_PLANDao.Properties.ISCHECK.eq(1))
-                            .where(INSPECT_PLANDao.Properties.INSP_ID.eq(0L))
+                            .where(INSPECT_PLANDao.Properties.INSP_ID.eq(-1L))
                             .where(INSPECT_PLANDao.Properties.IS_TEMPORARY.eq(1)).count();
                     break;
             }
@@ -390,30 +447,25 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
             if (num == -1) {
                 return;
             }
-
-            qb2.limit(i_count).offset(i_start).rx().list().subscribeOn(Schedulers.io()).compose(this.<List<INSPECT_PLAN>>bindToLife()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<List<INSPECT_PLAN>>() {
+            qb2.limit(i_count).offset(i_start).rx().list().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<List<INSPECT_PLAN>>() {
                 @Override
                 public void call(List<INSPECT_PLAN> inspect_plen) {
                     switch (which) {
                         case 0:
                             ((TextView) mTabViewList.get(which).findViewById(R.id.tv_name))
                                     .setText("全部(" + finalNum + ")");
-
                             mAllList.addAll(inspect_plen);
                             mAllAdapter.notifyDataSetChanged();
                             break;
                         case 1:
                             ((TextView) mTabViewList.get(which).findViewById(R.id.tv_name))
                                     .setText("计划(" + finalNum + ")");
-
-
                             mPlanList.addAll(inspect_plen);
                             mPlanAdapter.notifyDataSetChanged();
                             break;
                         case 2:
                             ((TextView) mTabViewList.get(which).findViewById(R.id.tv_name))
                                     .setText("临时(" + finalNum + ")");
-
                             mNoPlanList.addAll(inspect_plen);
                             mNoPlanAdapter.notifyDataSetChanged();
                             break;
@@ -423,8 +475,6 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
 
@@ -432,11 +482,11 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
     private void getFirstTime() {
         try {
             Date[] dateArry = AndroidUtils.getTimeCycle(7);
-            startDate = dateArry[0];
-            endDate = dateArry[1];
+            mStartDate = dateArry[0];
+            mEndDate = dateArry[1];
             if ("PM".equals(insrType) && searchCycle == 7) {
-                startDate = new Date();
-                endDate = new Date();
+                mStartDate = new Date();
+                mEndDate = new Date();
             }
             searchCycle = 7;
         } catch (Exception e) {
@@ -446,7 +496,7 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-
+        CurrentWhich = tab.getPosition();
     }
 
     @Override
@@ -455,7 +505,6 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
     }
 
 
-    @Override
     public void doSaveListData(Set<String> set) {
 
 
@@ -473,6 +522,9 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
             //此处增加分组标签（B开头）及地理位置（D开头）
             if (str1.indexOf("D") == 0 || str1.indexOf("B") == 0) {
                 //先要查出ddid，
+
+
+                //// TODO: 2017/8/10 bug
                 List<INSPECT_PLAN> list = AndroidUtils.getInspPlanByRfid(InspectStartActivity.this, mDaoSession, str1);
                 AlertDialog.Builder builder = new AlertDialog.Builder(InspectStartActivity.this);
                 builder.setTitle("选择一个项目");
@@ -513,13 +565,12 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
                         continue;
                     }
                     //如果在周期内的话，就是计划
-                    if ((new Date()).getTime() >= plan.getINSP_EXEC_START_DATE().getTime() && (new Date()).getTime() <= plan.getINSP_EXEC_END_DATE().getTime()) {
+                    if (plan.getINSP_EXEC_START_DATE() != null && plan.getINSP_EXEC_END_DATE() != null && (new Date()).getTime() >= plan.getINSP_EXEC_START_DATE().getTime() && (new Date()).getTime() <= plan.getINSP_EXEC_END_DATE().getTime()) {
                         isPlan = 2;
                         break;
                     }
                 }
             }
-
             //						AndroidUtils.showErrorMsg("提示", "巡检类型(1、2、计划，0、无)：isPlan="+ isPlan + ";扫到的RFID="+str1 , InspectStartActivity.this);
             String userID = SPUtil.getString(this, "userID", "");
             if (isPlan == 0) {//以后修改为，如果没有计划，改为查询任务
@@ -619,16 +670,13 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
                     intent.putExtra("dicId", INSE_TEMPLATE_ID);//有用 了
                     intent.putExtra("rfidType", rfidType);//设备还是巡检点
                     intent.putExtra("isPlan", isPlan);
-
                     intent.putExtra("TYPE", insrType);//XJ还是PM
-
                     if ("PM".equals(insrType)) {
                         //看看计划Id
                         List<INSPECT_REP> list1 = mDaoSession.getINSPECT_REPDao().queryBuilder()
                                 .where(INSPECT_REPDao.Properties.INSR_TYPE.eq("PM"))
                                 .where(INSPECT_REPDao.Properties.INSR_FK_ID.eq(planId))
                                 .list();
-
                         if (list1 != null && list1.size() != 0) {
                             intent.putExtra("isNew", 0);
                             intent.putExtra("planId", list1.get(0).getINSR_ID());       //相当于重新打开 planid是rep的主键Id
@@ -823,13 +871,10 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
                                 .orderAsc(InspectTempletItemDao.Properties.ITEM_SORT)
                                 .orderAsc(InspectTempletItemDao.Properties.ITEM_ID)
                                 .list();
-
                     }
                 }
             }
         }
-
-
     }
 
 
@@ -890,6 +935,12 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
                     userChooseIds = data.getIntegerArrayListExtra("userIdList");
                     userChooseNames = data.getStringArrayListExtra("userNameList");
                     break;
+                case Content.INSPECT_DETAIL_REQUESET_CODE:
+                    for (int i = 0; i < mTitleList.size(); i++) {
+                        queryAllCount(i, 0, 10);
+                    }
+                    break;
+
             }
         }
 
@@ -898,14 +949,12 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
 
     //返回到最上方
     private void backToTop() {
-
-
+        mViewList.get(CurrentWhich).scrollToPosition(0);
     }
 
     //文字搜索
     private void doTextSearch() {
-
-
+        queryAllCount(CurrentWhich, 0, 10);
     }
 
     //弹框搜索
@@ -918,5 +967,11 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
                 doSaveListData(set);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+        finish();
     }
 }

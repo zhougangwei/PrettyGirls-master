@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.utils.TimeUtils;
 import com.bumptech.glide.Glide;
+import com.jzxiang.pickerview.TimePickerDialog;
+import com.jzxiang.pickerview.data.Type;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
@@ -27,6 +29,10 @@ import coder.aihui.R;
 import coder.aihui.base.AppActivity;
 import coder.aihui.base.BaseFragment;
 import coder.aihui.base.Content;
+import coder.aihui.base.DeptDecotor;
+import coder.aihui.base.DeptView;
+import coder.aihui.base.DlwzDecotor;
+import coder.aihui.base.DlwzView;
 import coder.aihui.data.bean.DialogBean;
 import coder.aihui.data.bean.IN_ASSET;
 import coder.aihui.data.bean.PUB_COMPANY;
@@ -34,12 +40,10 @@ import coder.aihui.data.bean.PUB_DICTIONARY_ITEM;
 import coder.aihui.data.bean.SYS_USER;
 import coder.aihui.data.bean.gen.PUB_DICTIONARY_ITEMDao;
 import coder.aihui.manager.DeptLocationManager;
-import coder.aihui.util.viewutil.DatePickUtil;
 import coder.aihui.widget.ListBottomDialog;
 import coder.aihui.widget.contact.ContactActivity;
 import coder.aihui.widget.contact.SysUserActivity;
 import coder.aihui.widget.jdaddressselector.ISelectAble;
-import coder.aihui.widget.jdaddressselector.SelectedListener;
 
 import static coder.aihui.base.Content.COMPANY_GHDW;
 import static coder.aihui.base.Content.COMPANY_ID;
@@ -49,7 +53,7 @@ import static coder.aihui.base.Content.COMPANY_TYPE;
 import static coder.aihui.base.Content.SYSUSER_REQUEST_CODE;
 
 
-public class AssetDetailEditActivity extends AppActivity implements SelectedListener {
+public class AssetDetailEditActivity extends AppActivity implements DeptView, DlwzView {
 
 
     @BindView(R.id.iv_back)
@@ -109,7 +113,9 @@ public class AssetDetailEditActivity extends AppActivity implements SelectedList
     private List<DialogBean> mScqrList = new ArrayList<>(); //首次确认
     private int              whichPic  = -1;                //哪张图片
     private List<ImageView>  PicList   = new ArrayList<>(); //ImageView的集合
-
+    private DeptDecotor mDeptDecotor;
+    private DlwzDecotor mDlwzDecotor;
+    private DeptLocationManager mDeptLocationManager;
 
     @Override
     protected int getContentViewId() {
@@ -124,7 +130,9 @@ public class AssetDetailEditActivity extends AppActivity implements SelectedList
     @Override
     protected void initView() {
 
-
+        mDeptDecotor = new DeptDecotor(this, this);
+        mDlwzDecotor = new DlwzDecotor(this,this);
+        mDeptLocationManager = new DeptLocationManager();
         mTvTitle.setText("资产编辑");
         TextView tv_Zmz = (TextView) mRlZmz.findViewById(R.id.tv_word);
         TextView tv_Cmz = (TextView) mRlCmz.findViewById(R.id.tv_word);
@@ -217,7 +225,7 @@ public class AssetDetailEditActivity extends AppActivity implements SelectedList
                 getScrq();
                 break;
             case R.id.ll_location:          //地理位子
-                getLocation(this);
+                getDlwz();
                 break;
             case R.id.ll_ghdw:              //供货单位
                 gotoChooseSccj(COMPANY_GHDW);
@@ -226,7 +234,7 @@ public class AssetDetailEditActivity extends AppActivity implements SelectedList
                 gotoChooseSccj(COMPANY_SCCJ);
                 break;
             case R.id.ll_bgks:              //保管科室
-                getDept(this);
+                getDept();
                 break;
             case R.id.ll_bgr:                  //保管人
                 gotoGetBgr();
@@ -252,7 +260,7 @@ public class AssetDetailEditActivity extends AppActivity implements SelectedList
 
     private void gotoGetBgr() {
         Intent intent = new Intent(this, SysUserActivity.class);
-        intent.putExtra(Content.IS_MULTISELECT,false);      //是否多选
+        intent.putExtra(Content.IS_MULTISELECT, false);      //是否多选
         startActivityForResult(intent, SYSUSER_REQUEST_CODE);
 
     }
@@ -263,11 +271,7 @@ public class AssetDetailEditActivity extends AppActivity implements SelectedList
         startActivityForResult(intent, COMPANY_REQUEST_CODE);
 
     }
-
-
     private void gotoChoosePic(int type) {
-
-
         whichPic = type;
         Matisse.from(this)
                 .choose(MimeType.allOf())
@@ -325,16 +329,17 @@ public class AssetDetailEditActivity extends AppActivity implements SelectedList
                     }
             }
         }
-
-
     }
-
 
     //保存数据
     private void gotoSave() {
 
-        finish();
 
+
+
+
+
+        finish();
     }
 
     //获取保管类型
@@ -350,7 +355,7 @@ public class AssetDetailEditActivity extends AppActivity implements SelectedList
 
     //获取首次确认
     private void getScqr() {
-        new ListBottomDialog(this).showDialog( mScqrList, new ListBottomDialog.onBackResult() {
+        new ListBottomDialog(this).showDialog(mScqrList, new ListBottomDialog.onBackResult() {
             @Override
             public void backResult(DialogBean bean) {
                 mTvScqr.setText(bean.getName());
@@ -360,18 +365,35 @@ public class AssetDetailEditActivity extends AppActivity implements SelectedList
 
     //获取生产时间
     private void getScrq() {
-        DatePickUtil.getInstance().showDatePick(mTvScrq, this, new DatePickUtil.GetResult() {
-            @Override
-            public void getResult(String result) {
-            }
-        });
+        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        TimePickerDialog build = new TimePickerDialog.Builder()
+                .setCurrentMillseconds(TimeUtils.string2Milliseconds(mTvScrq.getText().toString() == null ? TimeUtils.getCurTimeString(format) : mTvScrq.getText().toString(), format))
+                .setThemeColor(getResources().getColor(R.color.timepicker_dialog_bg))
+                .setType(Type.YEAR_MONTH_DAY)
+                .setWheelItemTextNormalColor(getResources().getColor(R.color.timetimepicker_default_text_color))
+                .setWheelItemTextSelectorColor(getResources().getColor(R.color.timepicker_toolbar_bg))
+                .setWheelItemTextSize(15)
+                .build();
+        build.show(getSupportFragmentManager(), "1");
     }
 
     @Override
     public void onAddressSelected(ArrayList<ISelectAble> selectAbles) {
-        DeptLocationManager manager = new DeptLocationManager(selectAbles);
 
+        mDeptLocationManager.solveDatas(selectAbles);
+    }
+    @Override
+    public void closeDiaLog() {
+        mDeptDecotor.closeDiaLog();
+        mDlwzDecotor.closeDiaLog();
+    }
+    @Override
+    public void getDept() {
+        mDeptDecotor.getDept();
+    }
 
-
+    @Override
+    public void getDlwz() {
+        mDlwzDecotor.getDlwz();
     }
 }

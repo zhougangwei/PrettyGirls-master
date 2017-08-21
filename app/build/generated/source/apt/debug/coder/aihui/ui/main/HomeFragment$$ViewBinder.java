@@ -2,6 +2,7 @@
 package coder.aihui.ui.main;
 
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 import butterknife.Unbinder;
 import butterknife.internal.Finder;
 import butterknife.internal.ViewBinder;
@@ -21,7 +22,8 @@ public class HomeFragment$$ViewBinder<T extends HomeFragment> implements ViewBin
     protected InnerUnbinder(T target, Finder finder, Object source) {
       this.target = target;
 
-      target.mRv = finder.findRequiredViewAsType(source, 2131755258, "field 'mRv'", RecyclerView.class);
+      target.mRv = finder.findRequiredViewAsType(source, 2131755287, "field 'mRv'", RecyclerView.class);
+      target.mTvNameHos = finder.findRequiredViewAsType(source, 2131755426, "field 'mTvNameHos'", TextView.class);
     }
 
     @Override
@@ -30,6 +32,7 @@ public class HomeFragment$$ViewBinder<T extends HomeFragment> implements ViewBin
       if (target == null) throw new IllegalStateException("Bindings already cleared.");
 
       target.mRv = null;
+      target.mTvNameHos = null;
 
       this.target = null;
     }

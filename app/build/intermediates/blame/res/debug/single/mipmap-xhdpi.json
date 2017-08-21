@@ -8,6 +8,10 @@
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\ic_updown.png"
     },
     {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\ic_del_pic.png",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\ic_del_pic.png"
+    },
+    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\ic_people.png",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\ic_people.png"
     },
@@ -180,12 +184,20 @@
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\ic_choose.png"
     },
     {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\ic_bhg.png",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\ic_bhg.png"
+    },
+    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\ic_photo.png",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\ic_photo.png"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\crk.png",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\crk.png"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\ic_nopic.png",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\ic_nopic.png"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\icon_back.png",

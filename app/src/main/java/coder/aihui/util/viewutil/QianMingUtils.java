@@ -2,17 +2,16 @@ package coder.aihui.util.viewutil;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.SystemClock;
-import android.util.Log;
+import android.graphics.PorterDuff;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.blankj.utilcode.utils.TimeUtils;
 
@@ -23,7 +22,12 @@ import java.util.ArrayList;
 
 import coder.aihui.R;
 import coder.aihui.util.BitmapDeleteNoUseSpaceUtil;
-import coder.aihui.util.ThreadUtils;
+import coder.aihui.util.FileUtil;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 import static coder.aihui.app.MyApplication.mContext;
 
@@ -44,10 +48,17 @@ public class QianMingUtils implements View.OnClickListener {
     private float a = 6f;
     private AlertDialog mDialog;
     private ImageView   mIv_image;
-    private Bitmap      mBitmap2;
-    private String      mUrl;
 
-    public QianMingUtils() {
+
+    private Canvas mCanvas;
+
+    private static QianMingUtils mLoadDataManager = new QianMingUtils();
+
+    private QianMingUtils() {
+    }
+
+    public static QianMingUtils getInstance() {
+        return mLoadDataManager;
     }
 
 
@@ -56,22 +67,27 @@ public class QianMingUtils implements View.OnClickListener {
         View view = View.inflate(activity, R.layout.dialog_qm, null);
 
         mIv_image = (ImageView) view.findViewById(R.id.iv_image);
-        final Button jiacu = (Button) view.findViewById(R.id.jiacu);
-        final Button bianxi = (Button) view.findViewById(R.id.bianxi);
-        //final Button save = (Button) view.findViewById(R.id.save);
+        final TextView jiacu = (TextView) view.findViewById(R.id.jiacu);            //加粗
+        final TextView bianxi = (TextView) view.findViewById(R.id.bianxi);          //变细
+        final TextView chongqian = (TextView) view.findViewById(R.id.chongqian);    //重签
 
+
+        final TextView tvQuit = (TextView) view.findViewById(R.id.tv_quit);    //重签
+        final TextView tvSave = (TextView) view.findViewById(R.id.tv_save);    //重签
         jiacu.setOnClickListener(this);
         bianxi.setOnClickListener(this);
-        //save.setOnClickListener(this);
+        chongqian.setOnClickListener(this);
+        tvQuit.setOnClickListener(this);
+        tvSave.setOnClickListener(this);
 
         // 1. 创建空白纸张
         bitmap = Bitmap.createBitmap(800, 800, Bitmap.Config.ARGB_8888);
 
         // 2. 创建画板
-        final Canvas canvas = new Canvas(bitmap);
+        mCanvas = new Canvas(bitmap);
 
         // 3. 绘制内容
-        canvas.drawColor(Color.WHITE);
+        mCanvas.drawColor(Color.WHITE);
 
         // 4. 设置给ImageView
         mIv_image.setImageBitmap(bitmap);
@@ -101,14 +117,13 @@ public class QianMingUtils implements View.OnClickListener {
                         float endY = event.getY();
 
                         // 画一条直线
-                        canvas.drawLine(startX, startY, endX, endY, paint);
+                        mCanvas.drawLine(startX, startY, endX, endY, paint);
                         // 更新图片
                         mIv_image.setImageBitmap(bitmap);
 
                         // 更新开始坐标
                         startX = endX;
                         startY = endY;
-
                         break;
                     case MotionEvent.ACTION_UP:     // 抬起
                         al.add(bitmap);
@@ -121,19 +136,7 @@ public class QianMingUtils implements View.OnClickListener {
             }
         });
 
-        mDialog = new AlertDialog.Builder(activity).setPositiveButton("保存", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                goToSave();
-
-            }
-        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                mDialog.dismiss();
-            }
-        }).setView(view).create();
+        mDialog = new AlertDialog.Builder(activity).setView(view).create();
         mDialog.setCancelable(true);
         mDialog.show();
     }
@@ -149,13 +152,31 @@ public class QianMingUtils implements View.OnClickListener {
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.jiacu:
+            case R.id.jiacu:        //加粗
                 goTojiacu();
                 break;
-            case R.id.bianxi:
+            case R.id.bianxi:       //变细
                 goTobianxi();
                 break;
+            case R.id.tv_quit:      //退出
+                gotoCancel();
+                break;
+            case R.id.tv_save:      //保存
+                goToSave();
+                break;
+            case R.id.chongqian:       //清除
+                mCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                mIv_image.setImageBitmap(bitmap);
+                break;
+
+
         }
+    }
+
+
+    //退出
+    private void gotoCancel() {
+        mDialog.dismiss();
     }
 
 
@@ -182,56 +203,70 @@ public class QianMingUtils implements View.OnClickListener {
     private void goToSave() {
 
 
-        ThreadUtils.runOnSubThread(new Runnable() {
-            @Override
-            public void run() {
-
-
-                try {
-                    mBitmap2 = BitmapDeleteNoUseSpaceUtil.deleteNoUseWhiteSpace(bitmap);
-
-                    SystemClock.currentThreadTimeMillis();
-
-                    //用时间来命名
-                    String time = "IMG_" + TimeUtils.getCurTimeString(new SimpleDateFormat("yyyyMMddhmmssSSS")) + ".jpg";
-                    File f = new File(mContext.getFilesDir(), time);
-                    if (f.exists()) {
-                        f.delete();
+        Observable.just(bitmap)
+                .map(new Func1<Bitmap, Bitmap>() {
+                    @Override
+                    public Bitmap call(Bitmap bitmap) {
+                        return BitmapDeleteNoUseSpaceUtil.deleteNoUseWhiteSpace(bitmap);
                     }
-                    f.createNewFile();
-
-                    FileOutputStream fos = new FileOutputStream(f);
-                    // 将图片写出到文件输出流中
-                    mBitmap2.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                    fos.close();
-                    mUrl = f.getAbsolutePath();
-
-                   ThreadUtils.runOnMainThread(new Runnable() {
-                       @Override
-                       public void run() {
-                           mOnSure.backResult(mUrl);
-                       }
-                   });
-                    Log.d("QianMingUtils", mUrl);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                }).subscribeOn(Schedulers.io())
+                .map(new Func1<Bitmap, String>() {
+                    @Override
+                    public String call(Bitmap bitmap) {
+                        //用时间来命名
+                        try {
+                            String time = "IMG_" + TimeUtils.getCurTimeString(new SimpleDateFormat("yyyyMMddhmmssSSS")) + ".jpg";
+                            File f = new File(FileUtil.getDiskCacheDir(mContext), time);
+                            if (f.exists()) {
+                                f.delete();
+                            }
+                            f.createNewFile();
+                            FileOutputStream fos = new FileOutputStream(f);
+                            // 将图片写出到文件输出流中
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                            fos.close();
+                            String mUrl = f.getAbsolutePath();
+                            return mUrl;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            return "错误1" + e.getMessage();
+                        }
+                    }
+                }).filter(new Func1<String, Boolean>() {
+            @Override
+            public Boolean call(String s) {
+                if (s.startsWith("错误1")) {
+                    mOnSure.backResult("" + s);
+                    return false;
+                } else if (TextUtils.isEmpty(s)) {
+                    mOnSure.backResult("错误2");
+                    return false;
+                } else {
+                    return true;
                 }
-
             }
-        });
+        }).subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String mUrl) {
+                        mOnSure.backResult(mUrl);
+                    }
+                });
 
 
-        //  this.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
+    }
 
-        // 为了图片保存之后, 立即在图库看到图片, 模拟一个系统sd卡挂载广播
+}
+//  this.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
+
+// 为了图片保存之后, 立即在图库看到图片, 模拟一个系统sd卡挂载广播
     /*		Intent intent = new Intent(Intent.ACTION_MEDIA_MOUNTED);
             // 设置文件路径
 			intent.setData(Uri.fromFile(Environment.getExternalStorageDirectory()));
 			sendBroadcast(intent);*/
 
 
-    }
 
 
-}
+

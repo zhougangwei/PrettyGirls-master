@@ -1,27 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:orientation="vertical">
 
 
     <LinearLayout
         style="@style/ll95">
-
         <TextView
+            android:id="@+id/tv_name"
             style="@style/tv_lt0_wt1"
             android:text="供电状况"/>
-
-        <TextView
-            style="@style/asset_tv_left22"
-            android:background="@drawable/shape_blue_normal"
-            android:paddingBottom="7px"
-            android:paddingLeft="20px"
-            android:paddingRight="20px"
-            android:paddingTop="7px"
-            android:text="添加备注"
-            />
-
     </LinearLayout>
 
     <include layout="@layout/line"></include>
@@ -32,45 +21,46 @@
 
         <TextView
             style="@style/tv_left0"
-            android:text="实测值"/>
+            android:text="实测值"
+            android:textColor="@color/textGrey"/>
 
-        <EditText
+        <TextView
+
+            android:paddingRight="25px"
             android:id="@+id/et_value"
-            android:visibility="invisible"
-            android:textSize="30px"
-            android:layout_marginLeft="25px"
-            android:background="@color/white"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_width="0px"
-            android:hint="请输入实测值"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="25px"
+            android:layout_weight="1"
+            android:gravity="end|center_vertical"
+            android:hint="点击输入"
+            android:textSize="26px"
+
             />
-
-        <include
-            layout="@layout/include_detail"
-            android:layout_width="14px"
-            android:layout_height="24px"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="29px"></include>
-
-
     </LinearLayout>
 
     <include layout="@layout/line"></include>
 
     <LinearLayout
+        android:layout_height="95px"
         style="@style/ll95">
 
         <TextView
+            android:gravity="center_vertical"
             style="@style/tv_lt0_wt1"
             android:text="结果"/>
 
         <RadioGroup
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:id="@+id/rg_result"
             android:layout_width="320px"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <RadioButton
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
                 android:id="@+id/rb_hg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -82,7 +72,9 @@
                 android:text="　"/>
 
             <RadioButton
-                android:id="@+id/rb_hhg"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/rb_bhg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="不合格"/>
@@ -95,19 +87,26 @@
     <include layout="@layout/line"></include>
 
     <LinearLayout
+        android:layout_height="95px"
         style="@style/ll95">
 
         <TextView
+            android:gravity="center_vertical"
             style="@style/tv_lt0_wt1"
             android:text="是否报修"/>
 
         <RadioGroup
+
+            android:layout_gravity="center_vertical"
+            android:id="@+id/rg_bx"
             android:layout_width="320px"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/rb_bx_hg"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/rb_bx_yes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="是"/>
@@ -118,7 +117,9 @@
                 android:text="　　"/>
 
             <RadioButton
-                android:id="@+id/rb_bx_bhg"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/rb_bx_no"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="否"/>
@@ -128,5 +129,30 @@
 
     </LinearLayout>
 
+    <include layout="@layout/line"></include>
+
+    <LinearLayout
+        android:id="@+id/ll_bz"
+        style="@style/ll95">
+
+        <TextView
+            style="@style/tv_left0"
+            android:layout_weight="1"
+            android:text="添加备注"
+            android:textColor="@color/textGrey"/>
+
+        <TextView
+            android:id="@+id/tv_add_bz"
+            style="@style/asset_tv_left22"
+            android:background="@drawable/shape_blue_normal"
+            android:paddingBottom="7px"
+            android:paddingLeft="20px"
+            android:paddingRight="20px"
+            android:paddingTop="7px"
+            android:text="添加备注"
+            />
+    </LinearLayout>
+
+    <include layout="@layout/line"></include>
 
 </LinearLayout>

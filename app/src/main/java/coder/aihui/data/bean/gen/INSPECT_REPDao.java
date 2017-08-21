@@ -61,8 +61,9 @@ public class INSPECT_REPDao extends AbstractDao<INSPECT_REP, Long> {
         public final static Property PPMC = new Property(34, String.class, "PPMC", false, "PPMC");
         public final static Property NET_INSPRID = new Property(35, Long.class, "NET_INSPRID", false, "NET__INSPRID");
         public final static Property ISCHECK = new Property(36, Integer.class, "ISCHECK", false, "ISCHECK");
-        public final static Property UP_FILE_ID = new Property(37, Integer.class, "UP_FILE_ID", false, "UP__FILE__ID");
-        public final static Property UP_FILE_TYPE = new Property(38, Integer.class, "UP_FILE_TYPE", false, "UP__FILE__TYPE");
+        public final static Property PDAID = new Property(37, String.class, "PDAID", false, "PDAID");
+        public final static Property UP_FILE_ID = new Property(38, Integer.class, "UP_FILE_ID", false, "UP__FILE__ID");
+        public final static Property UP_FILE_TYPE = new Property(39, Integer.class, "UP_FILE_TYPE", false, "UP__FILE__TYPE");
     }
 
 
@@ -115,8 +116,9 @@ public class INSPECT_REPDao extends AbstractDao<INSPECT_REP, Long> {
                 "\"PPMC\" TEXT," + // 34: PPMC
                 "\"NET__INSPRID\" INTEGER," + // 35: NET_INSPRID
                 "\"ISCHECK\" INTEGER," + // 36: ISCHECK
-                "\"UP__FILE__ID\" INTEGER," + // 37: UP_FILE_ID
-                "\"UP__FILE__TYPE\" INTEGER);"); // 38: UP_FILE_TYPE
+                "\"PDAID\" TEXT," + // 37: PDAID
+                "\"UP__FILE__ID\" INTEGER," + // 38: UP_FILE_ID
+                "\"UP__FILE__TYPE\" INTEGER);"); // 39: UP_FILE_TYPE
     }
 
     /** Drops the underlying database table. */
@@ -314,14 +316,19 @@ public class INSPECT_REPDao extends AbstractDao<INSPECT_REP, Long> {
             stmt.bindLong(37, ISCHECK);
         }
  
+        String PDAID = entity.getPDAID();
+        if (PDAID != null) {
+            stmt.bindString(38, PDAID);
+        }
+ 
         Integer UP_FILE_ID = entity.getUP_FILE_ID();
         if (UP_FILE_ID != null) {
-            stmt.bindLong(38, UP_FILE_ID);
+            stmt.bindLong(39, UP_FILE_ID);
         }
  
         Integer UP_FILE_TYPE = entity.getUP_FILE_TYPE();
         if (UP_FILE_TYPE != null) {
-            stmt.bindLong(39, UP_FILE_TYPE);
+            stmt.bindLong(40, UP_FILE_TYPE);
         }
     }
 
@@ -514,14 +521,19 @@ public class INSPECT_REPDao extends AbstractDao<INSPECT_REP, Long> {
             stmt.bindLong(37, ISCHECK);
         }
  
+        String PDAID = entity.getPDAID();
+        if (PDAID != null) {
+            stmt.bindString(38, PDAID);
+        }
+ 
         Integer UP_FILE_ID = entity.getUP_FILE_ID();
         if (UP_FILE_ID != null) {
-            stmt.bindLong(38, UP_FILE_ID);
+            stmt.bindLong(39, UP_FILE_ID);
         }
  
         Integer UP_FILE_TYPE = entity.getUP_FILE_TYPE();
         if (UP_FILE_TYPE != null) {
-            stmt.bindLong(39, UP_FILE_TYPE);
+            stmt.bindLong(40, UP_FILE_TYPE);
         }
     }
 
@@ -570,8 +582,9 @@ public class INSPECT_REPDao extends AbstractDao<INSPECT_REP, Long> {
             cursor.isNull(offset + 34) ? null : cursor.getString(offset + 34), // PPMC
             cursor.isNull(offset + 35) ? null : cursor.getLong(offset + 35), // NET_INSPRID
             cursor.isNull(offset + 36) ? null : cursor.getInt(offset + 36), // ISCHECK
-            cursor.isNull(offset + 37) ? null : cursor.getInt(offset + 37), // UP_FILE_ID
-            cursor.isNull(offset + 38) ? null : cursor.getInt(offset + 38) // UP_FILE_TYPE
+            cursor.isNull(offset + 37) ? null : cursor.getString(offset + 37), // PDAID
+            cursor.isNull(offset + 38) ? null : cursor.getInt(offset + 38), // UP_FILE_ID
+            cursor.isNull(offset + 39) ? null : cursor.getInt(offset + 39) // UP_FILE_TYPE
         );
         return entity;
     }
@@ -615,8 +628,9 @@ public class INSPECT_REPDao extends AbstractDao<INSPECT_REP, Long> {
         entity.setPPMC(cursor.isNull(offset + 34) ? null : cursor.getString(offset + 34));
         entity.setNET_INSPRID(cursor.isNull(offset + 35) ? null : cursor.getLong(offset + 35));
         entity.setISCHECK(cursor.isNull(offset + 36) ? null : cursor.getInt(offset + 36));
-        entity.setUP_FILE_ID(cursor.isNull(offset + 37) ? null : cursor.getInt(offset + 37));
-        entity.setUP_FILE_TYPE(cursor.isNull(offset + 38) ? null : cursor.getInt(offset + 38));
+        entity.setPDAID(cursor.isNull(offset + 37) ? null : cursor.getString(offset + 37));
+        entity.setUP_FILE_ID(cursor.isNull(offset + 38) ? null : cursor.getInt(offset + 38));
+        entity.setUP_FILE_TYPE(cursor.isNull(offset + 39) ? null : cursor.getInt(offset + 39));
      }
     
     @Override

@@ -25,11 +25,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.UUID;
 
 import coder.aihui.data.bean.INSPECT_EXT;
 import coder.aihui.data.bean.INSPECT_GROUP;
 import coder.aihui.data.bean.INSPECT_PLAN;
+import coder.aihui.data.bean.INSPECT_REPS;
+import coder.aihui.data.bean.InspectTempletItem;
 import coder.aihui.data.bean.PUB_DICTIONARY_ITEM;
 import coder.aihui.data.bean.REPAIR_PLACE;
 import coder.aihui.data.bean.gen.DaoSession;
@@ -179,6 +182,98 @@ public class AndroidUtils {
         }
     }
 
+    public static String getInspectTemPars(String par, String moduleId, DaoSession daoSession) {
+
+        ArrayList<Map<String, String>> mParDatas = new ArrayList<Map<String, String>>();
+        try {
+            //根据类型库房id来查询
+            //String sql = "select max(ITEM__UPDATE__DATE),ITEM__KFID from INSPECT_TEMPLET_ITEM where ITEM__TYPE  = ?  group by ITEM__KFID ";
+            String sql = new String();
+
+
+            if (!TextUtils.isEmpty(moduleId)) {
+                sql = "select max(ITEM__UPDATE__DATE)  ,ITEM__KFID,max(ITEM__CREATE__DATE)  from INSPECT_TEMPLET_ITEM where ITEM__TYPE  =  " + (par.equals("PM") ? 2 : 1) + " and  ( ITEM__KFID in ( " + moduleId + " ) or ITEM__KFID = '" + moduleId + "' )  group by ITEM__KFID ";
+            } else {
+                sql = "select max(ITEM__UPDATE__DATE)  ,ITEM__KFID , max(ITEM__CREATE__DATE)  from INSPECT_TEMPLET_ITEM where ITEM__TYPE  = ?  group by ITEM__KFID ";
+            }
+
+            Log.d("AndroidUtils", sql);
+
+            Cursor cursor = daoSession.getDatabase().rawQuery(sql, new String[]{});
+            //
+
+            String[] split = moduleId.split(",");
+
+
+            cursor.moveToFirst();
+            while (cursor.getPosition() != cursor.getCount()) {
+
+
+                TreeMap<String, String> treeMap = new TreeMap<>();
+                treeMap.put("moduleId", cursor.getString(1));
+
+                String modify__date = cursor.getString(0);
+
+                String create__date = cursor.getString(2);
+
+
+                Long time = judgeLong(modify__date, create__date);
+
+                Log.d("AndroidUtils1", "time:" + time + "---" + new Date(time));
+
+
+                treeMap.put("lastTime", time == null ? "2000-01-01 00:00:00" : TimeUtils.milliseconds2String(time));
+
+                mParDatas.add(treeMap);
+                cursor.moveToNext();
+            }
+            cursor.close();
+            ArrayList<String> list2 = new ArrayList(); //临时记录
+
+
+            for (int j = 0; j < mParDatas.size(); j++) {
+                list2.add(mParDatas.get(j).get("moduleId"));
+            }
+
+
+            if (list2.size() != split.length) {
+                for (int i = 0; i < split.length; i++) {
+                    if (!list2.contains(split[i])) {
+                        HashMap<String, String> hashMap = new HashMap<>();
+                        hashMap.put("moduleId", split[i]);
+                        hashMap.put("lastTime", "2000-01-01 00:00:00");
+                        mParDatas.add(hashMap);
+                    }
+                }
+            }
+
+
+            for (int i = 0; i < mParDatas.size(); i++) {
+                Map<String, String> map = mParDatas.get(i);
+                for (int j = 0; j < mParDatas.size(); j++) {
+                    Map<String, String> map1 = mParDatas.get(j);
+                    String moduleId1 = map.get("moduleId");
+                    String moduleId2 = map1.get("moduleId");
+                    String lastTime1 = map.get("lastTime");
+                    String lastTime2 = map1.get("lastTime");
+                    if (moduleId1.indexOf(moduleId2) >= 0 && moduleId1.split(",").length > 1) {
+                        if (TimeUtils.string2Date(lastTime1).after(TimeUtils.string2Date(lastTime2))) {
+                            mParDatas.remove(map1);         //1包含2删除2
+                        }
+                    }
+                }
+            }
+
+
+            return GsonUtil.parseListToJson(mParDatas);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+
+    }
+
+
     /**
      * 判断两个时间 哪个大 同时又判空操作
      *
@@ -286,8 +381,7 @@ public class AndroidUtils {
 
                 return new Date[]{sdf2.parse(first + " 00:00:00"), sdf2.parse(last + " 23:59:59")};
             } else {
-                return new Date[]{sdf.parse("2000-1-1"), sdf.parse("2100-1-1")};
-
+                return new Date[]{sdf.parse("2000-1-1"), sdf.parse("2000-1-1")};
             }
 
         } catch (Exception e) {
@@ -390,5 +484,42 @@ public class AndroidUtils {
     }
 
 
+    /**
+     * 方便渲染 数据转换
+     * @param bean 模板表对象
+     * @return reps
+     */
+    public static INSPECT_REPS changIti2Reps(InspectTempletItem bean){
+
+        INSPECT_REPS reps = new INSPECT_REPS();
+        reps.setINSPR_REP_ID(-1);                           //设置为-1就是已确认的
+        try{
+            reps.setINSPR_CYCLE(bean.getITEM_EXT_NUM2()+"");
+        }catch (Exception e){
+            reps.setINSPR_CYCLE("");
+        }
+        reps.setINSPR_WX_NEED(0);
+        reps.setPLAN_ID(0L);
+
+        reps.setINSPR_PCONTENT(bean.getITEM_NAME());
+
+        reps.setINSPR_RE_VALUE(bean.getITEM_EXT_STRING6());
+        try{
+            reps.setINSPR_IS_FILL_IN(bean.getITEM_EXT_NUM1()+"");
+        }catch (Exception e){
+            reps.setINSPR_IS_FILL_IN("");
+        }
+
+        //todo  评论没有?  模板不需要  评论
+        // reps.setINSPR_COMMENTS("");
+        reps.setINSPR_VAL_TYPE(bean.getITEM_EXT_STRING4());
+        reps.setINSPR_SEL_VAL(bean.getITEM_EXT_STRING5());
+        reps.setINSPR_UNIT(bean.getITEM_EXT_STRING3());
+        reps.setINSPR_HG_VAL(bean.getITEM_EXT_STRING2());
+        reps.setModelId(bean.getITEM_ID());
+
+
+        return reps;
+    }
 
 }

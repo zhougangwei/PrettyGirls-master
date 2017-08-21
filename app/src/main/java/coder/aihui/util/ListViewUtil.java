@@ -1,5 +1,7 @@
 package coder.aihui.util;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ListView;
 
@@ -26,4 +28,13 @@ public class ListViewUtil {
         }
     }
 
+
+    //获得ListView中的View
+    public static View getViewByPosition(int pos, RecyclerView mRecyclerView) {
+
+       int firstVisibleItems=  ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+        // 真实Position就是position - firstVisibleItems[0]
+        View childAt       = mRecyclerView.getChildAt(pos - firstVisibleItems);
+        return childAt;
+    }
 }

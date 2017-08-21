@@ -36,14 +36,15 @@
     <TextView
 
         android:layout_width="122px"
-        android:layout_height="48px"
+        android:padding="12px"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="574px"
         android:layout_marginTop="273px"
-        android:background="@drawable/shape_button_pressed"
+        android:background="@drawable/shape_button_up"
         android:gravity="center"
         android:text="上传修改"
         android:textColor="@color/white"
-        android:textSize="23px"/>
+        android:textSize="24px"/>
 
 
     <android.support.v4.view.ViewPager

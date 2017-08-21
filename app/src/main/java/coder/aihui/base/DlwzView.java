@@ -1,5 +1,7 @@
 package coder.aihui.base;
 
+import coder.aihui.widget.jdaddressselector.SelectedListener;
+
 /**
  * @ 创建者   zhou
  * @ 创建时间   2017/6/23 9:43
@@ -9,6 +11,6 @@ package coder.aihui.base;
  * @ 更新描述  ${TODO}
  */
 
-public interface DlwzView  {
-
+public interface DlwzView extends SelectedListener {
+    void getDlwz();
 }

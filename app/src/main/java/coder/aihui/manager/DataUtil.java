@@ -48,7 +48,7 @@ public class DataUtil {
                     }
                 }
             }
-        }).observeOn(Schedulers.io());
+        }).subscribeOn(Schedulers.io());
     }
 
     //将cursor中的内容转为 In_asset

@@ -22,8 +22,8 @@ public class HomeActivity$$ViewBinder<T extends HomeActivity> implements ViewBin
     protected InnerUnbinder(T target, Finder finder, Object source) {
       this.target = target;
 
-      target.mToolbar = finder.findRequiredViewAsType(source, 2131755289, "field 'mToolbar'", Toolbar.class);
-      target.mFab = finder.findRequiredViewAsType(source, 2131755301, "field 'mFab'", FloatingActionButton.class);
+      target.mToolbar = finder.findRequiredViewAsType(source, 2131755291, "field 'mToolbar'", Toolbar.class);
+      target.mFab = finder.findRequiredViewAsType(source, 2131755303, "field 'mFab'", FloatingActionButton.class);
     }
 
     @Override

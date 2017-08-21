@@ -49,11 +49,14 @@ import coder.aihui.data.bean.gen.PDA_ASSET_CHECKDao;
 import coder.aihui.data.bean.gen.PUB_DICTIONARY_ITEMDao;
 import coder.aihui.data.bean.gen.REPAIR_PLACEDao;
 import coder.aihui.manager.DataUtil;
+import coder.aihui.ui.main.DownPresenter;
+import coder.aihui.ui.main.DownView;
 import coder.aihui.util.AndroidUtils;
 import coder.aihui.util.SPUtil;
 import coder.aihui.util.ToastUtil;
 import coder.aihui.util.Utils;
 import coder.aihui.widget.AlertListDialogUtil;
+import coder.aihui.widget.popwindow.MenuPopup;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -65,7 +68,7 @@ import rx.schedulers.Schedulers;
 import static coder.aihui.R.id.iv_back;
 
 
-public class AssetCheckActivity extends AppActivity implements AssetQueryView {
+public class AssetCheckActivity extends AppActivity implements DownView {
 
 
     @BindView(R.id.linearLayout)
@@ -76,6 +79,9 @@ public class AssetCheckActivity extends AppActivity implements AssetQueryView {
     LinearLayout mIvSearch;
     @BindView(R.id.iv_config)
     LinearLayout mIvConfig;
+
+    @BindView(R.id.iv_updown)
+    LinearLayout mIvUpDown;
     @BindView(iv_back)
     ImageView    mIvBack;
     @BindView(R.id.tv_title)
@@ -128,6 +134,9 @@ public class AssetCheckActivity extends AppActivity implements AssetQueryView {
 
     private CommonAdapter<IN_ASSET> mMainAdapter;
 
+    private List<String> mUpDownList = new ArrayList<>();//上传下载按钮的数据填充
+
+
     private String searchState = "234";//默认
 
     ArrayList<String> searchList = new ArrayList();
@@ -147,7 +156,8 @@ public class AssetCheckActivity extends AppActivity implements AssetQueryView {
     private long                mLastTime;
     private boolean                 loadFlag    = true;       //加载数据的时候不刷新界面
     private HashMap<Long, IN_ASSET> mChooseData = new HashMap<>();  //所有被选中的物资
-
+    private MenuPopup     mUpdownPopup;
+    private DownPresenter mDownPresenter;
 
     @Override
     protected BaseFragment getFirstFragment() {
@@ -165,6 +175,10 @@ public class AssetCheckActivity extends AppActivity implements AssetQueryView {
 
         qcid = AndroidUtils.getMaxPcid(mDaoSession);     //初始化获取最大期次
 
+
+        mUpDownList.add("上传数据");            //弹框数据
+
+        mDownPresenter = new DownPresenter(this, mDaoSession);
         initTextView();
 
         //初始化列表视图
@@ -204,7 +218,7 @@ public class AssetCheckActivity extends AppActivity implements AssetQueryView {
         canCancelRadioButton(mRbAll);
         mLayoutManager = new LinearLayoutManager(this);
         mRvList.setLayoutManager(mLayoutManager);
-        mMainAdapter = new CommonAdapter<IN_ASSET>(this, R.layout.item_assetquery, mDatas) {
+        mMainAdapter = new CommonAdapter<IN_ASSET>(this, R.layout.item_asset_check, mDatas) {
             @Override
             protected void convert(ViewHolder holder, final IN_ASSET bean, int position) {
 
@@ -298,11 +312,15 @@ public class AssetCheckActivity extends AppActivity implements AssetQueryView {
     //返回的科室在这
 
 
-    @OnClick({R.id.iv_back, R.id.iv_scan, R.id.iv_search, R.id.iv_config, R.id.tv_yd, R.id.tv_wd, R.id.tv_bd, R.id.tv_zk,
+    @OnClick({R.id.iv_updown, R.id.iv_back, R.id.iv_scan, R.id.iv_search, R.id.iv_config, R.id.tv_yd, R.id.tv_wd, R.id.tv_bd, R.id.tv_zk,
             R.id.tv_yzk, R.id.tv_lsyd
     })
     public void onViewClicked(View view) {
         switch (view.getId()) {
+
+            case R.id.iv_updown:
+                gotoUpdown();
+                break;
             case R.id.iv_back:
                 finish();
                 break;
@@ -336,6 +354,28 @@ public class AssetCheckActivity extends AppActivity implements AssetQueryView {
                 break;
 
         }
+    }
+
+
+    //上传下载数据
+    private void gotoUpdown() {
+        if (mUpdownPopup == null) {
+            mUpdownPopup = new MenuPopup(this, mUpDownList, new MenuPopup.BackReslut() {
+                @Override
+                public void onBackResult(String string) {
+                    if ("上传数据".equals(string)) {
+                        gotoUpdata();
+                    }
+                }
+            });
+        }
+        mUpdownPopup.showPopupWindow(mIvUpDown);
+
+    }
+
+    private void gotoUpdata() {
+        //  mDownPresenter.gotoUp();
+
     }
 
 
@@ -524,10 +564,11 @@ public class AssetCheckActivity extends AppActivity implements AssetQueryView {
                     mAllDlwzIds = data.getStringExtra("mAllDlwzIds");
                     mAllDlwzName = data.getStringExtra("mAllDlwzName");
                     mTvDlwz.setText(mAllDlwzName);
-
                     //预转科
+                    break;
                 case Content.YZK_REQUEST_CODE:
                     //转科成功的数据
+                    ToastUtil.showToast("转科成功!");
                     // long[] changeDeptses = data.getLongArrayExtra("changeDepts");
                     queryAssetInfo();
                     loadMeinv(0, 10);
@@ -740,7 +781,7 @@ public class AssetCheckActivity extends AppActivity implements AssetQueryView {
     @Override
     public void doSaveListData(Set set) {
         //
-        if ((TextUtils.isEmpty(mDlwzIds) || TextUtils.isEmpty(mDeptIds))) {
+        if ((TextUtils.isEmpty(mDlwzIds) && TextUtils.isEmpty(mDeptIds))) {
             ToastUtil.showToast("请先选择地理位置或科室");
             return;
         }
@@ -787,6 +828,7 @@ public class AssetCheckActivity extends AppActivity implements AssetQueryView {
                     public void onError(Throwable e) {
                         ToastUtil.showToast("出现错误" + e.getMessage());
                     }
+
                     @Override
                     public void onNext(String s) {
 
@@ -1026,4 +1068,18 @@ public class AssetCheckActivity extends AppActivity implements AssetQueryView {
     }
 
 
+    @Override
+    public void showSuccess(int type) {
+
+    }
+
+    @Override
+    public void showFault(int type, String wrong) {
+
+    }
+
+    @Override
+    public void showProgress(int num, int type) {
+
+    }
 }

@@ -5,47 +5,49 @@
               android:orientation="vertical">
 
     <LinearLayout
-        android:background="@color/planBlue"
         android:layout_width="match_parent"
-        android:layout_height="96px"
+        android:layout_height="120px"
+        android:background="@color/planBlue"
         android:orientation="horizontal">
 
         <Spinner
-            android:layout_marginLeft="24px"
             android:id="@+id/spinner"
-            android:layout_width="177px"
-            android:layout_height="54px"
+            android:layout_width="175px"
+            android:layout_height="80px"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="24px"
             android:background="@color/white"
             android:dropDownVerticalOffset="50px"
             ></Spinner>
 
-        <include
+        <ImageView
             android:layout_gravity="center_vertical"
             android:layout_width="2px"
-            android:layout_height="33px"
-            layout="@layout/hline"></include>
+            android:layout_height="5px"
+            android:background="@color/colorLine"
+            />
+
         <EditText
-            android:layout_gravity="center_vertical"
-            android:padding="10px"
-            android:singleLine="true"
-            android:background="@color/white"
-            android:imeOptions="actionSearch"
             android:id="@+id/et_search"
             android:layout_width="300px"
-            android:layout_height="54px"
-            android:textSize="24px"/>
-        
+            android:layout_height="80px"
+            android:layout_gravity="center_vertical"
+            android:background="@color/white"
+            android:imeOptions="actionSearch"
+            android:paddingLeft="25px"
+            android:singleLine="true"
+            android:textSize="26px"/>
+
         <TextView
             android:id="@+id/tv_search"
-            android:textSize="36px"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20px"
-            android:textColor="@color/white"
-            android:text="搜索"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:padding="25px"
+            android:text="搜索"
+            android:textColor="@color/white"
+            android:textSize="34px"/>
+
     </LinearLayout>
 
     <include layout="@layout/line"></include>

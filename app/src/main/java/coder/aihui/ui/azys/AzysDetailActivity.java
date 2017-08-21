@@ -48,6 +48,7 @@ import coder.aihui.ui.bz.BzActivity;
 import coder.aihui.util.NumberChooseDialog;
 import coder.aihui.util.ThreadUtils;
 import coder.aihui.util.ToastUtil;
+import coder.aihui.util.viewutil.QianMingUtils;
 import coder.aihui.widget.ListBottomDialog;
 import coder.aihui.widget.ScrollViewWithListView;
 
@@ -127,6 +128,9 @@ public class AzysDetailActivity extends AppActivity {
     LinearLayout mLlPjmx;
     @BindView(R.id.et_inputId)
     EditText     mEtInputId;
+
+    @BindView(R.id.iv_qianming)
+    ImageView mIvQianming;
     private PUR_CONTRACT_PLAN_DETAIL bean;   //回显用 detailBean
     private List<AZYS_MX> mMXList = new ArrayList<>();
     private String whichPic;                //哪张图片
@@ -161,7 +165,8 @@ public class AzysDetailActivity extends AppActivity {
             R.id.rl_cmz,
             R.id.rl_mpz,
             R.id.ll_zczyxq,
-            R.id.ll_jysynx
+            R.id.ll_jysynx,
+            R.id.iv_qianming
     })
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -194,6 +199,19 @@ public class AzysDetailActivity extends AppActivity {
             case R.id.ll_jysynx:    //建议使用年限
                 gotoChooseNx();
                 break;
+            case R.id.iv_qianming:  //签名
+                QianMingUtils.getInstance().showQianming(this, new QianMingUtils.OnSure() {
+                    @Override
+                    public void backResult(String url) {
+                        if (!url.startsWith("错误")) {
+                            Glide.with(AzysDetailActivity.this).load(url)
+                                    .into(mIvQianming);
+                        } else {
+                            ToastUtil.showToast(url);
+                        }
+                    }
+                });
+                break;
         }
     }
 
@@ -218,8 +236,6 @@ public class AzysDetailActivity extends AppActivity {
                 .setWheelItemTextSize(15)
                 .build();
         build.show(getSupportFragmentManager(), "1");
-
-
     }
 
     @Override
@@ -281,9 +297,6 @@ public class AzysDetailActivity extends AppActivity {
 
     //去保存
     private void gotoSave() {
-
-
-
 
 
         //安装工程师

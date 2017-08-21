@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb"
+            android:layout_width="wrap_content"
+            android:layout_height="48px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="23px"
+            android:text="信息科"
+            android:textSize="27px"/>
+
+        <View
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_correct"
+            android:layout_width="122px"
+            android:layout_height="48px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="24px"
+            android:background="@drawable/shape_blue_normal"
+            android:gravity="center"
+            android:text="编辑"
+            android:textColor="@color/editBlue"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/line"></include>
+
+    <LinearLayout
+        android:id="@+id/ll_main"
+        android:layout_width="match_parent"
+        android:layout_height="269px"
+        android:orientation="horizontal">
+
+        <ImageView
+            app:layout_auto_baseheight="width"
+            android:id="@+id/iv_asset"
+            android:layout_width="220px"
+            android:layout_height="220px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="24px"
+            android:background="@color/bgGrey"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_marginTop="24px"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_assetquery_item"
+                    android:text="名称:"/>
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    style="@style/text_assetquery_item"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="14px"
+                    android:text=""/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_marginTop="15px"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_assetquery_item"
+                    android:text="品牌:"/>
+
+                <TextView
+                    android:id="@+id/tv_brand"
+                    style="@style/text_assetquery_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14px"
+                    android:text=""/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+
+                android:layout_height="0px"
+                android:layout_marginTop="15px"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_assetquery_item"
+                    android:text="编号:"/>
+
+                <TextView
+                    android:id="@+id/tv_code"
+                    style="@style/text_assetquery_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14px"
+                    android:text=""/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+
+                android:layout_height="0px"
+                android:layout_marginTop="15px"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_assetquery_item"
+                    android:text="旧编号:"/>
+
+                <TextView
+                    android:id="@+id/tv_old_code"
+                    style="@style/text_assetquery_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14px"
+                    android:text=""/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_marginTop="13px"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_assetquery_item"
+                    android:layout_width="wrap_content"
+                    android:text="科室:"/>
+
+                <TextView
+                    android:id="@+id/tv_dept"
+                    style="@style/text_assetquery_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14px"
+                    android:text=""/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_marginBottom="23px"
+                android:layout_marginTop="13px"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_assetquery_item"
+                    android:layout_width="wrap_content"
+                    android:text="位置:"/>
+
+                <TextView
+
+                    android:id="@+id/tv_location"
+                    style="@style/text_assetquery_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14px"
+                    android:text=""/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <ImageView
+        android:background="#F5F5F5"
+        android:layout_width="match_parent"
+        android:layout_height="7px"/>
+
+
+
+</LinearLayout>

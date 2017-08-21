@@ -311,4 +311,8 @@ public class SPUtil {
     public static String getWsAddress(Context context) {
         return getString(context,"wsAddress","");
     }
+
+    public static String getHospitalName(Context context) {
+        return getString(context,"hospitalName","");
+    }
 }

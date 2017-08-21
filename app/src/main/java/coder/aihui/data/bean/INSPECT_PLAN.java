@@ -15,6 +15,10 @@ import java.util.Date;
 @Entity
 public class INSPECT_PLAN {
 
+
+    /**
+     * 添加这个是因为 我想将临时做的数据 保存到计划当中 不作乱  保证只有一个类用于显示
+     */
     @Id
     private Long ID;
     @Unique

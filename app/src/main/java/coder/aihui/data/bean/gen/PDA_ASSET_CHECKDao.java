@@ -55,6 +55,7 @@ public class PDA_ASSET_CHECKDao extends AbstractDao<PDA_ASSET_CHECK, Long> {
         public final static Property DQDDMC = new Property(28, String.class, "DQDDMC", false, "DQDDMC");
         public final static Property UUID = new Property(29, String.class, "UUID", false, "UUID");
         public final static Property LABEL_DEFAULT_NAME = new Property(30, String.class, "LABEL_DEFAULT_NAME", false, "LABEL__DEFAULT__NAME");
+        public final static Property PDAID = new Property(31, String.class, "PDAID", false, "PDAID");
     }
 
 
@@ -100,7 +101,8 @@ public class PDA_ASSET_CHECKDao extends AbstractDao<PDA_ASSET_CHECK, Long> {
                 "\"DQKSID\" TEXT," + // 27: DQKSID
                 "\"DQDDMC\" TEXT," + // 28: DQDDMC
                 "\"UUID\" TEXT," + // 29: UUID
-                "\"LABEL__DEFAULT__NAME\" TEXT);"); // 30: LABEL_DEFAULT_NAME
+                "\"LABEL__DEFAULT__NAME\" TEXT," + // 30: LABEL_DEFAULT_NAME
+                "\"PDAID\" TEXT);"); // 31: PDAID
     }
 
     /** Drops the underlying database table. */
@@ -267,6 +269,11 @@ public class PDA_ASSET_CHECKDao extends AbstractDao<PDA_ASSET_CHECK, Long> {
         if (LABEL_DEFAULT_NAME != null) {
             stmt.bindString(31, LABEL_DEFAULT_NAME);
         }
+ 
+        String PDAID = entity.getPDAID();
+        if (PDAID != null) {
+            stmt.bindString(32, PDAID);
+        }
     }
 
     @Override
@@ -427,6 +434,11 @@ public class PDA_ASSET_CHECKDao extends AbstractDao<PDA_ASSET_CHECK, Long> {
         if (LABEL_DEFAULT_NAME != null) {
             stmt.bindString(31, LABEL_DEFAULT_NAME);
         }
+ 
+        String PDAID = entity.getPDAID();
+        if (PDAID != null) {
+            stmt.bindString(32, PDAID);
+        }
     }
 
     @Override
@@ -467,7 +479,8 @@ public class PDA_ASSET_CHECKDao extends AbstractDao<PDA_ASSET_CHECK, Long> {
             cursor.isNull(offset + 27) ? null : cursor.getString(offset + 27), // DQKSID
             cursor.isNull(offset + 28) ? null : cursor.getString(offset + 28), // DQDDMC
             cursor.isNull(offset + 29) ? null : cursor.getString(offset + 29), // UUID
-            cursor.isNull(offset + 30) ? null : cursor.getString(offset + 30) // LABEL_DEFAULT_NAME
+            cursor.isNull(offset + 30) ? null : cursor.getString(offset + 30), // LABEL_DEFAULT_NAME
+            cursor.isNull(offset + 31) ? null : cursor.getString(offset + 31) // PDAID
         );
         return entity;
     }
@@ -505,6 +518,7 @@ public class PDA_ASSET_CHECKDao extends AbstractDao<PDA_ASSET_CHECK, Long> {
         entity.setDQDDMC(cursor.isNull(offset + 28) ? null : cursor.getString(offset + 28));
         entity.setUUID(cursor.isNull(offset + 29) ? null : cursor.getString(offset + 29));
         entity.setLABEL_DEFAULT_NAME(cursor.isNull(offset + 30) ? null : cursor.getString(offset + 30));
+        entity.setPDAID(cursor.isNull(offset + 31) ? null : cursor.getString(offset + 31));
      }
     
     @Override

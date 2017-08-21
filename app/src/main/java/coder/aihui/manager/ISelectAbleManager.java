@@ -10,4 +10,5 @@ package coder.aihui.manager;
  */
 
 public interface ISelectAbleManager {
+
 }

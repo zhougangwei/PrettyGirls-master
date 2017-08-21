@@ -1,12 +1,20 @@
 package coder.aihui.data.source.remote;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import org.greenrobot.greendao.Property;
+import org.greenrobot.greendao.query.QueryBuilder;
+import org.greenrobot.greendao.query.WhereCondition;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +27,9 @@ import coder.aihui.data.source.MyDataSource;
 import coder.aihui.http.AiHuiLoginServices;
 import coder.aihui.http.MyRetrofit;
 import coder.aihui.http.WebServiceUtil;
+import coder.aihui.ui.main.DownLoadBean;
 import coder.aihui.ui.main.DownView;
+import coder.aihui.ui.main.UpBean;
 import coder.aihui.util.GsonUtil;
 import coder.aihui.util.SPUtil;
 import coder.aihui.util.ToastUtil;
@@ -33,6 +43,7 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
+import static coder.aihui.app.MyApplication.daoSession;
 import static coder.aihui.app.MyApplication.mContext;
 import static coder.aihui.ui.main.DownPresenter.COMPANY_DOWN;
 import static coder.aihui.ui.main.DownPresenter.PUR_CONTRACT_PLAN_DOWN;
@@ -94,16 +105,15 @@ public class RemoteMyDataSource implements MyDataSource {
 
 
     /**
-     * @param view     视图层
-     * @param entitys  类
-     * @param methods  方法
-     * @param pars     参数
-     * @param callback 回传
+     * @param bean     封装的下载对象
+     * @param callback 回调显示视图
      */
     //保存台账的
-    public void saveDatas(final BaseView view, final String entitys[], final String methods[], final List<String[]> pars, final LoadDatasCallback callback) {
-
-        for (int k = 0; k < entitys.length; k++) {
+    public void saveDatas(DownLoadBean bean, final LoadDatasCallback callback) {
+        for (int k = 0; k < bean.getEnties().length; k++) {
+            final String[] entitys = bean.getEnties();
+            final List<String[]> pars = bean.getPars();
+            final String[] methods = bean.getMethods();
             final String url = SPUtil.getString(mContext, Content.WS_ADDRESS, "");
             mCountHashMap.remove(entitys[k]);
             mTotalsHashMap.remove(entitys[k]);
@@ -122,7 +132,6 @@ public class RemoteMyDataSource implements MyDataSource {
             try {
                 WebServiceUtil ws = new WebServiceUtil();
                 String recode = ws.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url, methods[k], list).get();
-
                 Log.d("RemoteMyDataSource", recode);
 
                 if (recode.startsWith("0")) {
@@ -144,13 +153,13 @@ public class RemoteMyDataSource implements MyDataSource {
             }
 
             final int finalK = k;
+
+
             Observable.create(new Observable.OnSubscribe<JSONArray>() {
                 @Override
                 public void call(Subscriber<? super JSONArray> subscriber) {
                     try {
-
                         int mTotals = mTotalsHashMap.get(entitys[finalK]);
-
                         int downSize = 500;        //每次下载几条
                         int loopSize = mTotals % downSize == 0 ? mTotals
                                 / downSize : mTotals / downSize + 1;
@@ -179,7 +188,6 @@ public class RemoteMyDataSource implements MyDataSource {
                     }
                 }
             })
-                    .compose(view.<JSONArray>bindToLife())
                     .subscribeOn(Schedulers.io())
                     .filter(new Func1<JSONArray, Boolean>() {
                         @Override
@@ -188,10 +196,10 @@ public class RemoteMyDataSource implements MyDataSource {
                             if (jsonArray == null) {
                                 callback.onDataNotAvailable("错误4,数组为空");
                             }
-
                             return jsonArray != null;
                         }
                     })
+
                     .observeOn(Schedulers.io())
                     .map(new Func1<JSONArray, List>() {
                         @Override
@@ -222,35 +230,144 @@ public class RemoteMyDataSource implements MyDataSource {
                         @Override
                         public void call(List datas) {
 
+                            //多线程下载保持 每一个 下载的数目 总数都是独立的
+                            int mDownNum = mCountHashMap.get(entitys[finalK]) == null ? 0 : mCountHashMap.get(entitys[finalK]);
+                            int mTotals = mTotalsHashMap.get(entitys[finalK]) == null ? 0 : mTotalsHashMap.get(entitys[finalK]);
 
-                            synchronized (entitys[finalK]) {
-
-                                //多线程下载保持 每一个 下载的数目 总数都是独立的
-                                int mDownNum = mCountHashMap.get(entitys[finalK]) == null ? 0 : mCountHashMap.get(entitys[finalK]);
-                                int mTotals = mTotalsHashMap.get(entitys[finalK]) == null ? 0 : mTotalsHashMap.get(entitys[finalK]);
-
-                                callback.onGetData();       //显示获取到数据
-
-                                if (mTotals == 0) {
-                                    callback.onDataFinished();
-                                    return;
-                                }
-                                for (int j = 0; j < datas.size(); j++) {
-                                    mDaossion.insertOrReplace(datas.get(j));
-                                    callback.onDatasLoadedProgress(100 * (mDownNum + j) / mTotals);
-                                }
-                                mDownNum += datas.size();
-
-                                mCountHashMap.put(entitys[finalK], mDownNum);
-                                if (mDownNum == mTotals) {
-                                    callback.onDataFinished();
-                                }
+                            callback.onGetData();       //显示获取到数据
+                            if (mTotals == 0) {
+                                callback.onDataFinished();
+                                return;
                             }
+                            for (int j = 0; j < datas.size(); j++) {
+                                mDaossion.insertOrReplace(datas.get(j));
+                                callback.onDatasLoadedProgress(100 * (mDownNum + j + 1) / mTotals);
+                            }
+                            mDownNum += datas.size();
+
+                            mCountHashMap.put(entitys[finalK], mDownNum);
+                            if (mDownNum >= mTotals) {
+                                callback.onDataFinished();
+                            }
+
                         }
                     });
-
         }
 
+    }
+
+
+    /**
+     * @param upDatas  //封装的集合
+     * @param callback 接口回调渲染视图
+     */
+    public void gotoUp(List<UpBean> upDatas, final LoadDatasCallback callback) {
+        TelephonyManager telephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        final String imei = telephonyManager.getDeviceId();//机器的IMEI
+
+        final String wsAddress = SPUtil.getWsAddress(mContext);
+        //找到所有未上传的数据
+        Observable.from(upDatas)
+                .concatMap(new Func1<UpBean, Observable<StringListBean>>() {
+                    @Override
+                    public Observable<StringListBean> call(UpBean upBean) {
+                        return getUpdatas(upBean);
+                    }
+                }).filter(new Func1<StringListBean, Boolean>() {
+            @Override
+            public Boolean call(StringListBean bean) {
+                return bean.datas != null && bean.datas.size() != 0;
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<StringListBean>() {
+                    @Override
+                    public void call(StringListBean bean) {
+                        int updateSize = 20;
+                        List list = bean.datas;
+                        try {
+                            if (list.size() != 0) {
+                                for (int i = 0; i < list.size(); i = i + updateSize) {
+                                    List list1 = list.subList(i, (list.size()) > updateSize ? updateSize : (list.size()));
+                                    WebServiceUtil ws = new WebServiceUtil();
+                                    String recode = ws.execute(wsAddress, bean.method, list1).get();
+                                    JSONObject resJson = new JSONObject(recode);
+
+                                    if (resJson.getLong("recode") != 0) {// 返回码不等于
+                                        callback.onDatasLoadedProgress(i);
+                                    }
+                                }
+                                gotoChangeFlag(bean.upBean, list);
+                                callback.onDataFinished();
+                            } else {
+                                callback.onDataFinished();
+                            }
+                        } catch (Exception e) {
+                            callback.onDataNotAvailable(e.getMessage());
+                        }
+                    }
+                });
+    }
+
+    private void gotoChangeFlag(UpBean upBean, List list) {
+
+        try {
+            String enties = upBean.getEnties();
+            Class clazz = Class.forName(enties);
+            Method m2 = clazz.getDeclaredMethod("setSYNC_DATE", Date.class);
+            Method m3 = clazz.getDeclaredMethod("setSYNC_FLAG", Integer.class);
+            for (int i = 0; i < list.size(); i++) {
+                m2.invoke(list.get(i), new Date());
+                m3.invoke(list.get(i), 1);
+            }
+            mDaossion.getDao(clazz).insertInTx(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    @Nullable
+    private synchronized Observable<StringListBean> getUpdatas(final UpBean upBean) {
+        return Observable.create(new Observable.OnSubscribe<StringListBean>() {
+            @Override
+            public void call(Subscriber<? super StringListBean> subscriber) {
+                try {
+                    String entity = upBean.getEnties();
+                    String method = upBean.getMethods();
+                    WhereCondition[] whereconditions1 = upBean.getWhereconditions();
+                    Property[] propertie = upBean.getPropertie();
+                    Class cls = Class.forName(entity);
+                    QueryBuilder qb = daoSession.queryBuilder(cls);
+                    if (whereconditions1 != null) {
+                        for (WhereCondition whereCondition : whereconditions1) {
+                            qb.where(whereCondition);
+                        }
+                    }
+                    if (propertie != null && propertie.length != 0) {
+                        qb.orderAsc(propertie);
+                    }
+                    List list = qb.list();
+                    StringListBean stringListBean = new StringListBean();
+                    stringListBean.method = method;
+                    stringListBean.datas = list;
+                    stringListBean.upBean = upBean;
+                    subscriber.onNext(stringListBean);
+                } catch (Exception e) {
+                    subscriber.onNext(null);
+                }
+                subscriber.onCompleted();
+            }
+        }).subscribeOn(Schedulers.io());
+
+    }
+
+
+    class StringListBean {
+        String method;
+        List   datas;
+        UpBean upBean;
     }
 
 
@@ -260,15 +377,17 @@ public class RemoteMyDataSource implements MyDataSource {
      * @param method   方法
      * @param callback 回传
      */
-    public void saveDatas(DownView view, String[] entite, String[] method, final LoadDatasCallback callback) {
+
+  /*  public void saveDatas(DownView view, String[] entite, String[] method, final LoadDatasCallback callback) {
         this.saveDatas(view, entite, method, null, callback);
     }
-
+*/
 
     /**
      * @param type     下载类型
      * @param callback
      */
+
     public void saveHttpDatas(Integer type, final LoadDatasCallback callback) {
         getRetrofitObserbe(type).compose(mView.<List>bindToLife())
                 .subscribeOn(Schedulers.io())
@@ -313,7 +432,6 @@ public class RemoteMyDataSource implements MyDataSource {
 
     public void gotoUpJson(Integer type, Map<String, String> jsonMap, final LoadDatasCallback callback) {
 
-
         MyRetrofit.getRetrofit()
                 .create(AiHuiLoginServices.class)
                 .upLoadPurPlan(jsonMap)
@@ -351,8 +469,6 @@ public class RemoteMyDataSource implements MyDataSource {
                         .getAzysDatas("2010-10-25", 1), MyRetrofit.getRetrofit()
                         .create(AiHuiLoginServices.class)
                         .getAzysMx());
-
-
             case PXGL_SB_DOWN:
                 return Observable.mergeDelayError(MyRetrofit.getRetrofit()
                         .create(AiHuiLoginServices.class)

@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -32,7 +31,7 @@ public class SlideFromTopPopup extends BasePopupWindow {
     private List<String> mDataList;
 
 
-    public SlideFromTopPopup(Activity context, List dataList) {
+    public SlideFromTopPopup(Activity context, List dataList, final onBackResult onBackResult) {
         super(context);
         setBackPressEnable(false);
         setDismissWhenTouchOuside(true);
@@ -43,10 +42,15 @@ public class SlideFromTopPopup extends BasePopupWindow {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), mDataList.get(position), Toast.LENGTH_LONG).show();
+                onBackResult.backResult(mDataList.get(position));
             }
         });
     }
+
+    public interface onBackResult {
+        void backResult(String string);
+    }
+
 
     @Override
     protected Animation initShowAnimation() {

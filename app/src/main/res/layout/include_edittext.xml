@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<EditText xmlns:android="http://schemas.android.com/apk/res/android"
-          android:id="@+id/et_value"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/white"
-          android:imeOptions="actionDone"
-          android:hint="输入实测值"
-          android:minHeight="120px"
-          android:orientation="vertical"
-          android:paddingLeft="24px"
-          android:singleLine="true"
-          android:textSize="32px">
 
-</EditText>
+
+<RelativeLayout
+    android:minHeight="120px"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+   >
+    <EditText
+        android:padding="24px"
+        android:id="@+id/et_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:hint="输入实测值"
+        android:imeOptions="actionDone"
+        android:orientation="vertical"
+        android:singleLine="true"
+        android:textSize="32px">
+
+    </EditText>
+</RelativeLayout>

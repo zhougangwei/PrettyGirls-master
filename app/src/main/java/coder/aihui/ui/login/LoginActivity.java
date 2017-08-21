@@ -45,7 +45,7 @@ public class LoginActivity extends AppActivity {
     LinearLayout mLoginFormView;
 
     private UserLoginTask mAuthTask = null;
-    private boolean isLogin = false;
+    private boolean       isLogin   = false;
 
 
     @Override
@@ -57,12 +57,13 @@ public class LoginActivity extends AppActivity {
     protected void initView() {
 
 
-        isLogin  = SPUtil.getBoolean(this,"isLogin",false);
+        isLogin = SPUtil.getBoolean(this, "isLogin", false);
         //如果是已经登录的 就直接进去了
-        if (isLogin){
+        if (isLogin) {
             startActivity(new Intent(LoginActivity.this
                     , MainActivity.class
             ));
+            finish();
         }
 
     }
@@ -104,7 +105,7 @@ public class LoginActivity extends AppActivity {
         // Check for a valid userId address.
         if (TextUtils.isEmpty(userId)) {
 
-            SPUtil.saveString(this,"userName", userId);
+            SPUtil.saveString(this, "userName", userId);
 
             //mEtUser.setError(getString(R.string.error_field_required));
             focusView = mEtUser;

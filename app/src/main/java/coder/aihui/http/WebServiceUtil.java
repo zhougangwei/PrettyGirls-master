@@ -50,6 +50,10 @@ public class WebServiceUtil extends AsyncTask<Object, Object, String> {
         // 根据命名空间和方法得到SoapObject对象
         SoapObject soapObject = new SoapObject(targetNameSpace,
                 METHOD);
+        if (params.length == 1) {
+            soapObject.addProperty("par" + 0, params[2]);
+        }
+
 
         if (params.length >= 3 && params[2] != null) {
             List<Object> list = (List<Object>) params[2];
@@ -92,21 +96,19 @@ public class WebServiceUtil extends AsyncTask<Object, Object, String> {
             if (e.getMessage() == null) {
                 return "0$" + "空的错误";
             }
-
             StringBuffer msg = new StringBuffer(e.getMessage());
-
             for (StackTraceElement traceElement : e.getStackTrace()) {
                 msg.append(traceElement.toString());
             }
             return "0$" + msg;
-            //			return "IOException";
+
         } finally {
 
         }
     }
 
 /*
-	@Override
+    @Override
 	protected void onPostExecute(String s) {
 		mOnCallBack.callBack(s);
 	}*/

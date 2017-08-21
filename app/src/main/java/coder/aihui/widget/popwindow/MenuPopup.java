@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -41,7 +40,6 @@ public class MenuPopup extends BasePopupWindow {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), mDataList.get(position), Toast.LENGTH_LONG).show();
                 backReslut.onBackResult(mDataList.get(position));
             }
         });

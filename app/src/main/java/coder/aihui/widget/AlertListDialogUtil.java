@@ -68,7 +68,6 @@ public class AlertListDialogUtil {
             super.handleMessage(msg);
             if (msg.what == 1) {
                 try {
-
                     mMLoadVIew.setVisibility(View.INVISIBLE);
                     mSuccess.setVisibility(View.VISIBLE);
                     Thread.currentThread();

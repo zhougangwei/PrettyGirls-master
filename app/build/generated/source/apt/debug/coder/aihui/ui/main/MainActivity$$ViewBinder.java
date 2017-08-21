@@ -24,10 +24,10 @@ public class MainActivity$$ViewBinder<T extends MainActivity> implements ViewBin
     protected InnerUnbinder(T target, Finder finder, Object source) {
       this.target = target;
 
-      target.mTvTitle = finder.findRequiredViewAsType(source, 2131755235, "field 'mTvTitle'", TextView.class);
-      target.mToolbar = finder.findRequiredViewAsType(source, 2131755289, "field 'mToolbar'", Toolbar.class);
-      target.mFlContent = finder.findRequiredViewAsType(source, 2131755324, "field 'mFlContent'", FrameLayout.class);
-      target.mBottomNavigationBar = finder.findRequiredViewAsType(source, 2131755325, "field 'mBottomNavigationBar'", BottomNavigationBar.class);
+      target.mTvTitle = finder.findRequiredViewAsType(source, 2131755236, "field 'mTvTitle'", TextView.class);
+      target.mToolbar = finder.findRequiredViewAsType(source, 2131755291, "field 'mToolbar'", Toolbar.class);
+      target.mFlContent = finder.findRequiredViewAsType(source, 2131755333, "field 'mFlContent'", FrameLayout.class);
+      target.mBottomNavigationBar = finder.findRequiredViewAsType(source, 2131755334, "field 'mBottomNavigationBar'", BottomNavigationBar.class);
     }
 
     @Override

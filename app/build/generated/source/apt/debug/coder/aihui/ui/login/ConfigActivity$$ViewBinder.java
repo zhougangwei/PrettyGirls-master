@@ -23,25 +23,25 @@ public class ConfigActivity$$ViewBinder<T extends ConfigActivity> implements Vie
   protected static class InnerUnbinder<T extends ConfigActivity> implements Unbinder {
     protected T target;
 
-    private View view2131755292;
+    private View view2131755294;
 
     protected InnerUnbinder(final T target, Finder finder, Object source) {
       this.target = target;
 
       View view;
-      target.mTvTitle = finder.findRequiredViewAsType(source, 2131755235, "field 'mTvTitle'", TextView.class);
-      view = finder.findRequiredView(source, 2131755292, "field 'mBtSure' and method 'onViewClicked'");
-      target.mBtSure = finder.castView(view, 2131755292, "field 'mBtSure'");
-      view2131755292 = view;
+      target.mTvTitle = finder.findRequiredViewAsType(source, 2131755236, "field 'mTvTitle'", TextView.class);
+      view = finder.findRequiredView(source, 2131755294, "field 'mBtSure' and method 'onViewClicked'");
+      target.mBtSure = finder.castView(view, 2131755294, "field 'mBtSure'");
+      view2131755294 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked();
         }
       });
-      target.mEtAddress = finder.findRequiredViewAsType(source, 2131755291, "field 'mEtAddress'", EditText.class);
-      target.mDonutProgress = finder.findRequiredViewAsType(source, 2131755294, "field 'mDonutProgress'", DonutProgress.class);
-      target.mRlProgress = finder.findRequiredViewAsType(source, 2131755293, "field 'mRlProgress'", RelativeLayout.class);
+      target.mEtAddress = finder.findRequiredViewAsType(source, 2131755293, "field 'mEtAddress'", EditText.class);
+      target.mDonutProgress = finder.findRequiredViewAsType(source, 2131755296, "field 'mDonutProgress'", DonutProgress.class);
+      target.mRlProgress = finder.findRequiredViewAsType(source, 2131755295, "field 'mRlProgress'", RelativeLayout.class);
     }
 
     @Override
@@ -55,8 +55,8 @@ public class ConfigActivity$$ViewBinder<T extends ConfigActivity> implements Vie
       target.mDonutProgress = null;
       target.mRlProgress = null;
 
-      view2131755292.setOnClickListener(null);
-      view2131755292 = null;
+      view2131755294.setOnClickListener(null);
+      view2131755294 = null;
 
       this.target = null;
     }

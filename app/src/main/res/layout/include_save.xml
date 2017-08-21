@@ -5,10 +5,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tv_save"
+    android:gravity="center"
     android:layout_width="70px"
     android:layout_height="80px"
     android:layout_marginLeft="627px"
-    android:layout_marginTop="88px"
+    android:layout_marginTop="66px"
     android:text="保存"
 
     android:textColor="@color/white"

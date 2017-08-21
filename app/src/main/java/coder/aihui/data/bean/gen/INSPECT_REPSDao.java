@@ -53,6 +53,8 @@ public class INSPECT_REPSDao extends AbstractDao<INSPECT_REPS, Long> {
         public final static Property INSPR_METER_ID = new Property(26, Long.class, "INSPR_METER_ID", false, "INSPR__METER__ID");
         public final static Property METER_PLAN_ID = new Property(27, Long.class, "METER_PLAN_ID", false, "METER__PLAN__ID");
         public final static Property Default = new Property(28, Integer.class, "Default", false, "DEFAULT");
+        public final static Property ModelId = new Property(29, Long.class, "modelId", false, "MODEL_ID");
+        public final static Property PDAID = new Property(30, String.class, "PDAID", false, "PDAID");
     }
 
 
@@ -96,7 +98,9 @@ public class INSPECT_REPSDao extends AbstractDao<INSPECT_REPS, Long> {
                 "\"INSR__TYPE\" TEXT," + // 25: INSR_TYPE
                 "\"INSPR__METER__ID\" INTEGER," + // 26: INSPR_METER_ID
                 "\"METER__PLAN__ID\" INTEGER," + // 27: METER_PLAN_ID
-                "\"DEFAULT\" INTEGER);"); // 28: Default
+                "\"DEFAULT\" INTEGER," + // 28: Default
+                "\"MODEL_ID\" INTEGER," + // 29: modelId
+                "\"PDAID\" TEXT);"); // 30: PDAID
     }
 
     /** Drops the underlying database table. */
@@ -253,6 +257,16 @@ public class INSPECT_REPSDao extends AbstractDao<INSPECT_REPS, Long> {
         if (Default != null) {
             stmt.bindLong(29, Default);
         }
+ 
+        Long modelId = entity.getModelId();
+        if (modelId != null) {
+            stmt.bindLong(30, modelId);
+        }
+ 
+        String PDAID = entity.getPDAID();
+        if (PDAID != null) {
+            stmt.bindString(31, PDAID);
+        }
     }
 
     @Override
@@ -403,6 +417,16 @@ public class INSPECT_REPSDao extends AbstractDao<INSPECT_REPS, Long> {
         if (Default != null) {
             stmt.bindLong(29, Default);
         }
+ 
+        Long modelId = entity.getModelId();
+        if (modelId != null) {
+            stmt.bindLong(30, modelId);
+        }
+ 
+        String PDAID = entity.getPDAID();
+        if (PDAID != null) {
+            stmt.bindString(31, PDAID);
+        }
     }
 
     @Override
@@ -441,7 +465,9 @@ public class INSPECT_REPSDao extends AbstractDao<INSPECT_REPS, Long> {
             cursor.isNull(offset + 25) ? null : cursor.getString(offset + 25), // INSR_TYPE
             cursor.isNull(offset + 26) ? null : cursor.getLong(offset + 26), // INSPR_METER_ID
             cursor.isNull(offset + 27) ? null : cursor.getLong(offset + 27), // METER_PLAN_ID
-            cursor.isNull(offset + 28) ? null : cursor.getInt(offset + 28) // Default
+            cursor.isNull(offset + 28) ? null : cursor.getInt(offset + 28), // Default
+            cursor.isNull(offset + 29) ? null : cursor.getLong(offset + 29), // modelId
+            cursor.isNull(offset + 30) ? null : cursor.getString(offset + 30) // PDAID
         );
         return entity;
     }
@@ -477,6 +503,8 @@ public class INSPECT_REPSDao extends AbstractDao<INSPECT_REPS, Long> {
         entity.setINSPR_METER_ID(cursor.isNull(offset + 26) ? null : cursor.getLong(offset + 26));
         entity.setMETER_PLAN_ID(cursor.isNull(offset + 27) ? null : cursor.getLong(offset + 27));
         entity.setDefault(cursor.isNull(offset + 28) ? null : cursor.getInt(offset + 28));
+        entity.setModelId(cursor.isNull(offset + 29) ? null : cursor.getLong(offset + 29));
+        entity.setPDAID(cursor.isNull(offset + 30) ? null : cursor.getString(offset + 30));
      }
     
     @Override

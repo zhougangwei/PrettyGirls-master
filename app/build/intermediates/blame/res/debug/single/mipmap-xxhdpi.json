@@ -36,6 +36,10 @@
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xxhdpi\\xz_pre.png"
     },
     {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_del_pic.png",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_del_pic.png"
+    },
+    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\sys.png",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xxhdpi\\sys.png"
     },
@@ -86,6 +90,10 @@
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\fj.png",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xxhdpi\\fj.png"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_bhg.png",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_bhg.png"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_file.png",
@@ -170,6 +178,10 @@
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_arrow_down.png",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_arrow_down.png"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_nopic.png",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_nopic.png"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\azys.png",

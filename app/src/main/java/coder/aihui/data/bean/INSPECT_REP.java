@@ -51,11 +51,12 @@ public class INSPECT_REP {
     private String         PPMC;
     private Long           NET_INSPRID;
     private Integer        ISCHECK;
+    private String        PDAID;
 
 
     private Integer UP_FILE_ID;
     private Integer UP_FILE_TYPE;
-    @Generated(hash = 441002353)
+    @Generated(hash = 985752119)
     public INSPECT_REP(Long INSR_ID, Integer INSR_FK_ID, String INSR_TYPE,
             java.util.Date INSR_EXEC_DATE, java.util.Date INSR_PRIOR_EXEC_DATE, Integer INSR_USER_ID,
             String INSR_RESULT, String INSR_NID, String INSR_REMARK, Integer INSR_WX_NEED,
@@ -64,7 +65,7 @@ public class INSPECT_REP {
             Long XJFL, String XJFL_MC, String INSE_CYCLE, String RFID_CODE, String BAR_CODE,
             java.util.Date SYNC_DATE, Integer SYNC_FLAG, String UUID, String KPBH_OLD, String REP_NAMES,
             String REP_IDS, Long KSID, String KSMC, String SCBH, String GGXH, String PPMC,
-            Long NET_INSPRID, Integer ISCHECK, Integer UP_FILE_ID, Integer UP_FILE_TYPE) {
+            Long NET_INSPRID, Integer ISCHECK, String PDAID, Integer UP_FILE_ID, Integer UP_FILE_TYPE) {
         this.INSR_ID = INSR_ID;
         this.INSR_FK_ID = INSR_FK_ID;
         this.INSR_TYPE = INSR_TYPE;
@@ -102,6 +103,7 @@ public class INSPECT_REP {
         this.PPMC = PPMC;
         this.NET_INSPRID = NET_INSPRID;
         this.ISCHECK = ISCHECK;
+        this.PDAID = PDAID;
         this.UP_FILE_ID = UP_FILE_ID;
         this.UP_FILE_TYPE = UP_FILE_TYPE;
     }
@@ -341,6 +343,12 @@ public class INSPECT_REP {
     }
     public void setUP_FILE_TYPE(Integer UP_FILE_TYPE) {
         this.UP_FILE_TYPE = UP_FILE_TYPE;
+    }
+    public String getPDAID() {
+        return this.PDAID;
+    }
+    public void setPDAID(String PDAID) {
+        this.PDAID = PDAID;
     }
 
 

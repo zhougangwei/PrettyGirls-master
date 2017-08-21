@@ -2,7 +2,6 @@ package coder.aihui.ui.assetcheck;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,12 +16,15 @@ import coder.aihui.R;
 import coder.aihui.base.AppActivity;
 import coder.aihui.base.BaseFragment;
 import coder.aihui.base.Content;
+import coder.aihui.base.DeptDecotor;
+import coder.aihui.base.DeptView;
+import coder.aihui.base.DlwzDecotor;
 import coder.aihui.base.DlwzView;
+import coder.aihui.manager.DeptLocationManager;
 import coder.aihui.widget.jdaddressselector.ISelectAble;
-import coder.aihui.widget.jdaddressselector.SelectedListener;
 
 
-public class AssetQueryConfigActivity extends AppActivity implements DlwzView, SelectedListener {
+public class AssetQueryConfigActivity extends AppActivity implements DeptView,DlwzView {
 
 
     @BindView(R.id.iv_back)
@@ -54,6 +56,10 @@ public class AssetQueryConfigActivity extends AppActivity implements DlwzView, S
     String mAllDeptIds;
     String mAllDeptName;
     String mAllDlwzName;
+    private DeptDecotor mDeptDecotor;
+
+    private DlwzDecotor mDlwzDecotor;
+    private DeptLocationManager mDeptLocationManager;
 
 
     @Override
@@ -70,9 +76,13 @@ public class AssetQueryConfigActivity extends AppActivity implements DlwzView, S
 
     @Override
     protected void initView() {
+        //负责处理地理位子的
+        mDeptDecotor = new DeptDecotor(this,this);
+        mDlwzDecotor = new DlwzDecotor(this,this);
+
+        mDeptLocationManager = new DeptLocationManager();   //处理数据的
         mTvTitle.setText("资产清点配置");
         initIntent();
-
     }
 
 
@@ -99,7 +109,6 @@ public class AssetQueryConfigActivity extends AppActivity implements DlwzView, S
         mTvDept.setText(mAllDeptName);
         mTvLocation.setText(mAllDlwzName);
 
-
     }
 
 
@@ -118,10 +127,10 @@ public class AssetQueryConfigActivity extends AppActivity implements DlwzView, S
                 finish();           //返回
                 break;
             case R.id.ll_location:
-                getLocation(this);
+                mDlwzDecotor.getDlwz();
                 break;
             case R.id.ll_dept:
-                getDept(this);  //弹出地址选择框
+                getDept();  //弹出地址选择框
                 break;
             case R.id.ll_way:
                 break;
@@ -151,69 +160,42 @@ public class AssetQueryConfigActivity extends AppActivity implements DlwzView, S
     @Override
     public void onAddressSelected(ArrayList<ISelectAble> selectAbles) {
 
-        String result = "";
-        StringBuilder sbids = new StringBuilder();
-        String arg = "";
-        sbids.append("(");
 
-        for (int i = 0; i < selectAbles.size(); i++) {
-
-            ISelectAble selectAble = selectAbles.get(i);
-            if (i != selectAbles.size() - 1) {
-                arg = selectAble.getArg();
-                String name = selectAble.getName();
-                int id = selectAble.getId();
-                result += name + "-";
-                sbids.append(id).append(",");
-            } else {
-                arg = selectAble.getArg();
-                String name = selectAble.getName();
-                int id = selectAble.getId();
-                result += name;
-                sbids.append(id);
-            }
-        }
-        sbids.append(")");
-        if (selectAbles != null && selectAbles.size() > 0) {
-            ISelectAble iSelectAble = selectAbles.get(selectAbles.size() - 1);
-
-            if ("dept".equals(arg)) {
-                mDeptName = iSelectAble.getName();
-                mDeptIds = iSelectAble.getId() + "";
-            } else if ("location".equals(arg)) {
-                mDlwzName = iSelectAble.getName();
-                mDlwzIds = iSelectAble.getId() + "";
-            }
-
-        }
-
-        if (!TextUtils.isEmpty(result)) {
-            if ("dept".equals(arg)) {
-                mAllDeptName = result.substring(0, result.length() - 1);
-                mTvDept.setText(mAllDeptName);
-            } else if ("location".equals(arg)) {
-                mAllDlwzName = result.substring(0, result.length() - 1);
-                mTvLocation.setText(mAllDlwzName);
-            }
-        }
+        mDeptLocationManager.solveDatas(selectAbles);
+        mAllDeptName = mDeptLocationManager.getAllDeptName();
+        mAllDlwzName = mDeptLocationManager.getAllDlwzName();
+        mAllDeptIds = mDeptLocationManager.getAllDeptIds();
+        mAllDlwzIds = mDeptLocationManager.getAllDlwzIds();
+        mDlwzIds = mDeptLocationManager.getDlwzIds();
+        mDeptIds = mDeptLocationManager.getDeptIds();
+        mDlwzName = mDeptLocationManager.getDlwzName();
+        mDeptName = mDeptLocationManager.getDeptName();
 
 
-        String ids = sbids.toString();
-        if (ids.length() != 2) {              //说明只有()
-            if ("dept".equals(arg)) {
-                mAllDeptIds = ids;
-            } else if ("location".equals(arg)) {
-                mAllDlwzIds = ids;
-            }
-        }
+        mTvDept.setText(mAllDeptName);           //所有科室的
+        mTvLocation.setText(mAllDlwzName);           //所有地理的
+    }
 
+    @Override
+    public void closeDiaLog() {
+        mDeptDecotor.closeDiaLog();
+        mDlwzDecotor.closeDiaLog();
     }
 
     @Override
     public void onBackPressed() {
         backAssetquery();
-
         super.onBackPressed();
 
+    }
+
+    @Override
+    public void getDept() {
+        mDeptDecotor.getDept();
+    }
+
+    @Override
+    public void getDlwz() {
+        mDlwzDecotor.getDlwz();
     }
 }

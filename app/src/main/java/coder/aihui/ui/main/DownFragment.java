@@ -18,9 +18,13 @@ import butterknife.BindView;
 import coder.aihui.R;
 import coder.aihui.base.BaseFragment;
 import coder.aihui.base.Content;
+import coder.aihui.data.bean.gen.INSPECT_PLANDao;
 import coder.aihui.rxbus.event.MainEvent;
 import coder.aihui.util.AndroidUtils;
 import coder.aihui.util.ColorsUtil;
+import coder.aihui.util.ListUtils;
+import coder.aihui.util.ListViewUtil;
+import coder.aihui.util.LogUtil;
 import coder.aihui.util.SPUtil;
 import coder.aihui.util.ToastUtil;
 import coder.aihui.widget.MyProgressButton;
@@ -37,6 +41,9 @@ import static coder.aihui.ui.main.DownPresenter.HTTP;
 import static coder.aihui.ui.main.DownPresenter.INIT_DOWN;
 import static coder.aihui.ui.main.DownPresenter.INSPECT_INIT_DOWN;
 import static coder.aihui.ui.main.DownPresenter.INSPECT_PLAN_DOWN;
+import static coder.aihui.ui.main.DownPresenter.INSPECT_PM_INIT_DOWN;
+import static coder.aihui.ui.main.DownPresenter.INSPECT_PM_PLAN_DOWN;
+import static coder.aihui.ui.main.DownPresenter.INSPECT_PM_TEMPLETITEM_DOWN;
 import static coder.aihui.ui.main.DownPresenter.INSPECT_TEMPLETITEM_DOWN;
 import static coder.aihui.ui.main.DownPresenter.PUR_CONTRACT_PLAN_DOWN;
 import static coder.aihui.ui.main.DownPresenter.PXGL_SB_DOWN;
@@ -63,20 +70,14 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
     ArrayList<DownLoadBean> mDatas = new ArrayList<DownLoadBean>() {
     };
     private CommonAdapter<DownLoadBean> mMainAdapter;
-    private List<String> mTextNameList = new ArrayList();     //文本名字
-    private String[] mBigType;
-    private List<String> mBigTypeList = new ArrayList<>();
+
+    public static final String[]     mBigType     = new String[]{"台账", "巡检", "PM", "安装验收"};
+    private             List<String> mBigTypeList = new ArrayList<>();
+    private List<String> mTypeList;
 
 
     @Override
     protected void initView() {
-
-        //初始化名字 以后要加就加这里
-        initTextName();
-
-        SPUtil.saveInt(mContext, Content.UnDownDatas, mDatas.size());   //显示几个小红点
-        //更新显示 数目未下载数目
-        ((MainActivity) mActivity).updateUnreadCount();
 
         mPresenter = new DownPresenter(this, mDaoSession);
         mPresenter.registerRxBus(MainEvent.class, new Action1<MainEvent>() {
@@ -84,27 +85,18 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
             public void call(MainEvent mainEvent) {
             }
         });
-
-        //初始话列表的下载
-        initRecycle();
-
         //初始进度条
         MyProgressButton.initStatusString(new String[]{"下载", "暂停", "完成", "错误", "删除", "更新"});
+        //初始话列表的下载
+        initRecycle();
+        //初始化名字 以后要加就加这里
+        initTextName();
+        SPUtil.saveInt(mContext, Content.UnDownDatas, mDatas.size());   //显示几个小红点
+        //更新显示 数目未下载数目
+        ((MainActivity) mActivity).updateUnreadCount();
     }
 
     private void initTextName() {
-        mTextNameList.clear();
-        mTextNameList.add("初始化");
-        mTextNameList.add("台账下载");
-        mTextNameList.add("公司下载");
-        mTextNameList.add("巡检下载");
-        mTextNameList.add("巡检初始下载");
-        mTextNameList.add("巡检模板下载");
-        mTextNameList.add("安装验收下载");
-        mTextNameList.add("培训管理下载");
-
-
-        mBigType = new String[]{"台账", "巡检", "安装验收"};
 
 
         mBigTypeList = Arrays.asList(mBigType);
@@ -112,47 +104,35 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
         //查询台账的已有数目
         mDatas.clear();
 
-
         //下载台账初始化
         DownLoadBean downLoadBean = new DownLoadBean();
-        downLoadBean.name = mTextNameList.get(0);
-        downLoadBean.count = mDaoSession.getSYS_DEPTDao().count() == 0 ? 0 : Integer.parseInt(mDaoSession.getSYS_DEPTDao().count() + "");
+        downLoadBean.name = "初始化";
+        downLoadBean.count = mDaoSession.getSYS_DEPTDao().count() == 0L ? 0 : Integer.parseInt(mDaoSession.getSYS_DEPTDao().count() + "");
         downLoadBean.enties = new String[]{"coder.aihui.data.bean.PUB_DICTIONARY_ITEM", "coder.aihui.data.bean.SYS_DEPT", "coder.aihui.data.bean.IN_STORE_QC", "coder.aihui.data.bean.PUB_DICTIONARY_ITEM"};
         downLoadBean.methods = new String[]{"getHrpPubDictDataJSON2", "getHrpDeptDataJSON", "getHrpInStoreQcDataJSON", "getHrpPubDictDataJSON"};
         downLoadBean.way = WEB_SERVICE;
         downLoadBean.type = INIT_DOWN;
         downLoadBean.bigType = mBigType[0];
-
-        final String[] pars0 = new String[]{"007083"};
-        final List<String[]> pars0List = new ArrayList<>();
-        pars0List.add(pars0);
-        downLoadBean.pars = pars0List;
         mDatas.add(downLoadBean);
 
 
         DownLoadBean assetBean = new DownLoadBean();
 
-        String userId = SPUtil.getString(mContext, "userId", "1");
-        final String[] pars = new String[]{userId};
-        final List<String[]> parss = new ArrayList<>();
-        parss.add(pars);
 
         //下载台账
-        assetBean.name = mTextNameList.get(1);
-        assetBean.count = mDaoSession.getIN_ASSETDao().count() == 0 ? 0 : Integer.parseInt(mDaoSession.getIN_ASSETDao().count() + "");
+        assetBean.name = "台账下载";
+        assetBean.count = mDaoSession.getIN_ASSETDao().count() == 0L ? 0 : Integer.parseInt(mDaoSession.getIN_ASSETDao().count() + "");
         assetBean.enties = new String[]{"coder.aihui.data.bean.IN_ASSET"};
         assetBean.methods = new String[]{"getHrpInAssetDataJSON3"};
         assetBean.way = WEB_SERVICE;
         assetBean.type = ASSET_DOWN;
-        assetBean.pars = parss;
         assetBean.bigType = mBigType[0];
         mDatas.add(assetBean);
 
-
         //下载公司
         DownLoadBean companyBean = new DownLoadBean();
-        companyBean.name = mTextNameList.get(2);
-        companyBean.count = mDaoSession.getIN_ASSETDao().count() == 0 ? 0 : Integer.parseInt(mDaoSession.getPUB_COMPANYDao().count() + "");
+        companyBean.name = "公司下载";
+        companyBean.count = mDaoSession.getIN_ASSETDao().count() == 0L ? 0 : Integer.parseInt(mDaoSession.getPUB_COMPANYDao().count() + "");
         companyBean.way = HTTP;
         companyBean.type = COMPANY_DOWN;
         companyBean.bigType = mBigType[0];
@@ -161,69 +141,107 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
 
         //下载巡检计划
         DownLoadBean planBean = new DownLoadBean();
-        List<String[]> list = new ArrayList<>();
-        list.add(new String[]{"XJ", AndroidUtils.getPlanPras("XJ", "1", mDaoSession)});
-        planBean.name = mTextNameList.get(3);
-        planBean.count = mDaoSession.getIN_ASSETDao().count() == 0 ? 0 : Integer.parseInt(mDaoSession.getINSPECT_PLANDao().count() + "");
+
+        long xj = mDaoSession.getINSPECT_PLANDao().queryBuilder().where(INSPECT_PLANDao.Properties.INSP_TYPE.eq("XJ")).count();
+        planBean.count = (xj == 0L ? 0 : Integer.parseInt(xj + ""));
         planBean.enties = new String[]{"coder.aihui.data.bean.INSPECT_PLAN"};
         planBean.methods = new String[]{"getHrpInspectPlanDataJSON4"};
         planBean.way = WEB_SERVICE;
         planBean.type = INSPECT_PLAN_DOWN;
-        planBean.pars = list;
-        planBean.bigType = mBigType[0];
+        planBean.name = "巡检下载";
+        planBean.bigType = mBigType[1];
         mDatas.add(planBean);
 
 
         //下载巡检初始化
         DownLoadBean inspectInitBean = new DownLoadBean();
 
-        List<String[]> list2 = new ArrayList<>();
-        String[] pars2 = new String[]{"007119,007120"};
-        list2.add(pars2);
 
-        inspectInitBean.name = mTextNameList.get(4);
-        inspectInitBean.count = mDaoSession.getINSPECT_EXT_EXECUTORDao().count() == 0 ? 0 : Integer.parseInt(mDaoSession.getINSPECT_EXT_EXECUTORDao().count() + "");
+        inspectInitBean.name = "巡检初始下载";
+        inspectInitBean.count = mDaoSession.getINSPECT_EXT_EXECUTORDao().count() == 0L ? 0 : Integer.parseInt(mDaoSession.getINSPECT_EXT_EXECUTORDao().count() + "");
         inspectInitBean.enties = new String[]{"coder.aihui.data.bean.PUB_DICTIONARY_ITEM", "coder.aihui.data.bean.REPAIR_PLACE", "coder.aihui.data.bean.INSPECT_EXT", "coder.aihui.data.bean.INSPECT_EXT_EXECUTOR", "coder.aihui.data.bean.SYS_PARAM", "coder.aihui.data.bean.INSPECT_GROUP"};
         inspectInitBean.methods = new String[]{"getHrpPubDictDataJSON2", "getHrpRePlaceDataJSON", "getHrpInspectExtDataJSON", "getHrpInspectExtExecDataJSON", "getHrpParamDataJSON", "getHrpInspectGroupDataJSON"};
         inspectInitBean.type = INSPECT_INIT_DOWN;
         inspectInitBean.way = WEB_SERVICE;
-        inspectInitBean.pars = list2;
-        inspectInitBean.bigType = mBigType[0];
+
+        inspectInitBean.bigType = mBigType[1];
         mDatas.add(inspectInitBean);
-
-
         //下载巡检模板
         DownLoadBean inspectTempletItemBean = new DownLoadBean();
-        List<String[]> list3 = new ArrayList<>();
-        String[] pars3 = {"XJ"};
-        list3.add(pars3);
-        inspectTempletItemBean.name = mTextNameList.get(5);
-        inspectTempletItemBean.count = mDaoSession.getInspectTempletItemDao().count() == 0 ? 0 : Integer.parseInt(mDaoSession.getInspectTempletItemDao().count() + "");
+
+        inspectTempletItemBean.name = "巡检模板下载";
+        inspectTempletItemBean.count = mDaoSession.getInspectTempletItemDao().count() == 0L ? 0 : Integer.parseInt(mDaoSession.getInspectTempletItemDao().count() + "");
         inspectTempletItemBean.enties = new String[]{"coder.aihui.data.bean.InspectTempletItem"};
         inspectTempletItemBean.methods = new String[]{"getHrpInspectTempletItemDataJSON"};
         inspectTempletItemBean.type = INSPECT_TEMPLETITEM_DOWN;
         inspectTempletItemBean.way = WEB_SERVICE;
-        inspectTempletItemBean.pars = list2;
-        inspectTempletItemBean.bigType = mBigType[0];
+        inspectTempletItemBean.bigType = mBigType[1];
+
+
+
         mDatas.add(inspectTempletItemBean);
+
+
+        //下载PM计划
+        DownLoadBean planPmBean = new DownLoadBean();
+
+        planPmBean.name = "PM下载";
+
+        long pm = mDaoSession.getINSPECT_PLANDao().queryBuilder().where(INSPECT_PLANDao.Properties.INSP_TYPE.eq("PM")).count();
+        planPmBean.count = (pm == 0L ? 0 : Integer.parseInt(pm + ""));
+        planPmBean.enties = new String[]{"coder.aihui.data.bean.INSPECT_PLAN"};
+        planPmBean.methods = new String[]{"getHrpInspectPlanDataJSON4"};
+        planPmBean.way = WEB_SERVICE;
+        planPmBean.type = INSPECT_PM_PLAN_DOWN;
+
+        planPmBean.bigType = mBigType[2];
+        mDatas.add(planPmBean);
+
+
+        //下载PM初始化
+
+        DownLoadBean pmInitBean = (DownLoadBean) inspectInitBean.deepClone();
+        pmInitBean.type = INSPECT_PM_INIT_DOWN;
+        pmInitBean.bigType = mBigType[2];
+        pmInitBean.name ="PM初始下载";
+        mDatas.add(pmInitBean);
+
+        //下载巡检模板
+        DownLoadBean pmTempletItemBean = new DownLoadBean();
+
+        pmTempletItemBean.name = "PM模板下载";
+        pmTempletItemBean.count = mDaoSession.getInspectTempletItemDao().count() == 0L ? 0 : Integer.parseInt(mDaoSession.getInspectTempletItemDao().count() + "");
+        pmTempletItemBean.enties = new String[]{"coder.aihui.data.bean.InspectTempletItem"};
+        pmTempletItemBean.methods = new String[]{"HrpInspectTempletItemDataJSON"};
+        pmTempletItemBean.type = INSPECT_PM_TEMPLETITEM_DOWN;
+        pmTempletItemBean.way = WEB_SERVICE;
+
+        pmTempletItemBean.bigType = mBigType[2];
+        mDatas.add(pmTempletItemBean);
+
+
 
         //下载安装验收
         DownLoadBean pubContractPlanBean = new DownLoadBean();
-        pubContractPlanBean.name = mTextNameList.get(6);
-        pubContractPlanBean.count = mDaoSession.getPUR_CONTRACT_PLANDao().count() == 0 ? 0 : Integer.parseInt(mDaoSession.getPUR_CONTRACT_PLANDao().count() + "");
+        pubContractPlanBean.name = "安装验收下载";
+        pubContractPlanBean.count = mDaoSession.getPUR_CONTRACT_PLANDao().count() == 0L ? 0 : Integer.parseInt(mDaoSession.getPUR_CONTRACT_PLANDao().count() + "");
         pubContractPlanBean.type = PUR_CONTRACT_PLAN_DOWN;
         pubContractPlanBean.way = HTTP;
-        pubContractPlanBean.bigType = mBigType[2];
+        pubContractPlanBean.bigType = mBigType[3];
         mDatas.add(pubContractPlanBean);
 
         //下载培训管理
         DownLoadBean pxsbBean = new DownLoadBean();
-        pxsbBean.name = mTextNameList.get(7);
-        pxsbBean.count = mDaoSession.getIN_MATERIALS_WZMCDao().count() == 0 ? 0 : Integer.parseInt(mDaoSession.getIN_MATERIALS_WZMCDao().count() + "");
+        pxsbBean.name = "培训管理下载";
+        pxsbBean.count = mDaoSession.getIN_MATERIALS_WZMCDao().count() == 0L ? 0 : Integer.parseInt(mDaoSession.getIN_MATERIALS_WZMCDao().count() + "");
         pxsbBean.type = PXGL_SB_DOWN;
         pxsbBean.way = HTTP;
-        pxsbBean.bigType = mBigType[2];
+        pxsbBean.bigType = mBigType[3];
         mDatas.add(pxsbBean);
+
+        mTypeList = ListUtils.ListFiled2list(mDatas, "getType", DownLoadBean.class);
+
+        mMainAdapter.notifyDataSetChanged();
 
 
     }
@@ -236,21 +254,30 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
 
 
     //显示错误页面
-    public void showError(int type, final String wrong) {
+    public synchronized void showError(int type, final String wrong) {
         Observable.just(type)
                 .compose(this.<Integer>bindToLife())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer integer) {
-                View view = mRv.getChildAt(integer);//与前面添加集合对应
-                MyProgressButton mcp = (MyProgressButton) view.findViewById(R.id.CP_down);
-                //"下载","暂停","完成","错误","删除","更新"
-                mcp.setMorphingCircle(false);
-                mcp.setMorphingNormal(false);
-                mcp.normal(3);
+
+                int i = mTypeList.indexOf(integer + "");
+                View view = ListViewUtil.getViewByPosition(i, mRv);
+                LogUtil.d(integer + "");
+                if (view == null) {
+                    LogUtil.e(integer + "");
+                } else {
+                    MyProgressButton mcp = (MyProgressButton) view.findViewById(R.id.CP_down);
+                    //"下载","暂停","完成","错误","删除","更新"
+                    mcp.setMorphingCircle(false);
+                    mcp.setMorphingNormal(false);
+                    mcp.normal(3);
+                }
+
                 //弹框显示错误原因
                 AndroidUtils.showErrorMsg("下载失败", wrong, getActivity());
             }
+
         });
 
 
@@ -265,7 +292,8 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer type) {                        //根据Type来进行显示哪个
-                View view = mRv.getChildAt(type);//与前面添加集合对应
+                int i = mTypeList.indexOf(type + "");
+                View view = ListViewUtil.getViewByPosition(i, mRv);
                 MyProgressButton mcp = (MyProgressButton) view.findViewById(R.id.CP_down);
                 //"下载","暂停","完成","错误","删除","更新"
                 mcp.setMorphingCircle(false);
@@ -320,7 +348,8 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
                             public void call(int[] ints) {
                                 int num = ints[0];
                                 int type = ints[1];
-                                View view = mRv.getChildAt(type);//与前面添加集合对应
+                                int i = mTypeList.indexOf(type + "");
+                                View view = ListViewUtil.getViewByPosition(i, mRv);
                                 MyProgressButton mcp = (MyProgressButton) view.findViewById(R.id.CP_down);
                                 //"下载","暂停","完成","错误","删除","更新"
                                 mcp.download(num);
@@ -350,21 +379,19 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
             }
         }));
 
-
         //下载
         mMainAdapter = new CommonAdapter<DownLoadBean>(mActivity, R.layout.item_down_main_ios, mDatas) {
             @Override
             protected void convert(final ViewHolder holder, final DownLoadBean bean, int position) {
                 final MyProgressButton cb = (MyProgressButton) holder.getView(R.id.CP_down);
                 //(new String[]{"下载","暂停","完成","错误","删除","更新"};
-                if (bean.count != null || bean.count != 0) {
+                if (bean.count == 0) {
                     cb.normal(0); //max value is String[].length - 1;  call anytime;
                 } else {
                     cb.normal(4);
                 }
                 holder.setText(R.id.tv_title, bean.name);
                 //下载
-
                 cb.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -384,7 +411,7 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
                                 e.printStackTrace();
                             }
                             if (bean.way == WEB_SERVICE) {
-                                mPresenter.gotoDown(bean.methods, bean.enties, bean.pars, bean.type, bean.way);
+                                mPresenter.gotoDown(bean);
                             } else if (bean.way == HTTP) {
                                 mPresenter.gotoDown(bean.type);
                             }
@@ -428,50 +455,6 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
             bt_clear.setTextColor(getResources().getColor(R.color.black));
         }
     }
-
-
-    //显示正在下载
-
-   /* @Override
-    public void showLoading(int type) {
-        Observable.just(type)
-                .compose(this.<Integer>bindToLife())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Integer>() {
-            @Override
-            public void call(Integer integer) {
-                switch (integer) {
-                    case INIT_DOWN:
-
-                        break;
-
-                    case ASSET_DOWN:
-                        View view = mRv.getChildAt(1);//与前面添加集合对应
-                        NumberProgressBar mNumberProgressBar = (NumberProgressBar) view.findViewById(R.id.number_progress_bar);
-                        break;
-
-                }
-            }
-        });
-    }
-
-    //关闭正在下载
-    @Override
-    public void closeLoading(int type) {
-        Observable.just(type)
-                .compose(this.<Integer>bindToLife())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Integer>() {
-            @Override
-            public void call(Integer integer) {
-                switch (integer) {
-                    case ASSET_DOWN:
-                        View view = mRv.getChildAt(1);//与前面添加集合对应
-                        break;
-                }
-            }
-        });
-
-    }
-*/
 
     @Override
     public void onDestroy() {

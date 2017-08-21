@@ -180,6 +180,8 @@
         </activity>
         <activity android:name=".ui.pxgl.PxglListActivity">
         </activity>
+        <activity android:name=".ui.inspectxj.InspectConfigActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -44,12 +44,12 @@
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\drawable-xhdpi-v4\\abc_list_selector_disabled_holo_dark.9.png"
     },
     {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\design_ic_visibility.png",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\6f6f3bf43ac436ebfb3683f0bd89179ccefded2b\\output\\res\\drawable-xhdpi-v4\\design_ic_visibility.png"
-    },
-    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_ic_menu_share_mtrl_alpha.png",
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\drawable-xhdpi-v4\\abc_ic_menu_share_mtrl_alpha.png"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\design_ic_visibility.png",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\6f6f3bf43ac436ebfb3683f0bd89179ccefded2b\\output\\res\\drawable-xhdpi-v4\\design_ic_visibility.png"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_btn_radio_to_on_mtrl_000.png",
@@ -98,6 +98,10 @@
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\selector_menu_popup.xml",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\drawable-xhdpi\\selector_menu_popup.xml"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\shape_cent_round.xml",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\drawable-xhdpi\\shape_cent_round.xml"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\shape_side_bar_bg.xml",
@@ -184,6 +188,10 @@
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\drawable-xhdpi-v4\\abc_btn_check_to_on_mtrl_000.png"
     },
     {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\shape_blue_4px.xml",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\drawable-xhdpi\\shape_blue_4px.xml"
+    },
+    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\radiob_blue.xml",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\drawable-xhdpi\\radiob_blue.xml"
     },
@@ -214,6 +222,10 @@
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_btn_check_to_on_mtrl_015.png",
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\drawable-xhdpi-v4\\abc_btn_check_to_on_mtrl_015.png"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\shape_grey_4px.xml",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\drawable-xhdpi\\shape_grey_4px.xml"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_textfield_search_activated_mtrl_alpha.9.png",
@@ -258,6 +270,10 @@
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_textfield_default_mtrl_alpha.9.png",
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\drawable-xhdpi-v4\\abc_textfield_default_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\shape_button_up.xml",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\drawable-xhdpi\\shape_button_up.xml"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_text_select_handle_left_mtrl_light.png",

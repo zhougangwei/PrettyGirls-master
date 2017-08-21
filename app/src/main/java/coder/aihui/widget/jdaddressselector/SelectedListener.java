@@ -12,7 +12,6 @@ public interface SelectedListener {
      */
     void onAddressSelected(ArrayList<ISelectAble> selectAbles);
 
-
     /**
      * 需要关闭当前的dialog
      */

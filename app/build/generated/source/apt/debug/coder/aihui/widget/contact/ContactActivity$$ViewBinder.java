@@ -23,26 +23,26 @@ public class ContactActivity$$ViewBinder<T extends ContactActivity> implements V
   protected static class InnerUnbinder<T extends ContactActivity> implements Unbinder {
     protected T target;
 
-    private View view2131755422;
+    private View view2131755434;
 
     protected InnerUnbinder(final T target, Finder finder, Object source) {
       this.target = target;
 
       View view;
-      target.mRv = finder.findRequiredViewAsType(source, 2131755258, "field 'mRv'", RecyclerView.class);
-      target.mIndexBar = finder.findRequiredViewAsType(source, 2131755297, "field 'mIndexBar'", IndexBar.class);
-      target.mTvSideBarHint = finder.findRequiredViewAsType(source, 2131755298, "field 'mTvSideBarHint'", TextView.class);
-      view = finder.findRequiredView(source, 2131755422, "field 'mIvBack' and method 'onViewClicked'");
-      target.mIvBack = finder.castView(view, 2131755422, "field 'mIvBack'");
-      view2131755422 = view;
+      target.mRv = finder.findRequiredViewAsType(source, 2131755287, "field 'mRv'", RecyclerView.class);
+      target.mIndexBar = finder.findRequiredViewAsType(source, 2131755299, "field 'mIndexBar'", IndexBar.class);
+      target.mTvSideBarHint = finder.findRequiredViewAsType(source, 2131755300, "field 'mTvSideBarHint'", TextView.class);
+      view = finder.findRequiredView(source, 2131755434, "field 'mIvBack' and method 'onViewClicked'");
+      target.mIvBack = finder.castView(view, 2131755434, "field 'mIvBack'");
+      view2131755434 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked();
         }
       });
-      target.mTvTitle = finder.findRequiredViewAsType(source, 2131755235, "field 'mTvTitle'", TextView.class);
-      target.mSearch = finder.findRequiredViewAsType(source, 2131755295, "field 'mSearch'", RelativeLayout.class);
+      target.mTvTitle = finder.findRequiredViewAsType(source, 2131755236, "field 'mTvTitle'", TextView.class);
+      target.mSearch = finder.findRequiredViewAsType(source, 2131755297, "field 'mSearch'", RelativeLayout.class);
     }
 
     @Override
@@ -57,8 +57,8 @@ public class ContactActivity$$ViewBinder<T extends ContactActivity> implements V
       target.mTvTitle = null;
       target.mSearch = null;
 
-      view2131755422.setOnClickListener(null);
-      view2131755422 = null;
+      view2131755434.setOnClickListener(null);
+      view2131755434 = null;
 
       this.target = null;
     }

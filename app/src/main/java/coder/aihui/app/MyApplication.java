@@ -46,6 +46,7 @@ public class MyApplication extends Application /*implements ReactApplication */{
 
         mRefWatcher = LeakCanary.install(this);
 
+
         //配置程序异常退出处理
         Thread.setDefaultUncaughtExceptionHandler(new LocalFileHandler(this));
 

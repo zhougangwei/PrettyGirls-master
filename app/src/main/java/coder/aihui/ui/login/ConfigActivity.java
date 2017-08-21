@@ -18,6 +18,7 @@ import coder.aihui.base.AppActivity;
 import coder.aihui.base.BaseFragment;
 import coder.aihui.base.Content;
 import coder.aihui.http.WebServiceUtil;
+import coder.aihui.ui.main.DownLoadBean;
 import coder.aihui.ui.main.DownPresenter;
 import coder.aihui.ui.main.DownView;
 import coder.aihui.util.AndroidUtils;
@@ -132,7 +133,12 @@ public class ConfigActivity extends AppActivity implements DownView {
 
         objectAnimator.start();*/
         changeProgress(true);
-        mPresenter.gotoDown(new String[]{"getHrpUserDataJSON"}, new String[]{"coder.aihui.data.bean.SYS_USER"}, null, SYS_USER_DOWN, WEB_SERVICE);
+        DownLoadBean bean = new DownLoadBean();
+        bean.setMethods(new String[]{"getHrpUserDataJSON"});
+        bean.setEnties(new String[]{"coder.aihui.data.bean.SYS_USER"});
+        bean.setWay(WEB_SERVICE);
+        bean.setType(SYS_USER_DOWN);
+        mPresenter.gotoDown(bean);
 
     }
 

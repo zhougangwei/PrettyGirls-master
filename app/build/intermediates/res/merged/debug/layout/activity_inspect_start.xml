@@ -55,8 +55,6 @@
         android:padding="21px"></include>
 
     <include
-
-
         layout="@layout/include_search_ll"></include>
 
 
@@ -68,6 +66,8 @@
         android:orientation="horizontal">
 
         <TextView
+            android:singleLine="true"
+            android:id="@+id/tv_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25px"
@@ -77,9 +77,13 @@
             android:textColor="#fbac46"/>
 
         <TextView
+            android:layout_marginLeft="15px"
+            android:singleLine="true"
+            android:id="@+id/tv_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="25px"
+            android:layout_weight="1"
             android:text="周期结束时间:"
             android:textColor="#fbac46"/>
 
@@ -119,12 +123,21 @@
         android:layout_below="@+id/line">
     </android.support.v4.view.ViewPager>
 
+
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_backToTop"
-        android:layout_width="wrap_content"
+        android:layout_width="88px"
+        android:scaleType="fitCenter"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="576px"
-        android:layout_marginTop="879px"/>
-
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="144px"
+        android:layout_marginRight="48px"
+        android:src="@mipmap/ic_backtop"
+        app:backgroundTint="#eeeeee"
+        app:borderWidth="0dp"
+        app:layout_auto_baseheight="width"
+        />
 
 </RelativeLayout>

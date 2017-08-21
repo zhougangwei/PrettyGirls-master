@@ -55,6 +55,18 @@ public class Content {
     //文件选择器
     public static final int FILE_PICK_REQUEST_CODE = 15;
 
+    //跳往巡检明细一级页面
+    public static final int INSPECT_DETAIL_REQUESET_CODE =16;
+
+    //跳往巡检明细二级页面
+    public static final int INSPECT_DETAIL2_REQUESET_CODE =17;
+
+    //巡检配置
+    public static final int INSPECT_CONFIG_REQUESET_CODE =18;
+
+    //开始巡检
+    public static final int INSPECT_START_REQUESET_CODE =19;
+
 
 
 
@@ -108,4 +120,5 @@ public class Content {
 
 
     public static String FJ_PATH = "paths";
+
 }

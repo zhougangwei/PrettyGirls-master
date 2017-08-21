@@ -8,7 +8,7 @@ package com.daimajia.numberprogressbar;
 
 public final class R {
     public static final class attr {
-        public static final int numberProgressBarStyle = 0x7f0101ae;
+        public static final int numberProgressBarStyle = 0x7f0101b1;
         public static final int progress_current = 0x7f010160;
         public static final int progress_max = 0x7f010161;
         public static final int progress_reached_bar_height = 0x7f010164;
@@ -46,7 +46,7 @@ public final class R {
         public static final int NumberProgressBar_progress_text_visibility = 9;
         public static final int NumberProgressBar_progress_unreached_bar_height = 5;
         public static final int NumberProgressBar_progress_unreached_color = 2;
-        public static final int[] Themes = { 0x7f0101ab, 0x7f0101ac, 0x7f0101ad, 0x7f0101ae };
+        public static final int[] Themes = { 0x7f0101ae, 0x7f0101af, 0x7f0101b0, 0x7f0101b1 };
         public static final int Themes_numberProgressBarStyle = 3;
     }
 }

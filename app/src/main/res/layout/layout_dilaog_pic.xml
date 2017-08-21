@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="560px"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+
+    <com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
+        android:id="@+id/rv_pic"
+        android:layout_width="560px"
+        android:layout_height="640px"
+        android:layout_gravity="center"
+        android:padding="15dp"
+        app:rvp_singlePageFling="true"
+        app:rvp_triggerOffset="0.1">
+
+    </com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager>
+</LinearLayout>

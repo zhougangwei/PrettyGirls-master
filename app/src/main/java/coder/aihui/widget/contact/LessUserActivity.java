@@ -98,7 +98,7 @@ public class LessUserActivity extends AppActivity {
         };
         mRv.setAdapter(mCommonAdapter);
         initData();
-        getIntent();
+
 
     }
 

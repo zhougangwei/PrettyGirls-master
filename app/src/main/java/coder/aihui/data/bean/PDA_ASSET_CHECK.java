@@ -48,7 +48,9 @@ public class PDA_ASSET_CHECK {
     private String DQDDMC;//当前位置名称，显示需要，不再去查一次
     private String UUID;
     private String LABEL_DEFAULT_NAME;
-    @Generated(hash = 962259879)
+    private String        PDAID;
+
+    @Generated(hash = 1641979191)
     public PDA_ASSET_CHECK(Long CHECK_ID, Long ASSET_ID, String QCPC, String PDA_ID, String CHECK_TYPE,
             String DS_TYPE, Integer IS_CHANGE, String CHANGE_DEPT, Integer IS_CHANGE_DD,
             String CHANGE_DDID, String ASSET_CHECK_ID, String ASSET_CHECK_NAME,
@@ -56,7 +58,7 @@ public class PDA_ASSET_CHECK {
             java.util.Date ASSET_CHECKER_DATE, String ASSET_COLLATE_ID, String ASSET_COLLATE_NAME,
             java.util.Date ASSET_COLLATE_DATE, Integer BGRID, String BGRXM, Integer ASSET_SYNC_FLAG,
             java.util.Date ASSET_SYNC_DATE, String REMARKS, String DDID, String KSID, String DQDDID,
-            String DQKSID, String DQDDMC, String UUID, String LABEL_DEFAULT_NAME) {
+            String DQKSID, String DQDDMC, String UUID, String LABEL_DEFAULT_NAME, String PDAID) {
         this.CHECK_ID = CHECK_ID;
         this.ASSET_ID = ASSET_ID;
         this.QCPC = QCPC;
@@ -88,6 +90,7 @@ public class PDA_ASSET_CHECK {
         this.DQDDMC = DQDDMC;
         this.UUID = UUID;
         this.LABEL_DEFAULT_NAME = LABEL_DEFAULT_NAME;
+        this.PDAID = PDAID;
     }
     @Generated(hash = 116701339)
     public PDA_ASSET_CHECK() {
@@ -277,6 +280,12 @@ public class PDA_ASSET_CHECK {
     }
     public void setLABEL_DEFAULT_NAME(String LABEL_DEFAULT_NAME) {
         this.LABEL_DEFAULT_NAME = LABEL_DEFAULT_NAME;
+    }
+    public String getPDAID() {
+        return this.PDAID;
+    }
+    public void setPDAID(String PDAID) {
+        this.PDAID = PDAID;
     }
 
 

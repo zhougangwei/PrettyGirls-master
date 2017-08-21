@@ -16,6 +16,8 @@ import coder.aihui.widget.jdaddressselector.ISelectAble;
  */
 
 public class DeptLocationManager implements ISelectAbleManager{
+
+
     public ArrayList<ISelectAble> selectAbles;
     String mDlwzName;
     String mDlwzIds;
@@ -27,10 +29,11 @@ public class DeptLocationManager implements ISelectAbleManager{
     String mAllDeptName;
     String mAllDlwzName;
 
-
     //数据转化分析
-    public DeptLocationManager(ArrayList<ISelectAble> selectAbles) {
-        this.selectAbles = selectAbles;
+    public DeptLocationManager() {
+    }
+
+    public void solveDatas(ArrayList<ISelectAble> selectAbles) {
         String result = "";
         StringBuilder sbids = new StringBuilder();
         String arg = "";
@@ -69,9 +72,9 @@ public class DeptLocationManager implements ISelectAbleManager{
 
         if (!TextUtils.isEmpty(result)) {
             if ("dept".equals(arg)) {
-                mAllDeptName = result.substring(0, result.length() - 1);
+                mAllDeptName = result.substring(0, result.length() );
             } else if ("location".equals(arg)) {
-                mAllDlwzName = result.substring(0, result.length() - 1);
+                mAllDlwzName = result.substring(0, result.length() );
             }
         }
         String ids = sbids.toString();

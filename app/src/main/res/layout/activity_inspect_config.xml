@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="coder.aihui.ui.azys.AzysConfigActivity">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/include_small_title"></include>
+
+    <include layout="@layout/icon_back"></include>
+
+    <include
+        layout="@layout/include_title_text"></include>
+
+    <include layout="@layout/include_save"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_location"
+            android:layout_width="match_parent"
+            android:layout_height="103px"
+            android:layout_below="@+id/title"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/tv_left22"
+
+                android:text="位置"/>
+
+
+            <TextView
+                android:id="@+id/tv_dlwz"
+                style="@style/tv_weight1"
+                android:text="一楼"
+                />
+            android:id="@+id/tv_dlwz"
+            style="@style/tv_weight1"
+            android:text="一楼"
+            />
+
+            <include
+                android:id="@+id/iv_ks_detail"
+                layout="@layout/include_detail"></include>
+
+        </LinearLayout>
+
+        <include
+            layout="@layout/line"
+            ></include>
+
+        <LinearLayout
+            android:id="@+id/ll_dept"
+            android:layout_width="match_parent"
+            android:layout_height="103px"
+            android:layout_below="@+id/line1"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/tv_left22"
+
+                android:text="科室"/>
+
+            <TextView
+                android:id="@+id/tv_dept"
+                style="@style/tv_weight1"
+                android:text="急诊"
+                />
+
+            <include
+                android:id="@+id/iv_ks_detail"
+                layout="@layout/include_detail"></include>
+        </LinearLayout>
+
+        <include
+
+            layout="@layout/line"
+            ></include>
+
+        <LinearLayout
+            android:id="@+id/ll_cxrq"
+            android:layout_width="match_parent"
+            android:layout_height="103px"
+            android:layout_below="@+id/title"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/tv_left22"
+                android:layout_weight="1"
+                android:text="查询周期"/>
+
+            <Spinner
+
+                android:id="@+id/sp_cxzq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:entries="@array/recycleConfig"
+                android:gravity="end"
+                android:spinnerMode="dialog"
+                />
+
+            <include
+                android:id="@+id/iv_ks_detail"
+                layout="@layout/include_detail"></include>
+
+        </LinearLayout>
+
+        <include
+            layout="@layout/line"
+            ></include>
+
+        <LinearLayout
+            android:id="@+id/ll_ksrq"
+            android:layout_width="match_parent"
+            android:layout_height="103px"
+            android:layout_below="@+id/title"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/tv_left22"
+
+                android:text="开始日期"/>
+
+            <TextView
+                android:id="@+id/tv_ksrq"
+                style="@style/tv_weight1"
+
+                />
+
+            <include
+                android:id="@+id/iv_ks_detail"
+                layout="@layout/include_detail"></include>
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/line1"
+            layout="@layout/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/ll_bd"></include>
+
+        <LinearLayout
+            android:id="@+id/ll_jsrq"
+            android:layout_width="match_parent"
+            android:layout_height="103px"
+            android:layout_below="@+id/title"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/tv_left22"
+
+                android:text="结束日期"/>
+
+            <TextView
+                android:id="@+id/tv_jsrq"
+                style="@style/tv_weight1"
+
+                />
+
+            <include
+                android:id="@+id/iv_ks_detail"
+                layout="@layout/include_detail"></include>
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/line1"
+            layout="@layout/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/ll_bd"></include>
+    </LinearLayout>
+</RelativeLayout>

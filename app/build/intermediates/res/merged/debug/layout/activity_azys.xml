@@ -40,13 +40,13 @@
 
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/line">
+    </android.support.v4.view.ViewPager>
 
-    </android.support.v7.widget.RecyclerView>
 
 
     <include layout="@layout/include_backtop"></include>

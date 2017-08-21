@@ -15,18 +15,19 @@ import butterknife.OnClick;
 import coder.aihui.R;
 import coder.aihui.base.AppActivity;
 import coder.aihui.base.BaseFragment;
+import coder.aihui.base.DeptDecotor;
+import coder.aihui.base.DeptView;
 import coder.aihui.data.bean.IN_ASSET;
 import coder.aihui.data.bean.PDA_ASSET_CHECK;
 import coder.aihui.data.bean.gen.PDA_ASSET_CHECKDao;
 import coder.aihui.data.normalbean.YzkBean;
 import coder.aihui.data.normalbean.YzkSonBean;
-import coder.aihui.util.AndroidUtils;
 import coder.aihui.manager.DeptLocationManager;
+import coder.aihui.util.AndroidUtils;
 import coder.aihui.util.SPUtil;
 import coder.aihui.util.ToastUtil;
 import coder.aihui.widget.ScrollViewWithExpandListView;
 import coder.aihui.widget.jdaddressselector.ISelectAble;
-import coder.aihui.widget.jdaddressselector.SelectedListener;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -34,7 +35,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 
-public class YzkActivity extends AppActivity implements SelectedListener {
+public class YzkActivity extends AppActivity implements DeptView {
 
     @BindView(R.id.tv_title)
     TextView  mTvTitle;
@@ -58,6 +59,8 @@ public class YzkActivity extends AppActivity implements SelectedListener {
 
     String changeDeptName;  //更改的科室名称
     String changeDeptId;    //更改的科室id
+    private DeptDecotor mDeptDecotor;
+    private DeptLocationManager mDeptLocationManager;
 
 
     @Override
@@ -73,6 +76,8 @@ public class YzkActivity extends AppActivity implements SelectedListener {
 
     @Override
     protected void initView() {
+        mDeptLocationManager = new DeptLocationManager();
+        mDeptDecotor = new DeptDecotor(this, this);
         mTvTitle.setText("预转科");
         mYzkAdapter = new YzkAdapter(this, fatherList);
         mEl.setAdapter(mYzkAdapter);
@@ -121,7 +126,7 @@ public class YzkActivity extends AppActivity implements SelectedListener {
                 gotoSave();
                 break;
             case R.id.ll_dept:
-                getDept(this);
+                getDept();
                 break;
         }
     }
@@ -152,7 +157,7 @@ public class YzkActivity extends AppActivity implements SelectedListener {
                 pda_asset_check.setASSET_SYNC_FLAG(0);//设置为未同步状态
                 assetCheckDao.update(pda_asset_check);
             }
-        }).subscribeOn(Schedulers.io())
+        }).observeOn(Schedulers.io())
                 .map(new Func1<PDA_ASSET_CHECK, Long>() {
                     @Override
                     public Long call(PDA_ASSET_CHECK pda_asset_check) {
@@ -162,7 +167,7 @@ public class YzkActivity extends AppActivity implements SelectedListener {
                 .map(new Func1<List<Long>, Long[]>() {
                     @Override
                     public Long[] call(List<Long> strings) {
-                        return (Long[]) strings.toArray();
+                        return  strings.toArray(new Long[0]);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -173,6 +178,7 @@ public class YzkActivity extends AppActivity implements SelectedListener {
                         //万一要用  先传过去吧
                         intent.putExtra("changeDepts", longs);
                         setResult(RESULT_OK, intent);
+                        finish();
                     }
                 });
     }
@@ -180,11 +186,19 @@ public class YzkActivity extends AppActivity implements SelectedListener {
 
     @Override
     public void onAddressSelected(ArrayList<ISelectAble> selectAbles) {
-        DeptLocationManager manager = new DeptLocationManager(selectAbles);
-        changeDeptId = manager.getDeptIds();
-        changeDeptName = manager.getDeptName();
+
+        mDeptLocationManager.solveDatas(selectAbles);
+        changeDeptId = mDeptLocationManager.getDeptIds();
+        changeDeptName = mDeptLocationManager.getDeptName();
         mTvChangeDept.setText(changeDeptName + "");
     }
 
-
+    @Override
+    public void closeDiaLog() {
+        mDeptDecotor.closeDiaLog();
+    }
+    @Override
+    public void getDept() {
+        mDeptDecotor.getDept();
+    }
 }

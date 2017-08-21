@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:2:1-185:12
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:2:1-187:12
 	package
 		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:3:11-32
 		INJECTED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml
@@ -64,7 +64,8 @@ ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:18:5-79
 	android:name
 		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:18:22-77
 application
-ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:20:5-183:19
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:20:5-185:19
+MERGED from [com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2] C:\Users\Administrator\.android\build-cache\5b0efc51b15b9d4630d83c5b346032ca90624bf4\output\AndroidManifest.xml:11:5-12:19
 MERGED from [com.github.jiang111:CProgressButton:v1.2.7] C:\Users\Administrator\.android\build-cache\120b9eb0768acaed967bf9bd5a29f274c6c84a42\output\AndroidManifest.xml:11:5-15:19
 MERGED from [com.jzxiang.pickerview:TimePickerDialog:1.0.1] C:\Users\Administrator\.android\build-cache\d5a1cd54089cb080e55f0c59772bddbb8300e3ec\output\AndroidManifest.xml:11:5-14:19
 MERGED from [com.leon:lfilepickerlibrary:1.2.0] C:\Users\Administrator\.android\build-cache\d0b67e3cc23d50589919fd1b200a94b9766e8ed0\output\AndroidManifest.xml:12:5-20:19
@@ -310,9 +311,15 @@ activity#coder.aihui.ui.pxgl.PxglListActivity
 ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:181:9-182:20
 	android:name
 		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:181:19-59
+activity#coder.aihui.ui.inspectxj.InspectConfigActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:183:9-184:20
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:183:19-69
 uses-sdk
 INJECTED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2] C:\Users\Administrator\.android\build-cache\5b0efc51b15b9d4630d83c5b346032ca90624bf4\output\AndroidManifest.xml:7:5-9:41
 MERGED from [com.github.jiang111:CProgressButton:v1.2.7] C:\Users\Administrator\.android\build-cache\120b9eb0768acaed967bf9bd5a29f274c6c84a42\output\AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.chrisbanes:PhotoView:1.2.6] C:\Users\Administrator\.android\build-cache\8e748c5d23310490e2cdd3543a6324a163e1e2e3\output\AndroidManifest.xml:8:5-10:41
 MERGED from [com.jzxiang.pickerview:TimePickerDialog:1.0.1] C:\Users\Administrator\.android\build-cache\d5a1cd54089cb080e55f0c59772bddbb8300e3ec\output\AndroidManifest.xml:7:5-9:41
 MERGED from [com.leon:lfilepickerlibrary:1.2.0] C:\Users\Administrator\.android\build-cache\d0b67e3cc23d50589919fd1b200a94b9766e8ed0\output\AndroidManifest.xml:8:5-10:41
 MERGED from [com.github.razerdp:BasePopup:v1.8.0] C:\Users\Administrator\.android\build-cache\94ee907a3c7bd49da43ac7ec9c574ef536033dd9\output\AndroidManifest.xml:7:5-9:41

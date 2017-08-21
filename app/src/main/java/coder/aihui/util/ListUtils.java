@@ -42,6 +42,12 @@ public class ListUtils {
     }
 
 
+    /**
+     * @param list      源集合
+     * @param methodName    获取目标字段的方法
+     * @param clazz     源对象.class
+     * @return
+     */
     //做一个转换 将集合中的每个个对象中的某一个字段取出来变成另一个集合
     public static List<String> ListFiled2list(List list, String methodName, Class clazz) {
         List<String> stringList = new ArrayList<>();
@@ -49,10 +55,11 @@ public class ListUtils {
 
             for (int i = 0; i < list.size(); i++) {
                 Method method = clazz.getDeclaredMethod(methodName);
-                String invoke = (String) method.invoke(list.get(i));
+                String invoke =  method.invoke(list.get(i)).toString();
                 stringList.add(invoke);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return stringList;
         }
 

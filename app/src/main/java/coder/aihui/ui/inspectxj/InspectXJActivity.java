@@ -2,7 +2,6 @@ package coder.aihui.ui.inspectxj;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -19,6 +19,7 @@ import com.blankj.utilcode.utils.TimeUtils;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
+import org.greenrobot.greendao.Property;
 import org.greenrobot.greendao.query.QueryBuilder;
 import org.greenrobot.greendao.query.WhereCondition;
 
@@ -34,10 +35,15 @@ import butterknife.OnClick;
 import coder.aihui.R;
 import coder.aihui.base.AppActivity;
 import coder.aihui.base.BaseFragment;
+import coder.aihui.base.Content;
 import coder.aihui.data.bean.INSPECT_PLAN;
 import coder.aihui.data.bean.LoadingBean;
 import coder.aihui.data.bean.gen.INSPECT_PLANDao;
-import coder.aihui.ui.assetcheck.AssetQueryConfigActivity;
+import coder.aihui.data.bean.gen.INSPECT_REPDao;
+import coder.aihui.data.bean.gen.INSPECT_REPSDao;
+import coder.aihui.ui.main.DownPresenter;
+import coder.aihui.ui.main.DownView;
+import coder.aihui.ui.main.UpBean;
 import coder.aihui.util.AndroidUtils;
 import coder.aihui.util.SPUtil;
 import coder.aihui.widget.popwindow.MenuPopup;
@@ -46,32 +52,36 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSelectedListener {
+import static coder.aihui.base.Content.INSPECT_START_REQUESET_CODE;
+import static coder.aihui.ui.main.DownFragment.mBigType;
+import static coder.aihui.ui.main.DownPresenter.HTTP;
+import static coder.aihui.ui.main.DownPresenter.INSPECT_UP;
+
+public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSelectedListener, DownView {
 
 
     @BindView(R.id.iv_back)
-    ImageView            mIvBack;
+    ImageView    mIvBack;
     @BindView(R.id.iv_config)
-    LinearLayout         mIvConfig;
+    LinearLayout mIvConfig;
     @BindView(R.id.iv_updown)
-    LinearLayout         mIvUpdown;
+    LinearLayout mIvUpdown;
     @BindView(R.id.iv_pz)
-    LinearLayout         mIvPz;
+    LinearLayout mIvPz;
     @BindView(R.id.sp_search)
-    Spinner              mSpSearch;
+    Spinner      mSpSearch;
     @BindView(R.id.et_search)
-    EditText             mEtSearch;
+    EditText     mEtSearch;
     @BindView(R.id.tv_search)
-    TextView             mTvSearch;
+    TextView     mTvSearch;
     @BindView(R.id.tb)
-    TabLayout            mTb;
+    TabLayout    mTb;
 
     @BindView(R.id.vp)
     ViewPager            mVp;
     @BindView(R.id.fab_xj)
-    FloatingActionButton mFabXj;
-    @BindView(R.id.fab_num)
-    FloatingActionButton mFabNum;
+    ImageButton          mFabXj;
+
 
     private List<String>       mTitleList = new ArrayList<>();
     private List<RecyclerView> mViewList  = new ArrayList<>();
@@ -106,8 +116,8 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
 
     private Integer modelState = 1;//1 巡检模式，2 计划查询模式 3.查询已检 4.查询未检
 
-    private Date startDate;//查询开始日期00:00
-    private Date endDate;//查询结束日期23:59
+    private Date mStartDate;//查询开始日期00:00
+    private Date mEndDate;//查询结束日期23:59
     private String searchText = "";//内容，优先级最高
 
     private String insrType = "XJ";//默认巡检   新增JL
@@ -125,6 +135,8 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     private View mWjTabView;    //未检的TabVIew
     private View mGqTabView;    //过期的TabView
     private List<View> mTabViewList = new ArrayList<>();
+    private DownPresenter mDownPresenter;
+    private int mWhichSelect = 0;               //当前选中的是哪个
 
     @Override
     protected int getContentViewId() {
@@ -138,17 +150,21 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
 
     @Override
     protected void initView() {
+
+        mDownPresenter = new DownPresenter(this, mDaoSession);
         mPagerAdapter = new InspectPagerAdapter(mTitleList, mViewList, this);
         mVp.setAdapter(mPagerAdapter);
 
         mTb.setupWithViewPager(mVp);
-
 
         mTb.addOnTabSelectedListener(this);
 
         mDataList.add(new LoadingBean(mCheckList, false));
         mDataList.add(new LoadingBean(mUnCheckList, false));
         mDataList.add(new LoadingBean(mOverDueList, false));
+
+        //区分巡检还是pm
+        initgetIntent();
 
 
         //第一次进来请求的时间
@@ -158,6 +174,11 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
         //变更tab显示
         changeTextOfTab();
         initdata();
+    }
+
+    private void initgetIntent() {
+        Intent intent = getIntent();
+        insrType = intent.getStringExtra("type");       //类型
     }
 
     private void changeTextOfTab() {
@@ -177,8 +198,6 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
                 mGqTabView = View.inflate(this, R.layout.tab_view2, null);
                 mTabViewList.add(mGqTabView);
             }
-
-
             tab.setCustomView(mTabViewList.get(i));
 
             if (position == 0) {
@@ -207,7 +226,26 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
         showDialogs.add("全部");
         showDialogs.add("计划");
         showDialogs.add("临时");
-        SlideFromTopPopup popWindow = new SlideFromTopPopup(this, showDialogs);
+        SlideFromTopPopup popWindow = new SlideFromTopPopup(this, showDialogs, new SlideFromTopPopup.onBackResult() {
+            @Override
+            public void backResult(String string) {
+                switch (string) {
+                    case "全部":
+
+                        break;
+                    case "计划":
+
+                        break;
+                    case "临时":
+
+                        break;
+
+                    default:
+                        break;
+
+                }
+            }
+        });
         popWindow.showPopupWindow(v);
     }
 
@@ -216,11 +254,11 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     private void getFirstTime() {
         try {
             Date[] dateArry = AndroidUtils.getTimeCycle(7);
-            startDate = dateArry[0];
-            endDate = dateArry[1];
+            mStartDate = dateArry[0];
+            mEndDate = dateArry[1];
             if ("PM".equals(insrType) && searchCycle == 7) {
-                startDate = new Date();
-                endDate = new Date();
+                mStartDate = new Date();
+                mEndDate = new Date();
             }
             searchCycle = 7;
         } catch (Exception e) {
@@ -314,7 +352,6 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
             }
         }
 
-
         holder.setText(R.id.tv_wzmc, planBean.getWZMC());
         holder.setText(R.id.tv_kpbh, planBean.getKPBH());
         holder.setText(R.id.tv_oldkpbh, planBean.getKPBH_OLD());
@@ -358,11 +395,9 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
         }
     }
 
-    @OnClick({R.id.iv_back, R.id.iv_config, R.id.iv_updown, R.id.iv_pz, R.id.tv_search, R.id.fab_xj, R.id.fab_num})
+    @OnClick({R.id.iv_back, R.id.iv_config, R.id.iv_updown, R.id.iv_pz, R.id.tv_search, R.id.fab_xj})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-
-
             case R.id.iv_back:
                 finish();
                 break;
@@ -378,13 +413,14 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
             case R.id.tv_search:
                 gotoSearch();
                 break;
-
             case R.id.fab_xj:
+                Intent intent = new Intent(this, InspectStartActivity.class);
+                intent.putExtra("insrType", insrType);
+                intent.putExtra("mStartDate", mStartDate);
+                intent.putExtra("mEndDate", mEndDate);
+                startActivityForResult(intent, INSPECT_START_REQUESET_CODE);
+                break;
 
-                startActivity(new Intent(this, InspectStartActivity.class));
-                break;
-            case R.id.fab_num:
-                break;
         }
     }
 
@@ -413,21 +449,98 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
             mUpdownPopup = new MenuPopup(this, mUpDownList, new MenuPopup.BackReslut() {
                 @Override
                 public void onBackResult(String string) {
+                    switch (string) {
+                        case "上传巡检数据":
+                            gotoUpData();
+                            break;
+                        case "巡检初始":
+                            break;
+                        case "下载模板":
+                            break;
+                        case "下载模板数据":
+                            break;
+                        case "数据修复":
+                            break;
+                        case "数据清空":
+                            break;
 
+                    }
                 }
             });
         }
         mUpdownPopup.showPopupWindow(mIvUpdown);
     }
 
+    private void gotoUpData() {
+        ArrayList<UpBean> list = new ArrayList<>();
+        UpBean upBean = new UpBean();
+        upBean.setEnties("coder.aihui.data.bean.INSPECT_REP");
+        upBean.setMethods("uploadPdaRepDataJSON");
+        upBean.setPars(null);
+        upBean.setType(INSPECT_UP);
+        upBean.setWay(HTTP);
+        upBean.setName("主表");
+        upBean.setCount(0);
+        upBean.setBigType(mBigType[2]);
+        upBean.setPropertie(new Property[]{INSPECT_REPDao.Properties.SYNC_FLAG});
+        upBean.setWhereconditions(new WhereCondition[]{INSPECT_REPDao.Properties.INSR_TYPE.eq("XJ")});
+
+
+        UpBean upBean2 = new UpBean();
+        upBean2.setEnties("coder.aihui.data.bean.INSPECT_REPS");
+        upBean2.setMethods("uploadPdaRepsDataJSON");
+        upBean2.setPars(null);
+        upBean2.setType(INSPECT_UP);
+        upBean2.setWay(HTTP);
+        upBean2.setName("明细表");
+        upBean2.setCount(0);
+        upBean2.setBigType(mBigType[2]);
+        upBean2.setPropertie(new Property[]{INSPECT_REPSDao.Properties.SYNC_FLAG});
+        upBean2.setWhereconditions(new WhereCondition[]{INSPECT_REPSDao.Properties.INSR_TYPE.eq("XJ")});
+
+        list.add(upBean);
+        list.add(upBean2);
+        mDownPresenter.gotoUp(list, INSPECT_UP);
+    }
+
     //配置
     private void gotoConfig() {
-        Intent intent = new Intent(this, AssetQueryConfigActivity.class);
-        startActivity(intent);
+        Intent intent = new Intent(this, InspectConfigActivity.class);
+        intent.putExtra("mEndDate", mEndDate);
+        intent.putExtra("mAllDlwzIds", mAllDlwzIds);
+        startActivityForResult(intent, Content.INSPECT_CONFIG_REQUESET_CODE);
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                //配置回来
+                case Content.INSPECT_CONFIG_REQUESET_CODE:
+
+                    mDeptIds = data.getStringExtra("mDeptIds");
+                    mDlwzIds = data.getStringExtra("mDlwzIds");
+                    mAllDeptIds = data.getStringExtra("mAllDeptIds");
+                    mAllDlwzIds = data.getStringExtra("mAllDlwzIds");
+                    mStartDate = (Date) data.getSerializableExtra("mStartDate");
+                    mEndDate = (Date) data.getSerializableExtra("mEndDate");
+                    mAllDlwzIds = data.getStringExtra("mAllDlwzIds");
+                    break;
+                //开始巡检回来
+                case INSPECT_START_REQUESET_CODE:
+                    for (int i = 0; i < mTitleList.size(); i++) {
+                        queryAllCount(i, 0, 10);
+                    }
+                    break;
+            }
+        }
+    }
+
     public void queryAllCount(final int which, int i_start, int i_count) {
+
+        searchText = mEtSearch.getText().toString();
         try {
             INSPECT_PLANDao planDao = mDaoSession.getINSPECT_PLANDao();
             QueryBuilder<INSPECT_PLAN> qb2 = planDao.queryBuilder();
@@ -453,10 +566,9 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
                 qb2.where(INSPECT_PLANDao.Properties.INSP_EXEC_START_DATE.le(new Date()),
                         INSPECT_PLANDao.Properties.INSP_EXEC_END_DATE.ge(new Date()));
             } else {
-                qb2.where(INSPECT_PLANDao.Properties.INSP_EXEC_DATE.ge(startDate),
-                        INSPECT_PLANDao.Properties.INSP_EXEC_DATE.le(endDate));
+                qb2.where(INSPECT_PLANDao.Properties.INSP_EXEC_DATE.ge(mStartDate),
+                        INSPECT_PLANDao.Properties.INSP_EXEC_DATE.le(mEndDate));
             }
-
             qb2.where(INSPECT_PLANDao.Properties.INSP_TYPE.eq(insrType));
             if (!"".equals(searchText) && searchType == 3) {
                 qb2.where(INSPECT_PLANDao.Properties.WZMC
@@ -527,11 +639,11 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        int position = tab.getPosition();
+        mWhichSelect = tab.getPosition();
         //还没数据的 去加载数据 有数据的 就直接显示
-        if (mDataList.get(position).list.size() == 0) {
-            queryAllCount(position, 0, 10);
-        }
+    /*    if (mDataList.get(mWhichSelect).list.size() == 0) {
+            queryAllCount(mWhichSelect, 0, 10);
+        }*/
 
     }
 
@@ -559,4 +671,18 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     }
 
 
+    @Override
+    public void showSuccess(int type) {
+
+    }
+
+    @Override
+    public void showFault(int type, String wrong) {
+
+    }
+
+    @Override
+    public void showProgress(int num, int type) {
+
+    }
 }

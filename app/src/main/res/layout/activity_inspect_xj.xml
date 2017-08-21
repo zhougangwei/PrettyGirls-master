@@ -28,9 +28,9 @@
         layout="@layout/include_search_ll"></include>
 
 
-
     <include
         layout="@layout/include_tab"></include>
+
     <ImageView
         android:id="@+id/line"
         android:layout_width="match_parent"
@@ -46,23 +46,15 @@
         android:layout_below="@+id/line">
     </android.support.v4.view.ViewPager>
 
-    <android.support.design.widget.FloatingActionButton
+    <ImageButton
+        android:background="#ffffffff"
         android:id="@+id/fab_xj"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="576px"
-        android:layout_marginTop="879px"/>
-
-    <include
-        android:id="@+id/fab_num"
-        layout="@layout/include_backtop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="14px"
-
-        android:layout_marginRight="48px"/>
+        android:layout_marginTop="879px"
+        android:src="@mipmap/ksxj"
+        app:layout_auto_baseheight="width"/>
 
 
 </RelativeLayout>

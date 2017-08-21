@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -83,7 +84,7 @@ public class ListBottomDialog extends Dialog {
 
 
 
-        mRv.setAdapter(new CommonAdapter<DialogBean>(mContext,R.layout.item_text_pd30,mDatas) {
+        mRv.setAdapter(new CommonAdapter<DialogBean>(mContext,R.layout.item_text_mid,mDatas) {
             @Override
             protected void convert(ViewHolder holder, final DialogBean dialogBean, int position) {
 
@@ -98,6 +99,8 @@ public class ListBottomDialog extends Dialog {
 
             }
         });
+
+        mRv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
 
        // View contentView = LayoutInflater.from(context).inflate(ResId, null);
         dialog.setContentView(mRv);

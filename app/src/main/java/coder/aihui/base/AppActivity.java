@@ -1,7 +1,6 @@
 package coder.aihui.base;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
@@ -15,7 +14,7 @@ import com.zhy.autolayout.AutoFrameLayout;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.AutoRelativeLayout;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,39 +26,28 @@ import coder.aihui.data.bean.INSPECT_GROUP;
 import coder.aihui.data.bean.IN_ASSET;
 import coder.aihui.data.bean.PUB_DICTIONARY_ITEM;
 import coder.aihui.data.bean.REPAIR_PLACE;
-import coder.aihui.data.bean.SYS_DEPT;
 import coder.aihui.data.bean.gen.DaoSession;
 import coder.aihui.data.bean.gen.INSPECT_GROUPDao;
 import coder.aihui.data.bean.gen.IN_ASSETDao;
 import coder.aihui.data.bean.gen.PUB_DICTIONARY_ITEMDao;
 import coder.aihui.data.bean.gen.REPAIR_PLACEDao;
-import coder.aihui.data.bean.gen.SYS_DEPTDao;
-import coder.aihui.data.normalbean.DeptBean;
 import coder.aihui.util.ToastUtil;
-import coder.aihui.widget.jdaddressselector.BottomDialog;
-import coder.aihui.widget.jdaddressselector.DataProvider;
-import coder.aihui.widget.jdaddressselector.ISelectAble;
-import coder.aihui.widget.jdaddressselector.SelectedListener;
-import coder.aihui.widget.jdaddressselector.Selector;
 import coder.aihui.zxing.decoding.MipcaActivityCapture;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by renlei on 2016/5/23.
  */
-public abstract class AppActivity extends BaseActivity implements DlwzView {
+public abstract class AppActivity extends BaseActivity  {
 
     private static final String  LAYOUT_LINEARLAYOUT   = "LinearLayout";
     private static final String  LAYOUT_FRAMELAYOUT    = "FrameLayout";
     private static final String  LAYOUT_RELATIVELAYOUT = "RelativeLayout";
     public static final  Integer BAR_CODE              = 1;
     Unbinder mUnbinder;
-    private BottomDialog   mDeptDialog;           //底部弹窗 科室或者地理位子的
-    private BottomDialog   mLocationDialog;           //底部弹窗 科室或者地理位子的
+  //  private BottomDialog   mDeptDialog;           //底部弹窗 科室或者地理位子的
+
+    public static final SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     public  DaoSession     mDaoSession;
     public  SQLiteDatabase mDb;
 
@@ -160,192 +148,13 @@ public abstract class AppActivity extends BaseActivity implements DlwzView {
     }
 
 
-    //获得地理位子
-    public void getDept(SelectedListener selectedListener) {
-
-        if (mDeptDialog == null) {
-            mDeptDialog = new BottomDialog(AppActivity.this);
-
-            Selector selector = new Selector(this, 3);
-
-            final List<ISelectAble> Dept1 = new ArrayList<ISelectAble>();       //科室
-            final List<SYS_DEPT> list = mDaoSession.getSYS_DEPTDao().queryBuilder().where(SYS_DEPTDao.Properties.DEPT_PARENT_ID.eq(0L)).list();
-
-            if (list == null && list.size() == 0) {
-                ToastUtil.showToast("请先进行数据初始化!");
-                return;
-            }
-
-            for (int i = 0; i < list.size(); i++) {
-                SYS_DEPT sys_dept = list.get(i);
-                DeptBean deptBean = new DeptBean();
-                deptBean.id = Integer.parseInt(sys_dept.getDEPT_ID() + "");
-                deptBean.name = sys_dept.getDEPT_NAME();
-                deptBean.arg = "dept";
-                Dept1.add(deptBean);
-            }
-
-            if (Dept1.size() == 0) {
-                ToastUtil.showToast("当前无数据!");
-                return;
-            }
-
-            //输入自己的数据
-            selector.setDataProvider(new DataProvider() {
-                @Override
-                public void provideData(int currentDeep, int preId, final DataReceiver receiver) {
-                    if (currentDeep == 0) {
-                        receiver.send(Dept1);
-                    } else if (currentDeep == 1 || currentDeep == 2) {
-
-                        Observable.just(preId).compose(AppActivity.this.<Integer>bindToLife())
-                                .subscribeOn(Schedulers.io())
-                                .map(new Func1<Integer, List<SYS_DEPT>>() {
-                                    @Override
-                                    public List<SYS_DEPT> call(Integer integer) {
-                                        return mDaoSession.getSYS_DEPTDao().queryBuilder().where(SYS_DEPTDao.Properties.DEPT_PARENT_ID.eq(integer)).list();
-                                    }
-                                }).map(new Func1<List<SYS_DEPT>, List<ISelectAble>>() {
-                            @Override
-                            public List<ISelectAble> call(List<SYS_DEPT> sys_depts) {
-                                return changeDeptToCity(sys_depts);
-                            }
-                        })
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Action1<List<ISelectAble>>() {
-                                    @Override
-                                    public void call(List<ISelectAble> counties) {
-                                        receiver.send(counties);
-                                    }
-                                }, new Action1<Throwable>() {
-                                    @Override
-                                    public void call(Throwable throwable) {
-                                        //给一个空值 进去 触发提前结束
-                                        receiver.send(new ArrayList<ISelectAble>());
-                                    }
-                                });
-                    }
-                }
-            });
-            selector.setSelectedListener(selectedListener);
-            mDeptDialog.init(this, selector);
-            mDeptDialog.setOnAddressSelectedListener(selectedListener);
-            mDeptDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialog) {
-                    ToastUtil.showToast("111");
-                }
-            });
-        }
-
-        mDeptDialog.show();
-    }
 
 
-    //获得地理位子
-    public void getLocation(SelectedListener selectedListener) {
-
-        if (mLocationDialog == null) {
-            mLocationDialog = new BottomDialog(AppActivity.this);
-            Selector selector = new Selector(this, 3);
-
-            final List<ISelectAble> locationList = new ArrayList<ISelectAble>();       //地理位子
-
-            List<PUB_DICTIONARY_ITEM> diclist = mDaoSession.getPUB_DICTIONARY_ITEMDao().queryBuilder()
-                    .where(PUB_DICTIONARY_ITEMDao.Properties.DICT_ID.eq("007114"), PUB_DICTIONARY_ITEMDao.Properties.PARENT_ID.eq(0L)
-                    ).list();
-
-            if (diclist == null && diclist.size() == 0) {
-                ToastUtil.showToast("请先进行数据初始化!");
-                return;
-            }
-
-            for (int i = 0; i < diclist.size(); i++) {
-                PUB_DICTIONARY_ITEM dlwz = diclist.get(i);
-                DeptBean deptBean = new DeptBean();
-                deptBean.id = Integer.parseInt(dlwz.getITEM_ID() + "");
-                deptBean.name = dlwz.getITEM_NAME();
-                deptBean.arg = "location";
-                locationList.add(deptBean);
-            }
-
-            //输入自己的数据
-            selector.setDataProvider(new DataProvider() {
-                @Override
-                public void provideData(int currentDeep, int preId, final DataReceiver receiver) {
-                    if (currentDeep == 0) {
-                        receiver.send(locationList);
-                    } else if (currentDeep == 1 || currentDeep == 2) {
-                        Observable.just(preId).compose(AppActivity.this.<Integer>bindToLife())
-                                .subscribeOn(Schedulers.io())
-                                .map(new Func1<Integer, List<PUB_DICTIONARY_ITEM>>() {
-                                    @Override
-                                    public List<PUB_DICTIONARY_ITEM> call(Integer integer) {
-                                        return mDaoSession.getPUB_DICTIONARY_ITEMDao().queryBuilder()
-                                                .where(PUB_DICTIONARY_ITEMDao.Properties.DICT_ID.eq("007114"), PUB_DICTIONARY_ITEMDao.Properties.PARENT_ID.eq(integer)
-                                                ).list();
-                                    }
-                                }).map(new Func1<List<PUB_DICTIONARY_ITEM>, List<ISelectAble>>() {
-                            @Override
-                            public List<ISelectAble> call(List<PUB_DICTIONARY_ITEM> locationList) {
-                                return changeLocationToCity(locationList);
-                            }
-                        }).observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Action1<List<ISelectAble>>() {
-                                    @Override
-                                    public void call(List<ISelectAble> counties) {
-                                        receiver.send(counties);
-
-                                    }
-                                }, new Action1<Throwable>() {
-                                    @Override
-                                    public void call(Throwable throwable) {
-                                        //给一个空值 进去 触发提前结束
-                                        receiver.send(new ArrayList<ISelectAble>());
-
-                                    }
-                                });
-                    }
-                }
-            });
-
-            mLocationDialog.init(this, selector);
-            mLocationDialog.setOnAddressSelectedListener(selectedListener);
-        }
-
-        mLocationDialog.show();
-    }
 
 
-    //转换
-    private List<ISelectAble> changeDeptToCity(List<SYS_DEPT> sys_depts) {
-        List<ISelectAble> list = new ArrayList<>();
 
-        for (int i = 0; i < sys_depts.size(); i++) {
-            SYS_DEPT sys_dept = sys_depts.get(i);
-            DeptBean city = new DeptBean();
-            city.arg = "dept";
-            city.id = Integer.parseInt(sys_dept.getDEPT_ID() + "");
-            city.name = sys_dept.getDEPT_NAME();
-            list.add(city);
-        }
-        return list;
-    }
 
-    //转换
-    private List<ISelectAble> changeLocationToCity(List<PUB_DICTIONARY_ITEM> locatioList) {
-        List<ISelectAble> list = new ArrayList<>();
 
-        for (int i = 0; i < locatioList.size(); i++) {
-            PUB_DICTIONARY_ITEM sys_dept = locatioList.get(i);
-            DeptBean city = new DeptBean();
-            city.arg = "location";
-            city.id = Integer.parseInt(sys_dept.getITEM_ID() + "");
-            city.name = sys_dept.getITEM_NAME();
-            list.add(city);
-        }
-        return list;
-    }
 
 
     //打开相机
@@ -423,14 +232,6 @@ public abstract class AppActivity extends BaseActivity implements DlwzView {
     }
 
 
-    public void closeDiaLog() {
-        if (mLocationDialog != null) {
-            mLocationDialog.dismiss();
-        }
-        if (mDeptDialog != null) {
-            mDeptDialog.dismiss();
-        }
-    }
 
 
     public void gotoActivity(Class clazz) {

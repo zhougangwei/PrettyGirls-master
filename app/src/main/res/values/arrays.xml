@@ -12,6 +12,12 @@
         <item>@string/permission_white_external_hint</item>
     </string-array>
 
+    <string-array name="azys">
+        <item>科室</item>
+        <item>供应商名称</item>
+        <item>合同号</item>
+        <item>名称</item>
+    </string-array>
 
     <string-array name="assetquerycheck">
         <item>品牌|名称|规格</item>
@@ -19,6 +25,12 @@
         <item>新资产编号</item>
         <item>老资产编号</item>
     </string-array>
+
+    <string-array name="inspect">
+        <item>名称</item>
+        <item>新资产编号</item>
+    </string-array>
+
 
     <string-array name="kpbh2">
         <item>@string/search_newZcbh</item>
@@ -32,4 +44,16 @@
         <item>新资产编号</item>
         <item>老资产编号</item>
     </string-array>
+
+    <string-array name="recycleConfig">
+        <item>本期</item>
+        <item>本月</item>
+        <item>今天</item>
+        <item>本周</item>
+        <item>向前15天</item>
+        <item>向前30天</item>
+        <item>向前45天</item>
+
+    </string-array>
+
 </resources>
