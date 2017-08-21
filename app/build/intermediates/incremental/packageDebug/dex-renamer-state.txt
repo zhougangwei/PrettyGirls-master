@@ -1,7 +1,0 @@
-#Mon Aug 21 17:26:09 CST 2017
-base.0=H\:\\PrettyGirls-master\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_d6a329c67056f4f01a5e00fb959a3c4005bda331
-renamed.1=classes2.dex
-renamed.0=classes.dex
-file.1=H\:\\PrettyGirls-master\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_cb0db0bf6257365089a0ec2f03fc94e97f5e0146\\classes.dex
-base.1=H\:\\PrettyGirls-master\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_cb0db0bf6257365089a0ec2f03fc94e97f5e0146
-file.0=H\:\\PrettyGirls-master\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_d6a329c67056f4f01a5e00fb959a3c4005bda331\\classes.dex

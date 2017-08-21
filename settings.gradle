@@ -1,1 +1,1 @@
-include ':app', ':qianming'
+include ':app'
