@@ -10,7 +10,6 @@ import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -38,6 +37,8 @@ public class TextViewUtils {
 
     //创建一个 小选择框
     public static TextView createText(Activity activity) {
+        //我
+
         TextView textView = new TextView(activity);
         textView.setBackgroundResource(R.drawable.shape_uncheck_normal);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, SizeUtils.dp2px(activity, 30f));
@@ -69,10 +70,11 @@ public class TextViewUtils {
 
 
     //判断edittext里的内容是否为空
-    public static boolean isEmpty(EditText et){
+    public static boolean isEmpty(TextView et){
         if(TextUtils.isEmpty(et.getText().toString())){
             return true;  //为空
         }else{
+
             return false;
         }
     }

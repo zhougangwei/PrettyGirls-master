@@ -4,16 +4,16 @@
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\ic_add.png"
     },
     {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\ic_updown.png",
-        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\ic_updown.png"
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\ic_people.png",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\ic_people.png"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\ic_del_pic.png",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\ic_del_pic.png"
     },
     {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\ic_people.png",
-        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\ic_people.png"
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\ic_updown.png",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\ic_updown.png"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\mm_pre.png",
@@ -48,12 +48,12 @@
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\yhm.png"
     },
     {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\xq_sys.png",
-        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\xq_sys.png"
-    },
-    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\ic_logo.png",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\ic_logo.png"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\xq_sys.png",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xhdpi\\xq_sys.png"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\ic_password1.png",

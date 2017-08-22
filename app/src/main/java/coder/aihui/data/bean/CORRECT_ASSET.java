@@ -17,7 +17,9 @@ import org.greenrobot.greendao.annotation.Property;
 public class CORRECT_ASSET  {
     @Id
     @Property(nameInDb = "ID")
-    private Long           ID;
+    private Long ID;
+    private Long ASSET_ID;
+
     private String         DDID;
     private String         DDMC;
     private String         GHDWID;
@@ -54,15 +56,17 @@ public class CORRECT_ASSET  {
     private Integer        QRBZ;
     private String         BQYCZT;
     private String         BQZT;
-    @Generated(hash = 1093449408)
-    public CORRECT_ASSET(Long ID, String DDID, String DDMC, String GHDWID, String GHDWMC, String PPID,
-            String PPMC, String SCCJID, String SCCJMC, String GGXH, String SCBH, Integer PP_FLAG,
-            Integer GHDW_FLAG, Integer SCCJ_FLAG, Integer DD_FLAG, String USERID, String USERNAME,
-            Integer IS_UP, java.util.Date SCRQ, String WZMC, String FRONT_PIC, String SIDE_PIC,
-            String BIG_FRONT_PIC, String BIG_SIDE_PIC, Integer ZMZ_FILE_ID, Integer CMZ_FILE_ID,
-            String QD_FLAG, String BGRID, String BGRXM, String BGKSID, String BGKSMC, String BIG_MP_PIC,
-            String MP_PIC, String BQLX, Integer QRBZ, String BQYCZT, String BQZT) {
+    @Generated(hash = 603955600)
+    public CORRECT_ASSET(Long ID, Long ASSET_ID, String DDID, String DDMC, String GHDWID, String GHDWMC,
+            String PPID, String PPMC, String SCCJID, String SCCJMC, String GGXH, String SCBH,
+            Integer PP_FLAG, Integer GHDW_FLAG, Integer SCCJ_FLAG, Integer DD_FLAG, String USERID,
+            String USERNAME, Integer IS_UP, java.util.Date SCRQ, String WZMC, String FRONT_PIC,
+            String SIDE_PIC, String BIG_FRONT_PIC, String BIG_SIDE_PIC, Integer ZMZ_FILE_ID,
+            Integer CMZ_FILE_ID, String QD_FLAG, String BGRID, String BGRXM, String BGKSID,
+            String BGKSMC, String BIG_MP_PIC, String MP_PIC, String BQLX, Integer QRBZ, String BQYCZT,
+            String BQZT) {
         this.ID = ID;
+        this.ASSET_ID = ASSET_ID;
         this.DDID = DDID;
         this.DDMC = DDMC;
         this.GHDWID = GHDWID;
@@ -324,6 +328,12 @@ public class CORRECT_ASSET  {
     }
     public void setBQZT(String BQZT) {
         this.BQZT = BQZT;
+    }
+    public Long getASSET_ID() {
+        return this.ASSET_ID;
+    }
+    public void setASSET_ID(Long ASSET_ID) {
+        this.ASSET_ID = ASSET_ID;
     }
 
    

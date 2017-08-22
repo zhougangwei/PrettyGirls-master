@@ -5299,6 +5299,9 @@ containing a value of this type.
         public static final int Animation_Design_BottomSheetDialog=0x7f0b00a9;
         public static final int AnimationPicker=0x7f0b00aa;
         public static final int Animation_Bottom_Dialog=0x7f0b00ab;
+        /** 全局activity切换动画
+<item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
+         */
         public static final int AppTheme=0x7f0b00ac;
         public static final int AppTheme_AppBarOverlay=0x7f0b00ad;
         public static final int AppTheme_NoActionBar=0x7f0b0041;
@@ -5712,6 +5715,9 @@ containing a value of this type.
         public static final int asset_tv_left22width114=0x7f0b01a2;
         public static final int asset_tv_left38=0x7f0b01a3;
         public static final int azys_ll=0x7f0b01a4;
+        /** 全局activity切换动画
+<item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
+         */
         public static final int blueTheme=0x7f0b01a5;
         public static final int bottom_dialog=0x7f0b01a6;
         public static final int btn_blue_big=0x7f0b01a7;
