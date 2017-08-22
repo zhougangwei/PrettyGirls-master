@@ -26,7 +26,6 @@ public class ProcessDialogUtil {
         mProgressDialog.setProgress(0);
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setCancelable(false);
-        mProgressDialog.show();
         return mProgressDialog;
 
     }

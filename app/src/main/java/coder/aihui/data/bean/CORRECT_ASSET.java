@@ -19,7 +19,6 @@ public class CORRECT_ASSET  {
     @Property(nameInDb = "ID")
     private Long ID;
     private Long ASSET_ID;
-
     private String         DDID;
     private String         DDMC;
     private String         GHDWID;

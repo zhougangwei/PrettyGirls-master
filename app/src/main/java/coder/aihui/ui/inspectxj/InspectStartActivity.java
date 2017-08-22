@@ -67,6 +67,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
+import static coder.aihui.base.Content.INSPECT_DETAIL_REQUESET_CODE;
 import static java.lang.Long.parseLong;
 
 public class InspectStartActivity extends AppActivity implements TabLayout.OnTabSelectedListener {
@@ -344,7 +345,7 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
                 Intent intent = new Intent(InspectStartActivity.this, InspectDetailActivity.class);
                 intent.putExtra("isNew", 1);
                 intent.putExtra("planId", planBean.getINSP_ID());//如果isPlan是3，就是设备或者巡检的ID(对应的是台账或者Rp的Id)
-                startActivityForResult(intent, Content.INSPECT_DETAIL_REQUESET_CODE);
+                startActivityForResult(intent, INSPECT_DETAIL_REQUESET_CODE);
             }
         });
 
@@ -698,7 +699,7 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
                     if (groupRfid != null && !"".equals(groupRfid)) {
                         intent.putExtra("groupRfid", groupRfid);//巡检的是整个分组
                     }
-                    startActivity(intent);
+                    startActivityForResult(intent,INSPECT_DETAIL_REQUESET_CODE);
                     break;
 
                 } else if (modeType == 1) {                 //自动巡检
@@ -895,7 +896,7 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
-                finish();
+                onBackPressed();
                 break;
             case R.id.iv_people:
                 gotoAddPeople();
@@ -935,11 +936,12 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
                     userChooseIds = data.getIntegerArrayListExtra("userIdList");
                     userChooseNames = data.getStringArrayListExtra("userNameList");
                     break;
-                case Content.INSPECT_DETAIL_REQUESET_CODE:
+                case INSPECT_DETAIL_REQUESET_CODE:
                     for (int i = 0; i < mTitleList.size(); i++) {
                         queryAllCount(i, 0, 10);
                     }
                     break;
+
 
             }
         }

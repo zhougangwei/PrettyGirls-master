@@ -10,6 +10,7 @@
 
     <include
         android:id="@+id/ll_back"
+
         layout="@layout/include_small_title"></include>
 
     <include layout="@layout/icon_back"/>
@@ -33,6 +34,8 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:background="@color/white"
+                android:id="@+id/ll_wzmc"
                 android:layout_width="match_parent"
                 android:layout_height="95px"
                 android:orientation="horizontal">
@@ -41,40 +44,44 @@
                     style="@style/tv_left22"
                     android:text="设备名称"/>
 
-                <TextView
-                    android:textColor="@color/textGrey"
-                    android:id="@+id/tv_wzmc"
+                <EditText
+                    android:background="@color/white"
+                    android:layout_marginRight="67px"
+                    android:id="@+id/et_wzmc"
                     style="@style/tv_weight1"
-                    android:layout_marginLeft="56px"
-                    android:gravity="start"
-                    android:text="打印机"/>
+                    android:hint="点击输入"
+                    android:textColor="@color/textGrey"/>
+
 
             </LinearLayout>
 
             <include layout="@layout/line"></include>
 
             <LinearLayout
+                android:background="@color/white"
+                android:id="@+id/ll_ppmc"
                 android:layout_width="match_parent"
                 android:layout_height="95px"
                 android:orientation="horizontal">
-
                 <TextView
                     style="@style/tv_left22"
                     android:text="品牌"/>
-
                 <TextView
                     android:textColor="@color/textGrey"
-                    android:layout_marginLeft="123px"
-                    android:gravity="start"
                     android:id="@+id/tv_brand"
                     style="@style/tv_weight1"
-                    android:text="HP"/>
+                   />
 
+                <include
+                    android:id="@+id/iv_wz_detail"
+                    layout="@layout/include_detail"></include>
             </LinearLayout>
 
             <include layout="@layout/line"></include>
 
             <LinearLayout
+                android:background="@color/white"
+                android:id="@+id/ll_ggxh"
                 android:layout_width="match_parent"
                 android:layout_height="95px"
                 android:orientation="horizontal">
@@ -83,20 +90,22 @@
                     style="@style/tv_left22"
                     android:text="型号"/>
 
-                <TextView
+                <EditText
+                    android:background="@color/white"
+                    android:layout_marginRight="67px"
                     android:textColor="@color/textGrey"
-                    android:layout_marginLeft="124px"
-                    android:gravity="start"
-                    android:id="@+id/tv_ggxh"
+                    android:id="@+id/et_ggxh"
                     style="@style/tv_weight1"
-                    android:text="HP10"/>
+                    android:hint="点击输入"/>
+
 
             </LinearLayout>
 
             <include layout="@layout/line"></include>
 
             <LinearLayout
-
+                android:background="@color/white"
+                android:id="@+id/ll_scbh"
                 android:layout_width="match_parent"
                 android:layout_height="95px"
                 android:orientation="horizontal">
@@ -105,19 +114,22 @@
                     style="@style/tv_left22"
                     android:text="生产编号"/>
 
-                <TextView
+                <EditText
+                    android:background="@color/white"
+                    android:layout_marginRight="67px"
                     android:textColor="@color/textGrey"
                     android:layout_marginLeft="59px"
-                    android:gravity="start"
-                    android:id="@+id/tv_scbh"
+                    android:id="@+id/et_scbh"
                     style="@style/tv_weight1"
-                    android:text="CNCFR"/>
+                    android:hint="点击输入"/>
+
 
             </LinearLayout>
 
             <include layout="@layout/line"></include>
 
             <LinearLayout
+                android:background="@color/white"
                 android:id="@+id/ll_scrq"
                 android:layout_width="match_parent"
                 android:layout_height="95px"
@@ -141,6 +153,7 @@
 
             <LinearLayout
                 android:id="@+id/ll_location"
+                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="95px"
                 android:orientation="horizontal">
@@ -163,6 +176,7 @@
 
             <LinearLayout
                 android:id="@+id/ll_ghdw"
+                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="95px"
                 android:orientation="horizontal">
@@ -185,6 +199,7 @@
 
             <LinearLayout
                 android:id="@+id/ll_sccj"
+                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="95px"
                 android:orientation="horizontal">
@@ -207,6 +222,7 @@
 
             <LinearLayout
                 android:id="@+id/ll_bgks"
+                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="95px"
                 android:orientation="horizontal">
@@ -229,6 +245,7 @@
 
             <LinearLayout
                 android:id="@+id/ll_bgr"
+                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="95px"
                 android:orientation="horizontal">
@@ -251,6 +268,7 @@
 
             <LinearLayout
                 android:id="@+id/ll_bqlx"
+                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="95px"
                 android:orientation="horizontal">
@@ -273,6 +291,7 @@
 
             <LinearLayout
                 android:id="@+id/ll_scqr"
+                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="95px"
                 android:orientation="horizontal">
@@ -292,6 +311,31 @@
             </LinearLayout>
 
             <include layout="@layout/line"></include>
+
+
+            <LinearLayout
+                android:id="@+id/ll_bqyw"
+                 android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="95px"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_left22"
+                    android:text="标签有无"/>
+
+                <TextView
+                    android:id="@+id/tv_bqyw"
+                    style="@style/tv_weight1"
+                    android:text="有"/>
+
+                <include
+                    android:id="@+id/iv_wz_detail"
+                    layout="@layout/include_detail"></include>
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
 
             <LinearLayout
                 android:layout_width="match_parent"

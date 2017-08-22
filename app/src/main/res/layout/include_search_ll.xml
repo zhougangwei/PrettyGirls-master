@@ -29,7 +29,8 @@
         android:layout_gravity="center_vertical"></include>
 
     <EditText
-
+        android:textSize="26px"
+        android:gravity="center_vertical"
         android:paddingLeft="25px"
         android:imeOptions="actionSearch"
         android:singleLine="true"
@@ -41,6 +42,7 @@
         />
 
     <TextView
+        android:textSize="26px"
         android:id="@+id/tv_search"
         android:layout_width="122px"
         android:layout_height="match_parent"

@@ -23,34 +23,34 @@ public class InspectXJActivity$$ViewBinder<T extends InspectXJActivity> implemen
   protected static class InnerUnbinder<T extends InspectXJActivity> implements Unbinder {
     protected T target;
 
-    private View view2131755434;
+    private View view2131755438;
 
-    private View view2131755444;
+    private View view2131755448;
 
     private View view2131755194;
 
-    private View view2131755455;
+    private View view2131755459;
 
-    private View view2131755416;
+    private View view2131755420;
 
-    private View view2131755319;
+    private View view2131755324;
 
     protected InnerUnbinder(final T target, Finder finder, Object source) {
       this.target = target;
 
       View view;
-      view = finder.findRequiredView(source, 2131755434, "field 'mIvBack' and method 'onViewClicked'");
-      target.mIvBack = finder.castView(view, 2131755434, "field 'mIvBack'");
-      view2131755434 = view;
+      view = finder.findRequiredView(source, 2131755438, "field 'mIvBack' and method 'onViewClicked'");
+      target.mIvBack = finder.castView(view, 2131755438, "field 'mIvBack'");
+      view2131755438 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
-      view = finder.findRequiredView(source, 2131755444, "field 'mIvConfig' and method 'onViewClicked'");
-      target.mIvConfig = finder.castView(view, 2131755444, "field 'mIvConfig'");
-      view2131755444 = view;
+      view = finder.findRequiredView(source, 2131755448, "field 'mIvConfig' and method 'onViewClicked'");
+      target.mIvConfig = finder.castView(view, 2131755448, "field 'mIvConfig'");
+      view2131755448 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
@@ -66,31 +66,31 @@ public class InspectXJActivity$$ViewBinder<T extends InspectXJActivity> implemen
           target.onViewClicked(p0);
         }
       });
-      view = finder.findRequiredView(source, 2131755455, "field 'mIvPz' and method 'onViewClicked'");
-      target.mIvPz = finder.castView(view, 2131755455, "field 'mIvPz'");
-      view2131755455 = view;
+      view = finder.findRequiredView(source, 2131755459, "field 'mIvPz' and method 'onViewClicked'");
+      target.mIvPz = finder.castView(view, 2131755459, "field 'mIvPz'");
+      view2131755459 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
-      target.mSpSearch = finder.findRequiredViewAsType(source, 2131755454, "field 'mSpSearch'", Spinner.class);
-      target.mEtSearch = finder.findRequiredViewAsType(source, 2131755298, "field 'mEtSearch'", EditText.class);
-      view = finder.findRequiredView(source, 2131755416, "field 'mTvSearch' and method 'onViewClicked'");
-      target.mTvSearch = finder.castView(view, 2131755416, "field 'mTvSearch'");
-      view2131755416 = view;
+      target.mSpSearch = finder.findRequiredViewAsType(source, 2131755458, "field 'mSpSearch'", Spinner.class);
+      target.mEtSearch = finder.findRequiredViewAsType(source, 2131755303, "field 'mEtSearch'", EditText.class);
+      view = finder.findRequiredView(source, 2131755420, "field 'mTvSearch' and method 'onViewClicked'");
+      target.mTvSearch = finder.castView(view, 2131755420, "field 'mTvSearch'");
+      view2131755420 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
-      target.mTb = finder.findRequiredViewAsType(source, 2131755256, "field 'mTb'", TabLayout.class);
-      target.mVp = finder.findRequiredViewAsType(source, 2131755257, "field 'mVp'", ViewPager.class);
-      view = finder.findRequiredView(source, 2131755319, "field 'mFabXj' and method 'onViewClicked'");
-      target.mFabXj = finder.castView(view, 2131755319, "field 'mFabXj'");
-      view2131755319 = view;
+      target.mTb = finder.findRequiredViewAsType(source, 2131755261, "field 'mTb'", TabLayout.class);
+      target.mVp = finder.findRequiredViewAsType(source, 2131755262, "field 'mVp'", ViewPager.class);
+      view = finder.findRequiredView(source, 2131755324, "field 'mFabXj' and method 'onViewClicked'");
+      target.mFabXj = finder.castView(view, 2131755324, "field 'mFabXj'");
+      view2131755324 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
@@ -115,18 +115,18 @@ public class InspectXJActivity$$ViewBinder<T extends InspectXJActivity> implemen
       target.mVp = null;
       target.mFabXj = null;
 
-      view2131755434.setOnClickListener(null);
-      view2131755434 = null;
-      view2131755444.setOnClickListener(null);
-      view2131755444 = null;
+      view2131755438.setOnClickListener(null);
+      view2131755438 = null;
+      view2131755448.setOnClickListener(null);
+      view2131755448 = null;
       view2131755194.setOnClickListener(null);
       view2131755194 = null;
-      view2131755455.setOnClickListener(null);
-      view2131755455 = null;
-      view2131755416.setOnClickListener(null);
-      view2131755416 = null;
-      view2131755319.setOnClickListener(null);
-      view2131755319 = null;
+      view2131755459.setOnClickListener(null);
+      view2131755459 = null;
+      view2131755420.setOnClickListener(null);
+      view2131755420 = null;
+      view2131755324.setOnClickListener(null);
+      view2131755324 = null;
 
       this.target = null;
     }

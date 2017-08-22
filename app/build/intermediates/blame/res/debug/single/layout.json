@@ -44,24 +44,24 @@
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\activity_asset_check.xml"
     },
     {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\installlist_numlist.xml",
-        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\installlist_numlist.xml"
-    },
-    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_aaaa.xml",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\activity_aaaa.xml"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\installlist_numlist.xml",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\installlist_numlist.xml"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\item_girl_detail.xml",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\item_girl_detail.xml"
     },
     {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\album_list_item.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\46e5e5cd47989d2a37ead46d9dac744aeb77db5b\\output\\res\\layout\\album_list_item.xml"
-    },
-    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\layout_dilaog_pic.xml",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\layout_dilaog_pic.xml"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\album_list_item.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\46e5e5cd47989d2a37ead46d9dac744aeb77db5b\\output\\res\\layout\\album_list_item.xml"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\include_search_ll.xml",
@@ -80,12 +80,12 @@
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\fragment_splash.xml"
     },
     {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\address_selector.xml",
-        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\address_selector.xml"
-    },
-    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_yzk.xml",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\activity_yzk.xml"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\address_selector.xml",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\address_selector.xml"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_splash.xml",
@@ -116,24 +116,24 @@
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\install_item.xml"
     },
     {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\item_text_mid.xml",
-        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\item_text_mid.xml"
-    },
-    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\include_people.xml",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\include_people.xml"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\item_text_mid.xml",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\item_text_mid.xml"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\include_big_title.xml",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\include_big_title.xml"
     },
     {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_media_custom.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\layout\\notification_template_media_custom.xml"
-    },
-    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\item_text_pd30.xml",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\item_text_pd30.xml"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_media_custom.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\layout\\notification_template_media_custom.xml"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_material.xml",
@@ -144,28 +144,28 @@
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\357b9e6ff35d150c9b6752ff313a8d2a82fcadac\\output\\res\\layout\\__leak_canary_leak_row.xml"
     },
     {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\layout\\abc_screen_simple.xml"
-    },
-    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\simple_spinner_item.xml",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\simple_spinner_item.xml"
     },
     {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\item_pxgl_list.xml",
-        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\item_pxgl_list.xml"
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\layout\\abc_screen_simple.xml"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\item_inspect_detail.xml",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\item_inspect_detail.xml"
     },
     {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_menu_layout.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\layout\\abc_action_menu_layout.xml"
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\item_pxgl_list.xml",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\item_pxgl_list.xml"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_select_dialog_material.xml",
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\layout\\abc_select_dialog_material.xml"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_menu_layout.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\layout\\abc_action_menu_layout.xml"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_search.xml",
@@ -272,36 +272,36 @@
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\include_arrow_down.xml"
     },
     {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view.xml",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\layout\\abc_activity_chooser_view.xml"
-    },
-    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view_list_item.xml",
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\layout\\abc_activity_chooser_view_list_item.xml"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\layout\\abc_activity_chooser_view.xml"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\include_save_quit.xml",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\include_save_quit.xml"
     },
     {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\tab_view0.xml",
-        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\tab_view0.xml"
-    },
-    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_my.xml",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\fragment_my.xml"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\tab_view0.xml",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\tab_view0.xml"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\item_popup_list.xml",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\item_popup_list.xml"
     },
     {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\simple_text_view.xml",
-        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\simple_text_view.xml"
-    },
-    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\timepicker_line.xml",
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\d5a1cd54089cb080e55f0c59772bddbb8300e3ec\\output\\res\\layout\\timepicker_line.xml"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\simple_text_view.xml",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\layout\\simple_text_view.xml"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_dialog_title_material.xml",

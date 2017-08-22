@@ -167,7 +167,7 @@ public class YzkActivity extends AppActivity implements DeptView {
                 .map(new Func1<List<Long>, Long[]>() {
                     @Override
                     public Long[] call(List<Long> strings) {
-                        return  strings.toArray(new Long[0]);
+                        return  strings.toArray(new Long[strings.size()]);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())

@@ -21,7 +21,7 @@ public class GirlActivity$$ViewBinder<T extends GirlActivity> implements ViewBin
     protected InnerUnbinder(T target, Finder finder, Object source) {
       this.target = target;
 
-      target.mToolbar = finder.findRequiredViewAsType(source, 2131755291, "field 'mToolbar'", Toolbar.class);
+      target.mToolbar = finder.findRequiredViewAsType(source, 2131755296, "field 'mToolbar'", Toolbar.class);
     }
 
     @Override

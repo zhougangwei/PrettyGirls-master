@@ -22,19 +22,19 @@ public class AzysListActivity$$ViewBinder<T extends AzysListActivity> implements
   protected static class InnerUnbinder<T extends AzysListActivity> implements Unbinder {
     protected T target;
 
-    private View view2131755434;
+    private View view2131755438;
 
-    private View view2131755288;
+    private View view2131755293;
 
-    private View view2131755449;
+    private View view2131755453;
 
     protected InnerUnbinder(final T target, Finder finder, Object source) {
       this.target = target;
 
       View view;
-      view = finder.findRequiredView(source, 2131755434, "field 'mIvBack' and method 'onViewClicked'");
-      target.mIvBack = finder.castView(view, 2131755434, "field 'mIvBack'");
-      view2131755434 = view;
+      view = finder.findRequiredView(source, 2131755438, "field 'mIvBack' and method 'onViewClicked'");
+      target.mIvBack = finder.castView(view, 2131755438, "field 'mIvBack'");
+      view2131755438 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
@@ -42,23 +42,23 @@ public class AzysListActivity$$ViewBinder<T extends AzysListActivity> implements
         }
       });
       target.mTvTitle = finder.findRequiredViewAsType(source, 2131755236, "field 'mTvTitle'", TextView.class);
-      target.mTvName = finder.findRequiredViewAsType(source, 2131755436, "field 'mTvName'", TextView.class);
+      target.mTvName = finder.findRequiredViewAsType(source, 2131755440, "field 'mTvName'", TextView.class);
       target.mTvGgxh = finder.findRequiredViewAsType(source, 2131755225, "field 'mTvGgxh'", TextView.class);
       target.mTvDept = finder.findRequiredViewAsType(source, 2131755212, "field 'mTvDept'", TextView.class);
-      target.mLlNames = finder.findRequiredViewAsType(source, 2131755437, "field 'mLlNames'", LinearLayout.class);
-      target.mRv = finder.findRequiredViewAsType(source, 2131755287, "field 'mRv'", AutoRecyclerView.class);
-      view = finder.findRequiredView(source, 2131755288, "field 'mTvYs' and method 'onViewClicked'");
-      target.mTvYs = finder.castView(view, 2131755288, "field 'mTvYs'");
-      view2131755288 = view;
+      target.mLlNames = finder.findRequiredViewAsType(source, 2131755441, "field 'mLlNames'", LinearLayout.class);
+      target.mRv = finder.findRequiredViewAsType(source, 2131755292, "field 'mRv'", AutoRecyclerView.class);
+      view = finder.findRequiredView(source, 2131755293, "field 'mTvYs' and method 'onViewClicked'");
+      target.mTvYs = finder.castView(view, 2131755293, "field 'mTvYs'");
+      view2131755293 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
-      view = finder.findRequiredView(source, 2131755449, "field 'mIvPxgl' and method 'onViewClicked'");
-      target.mIvPxgl = finder.castView(view, 2131755449, "field 'mIvPxgl'");
-      view2131755449 = view;
+      view = finder.findRequiredView(source, 2131755453, "field 'mIvPxgl' and method 'onViewClicked'");
+      target.mIvPxgl = finder.castView(view, 2131755453, "field 'mIvPxgl'");
+      view2131755453 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
@@ -82,12 +82,12 @@ public class AzysListActivity$$ViewBinder<T extends AzysListActivity> implements
       target.mTvYs = null;
       target.mIvPxgl = null;
 
-      view2131755434.setOnClickListener(null);
-      view2131755434 = null;
-      view2131755288.setOnClickListener(null);
-      view2131755288 = null;
-      view2131755449.setOnClickListener(null);
-      view2131755449 = null;
+      view2131755438.setOnClickListener(null);
+      view2131755438 = null;
+      view2131755293.setOnClickListener(null);
+      view2131755293 = null;
+      view2131755453.setOnClickListener(null);
+      view2131755453 = null;
 
       this.target = null;
     }

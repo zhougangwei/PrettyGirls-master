@@ -85,4 +85,6 @@
 
     <color name="popup_bg">#8f000000</color>
     <color name="line_bg">#CDCDCD</color>
+    <color name="divide_gray_color">#E0D9D8</color>
+
 </resources>

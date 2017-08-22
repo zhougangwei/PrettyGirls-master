@@ -25,9 +25,9 @@ public class MainActivity$$ViewBinder<T extends MainActivity> implements ViewBin
       this.target = target;
 
       target.mTvTitle = finder.findRequiredViewAsType(source, 2131755236, "field 'mTvTitle'", TextView.class);
-      target.mToolbar = finder.findRequiredViewAsType(source, 2131755291, "field 'mToolbar'", Toolbar.class);
-      target.mFlContent = finder.findRequiredViewAsType(source, 2131755333, "field 'mFlContent'", FrameLayout.class);
-      target.mBottomNavigationBar = finder.findRequiredViewAsType(source, 2131755334, "field 'mBottomNavigationBar'", BottomNavigationBar.class);
+      target.mToolbar = finder.findRequiredViewAsType(source, 2131755296, "field 'mToolbar'", Toolbar.class);
+      target.mFlContent = finder.findRequiredViewAsType(source, 2131755338, "field 'mFlContent'", FrameLayout.class);
+      target.mBottomNavigationBar = finder.findRequiredViewAsType(source, 2131755339, "field 'mBottomNavigationBar'", BottomNavigationBar.class);
     }
 
     @Override

@@ -66,7 +66,10 @@ public class Content {
 
     //开始巡检
     public static final int INSPECT_START_REQUESET_CODE =19;
-
+    //品牌名称
+    public static final int PPMC_REQUEST_CODE       = 20;
+    //编辑
+    public static final int ASSET_EDIT_REQUEST_CODE       = 21;
 
 
 
@@ -92,7 +95,6 @@ public class Content {
 
 
 
-
     /**
      * 是否是多选
      */
@@ -111,8 +113,12 @@ public class Content {
     public static String CHECKED_SB_NAMES = "checkedSbNames";
 
 
-
     public static String AZYS_DETAIL_IDS = "azys_detail_ids";
+
+
+
+    public static String PPMC_IDS = "ppmc_ids";
+    public static String PPMC_NAMES = "ppmc_names";
     /**
      * 设备的ID的集合
      */

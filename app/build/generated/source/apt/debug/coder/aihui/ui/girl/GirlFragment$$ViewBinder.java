@@ -22,8 +22,8 @@ public class GirlFragment$$ViewBinder<T extends GirlFragment> implements ViewBin
     protected InnerUnbinder(T target, Finder finder, Object source) {
       this.target = target;
 
-      target.mViewPager = finder.findRequiredViewAsType(source, 2131755425, "field 'mViewPager'", ViewPager.class);
-      target.mRootView = finder.findRequiredViewAsType(source, 2131755424, "field 'mRootView'", LinearLayout.class);
+      target.mViewPager = finder.findRequiredViewAsType(source, 2131755429, "field 'mViewPager'", ViewPager.class);
+      target.mRootView = finder.findRequiredViewAsType(source, 2131755428, "field 'mRootView'", LinearLayout.class);
     }
 
     @Override

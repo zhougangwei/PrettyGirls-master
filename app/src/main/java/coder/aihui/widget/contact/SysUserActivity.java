@@ -133,6 +133,7 @@ public class SysUserActivity extends AppActivity {
                         public void onClick(View v) {
                             Intent intent = new Intent();
                             intent.putExtra("userId", bean.getUSER_ID());
+                            intent.putExtra("userName", bean.getUSER_NAME());
                             setResult(RESULT_OK, intent);
                             finish();
                         }

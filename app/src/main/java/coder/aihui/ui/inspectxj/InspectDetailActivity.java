@@ -366,12 +366,14 @@ public class InspectDetailActivity extends AppActivity {
     private void createSonData(final Long modelId) {
         Observable.from(mDaoSession.getInspectTempletItemDao().queryBuilder().where(InspectTempletItemDao.Properties.ITEM_PARENT_ID.eq(modelId))
                 .list())
+                .subscribeOn(Schedulers.io())
                 .filter(new Func1<InspectTempletItem, Boolean>() {
                     @Override
                     public Boolean call(InspectTempletItem inspectTempletItem) {
                         return inspectTempletItem != null;
                     }
                 })
+                .observeOn(Schedulers.io())
                 .map(new Func1<InspectTempletItem, INSPECT_REPS>() {
                     @Override
                     public INSPECT_REPS call(InspectTempletItem inspectTempletItem) {
@@ -386,7 +388,7 @@ public class InspectDetailActivity extends AppActivity {
                     @Override
                     public void call(List<INSPECT_REPS> inspect_repses) {
                         mDaoSession.getINSPECT_REPSDao().insertInTx(inspect_repses);            //存储数据
-                        mSonDatas = inspect_repses;
+                        mSonDatas.addAll(inspect_repses);
 
                     }
                 });
@@ -497,9 +499,10 @@ public class InspectDetailActivity extends AppActivity {
     private void gotoSave(Integer savetype) {
         INSPECT_PLAN planBean = new INSPECT_PLAN();
         INSPECT_REP inspectRep = new INSPECT_REP();
-
+        INSPECT_PLANDao pDao = daoSession.getINSPECT_PLANDao();
         //先保存大的
         if (isNew == 1) {
+            //过期或者没到
             if (isPlan == 3) {
                 //不是计划
                 String INSE_FK_ID = "";
@@ -571,20 +574,19 @@ public class InspectDetailActivity extends AppActivity {
                 planBean.setINSP_FK_ID(INSE_FK_ID);
                 planBean.setINSP_ID(-1L);               //是临时的标志
 
-
             } else {
-                INSPECT_PLANDao pDao = daoSession.getINSPECT_PLANDao();
-                INSPECT_PLAN plan = pDao.queryBuilder().where(INSPECT_PLANDao.Properties.INSP_ID.eq(planId)).unique();
-                inspectRep.setKSID(plan.getKSID());//新增科室ID
-                inspectRep.setKSMC(plan.getKSMC());
-                inspectRep.setWZMC(plan.getWZMC());
-                inspectRep.setKPBH(plan.getKPBH());
-                inspectRep.setDDMC(plan.getDDMC());
-                inspectRep.setDDID(plan.getDDID());
 
-                inspectRep.setSCBH(plan.getSCBH());
-                inspectRep.setGGXH(plan.getGGXH());
-                inspectRep.setPPMC(plan.getPPMC());
+                 planBean = pDao.queryBuilder().where(INSPECT_PLANDao.Properties.INSP_ID.eq(planId)).unique();
+                inspectRep.setKSID(planBean.getKSID());//新增科室ID
+                inspectRep.setKSMC(planBean.getKSMC());
+                inspectRep.setWZMC(planBean.getWZMC());
+                inspectRep.setKPBH(planBean.getKPBH());
+                inspectRep.setDDMC(planBean.getDDMC());
+                inspectRep.setDDID(planBean.getDDID());
+
+                inspectRep.setSCBH(planBean.getSCBH());
+                inspectRep.setGGXH(planBean.getGGXH());
+                inspectRep.setPPMC(planBean.getPPMC());
 
                 if (isPlan == 2) {
                     inspectRep.setINSR_FK_ID(Integer.parseInt(planId + ""));//关联计划外键ID,无计划的记录值写0
@@ -596,15 +598,15 @@ public class InspectDetailActivity extends AppActivity {
                 } else {
                     inspectRep.setINSR_FK_ID(0);//关联计划外键ID,无计划的记录值写0
                 }
-                inspectRep.setINSR_NID(plan.getINSP_FK_ID());//ID感觉应该加RP/TZ
-                inspectRep.setBAR_CODE(plan.getBAR_CODE());
-                inspectRep.setRFID_CODE(plan.getRFID_CODE());
-                inspectRep.setXJFL(plan.getXJFL());
-                inspectRep.setXJFL_MC(plan.getXJFL_MC());
-                inspectRep.setZQLX(plan.getZQLX());
-                inspectRep.setINSE_CYCLE(plan.getINSE_CYCLE());
+                inspectRep.setINSR_NID(planBean.getINSP_FK_ID());//ID感觉应该加RP/TZ
+                inspectRep.setBAR_CODE(planBean.getBAR_CODE());
+                inspectRep.setRFID_CODE(planBean.getRFID_CODE());
+                inspectRep.setXJFL(planBean.getXJFL());
+                inspectRep.setXJFL_MC(planBean.getXJFL_MC());
+                inspectRep.setZQLX(planBean.getZQLX());
+                inspectRep.setINSE_CYCLE(planBean.getINSE_CYCLE());
 
-                inspectRep.setKPBH_OLD(plan.getKPBH_OLD());
+                inspectRep.setKPBH_OLD(planBean.getKPBH_OLD());
 
             }
             inspectRep.setINSR_TYPE(insrType);
@@ -629,22 +631,19 @@ public class InspectDetailActivity extends AppActivity {
             inspectRep.setINSR_UPDATE_DATE(new Date());
             inspectRep.setINSR_UPDATE_USER(Integer.parseInt(userID));
             inspectRep.setINSR_ID(planId);
+            planBean = pDao.queryBuilder().where(INSPECT_PLANDao.Properties.INSP_ID.eq(planId)).unique();
             Log.v("MYTAG", planId + "修改的ID");
         }
         inspectRep.setISCHECK(1);
+
+        //这个因为关系到Pm所以一定要有计划的 才能改变ISCHECK 的状态
         if (inspectRep.getINSR_FK_ID() != null && inspectRep.getINSR_FK_ID() > 0) {
-            if ("PM".equals(insrType)) {
-                planBean = daoSession.getINSPECT_PLANDao().load(Long.valueOf(inspectRep.getINSR_FK_ID()));
                 planBean.setISCHECK(savetype);
                 inspectRep.setISCHECK(savetype);
-                planBean.setRESULT(1);//1是合格
-            } else if ("XJ".equals(insrType)) {
-                if (planBean != null) {
-                    planBean.setISCHECK(1);
-                    planBean.setRESULT(1);//1是合格
-                }
-            }
         }
+        planBean.setRESULT(1);//1是合格
+
+
         inspectRep.setINSR_WX_NEED(0);          //是否维修
         inspectRep.setINSR_RESULT("HG");        //是否合格
         long repId = mDaoSession.insertOrReplace(inspectRep);
@@ -660,11 +659,10 @@ public class InspectDetailActivity extends AppActivity {
             }
             reps.setINSPR_REP_ID(Integer.parseInt(repId + ""));
         }
-
         if (planBean.getINSP_ID() == -1L) {
             planBean.setINSP_ID(-repId);
-            mDaoSession.insertOrReplace(planBean);
         }
+        mDaoSession.insertOrReplace(planBean);
         mDaoSession.getINSPECT_REPSDao().insertOrReplaceInTx(mSonDatas);
         setResult(RESULT_OK);
         finish();

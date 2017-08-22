@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,6 +17,7 @@ import com.blankj.utilcode.utils.TimeUtils;
 import com.bumptech.glide.Glide;
 import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
+import com.jzxiang.pickerview.listener.OnDateSetListener;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
@@ -53,9 +55,9 @@ import coder.aihui.widget.ListBottomDialog;
 import coder.aihui.widget.ScrollViewWithListView;
 
 import static coder.aihui.R.id.tv_zczyxq;
+import static coder.aihui.base.Content.AZYS_DETAIL_IDS;
 import static coder.aihui.base.Content.BZ_REQUEST_CODE;
 import static coder.aihui.base.Content.PJMX_REQUEST_CODE;
-import static coder.aihui.base.Content.AZYS_DETAIL_IDS;
 
 public class AzysDetailActivity extends AppActivity {
 
@@ -234,6 +236,12 @@ public class AzysDetailActivity extends AppActivity {
                 .setWheelItemTextNormalColor(getResources().getColor(R.color.timetimepicker_default_text_color))
                 .setWheelItemTextSelectorColor(getResources().getColor(R.color.timepicker_toolbar_bg))
                 .setWheelItemTextSize(15)
+                .setCallBack(new OnDateSetListener() {
+                    @Override
+                    public void onDateSet(TimePickerDialog timePickerView, long millseconds) {
+                        mTvZczyxq.setText(TimeUtils.milliseconds2String(millseconds, format));
+                    }
+                })
                 .build();
         build.show(getSupportFragmentManager(), "1");
     }
@@ -247,8 +255,13 @@ public class AzysDetailActivity extends AppActivity {
                 //拍照回来的
                 case Content.REQUEST_PIC_CHOOSE:
                     List<Uri> uris = Matisse.obtainResult(data);
+                    ImageView imageView = ImageMap.get(whichPic);
+                    ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
+                    layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                    layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                    imageView.setLayoutParams(layoutParams);
                     if (!TextUtils.isEmpty(whichPic)) {
-                        Glide.with(this).load(uris.get(0)).into(ImageMap.get(whichPic));
+                        Glide.with(this).load(uris.get(0)).into(imageView);
                         mPicMap.put(whichPic, uris.get(0).toString());
                     }
                     break;

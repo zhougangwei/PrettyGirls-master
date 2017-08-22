@@ -46,6 +46,8 @@ import coder.aihui.ui.main.DownView;
 import coder.aihui.ui.main.UpBean;
 import coder.aihui.util.AndroidUtils;
 import coder.aihui.util.SPUtil;
+import coder.aihui.util.viewutil.ProcessDialogUtil;
+import coder.aihui.widget.MyProgressDialog;
 import coder.aihui.widget.popwindow.MenuPopup;
 import coder.aihui.widget.popwindow.SlideFromTopPopup;
 import rx.android.schedulers.AndroidSchedulers;
@@ -78,9 +80,9 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     TabLayout    mTb;
 
     @BindView(R.id.vp)
-    ViewPager            mVp;
+    ViewPager   mVp;
     @BindView(R.id.fab_xj)
-    ImageButton          mFabXj;
+    ImageButton mFabXj;
 
 
     private List<String>       mTitleList = new ArrayList<>();
@@ -137,6 +139,7 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     private List<View> mTabViewList = new ArrayList<>();
     private DownPresenter mDownPresenter;
     private int mWhichSelect = 0;               //当前选中的是哪个
+    private MyProgressDialog mProgressDialog;
 
     @Override
     protected int getContentViewId() {
@@ -151,6 +154,8 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     @Override
     protected void initView() {
 
+
+        mProgressDialog = ProcessDialogUtil.createNoCancelDialog("上传巡检数据", this);
         mDownPresenter = new DownPresenter(this, mDaoSession);
         mPagerAdapter = new InspectPagerAdapter(mTitleList, mViewList, this);
         mVp.setAdapter(mPagerAdapter);
@@ -452,6 +457,7 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
                     switch (string) {
                         case "上传巡检数据":
                             gotoUpData();
+
                             break;
                         case "巡检初始":
                             break;
@@ -462,13 +468,20 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
                         case "数据修复":
                             break;
                         case "数据清空":
+                            gotoClearData();
                             break;
-
+                        default:
+                            break;
                     }
+                    mUpdownPopup.dismiss();
                 }
             });
         }
         mUpdownPopup.showPopupWindow(mIvUpdown);
+    }
+
+    private void gotoClearData() {
+
     }
 
     private void gotoUpData() {
@@ -483,8 +496,7 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
         upBean.setCount(0);
         upBean.setBigType(mBigType[2]);
         upBean.setPropertie(new Property[]{INSPECT_REPDao.Properties.SYNC_FLAG});
-        upBean.setWhereconditions(new WhereCondition[]{INSPECT_REPDao.Properties.INSR_TYPE.eq("XJ")});
-
+      //  upBean.setWhereconditions(new WhereCondition[]{INSPECT_REPDao.Properties.INSR_TYPE.eq("XJ"),INSPECT_REPDao.Properties.SYNC_FLAG.isNull()});
 
         UpBean upBean2 = new UpBean();
         upBean2.setEnties("coder.aihui.data.bean.INSPECT_REPS");
@@ -496,10 +508,11 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
         upBean2.setCount(0);
         upBean2.setBigType(mBigType[2]);
         upBean2.setPropertie(new Property[]{INSPECT_REPSDao.Properties.SYNC_FLAG});
-        upBean2.setWhereconditions(new WhereCondition[]{INSPECT_REPSDao.Properties.INSR_TYPE.eq("XJ")});
+        upBean2.setWhereconditions(new WhereCondition[]{INSPECT_REPSDao.Properties.INSR_TYPE.eq("XJ"),INSPECT_REPSDao.Properties.SYNC_FLAG.isNull()});
 
         list.add(upBean);
         list.add(upBean2);
+        mProgressDialog.show();
         mDownPresenter.gotoUp(list, INSPECT_UP);
     }
 
@@ -640,22 +653,11 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         mWhichSelect = tab.getPosition();
-        //还没数据的 去加载数据 有数据的 就直接显示
-    /*    if (mDataList.get(mWhichSelect).list.size() == 0) {
-            queryAllCount(mWhichSelect, 0, 10);
-        }*/
-
     }
 
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
-   /*     int position = tab.getPosition();
-        if (position == 1) {
-            tab.setCustomView(R.include_tab.tab_view1);
-        }
-        if (position == 2) {
-            tab.setCustomView(R.include_tab.tab_view2);
-        }*/
+
     }
 
     @Override
@@ -673,16 +675,16 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
 
     @Override
     public void showSuccess(int type) {
-
+        mProgressDialog.dismiss();
     }
 
     @Override
     public void showFault(int type, String wrong) {
-
+        mProgressDialog.dismiss();
     }
 
     @Override
     public void showProgress(int num, int type) {
-
+        mProgressDialog.setProgress(num);
     }
 }

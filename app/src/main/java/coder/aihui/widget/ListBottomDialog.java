@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -99,10 +98,9 @@ public class ListBottomDialog extends Dialog {
 
             }
         });
-
-        mRv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
-
-       // View contentView = LayoutInflater.from(context).inflate(ResId, null);
+        mRv.addItemDecoration(new RecycleViewDivider(
+                mContext, LinearLayoutManager.VERTICAL, 15, mContext.getResources().getColor(R.color.divide_gray_color)));
+        // View contentView = LayoutInflater.from(context).inflate(ResId, null);
         dialog.setContentView(mRv);
         Window window = dialog.getWindow();
         WindowManager.LayoutParams params = window.getAttributes();

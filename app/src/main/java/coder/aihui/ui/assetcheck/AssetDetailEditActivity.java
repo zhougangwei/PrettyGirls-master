@@ -3,7 +3,11 @@ package coder.aihui.ui.assetcheck;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -13,6 +17,7 @@ import com.blankj.utilcode.utils.TimeUtils;
 import com.bumptech.glide.Glide;
 import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
+import com.jzxiang.pickerview.listener.OnDateSetListener;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
@@ -21,9 +26,11 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import coder.aihui.R;
 import coder.aihui.base.AppActivity;
@@ -42,10 +49,13 @@ import coder.aihui.data.bean.SYS_USER;
 import coder.aihui.data.bean.gen.CORRECT_ASSETDao;
 import coder.aihui.data.bean.gen.PUB_DICTIONARY_ITEMDao;
 import coder.aihui.manager.DeptLocationManager;
+import coder.aihui.util.AndroidUtils;
+import coder.aihui.util.SPUtil;
 import coder.aihui.util.ToastUtil;
 import coder.aihui.util.viewutil.TextViewUtils;
 import coder.aihui.widget.ListBottomDialog;
 import coder.aihui.widget.contact.ContactActivity;
+import coder.aihui.widget.contact.PpmcActivity;
 import coder.aihui.widget.contact.SysUserActivity;
 import coder.aihui.widget.jdaddressselector.ISelectAble;
 
@@ -54,6 +64,9 @@ import static coder.aihui.base.Content.COMPANY_ID;
 import static coder.aihui.base.Content.COMPANY_REQUEST_CODE;
 import static coder.aihui.base.Content.COMPANY_SCCJ;
 import static coder.aihui.base.Content.COMPANY_TYPE;
+import static coder.aihui.base.Content.PPMC_IDS;
+import static coder.aihui.base.Content.PPMC_NAMES;
+import static coder.aihui.base.Content.PPMC_REQUEST_CODE;
 import static coder.aihui.base.Content.SYSUSER_REQUEST_CODE;
 
 
@@ -64,14 +77,14 @@ public class AssetDetailEditActivity extends AppActivity implements DeptView, Dl
     ImageView    mIvBack;
     @BindView(R.id.tv_title)
     TextView     mTvTitle;
-    @BindView(R.id.tv_wzmc)
-    TextView     mTvWzmc;
+    @BindView(R.id.et_wzmc)
+    EditText     mEtWzmc;
     @BindView(R.id.tv_brand)
     TextView     mTvBrand;
-    @BindView(R.id.tv_ggxh)
-    TextView     mTvGgxh;
-    @BindView(R.id.tv_scbh)
-    TextView     mTvScbh;
+    @BindView(R.id.et_ggxh)
+    EditText     mEtGgxh;
+    @BindView(R.id.et_scbh)
+    EditText     mEtScbh;
     @BindView(R.id.tv_scrq)
     TextView     mTvScrq;
     @BindView(R.id.ll_scrq)
@@ -113,14 +126,45 @@ public class AssetDetailEditActivity extends AppActivity implements DeptView, Dl
     RelativeLayout mRlCmz;
     @BindView(R.id.rl_mpz)
     RelativeLayout mRlMpz;
+    @BindView(R.id.ll_wzmc)
+    LinearLayout   mLlWzmc;
+    @BindView(R.id.ll_ppmc)
+    LinearLayout   mLlPpmc;
+    @BindView(R.id.ll_ggxh)
+    LinearLayout   mLlGgxh;
+    @BindView(R.id.ll_scbh)
+    LinearLayout   mLlScbh;
+    @BindView(R.id.tv_bqyw)
+    TextView       mTvBqyw;
+    @BindView(R.id.ll_bqyw)
+    LinearLayout   mLlBqyw;
+
     private List<DialogBean> mBqlxList = new ArrayList<>();     //标签类型的集合
     private List<DialogBean> mScqrList = new ArrayList<>(); //首次确认
+    private List<DialogBean> mBqywList = new ArrayList<>(); //有无标签
     private int              whichPic  = -1;                //哪张图片
     private List<ImageView>  PicList   = new ArrayList<>(); //ImageView的集合
     private DeptDecotor         mDeptDecotor;
     private DlwzDecotor         mDlwzDecotor;
     private DeptLocationManager mDeptLocationManager;
-    private CORRECT_ASSET mCorrect;
+
+    private CORRECT_ASSET       mCorrect_asset;
+
+
+    HashMap<Integer, String> mPicMap = new HashMap<>();
+    private long   mSccjId = -1;       //生产厂家Id
+    private long   mGhdwId = -1;       //供货单位Id
+    private String mPpId   = "";       //品牌Id
+    private String mAllDlwzName;
+    private String mAllDeptIds;
+    private String mAllDlwzIds;
+    private String mAllDeptName;
+    private String mDeptIds;
+    private String mDeptName;
+    private String mDlwzIds;
+    private String mDlwzName;
+    private long mBgrId = -1;//保管人id
+    private String mBgrXm;//保管人姓名
 
     @Override
     protected int getContentViewId() {
@@ -165,59 +209,39 @@ public class AssetDetailEditActivity extends AppActivity implements DeptView, Dl
         Intent intent = getIntent();
         long assetId = intent.getLongExtra("assetId", 0L);
 
-        mCorrect = mDaoSession.getCORRECT_ASSETDao().
+        mCorrect_asset = mDaoSession.getCORRECT_ASSETDao().
                 queryBuilder().where(CORRECT_ASSETDao.Properties.ASSET_ID.eq(assetId))
                 .unique();
-        if (mCorrect != null) {
+        if (mCorrect_asset != null) {
             //使用旧的
         } else {
             //创建新的
-            mCorrect = createNew(assetId);
+            mCorrect_asset = createNew(assetId);
         }
-        showView(mCorrect);
+        showView(mCorrect_asset);
     }
 
     private CORRECT_ASSET createNew(long assetId) {
         IN_ASSET load = mDaoSession.getIN_ASSETDao().load(assetId);
-        CORRECT_ASSET correct_asset = new CORRECT_ASSET();
-
-        correct_asset.setID(-1L);
-
-        correct_asset.setASSET_ID(load.getID());
-        correct_asset.setDDID(load.getDDID());
-        correct_asset.setDDMC(load.getDDMC());
-        correct_asset.setGHDWID(load.getGHDWID());
-        correct_asset.setGHDWMC(load.getGHDWMC());
-        correct_asset.setPPID(load.getPPID());
-        correct_asset.setPPMC(load.getPPMC());
-        correct_asset.setSCCJID(load.getSCCJID());
-        correct_asset.setSCCJMC(load.getSCCJMC());
-        correct_asset.setGGXH(load.getGGXH());
-        correct_asset.setSCBH(load.getSCBH());
-    /*    correct_asset.setUSERID(load.getUSERID());
-        correct_asset.setUSERNAME(load.getUSERNAME());
-        correct_asset.setIS_UP(load.getIS_UP());*/
-        correct_asset.setSCRQ(load.getSCRQ());
-        correct_asset.setWZMC(load.getWZMC());
-/*        correct_asset.setFRONT_PIC(load.getFRONT_PIC());
-        correct_asset.setSIDE_PIC(load.getSIDE_PIC());
-        correct_asset.setBIG_FRONT_PIC(load.getBIG_FRONT_PIC());
-        correct_asset.setBIG_SIDE_PIC(load.getBIG_SIDE_PIC());
-        correct_asset.setZMZ_FILE_ID(load.getZMZ_FILE_ID());
-        correct_asset.setCMZ_FILE_ID(load.getCMZ_FILE_ID());
-        correct_asset.setQD_FLAG(load.getQD_FLAG());*/
-        correct_asset.setBGRID(load.getBGRID());
-        correct_asset.setBGKSID(load.getBGKSID());
-        correct_asset.setBGKSMC(load.getBGKSMC());
-/*        correct_asset.setBIG_MP_PIC(load.getBIG_MP_PIC());
-        correct_asset.setMP_PIC(load.getMP_PIC());
-        correct_asset.setBQLX(load.getBQLX());
-        correct_asset.setQRBZ(load.getQRBZ());
-        correct_asset.setBQYCZT(load.getBQYCZT());
-        correct_asset.setBQZT(load.getBQZT());*/
-
-
-        return correct_asset;
+        mCorrect_asset = new CORRECT_ASSET();
+        mCorrect_asset.setID(-1L);
+        mCorrect_asset.setASSET_ID(load.getID());
+        mCorrect_asset.setDDID(load.getDDID());
+        mCorrect_asset.setDDMC(load.getDDMC());
+        mCorrect_asset.setGHDWID(load.getGHDWID());
+        mCorrect_asset.setGHDWMC(load.getGHDWMC());
+        mCorrect_asset.setPPID(load.getPPID());
+        mCorrect_asset.setPPMC(load.getPPMC());
+        mCorrect_asset.setSCCJID(load.getSCCJID());
+        mCorrect_asset.setSCCJMC(load.getSCCJMC());
+        mCorrect_asset.setGGXH(load.getGGXH());
+        mCorrect_asset.setSCBH(load.getSCBH());
+        mCorrect_asset.setSCRQ(load.getSCRQ());
+        mCorrect_asset.setWZMC(load.getWZMC());
+        mCorrect_asset.setBGRID(load.getBGRID());
+        mCorrect_asset.setBGKSID(load.getBGKSID());
+        mCorrect_asset.setBGKSMC(load.getBGKSMC());
+        return mCorrect_asset;
     }
 
     /**
@@ -227,10 +251,10 @@ public class AssetDetailEditActivity extends AppActivity implements DeptView, Dl
      */
     private void showView(CORRECT_ASSET load) {
 
-        mTvWzmc.setText(load.getWZMC());        //物资名称
+        mEtWzmc.setText(load.getWZMC());        //物资名称
         mTvBrand.setText(load.getPPMC());       //品牌名称
-        mTvGgxh.setText(load.getGGXH());       //规格型号
-        mTvScbh.setText(load.getSCBH());       //生产编号
+        mEtGgxh.setText(load.getGGXH());       //规格型号
+        mEtScbh.setText(load.getSCBH());       //生产编号
 
         if (load.getSCRQ() != null) {
             mTvScrq.setText(TimeUtils.date2String(load.getSCRQ(), new SimpleDateFormat("yyyy-MM-dd")));//生产日期
@@ -241,6 +265,23 @@ public class AssetDetailEditActivity extends AppActivity implements DeptView, Dl
         mTvBgks.setText(load.getBGKSMC());  //保管科室
         mTvBgr.setText(load.getBGRXM());  //保管人员
 
+        //标签有无
+        mTvBqyw.setText("0".equals(load.getBQZT()) ? "无" : ("1".equals(load.getBQZT()) ? "有" : ""));
+        //确认标志
+        mTvScqr.setText("0".equals(load.getQRBZ()) ? "否" : ("1".equals(load.getBQZT()) ? "是" : ""));
+
+        //生产日期
+        if (load.getSCRQ() != null) {
+            mTvScrq.setText(TimeUtils.date2String(load.getSCRQ(), mFormat));
+        }
+        //标签类型
+        String bqlx = load.getBQLX();
+        if (!TextUtils.isEmpty(bqlx)) {
+            PUB_DICTIONARY_ITEM bean = mDaoSession.getPUB_DICTIONARY_ITEMDao().load(Long.valueOf(bqlx));
+            if (bean != null) {
+                mTvBqlx.setText(bean.getITEM_NAME());
+            }
+        }
     }
 
     //获取数据
@@ -267,10 +308,22 @@ public class AssetDetailEditActivity extends AppActivity implements DeptView, Dl
         mScqrList.add(dialogBean2);
 
 
+        DialogBean dialogBean3 = new DialogBean();
+        dialogBean3.setName("有");
+        DialogBean dialogBean4 = new DialogBean();
+        dialogBean4.setName("无");
+
+        mBqywList.add(dialogBean3);
+        mBqywList.add(dialogBean4);
+
+
     }
 
 
-    @OnClick({R.id.iv_back, R.id.tv_save, R.id.ll_scrq, R.id.ll_location, R.id.ll_ghdw, R.id.ll_sccj, R.id.ll_bgks, R.id.ll_bgr, R.id.ll_bqlx, R.id.ll_scqr, R.id.rl_zmz, R.id.rl_cmz, R.id.rl_mpz})
+    @OnClick({R.id.iv_back, R.id.tv_save, R.id.ll_scrq, R.id.ll_location, R.id.ll_ghdw, R.id.ll_sccj
+            , R.id.ll_bgks, R.id.ll_bgr, R.id.ll_bqlx, R.id.ll_scqr, R.id.rl_zmz, R.id.rl_cmz
+            , R.id.rl_mpz, R.id.ll_ppmc, R.id.ll_bqyw
+    })
     public void onViewClicked(View view) {
         switch (view.getId()) {
 
@@ -278,7 +331,7 @@ public class AssetDetailEditActivity extends AppActivity implements DeptView, Dl
                 finish();
                 break;
             case R.id.tv_save:
-                gotoSave();
+                gotoJudgeSave();
                 break;
 
             case R.id.ll_scrq:              //生产日期
@@ -315,9 +368,38 @@ public class AssetDetailEditActivity extends AppActivity implements DeptView, Dl
             case R.id.rl_mpz:               //铭牌照
                 gotoChoosePic(2);
                 break;
+
+            case R.id.ll_ppmc:               //品牌名称
+                gotoInputPpmc();
+                break;
+            case R.id.ll_bqyw:              //有无标签
+                gotoChooseBqyw();
+                break;
+            default:
+                break;
+
         }
     }
 
+    private void gotoChooseBqyw() {
+
+        new ListBottomDialog(this).showDialog(mScqrList, new ListBottomDialog.onBackResult() {
+            @Override
+            public void backResult(DialogBean bean) {
+                mTvBqyw.setText(bean.getName());
+            }
+        });
+    }
+
+
+    //输入品牌名称
+    private void gotoInputPpmc() {
+        Intent intent = new Intent(this, PpmcActivity.class);
+        startActivityForResult(intent, PPMC_REQUEST_CODE);
+    }
+
+
+    //选取保管人
     private void gotoGetBgr() {
         Intent intent = new Intent(this, SysUserActivity.class);
         intent.putExtra(Content.IS_MULTISELECT, false);      //是否多选
@@ -325,6 +407,7 @@ public class AssetDetailEditActivity extends AppActivity implements DeptView, Dl
 
     }
 
+    //选择生产厂家
     private void gotoChooseSccj(int companyType) {
         Intent intent = new Intent(this, ContactActivity.class);
         intent.putExtra(COMPANY_TYPE, companyType);                   //查询的是生产厂家还是保修单位之类的
@@ -332,6 +415,7 @@ public class AssetDetailEditActivity extends AppActivity implements DeptView, Dl
 
     }
 
+    //选取图片
     private void gotoChoosePic(int type) {
         whichPic = type;
         Matisse.from(this)
@@ -340,7 +424,7 @@ public class AssetDetailEditActivity extends AppActivity implements DeptView, Dl
                 .capture(true)
                 .captureStrategy(
                         new CaptureStrategy(true, "coder.aihui.ui.assetquery.provider"))
-                .maxSelectable(9)
+                .maxSelectable(1)
                 .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
                 // .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
                 .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
@@ -361,7 +445,14 @@ public class AssetDetailEditActivity extends AppActivity implements DeptView, Dl
                 case Content.REQUEST_PIC_CHOOSE:
                     List<Uri> uris = Matisse.obtainResult(data);
                     if (whichPic != -1) {
-                        Glide.with(this).load(uris.get(0)).into(PicList.get(whichPic));
+                        ImageView imageView = PicList.get(whichPic);
+                        ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
+                        layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                        imageView.setLayoutParams(layoutParams);
+
+                        Glide.with(this).load(uris.get(0)).into(imageView);
+                        mPicMap.put(whichPic, uris.get(0).toString());
                     }
                     break;
                 //选择公司表回来的
@@ -374,253 +465,143 @@ public class AssetDetailEditActivity extends AppActivity implements DeptView, Dl
                     }
                     switch (companyType) {
                         case COMPANY_GHDW:
+                            mGhdwId = companyId;        //供货单位的Id
                             mTvGhdw.setText(load.getMC());
                             break;
                         case COMPANY_SCCJ:
+                            mSccjId = companyId;        //生产厂家的Id
                             mTvSccj.setText(load.getMC());
                             break;
                     }
                     break;
 
+
+                //保管人回来的
                 case SYSUSER_REQUEST_CODE:
-                    long userId = data.getLongExtra("userId", -1L);
-                    SYS_USER user = mDaoSession.getSYS_USERDao().load(userId);
+                    mBgrId = data.getLongExtra("userId", -1L);
+                    mBgrXm = data.getStringExtra("userName");
+                    SYS_USER user = mDaoSession.getSYS_USERDao().load(mBgrId);
                     if (user != null) {
                         mTvBgr.setText(user.getUSER_NAME());
                     }
+                    break;
+                case PPMC_REQUEST_CODE:
+                    mPpId = data.getStringExtra(PPMC_IDS);
+                    String nameExtra = data.getStringExtra(PPMC_NAMES);
+                    if (!TextUtils.isEmpty(nameExtra)) {
+                        mTvBrand.setText(nameExtra);
+                    }
+
+
             }
         }
     }
 
     //保存数据
-    private void gotoSave() {
-        if (TextViewUtils.isEmpty(mTvWzmc)) {
+    private void gotoJudgeSave() {
+        if (TextViewUtils.isEmpty(mEtWzmc)) {
             ToastUtil.showToast("名称不能为空!");
         }
         if (TextViewUtils.isEmpty(mTvLocation)) {
             ToastUtil.showToast("地理位子不能为空!");
         }
+        gotoSave();
 
-
-
-
-
-        finish();
     }
 
-/*
+
     private void gotoSave() {
         try {
-
-            CORRECT_ASSET correct_asset = new CORRECT_ASSET();
-
             //标签类型
-            String bqlx = (String) mSpBqlx.getSelectedItem();
+            String bqlx = mTvBqlx.getText().toString();
             for (int i = 0; i < mBqlxList.size(); i++) {
-                if (mBqlxList.get(i).getITEM_NAME().equals(bqlx)) {
-                    correct_asset.setBQLX(mBqlxList.get(i).getITEM_ID() + "");
+                PUB_DICTIONARY_ITEM bean = (PUB_DICTIONARY_ITEM) mBqlxList.get(i).getObject();
+                if (bean.getITEM_NAME().equals(bqlx)) {
+                    mCorrect_asset.setBQLX(bean.getITEM_ID() + "");
                 }
             }
-            int selectedItemPosition = mSpScqr.getSelectedItemPosition();
-
-            if (selectedItemPosition == 1) {
-                correct_asset.setQRBZ(1);
-
-            } else if (selectedItemPosition == 2) {
-                correct_asset.setQRBZ(0);
+            String s = mTvScqr.getText().toString();
+            //1是已确认 0是未确认
+            if ("是".equals(s)) {
+                mCorrect_asset.setQRBZ(1);
+            } else if ("否".equals(s)) {
+                mCorrect_asset.setQRBZ(0);
             }
-
             //标签有无
-            int selectedItemPosition1 = mSpBqyw.getSelectedItemPosition();
-            if (selectedItemPosition1 == 0) {
-                correct_asset.setBQZT("1");
-
-            } else if (selectedItemPosition1 == 1) {
-                correct_asset.setBQZT("0");
+            String bqyw = mTvBqyw.getText().toString();
+            //1是有标签 0是无标签
+            if ("有".equals(bqyw)) {
+                mCorrect_asset.setQRBZ(1);
+            } else if ("无".equals(bqyw)) {
+                mCorrect_asset.setQRBZ(0);
             }
-            correct_asset.setBQYCZT(mTvBqyczt.getText().toString());
-
             //生产日期
-            correct_asset.setSCRQ(bean.getSCRQ());
-
-
+            String scrq = mTvScrq.getText().toString();
+            if (!TextUtils.isEmpty(scrq)) {
+                mCorrect_asset.setSCRQ(TimeUtils.string2Date(scrq, mFormat));
+            }
             //图片
-            correct_asset.setFRONT_PIC(frontUrl);
-            correct_asset.setSIDE_PIC(sideUrl);
-            correct_asset.setMP_PIC(mpUrl);
-
-            correct_asset.setBGKSID(bean.getBGKSID());
-            correct_asset.setBGRID(bean.getBGRID());
-            correct_asset.setBGKSMC(bean.getBGKSMC());
-            correct_asset.setBGRXM(bean.getBGRXM());
-
-
+            mCorrect_asset.setFRONT_PIC(mPicMap.get(0));
+            mCorrect_asset.setSIDE_PIC(mPicMap.get(1));
+            mCorrect_asset.setMP_PIC(mPicMap.get(2));
             //原图的地址存起来
 
-            if (alfront.size() != 0) {
-                correct_asset.setBIG_FRONT_PIC(alfront.get(0));
+            //地点名称
+            mCorrect_asset.setDDMC(mDlwzName);
+            mCorrect_asset.setDDID(mDlwzIds);
+
+            //保管科室
+            mCorrect_asset.setBGKSMC(mDeptName);
+            mCorrect_asset.setBGKSID(mDeptIds);
+
+            //保管人
+            mCorrect_asset.setBGRID(mBgrId == -1 ? null : mBgrId + "");
+            mCorrect_asset.setBGRXM(mBgrXm);
+
+            if (!TextViewUtils.isEmpty(mTvBrand)) {
+                mCorrect_asset.setPPMC(mTvBrand.getText().toString());//供货单位
+                //品牌id
+                mCorrect_asset.setPPID(TextUtils.isEmpty(mPpId) ? null : (mPpId + ""));
             }
-            if (alside.size() != 0) {
-                correct_asset.setBIG_SIDE_PIC(alside.get(0));
+            if (!TextViewUtils.isEmpty(mEtGgxh)) {
+                mCorrect_asset.setGGXH(mEtGgxh.getText().toString()); //型号
             }
-            if (alMp.size() != 0) {
-                correct_asset.setBIG_MP_PIC(alMp.get(0));
-            }
-
-
-            correct_asset.setDDMC(bean.getDDMC());
-            correct_asset.setDDID(bean.getDDID());
-            //要先变成空的 不然 没法判断是新的还是旧的
-            correct_asset.setPPID("");
-            correct_asset.setGHDWID("");
-            correct_asset.setSCCJID("");
-
-
-            if (!TextViewUtils.isEmpty(mAtBrand)) {
-                correct_asset.setPPMC(mAtBrand.getText().toString()); //品牌
-                //品牌Id
-                for (int i = 0; i < mPpmcList.size(); i++) {
-                    if (mAtBrand.getText().toString().equals(mPpmcList.get(i).getMC())) {
-                        correct_asset.setPPID(mPpmcList.get(i).getID().toString());
-                        break;
-                    }
-                }
-            }
-
-            try {
-                if (!TextViewUtils.isEmpty(mAtBgr)) {
-                    String string = mAtBgr.getText().toString().trim();
-                    String[] split = string.split("\\(");
-                    String name = split[0];
-                    String aaId = split[1];
-
-                    Log.d("HandCorrectDetailActivi", name);
-                    String id = aaId.substring(0, aaId.length() - 1);
-                    Log.d("HandCorrectDetailActivi", id);
-                    correct_asset.setBGRXM(name);
-                    correct_asset.setBGRID(id);
-                }
-            } catch (Exception e) {
-                ToastUtil.showToast("保管人数据错误!");
-            }
-
-            if (!TextViewUtils.isEmpty(mEtXh)) {
-                correct_asset.setGGXH(mEtXh.getText().toString()); //型号
-            }
-
-            if (!TextViewUtils.isEmpty(mEtSbmc)) {
-                correct_asset.setWZMC(mEtSbmc.getText().toString()); //物资名称
+            if (!TextViewUtils.isEmpty(mEtWzmc)) {
+                mCorrect_asset.setWZMC(mEtWzmc.getText().toString()); //物资名称
             }
             if (!TextViewUtils.isEmpty(mEtScbh)) {
-                correct_asset.setSCBH(mEtScbh.getText().toString());//生产编号
+                mCorrect_asset.setSCBH(mEtScbh.getText().toString());//生产编号
             }
 
-
-            if (!TextViewUtils.isEmpty(mAtBxdw)) {
-                correct_asset.setGHDWMC(mAtBxdw.getText().toString());//供货单位
+            if (!TextViewUtils.isEmpty(mTvGhdw)) {
+                mCorrect_asset.setGHDWMC(mTvGhdw.getText().toString());//供货单位
                 //供货单位Id
-                for (int i = 0; i < mGhdwList.size(); i++) {
-                    if (mAtBxdw.getText().toString().equals(mGhdwList.get(i).getMC())) {
-                        correct_asset.setGHDWID(mGhdwList.get(i).getID().toString());
-                        break;
-                    }
-                }
+                mCorrect_asset.setGHDWID(mGhdwId == -1 ? null : (mGhdwId + ""));
             }
-            if (!TextViewUtils.isEmpty(mAtSccj)) {
-                correct_asset.setSCCJMC(mAtSccj.getText().toString()); //生产厂家
-                for (int i = 0; i < mSccjList.size(); i++) {
-                    if (mAtSccj.getText().toString().equals(mSccjList.get(i).getMC())) {
-                        correct_asset.setSCCJID(mSccjList.get(i).getID().toString());
-                        break;
-                    }
-                }
-
+            if (!TextViewUtils.isEmpty(mTvSccj)) {
+                mCorrect_asset.setSCCJMC(mTvSccj.getText().toString()); //生产厂家
+                mCorrect_asset.setSCCJID(mSccjId == -1 ? null : (mSccjId + ""));
             }
 
-
-
-
-            //品牌Id
-            if (TextUtils.isEmpty(correct_asset.getPPID()) && !TextUtils.isEmpty(correct_asset.getPPMC())) {
-                //空的话 给标识
-                PP_FLAG = 1;                //1是新的 0 或者没有就是旧的
-                //同时将他存起来
-                IN_MATERIALS_PPMC ppmc = new IN_MATERIALS_PPMC();
-                ppmc.setMC(correct_asset.getPPMC());
-                mDaoSession.insertOrReplace(ppmc);
-            }
-            //供货单位Id
-            if (TextUtils.isEmpty(correct_asset.getGHDWID()) && !TextUtils.isEmpty(correct_asset.getGHDWMC())) {
-                //空的话 给标识
-                GHDW_FLAG = 1;                //1是新的 0 或者没有就是旧的
-                PUB_COMPANY pub_company = new PUB_COMPANY();
-                pub_company.setMC(correct_asset.getGHDWMC());
-                pub_company.setLX(1);
-                mDaoSession.insertOrReplace(pub_company);
-            }
-
-            //生产厂家
-            if (TextUtils.isEmpty(correct_asset.getSCCJID()) && !TextUtils.isEmpty(correct_asset.getSCCJMC())) {
-                //空的话 给标识
-                SCCJ_FLAG = 1;                //1是新的 0 或者没有就是旧的
-                PUB_COMPANY pub_company1 = new PUB_COMPANY();
-                pub_company1.setMC(correct_asset.getSCCJMC());
-                pub_company1.setLX(2);
-                mDaoSession.insertOrReplace(pub_company1);
-            }
-
-            //更新
-
-
-            String json = GsonUtil.parseObjectToJson(correct_asset);
-            JSONObject jsonObject = new JSONObject(json);
-            jsonObject.put("PP_FLAG", PP_FLAG);
-            jsonObject.put("GHDW_FLAG", GHDW_FLAG);
-            jsonObject.put("SCCJ_FLAG", SCCJ_FLAG);
-            jsonObject.put("DD_FLAG", DDWZ_FLAG);        //这个因为涉及到使从另外一个activity过来的
-
-            String userID = SpUtil.getString(this, "userID", "");
-            String userName = SpUtil.getString(this, "userName", "");
-            jsonObject.put("userId", userID);
-            jsonObject.put("userName", userName);
-            //网络上给过去
-
-
-            Log.d("HandCorrectDetailActivi", "jsonObject:" + jsonObject);
-
-
-            //   mDaoSession.update(mAsset);
-
-            correct_asset.setPP_FLAG(PP_FLAG);
-            correct_asset.setGHDW_FLAG(GHDW_FLAG);
-            correct_asset.setSCCJ_FLAG(SCCJ_FLAG);
-            correct_asset.setDD_FLAG(DDWZ_FLAG);
-
-            correct_asset.setUSERID(userID);
-            correct_asset.setUSERNAME(userName);
-
-
+            mCorrect_asset.setUSERID(SPUtil.getUserId(this));
+            mCorrect_asset.setUSERNAME(SPUtil.getUserName(this));
             //变化了 就修改状态为没有上传过
-            correct_asset.setIS_UP(0);
-
-
-            Log.d("HandCorrectDetailActivi", correct_asset.toString());
-            mDaoSession.insertOrReplace(correct_asset);
-
+            mCorrect_asset.setIS_UP(0);
+            if (-1L == mCorrect_asset.getID()) {
+                mCorrect_asset.setID(null);
+            }
+            mDaoSession.insertOrReplace(mCorrect_asset);
             mDaoSession.clear();
-
             ToastUtil.showToast("保存成功!");
+            setResult(RESULT_OK);
 
             finish();
         } catch (Exception e) {
-
+            e.printStackTrace();
             AndroidUtils.showErrorMsg("错误1", e.getMessage(), this);
-
         }
 
     }
-*/
-
 
 
     //获取保管类型
@@ -654,6 +635,12 @@ public class AssetDetailEditActivity extends AppActivity implements DeptView, Dl
                 .setWheelItemTextNormalColor(getResources().getColor(R.color.timetimepicker_default_text_color))
                 .setWheelItemTextSelectorColor(getResources().getColor(R.color.timepicker_toolbar_bg))
                 .setWheelItemTextSize(15)
+                .setCallBack(new OnDateSetListener() {
+                    @Override
+                    public void onDateSet(TimePickerDialog timePickerView, long millseconds) {
+                        mTvScrq.setText(TimeUtils.milliseconds2String(millseconds, format));
+                    }
+                })
                 .build();
         build.show(getSupportFragmentManager(), "1");
     }
@@ -662,6 +649,20 @@ public class AssetDetailEditActivity extends AppActivity implements DeptView, Dl
     public void onAddressSelected(ArrayList<ISelectAble> selectAbles) {
 
         mDeptLocationManager.solveDatas(selectAbles);
+        mAllDeptIds = mDeptLocationManager.getAllDeptIds();
+        mAllDlwzIds = mDeptLocationManager.getAllDlwzIds();
+        mAllDeptName = mDeptLocationManager.getAllDeptName();
+        mAllDlwzName = mDeptLocationManager.getAllDlwzName();
+        mDeptIds = mDeptLocationManager.getDeptIds();
+        mDeptName = mDeptLocationManager.getDeptName();
+        mDlwzIds = mDeptLocationManager.getDlwzIds();
+        mDlwzName = mDeptLocationManager.getDlwzName();
+
+
+        mTvBgks.setText(mAllDeptName);
+        mTvLocation.setText(mAllDlwzName);
+
+
     }
 
     @Override
@@ -679,4 +680,13 @@ public class AssetDetailEditActivity extends AppActivity implements DeptView, Dl
     public void getDlwz() {
         mDlwzDecotor.getDlwz();
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+
 }

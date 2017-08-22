@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:2:1-187:12
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:2:1-189:12
 	package
 		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:3:11-32
 		INJECTED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml
@@ -64,7 +64,7 @@ ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:18:5-79
 	android:name
 		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:18:22-77
 application
-ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:20:5-185:19
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:20:5-187:19
 MERGED from [com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2] C:\Users\Administrator\.android\build-cache\5b0efc51b15b9d4630d83c5b346032ca90624bf4\output\AndroidManifest.xml:11:5-12:19
 MERGED from [com.github.jiang111:CProgressButton:v1.2.7] C:\Users\Administrator\.android\build-cache\120b9eb0768acaed967bf9bd5a29f274c6c84a42\output\AndroidManifest.xml:11:5-15:19
 MERGED from [com.jzxiang.pickerview:TimePickerDialog:1.0.1] C:\Users\Administrator\.android\build-cache\d5a1cd54089cb080e55f0c59772bddbb8300e3ec\output\AndroidManifest.xml:11:5-14:19
@@ -315,6 +315,10 @@ activity#coder.aihui.ui.inspectxj.InspectConfigActivity
 ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:183:9-184:20
 	android:name
 		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:183:19-69
+activity#coder.aihui.widget.contact.PpmcActivity
+ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:185:9-186:20
+	android:name
+		ADDED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml:185:19-62
 uses-sdk
 INJECTED from H:\PrettyGirls-master\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2] C:\Users\Administrator\.android\build-cache\5b0efc51b15b9d4630d83c5b346032ca90624bf4\output\AndroidManifest.xml:7:5-9:41

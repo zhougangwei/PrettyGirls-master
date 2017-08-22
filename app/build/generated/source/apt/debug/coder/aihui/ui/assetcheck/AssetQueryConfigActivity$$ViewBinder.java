@@ -20,7 +20,7 @@ public class AssetQueryConfigActivity$$ViewBinder<T extends AssetQueryConfigActi
   protected static class InnerUnbinder<T extends AssetQueryConfigActivity> implements Unbinder {
     protected T target;
 
-    private View view2131755434;
+    private View view2131755438;
 
     private View view2131755208;
 
@@ -28,15 +28,15 @@ public class AssetQueryConfigActivity$$ViewBinder<T extends AssetQueryConfigActi
 
     private View view2131755214;
 
-    private View view2131755450;
+    private View view2131755454;
 
     protected InnerUnbinder(final T target, Finder finder, Object source) {
       this.target = target;
 
       View view;
-      view = finder.findRequiredView(source, 2131755434, "field 'mIvBack' and method 'onViewClicked'");
-      target.mIvBack = finder.castView(view, 2131755434, "field 'mIvBack'");
-      view2131755434 = view;
+      view = finder.findRequiredView(source, 2131755438, "field 'mIvBack' and method 'onViewClicked'");
+      target.mIvBack = finder.castView(view, 2131755438, "field 'mIvBack'");
+      view2131755438 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
@@ -74,9 +74,9 @@ public class AssetQueryConfigActivity$$ViewBinder<T extends AssetQueryConfigActi
           target.onViewClicked(p0);
         }
       });
-      view = finder.findRequiredView(source, 2131755450, "field 'mTvSave' and method 'onViewClicked'");
-      target.mTvSave = finder.castView(view, 2131755450, "field 'mTvSave'");
-      view2131755450 = view;
+      view = finder.findRequiredView(source, 2131755454, "field 'mTvSave' and method 'onViewClicked'");
+      target.mTvSave = finder.castView(view, 2131755454, "field 'mTvSave'");
+      view2131755454 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
@@ -100,16 +100,16 @@ public class AssetQueryConfigActivity$$ViewBinder<T extends AssetQueryConfigActi
       target.mLlWay = null;
       target.mTvSave = null;
 
-      view2131755434.setOnClickListener(null);
-      view2131755434 = null;
+      view2131755438.setOnClickListener(null);
+      view2131755438 = null;
       view2131755208.setOnClickListener(null);
       view2131755208 = null;
       view2131755211.setOnClickListener(null);
       view2131755211 = null;
       view2131755214.setOnClickListener(null);
       view2131755214 = null;
-      view2131755450.setOnClickListener(null);
-      view2131755450 = null;
+      view2131755454.setOnClickListener(null);
+      view2131755454 = null;
 
       this.target = null;
     }

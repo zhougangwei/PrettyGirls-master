@@ -271,7 +271,7 @@ public class RemoteMyDataSource implements MyDataSource {
                 .concatMap(new Func1<UpBean, Observable<StringListBean>>() {
                     @Override
                     public Observable<StringListBean> call(UpBean upBean) {
-                        return getUpdatas(upBean);
+                        return getUpdatas(upBean);          //获取未上传的数据
                     }
                 }).filter(new Func1<StringListBean, Boolean>() {
             @Override
@@ -320,7 +320,7 @@ public class RemoteMyDataSource implements MyDataSource {
                 m2.invoke(list.get(i), new Date());
                 m3.invoke(list.get(i), 1);
             }
-            mDaossion.getDao(clazz).insertInTx(list);
+            mDaossion.getDao(clazz).insertOrReplaceInTx(list);
         } catch (Exception e) {
             e.printStackTrace();
         }

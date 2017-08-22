@@ -9,15 +9,13 @@ import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
-import java.util.concurrent.ExecutionException;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import coder.aihui.R;
 import coder.aihui.base.AppActivity;
 import coder.aihui.base.BaseFragment;
 import coder.aihui.base.Content;
-import coder.aihui.http.WebServiceUtil;
+import coder.aihui.http.WebService2000Util;
 import coder.aihui.ui.main.DownLoadBean;
 import coder.aihui.ui.main.DownPresenter;
 import coder.aihui.ui.main.DownView;
@@ -89,38 +87,42 @@ public class ConfigActivity extends AppActivity implements DownView {
         }
         // 加载配置的WS地址
 
-        String recode;
+
         try {
-            String testUrl;
+            final String testUrl;
             if (wsAddress.contains("http://")) {
                 int i = wsAddress.indexOf("/", 8);
-                testUrl = wsAddress.substring(0, i==-1?wsAddress.length():i);
+                testUrl = wsAddress.substring(0, i == -1 ? wsAddress.length() : i);
             } else {
                 testUrl = "http://" + wsAddress;
             }
-            WebServiceUtil ws = new WebServiceUtil();
+
             // String WSDL =
             // "http://iwell2014.oicp.net:8081/services/pdaws";
             String METHOD = "testConnect";
-            recode = ws.execute(testUrl, METHOD).get();
-            if (recode.substring(0, 1).equals("0")) {
-                AndroidUtils.showErrorMsg("失败",
-                        recode.substring(2, recode.length()), ConfigActivity.this);
-            } else {
-                ToastUtil.showToast("测试成功");
-                //下载联系人
-                //保存地址
-                SPUtil.saveString(ConfigActivity.this
-                        , Content.WS_ADDRESS, testUrl
-                );
-                downSysUser();
-            }
-        } catch (InterruptedException e) {
+
+
+            WebService2000Util ws2 = new WebService2000Util(new WebService2000Util.OnCallBack() {
+                @Override
+                public void callBack(String recode) {
+                    if (recode.substring(0, 1).equals("0")) {
+                        AndroidUtils.showErrorMsg("失败",
+                                recode.substring(2, recode.length()), ConfigActivity.this);
+                    } else {
+                        ToastUtil.showToast("测试成功");
+                        SPUtil.saveString(ConfigActivity.this
+                                , Content.WS_ADDRESS, testUrl
+                        );
+                        downSysUser();
+                    }
+                }
+            });
+            ws2.execute(testUrl, METHOD);
+
+        } catch (Exception e) {
             e.printStackTrace();
             AndroidUtils.showErrorMsg("失败", e.getMessage(), ConfigActivity.this);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-            AndroidUtils.showErrorMsg("失败", e.getMessage(), ConfigActivity.this);
+
         }
     }
 
@@ -170,7 +172,7 @@ public class ConfigActivity extends AppActivity implements DownView {
     @Override
     public void showFault(int type, String wrong) {
         changeProgress(false);
-        AndroidUtils.showErrorMsg("下载失败",wrong,ConfigActivity.this);
+        AndroidUtils.showErrorMsg("下载失败", wrong, ConfigActivity.this);
     }
 
     @Override

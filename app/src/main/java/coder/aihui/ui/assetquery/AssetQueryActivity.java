@@ -87,10 +87,10 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
     private int    mSearchType = 9;//"1">名称 "2">出厂 "3">规格 "4">RFID "5">二维码设备扫描 "6">二维码摄像头扫描"7">老资产编号"8">新资产编号 9是品牌名称规格的后搜索
     private String searchText  = "";
 
-    private List<RecyclerView> mViewList    = new ArrayList<>();
-    private List<IN_ASSET>     mAllList     = new ArrayList<>();
-    private List<IN_ASSET>     mCorrectList = new ArrayList<>();
-    private List<LoadingBean>  mDataList    = new ArrayList<>();
+    private List<RecyclerView> mViewList = new ArrayList<>();
+
+
+    private List<LoadingBean> mDataList = new ArrayList<>();
     private CommonAdapter<IN_ASSET> mAllAdapter;
     private CommonAdapter<IN_ASSET> mCorrectAdapter;
     private boolean isSearchSon = true;                     //查询子集
@@ -131,8 +131,8 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
         //默认第一个
         mSearchTypeString = AssetQueryActivity.this.getResources().getStringArray(R.array.assetquerycheck)[0];
 
-        mDataList.add(new LoadingBean(mAllList, false));
-        mDataList.add(new LoadingBean(mCorrectList, false));
+        mDataList.add(new LoadingBean(new ArrayList(), false));
+        mDataList.add(new LoadingBean(new ArrayList(), false));
 
 
         initSpinner();
@@ -147,7 +147,7 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
     }
 
     private void initData() {
-        for (int i = 0; i <mDataList.size() ; i++) {
+        for (int i = 0; i < mDataList.size(); i++) {
             loadMeinv(i, mDataList.get(i).list.size(), 10);
         }
     }
@@ -194,13 +194,13 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
         mPagerAdapter.notifyDataSetChanged();
         //设置滚动加载监听,同时加载数据
         setScrollListener(mViewList, mDataList);
-        mAllAdapter = new CommonAdapter<IN_ASSET>(this, R.layout.item_inspect, mAllList) {
+        mAllAdapter = new CommonAdapter<IN_ASSET>(this, R.layout.item_asset_query, mDataList.get(0).list) {
             @Override
             protected void convert(ViewHolder holder, IN_ASSET o, int position) {
                 showItemView(holder, o);
             }
         };
-        mCorrectAdapter = new CommonAdapter<IN_ASSET>(this, R.layout.item_inspect, mCorrectList) {
+        mCorrectAdapter = new CommonAdapter<IN_ASSET>(this, R.layout.item_asset_query, mDataList.get(1).list) {
             @Override
             protected void convert(ViewHolder holder, IN_ASSET o, int position) {
                 showItemView(holder, o);
@@ -245,7 +245,7 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
             public void onClick(View v) {
                 Intent intent = new Intent(AssetQueryActivity.this, AssetDetailEditActivity.class);
                 intent.putExtra("assetId", bean.getID());
-                startActivity(intent);
+                startActivityForResult(intent, Content.ASSET_EDIT_REQUEST_CODE);
             }
         });
 
@@ -325,17 +325,23 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Content.REQUEST_CONFIG) {
-            if (resultCode == RESULT_OK) {
-                mDeptName = data.getStringExtra("mDeptName");
-                mDeptIds = data.getStringExtra("mDeptIds");
-                mDlwzName = data.getStringExtra("mDlwzName");
-                mDlwzIds = data.getStringExtra("mDlwzIds");
 
-                mAllDeptName = data.getStringExtra("mAllDeptName");
-                mAllDeptIds = data.getStringExtra("mAllDeptIds");
-                mAllDlwzIds = data.getStringExtra("mAllDlwzIds");
-                mAllDlwzName = data.getStringExtra("mAllDlwzName");
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case Content.REQUEST_CONFIG:
+                    mDeptName = data.getStringExtra("mDeptName");
+                    mDeptIds = data.getStringExtra("mDeptIds");
+                    mDlwzName = data.getStringExtra("mDlwzName");
+                    mDlwzIds = data.getStringExtra("mDlwzIds");
+
+                    mAllDeptName = data.getStringExtra("mAllDeptName");
+                    mAllDeptIds = data.getStringExtra("mAllDeptIds");
+                    mAllDlwzIds = data.getStringExtra("mAllDlwzIds");
+                    mAllDlwzName = data.getStringExtra("mAllDlwzName");
+                    break;
+                case Content.ASSET_EDIT_REQUEST_CODE:
+                    loadMeinv(2, 0, 10);                //刷新已修改的数据
+                    break;
             }
         }
     }
@@ -349,12 +355,12 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
     private synchronized void querySummaryInAsset(final int which, String sql, String[] par) {
 
         DataUtil.getDatas(mDaoSession, sql, par)
-                .observeOn(AndroidSchedulers.mainThread())
                 .toList()
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<IN_ASSET>>() {
                     @Override
                     public void call(List<IN_ASSET> listDatas) {
-                        mDataList.get(which).list.addAll(listDatas);
+                        mDataList.get(which).list.addAll(listDatas);        //添加数据的地方
                         switch (which) {
                             case 0:
                                 mAllAdapter.notifyDataSetChanged();
@@ -376,6 +382,8 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
     public void loadMeinv(final int which, final int start, final int count) {
 
         //   mSearchType = 9;//"1">名称 "2">出厂 "3">规格 "4">RFID "5">二维码设备扫描 "6">二维码摄像头扫描"7">老资产编号"8">新资产编号 9是品牌名称规格的后搜索
+
+        searchText = mEtSearch.getText().toString();
 
         switch (mSearchTypeString) {
             case "品牌\\|名称\\|规格":
@@ -426,7 +434,7 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
             }
         }
         StringBuffer sql = new StringBuffer();
-        sql.append("select a.ID as ID, a.WZMC as WZMC, a.GGXH as GGXH, a.PPMC as PPMC, a.SCBH as SCBH, a.KPBH as KPBH,a.KPBH__OLD as KPBH_OLD, a.BAR__CODE as BAR, a.KSMC as KSMC, a.DDMC as DDMC,ic_selected.DQDDMC as DQDDMC");
+        sql.append("select  a.ID as ID, a.WZMC as WZMC, a.GGXH as GGXH,a.RFID__CODE as RFID, a.PPMC as PPMC, a.SCBH as SCBH, a.KPBH as KPBH,a.KPBH__OLD as KPBH_OLD, a.BAR__CODE as BAR, a.KSMC as KSMC, a.DDMC as DDMC,ic_selected.DQDDMC as DQDDMC,ic_selected.IS__CHANGE as IS__CHANGE ,ic_selected.CHANGE__DEPT as CHANGE__DEPT");
         sql.append(",case when ic_selected.ASSET__ID is not null and (ic_selected.IS__CHANGE__DD != 1 or ic_selected.IS__CHANGE__DD is null) and ic_selected.IS__CHANGE=1 then 4 " +
                 "when ic_selected.ASSET__ID is not null and (ic_selected.IS__CHANGE != 1 or ic_selected.IS__CHANGE is null) and ic_selected.IS__CHANGE__DD=1 then 3 " +
                 "when ic_selected.ASSET__ID is not null and ic_selected.IS__CHANGE=1 and ic_selected.IS__CHANGE__DD=1 then 5 " +
@@ -525,7 +533,7 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
         sql.append(" order by PDAID desc,ID");
         sql.append(" limit ? offset ?");
         parList.add(i_count + "");
-       parList.add(i_start + "");
+        parList.add(i_start + "");
 
 
         //搜素数据的方法  以上就是拼sql

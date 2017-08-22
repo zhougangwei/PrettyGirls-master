@@ -24,42 +24,33 @@ public class InspectStartActivity$$ViewBinder<T extends InspectStartActivity> im
   protected static class InnerUnbinder<T extends InspectStartActivity> implements Unbinder {
     protected T target;
 
-    private View view2131755434;
-
-    private View view2131755448;
+    private View view2131755438;
 
     private View view2131755452;
 
-    private View view2131755453;
+    private View view2131755456;
 
-    private View view2131755416;
+    private View view2131755457;
 
-    private View view2131755317;
+    private View view2131755420;
+
+    private View view2131755322;
 
     protected InnerUnbinder(final T target, Finder finder, Object source) {
       this.target = target;
 
       View view;
-      view = finder.findRequiredView(source, 2131755434, "field 'mIvBack' and method 'onViewClicked'");
-      target.mIvBack = finder.castView(view, 2131755434, "field 'mIvBack'");
-      view2131755434 = view;
+      view = finder.findRequiredView(source, 2131755438, "field 'mIvBack' and method 'onViewClicked'");
+      target.mIvBack = finder.castView(view, 2131755438, "field 'mIvBack'");
+      view2131755438 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
-      view = finder.findRequiredView(source, 2131755448, "field 'mIvPeople' and method 'onViewClicked'");
-      target.mIvPeople = finder.castView(view, 2131755448, "field 'mIvPeople'");
-      view2131755448 = view;
-      view.setOnClickListener(new DebouncingOnClickListener() {
-        @Override
-        public void doClick(View p0) {
-          target.onViewClicked(p0);
-        }
-      });
-      view = finder.findRequiredView(source, 2131755452, "field 'mIvScan' and method 'onViewClicked'");
-      target.mIvScan = finder.castView(view, 2131755452, "field 'mIvScan'");
+      view = finder.findRequiredView(source, 2131755452, "field 'mIvPeople' and method 'onViewClicked'");
+      target.mIvPeople = finder.castView(view, 2131755452, "field 'mIvPeople'");
       view2131755452 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
@@ -67,31 +58,40 @@ public class InspectStartActivity$$ViewBinder<T extends InspectStartActivity> im
           target.onViewClicked(p0);
         }
       });
-      view = finder.findRequiredView(source, 2131755453, "field 'mIvSearch' and method 'onViewClicked'");
-      target.mIvSearch = finder.castView(view, 2131755453, "field 'mIvSearch'");
-      view2131755453 = view;
+      view = finder.findRequiredView(source, 2131755456, "field 'mIvScan' and method 'onViewClicked'");
+      target.mIvScan = finder.castView(view, 2131755456, "field 'mIvScan'");
+      view2131755456 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
-      target.mSpSearch = finder.findRequiredViewAsType(source, 2131755454, "field 'mSpSearch'", Spinner.class);
-      target.mEtSearch = finder.findRequiredViewAsType(source, 2131755298, "field 'mEtSearch'", EditText.class);
-      view = finder.findRequiredView(source, 2131755416, "field 'mTvSearch' and method 'onViewClicked'");
-      target.mTvSearch = finder.castView(view, 2131755416, "field 'mTvSearch'");
-      view2131755416 = view;
+      view = finder.findRequiredView(source, 2131755457, "field 'mIvSearch' and method 'onViewClicked'");
+      target.mIvSearch = finder.castView(view, 2131755457, "field 'mIvSearch'");
+      view2131755457 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
-      target.mTb = finder.findRequiredViewAsType(source, 2131755256, "field 'mTb'", TabLayout.class);
-      target.mVp = finder.findRequiredViewAsType(source, 2131755257, "field 'mVp'", ViewPager.class);
-      view = finder.findRequiredView(source, 2131755317, "field 'mFabBackToTop' and method 'onViewClicked'");
-      target.mFabBackToTop = finder.castView(view, 2131755317, "field 'mFabBackToTop'");
-      view2131755317 = view;
+      target.mSpSearch = finder.findRequiredViewAsType(source, 2131755458, "field 'mSpSearch'", Spinner.class);
+      target.mEtSearch = finder.findRequiredViewAsType(source, 2131755303, "field 'mEtSearch'", EditText.class);
+      view = finder.findRequiredView(source, 2131755420, "field 'mTvSearch' and method 'onViewClicked'");
+      target.mTvSearch = finder.castView(view, 2131755420, "field 'mTvSearch'");
+      view2131755420 = view;
+      view.setOnClickListener(new DebouncingOnClickListener() {
+        @Override
+        public void doClick(View p0) {
+          target.onViewClicked(p0);
+        }
+      });
+      target.mTb = finder.findRequiredViewAsType(source, 2131755261, "field 'mTb'", TabLayout.class);
+      target.mVp = finder.findRequiredViewAsType(source, 2131755262, "field 'mVp'", ViewPager.class);
+      view = finder.findRequiredView(source, 2131755322, "field 'mFabBackToTop' and method 'onViewClicked'");
+      target.mFabBackToTop = finder.castView(view, 2131755322, "field 'mFabBackToTop'");
+      view2131755322 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
@@ -99,8 +99,8 @@ public class InspectStartActivity$$ViewBinder<T extends InspectStartActivity> im
         }
       });
       target.mTvTitle = finder.findRequiredViewAsType(source, 2131755236, "field 'mTvTitle'", TextView.class);
-      target.mTvStart = finder.findRequiredViewAsType(source, 2131755315, "field 'mTvStart'", TextView.class);
-      target.mTvEnd = finder.findRequiredViewAsType(source, 2131755316, "field 'mTvEnd'", TextView.class);
+      target.mTvStart = finder.findRequiredViewAsType(source, 2131755320, "field 'mTvStart'", TextView.class);
+      target.mTvEnd = finder.findRequiredViewAsType(source, 2131755321, "field 'mTvEnd'", TextView.class);
     }
 
     @Override
@@ -122,18 +122,18 @@ public class InspectStartActivity$$ViewBinder<T extends InspectStartActivity> im
       target.mTvStart = null;
       target.mTvEnd = null;
 
-      view2131755434.setOnClickListener(null);
-      view2131755434 = null;
-      view2131755448.setOnClickListener(null);
-      view2131755448 = null;
+      view2131755438.setOnClickListener(null);
+      view2131755438 = null;
       view2131755452.setOnClickListener(null);
       view2131755452 = null;
-      view2131755453.setOnClickListener(null);
-      view2131755453 = null;
-      view2131755416.setOnClickListener(null);
-      view2131755416 = null;
-      view2131755317.setOnClickListener(null);
-      view2131755317 = null;
+      view2131755456.setOnClickListener(null);
+      view2131755456 = null;
+      view2131755457.setOnClickListener(null);
+      view2131755457 = null;
+      view2131755420.setOnClickListener(null);
+      view2131755420 = null;
+      view2131755322.setOnClickListener(null);
+      view2131755322 = null;
 
       this.target = null;
     }

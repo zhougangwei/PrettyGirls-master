@@ -182,6 +182,8 @@
         </activity>
         <activity android:name=".ui.inspectxj.InspectConfigActivity">
         </activity>
+        <activity android:name=".widget.contact.PpmcActivity">
+        </activity>
     </application>
 
 </manifest>

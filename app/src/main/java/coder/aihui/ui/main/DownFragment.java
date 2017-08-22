@@ -178,7 +178,6 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
         inspectTempletItemBean.bigType = mBigType[1];
 
 
-
         mDatas.add(inspectTempletItemBean);
 
 
@@ -203,7 +202,7 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
         DownLoadBean pmInitBean = (DownLoadBean) inspectInitBean.deepClone();
         pmInitBean.type = INSPECT_PM_INIT_DOWN;
         pmInitBean.bigType = mBigType[2];
-        pmInitBean.name ="PM初始下载";
+        pmInitBean.name = "PM初始下载";
         mDatas.add(pmInitBean);
 
         //下载巡检模板
@@ -218,7 +217,6 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
 
         pmTempletItemBean.bigType = mBigType[2];
         mDatas.add(pmTempletItemBean);
-
 
 
         //下载安装验收
@@ -350,9 +348,14 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
                                 int type = ints[1];
                                 int i = mTypeList.indexOf(type + "");
                                 View view = ListViewUtil.getViewByPosition(i, mRv);
-                                MyProgressButton mcp = (MyProgressButton) view.findViewById(R.id.CP_down);
-                                //"下载","暂停","完成","错误","删除","更新"
-                                mcp.download(num);
+                                if (view == null) {
+                                    LogUtil.d(i+"");
+                                }else{
+                                    MyProgressButton mcp = (MyProgressButton) view.findViewById(R.id.CP_down);
+                                    //"下载","暂停","完成","错误","删除","更新"
+                                    mcp.download(num);
+                                }
+
                             }
                         }
                 );

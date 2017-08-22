@@ -21,9 +21,9 @@ public class YzkActivity$$ViewBinder<T extends YzkActivity> implements ViewBinde
   protected static class InnerUnbinder<T extends YzkActivity> implements Unbinder {
     protected T target;
 
-    private View view2131755434;
+    private View view2131755438;
 
-    private View view2131755263;
+    private View view2131755268;
 
     private View view2131755211;
 
@@ -32,26 +32,26 @@ public class YzkActivity$$ViewBinder<T extends YzkActivity> implements ViewBinde
 
       View view;
       target.mTvTitle = finder.findRequiredViewAsType(source, 2131755236, "field 'mTvTitle'", TextView.class);
-      view = finder.findRequiredView(source, 2131755434, "field 'mIvBack' and method 'onViewClicked'");
-      target.mIvBack = finder.castView(view, 2131755434, "field 'mIvBack'");
-      view2131755434 = view;
+      view = finder.findRequiredView(source, 2131755438, "field 'mIvBack' and method 'onViewClicked'");
+      target.mIvBack = finder.castView(view, 2131755438, "field 'mIvBack'");
+      view2131755438 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
-      target.mTvNum = finder.findRequiredViewAsType(source, 2131755367, "field 'mTvNum'", TextView.class);
-      view = finder.findRequiredView(source, 2131755263, "field 'mTvOk' and method 'onViewClicked'");
-      target.mTvOk = finder.castView(view, 2131755263, "field 'mTvOk'");
-      view2131755263 = view;
+      target.mTvNum = finder.findRequiredViewAsType(source, 2131755372, "field 'mTvNum'", TextView.class);
+      view = finder.findRequiredView(source, 2131755268, "field 'mTvOk' and method 'onViewClicked'");
+      target.mTvOk = finder.castView(view, 2131755268, "field 'mTvOk'");
+      view2131755268 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
-      target.mTvChangeDept = finder.findRequiredViewAsType(source, 2131755368, "field 'mTvChangeDept'", TextView.class);
+      target.mTvChangeDept = finder.findRequiredViewAsType(source, 2131755373, "field 'mTvChangeDept'", TextView.class);
       target.mEl = finder.findRequiredViewAsType(source, 2131755234, "field 'mEl'", ScrollViewWithExpandListView.class);
       view = finder.findRequiredView(source, 2131755211, "field 'mLlDept' and method 'onViewClicked'");
       target.mLlDept = finder.castView(view, 2131755211, "field 'mLlDept'");
@@ -77,10 +77,10 @@ public class YzkActivity$$ViewBinder<T extends YzkActivity> implements ViewBinde
       target.mEl = null;
       target.mLlDept = null;
 
-      view2131755434.setOnClickListener(null);
-      view2131755434 = null;
-      view2131755263.setOnClickListener(null);
-      view2131755263 = null;
+      view2131755438.setOnClickListener(null);
+      view2131755438 = null;
+      view2131755268.setOnClickListener(null);
+      view2131755268 = null;
       view2131755211.setOnClickListener(null);
       view2131755211 = null;
 
