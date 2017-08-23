@@ -109,7 +109,7 @@ public class PpmcActivity extends AppActivity {
             };
         } else {
             mTvOk.setVisibility(View.GONE);
-            mCommonAdapter = new CommonAdapter<IN_MATERIALS_PPMC>(this, R.layout.item_text_pd30, mDatas) {
+            mCommonAdapter = new CommonAdapter<IN_MATERIALS_PPMC>(this, R.layout.item_text_pd20, mDatas) {
                 @Override
                 protected void convert(ViewHolder holder, final IN_MATERIALS_PPMC bean, int position) {
                     holder.setText(R.id.tv_name, bean.getMC());

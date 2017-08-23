@@ -36,6 +36,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 import static coder.aihui.app.MyApplication.daoSession;
+import static coder.aihui.ui.main.DownPresenter.PUR_CONTRACT_PLAN_UP;
 
 public class PxglListActivity extends AppActivity implements DownView {
 
@@ -156,7 +157,7 @@ public class PxglListActivity extends AppActivity implements DownView {
         HashMap<String, String> map = new HashMap<>();
 
 
-        mDownPresenter.gotoUp(map);
+        mDownPresenter.gotoUp(map,PUR_CONTRACT_PLAN_UP);
 
     }
 

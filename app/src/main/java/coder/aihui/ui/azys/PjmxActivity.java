@@ -132,6 +132,7 @@ public class PjmxActivity extends AppActivity {
     private void backSaveData() {
         Intent intent = new Intent();
         intent.putExtra("parts", GsonUtil.parseListToJson(mDatas));
+        intent.putExtra("partsnum",mDatas.size());
         setResult(RESULT_OK, intent);
         finish();
     }

@@ -1,12 +1,16 @@
 package coder.aihui.data.source.remote;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import com.blankj.utilcode.utils.TimeUtils;
+
 import org.greenrobot.greendao.Property;
+import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.query.QueryBuilder;
 import org.greenrobot.greendao.query.WhereCondition;
 import org.json.JSONArray;
@@ -466,7 +470,7 @@ public class RemoteMyDataSource implements MyDataSource {
             case PUR_CONTRACT_PLAN_DOWN:
                 return Observable.mergeDelayError(MyRetrofit.getRetrofit()
                         .create(AiHuiLoginServices.class)
-                        .getAzysDatas("2010-10-25", 1), MyRetrofit.getRetrofit()
+                        .getAzysDatas(getMaxAzystime(), 1), MyRetrofit.getRetrofit()
                         .create(AiHuiLoginServices.class)
                         .getAzysMx());
             case PXGL_SB_DOWN:
@@ -480,6 +484,26 @@ public class RemoteMyDataSource implements MyDataSource {
         }
         return null;
 
+    }
+
+
+    //获取本地数据库最大时间
+    private String getMaxAzystime() {
+
+        long createDate = 0;
+        Database db = mDaossion.getDatabase();
+        String sql = "select max(CREATE__TIME) as CREATE__TIME from PUR__CONTRACT__PLAN ";
+        Cursor cursor = db.rawQuery(sql, new String[]{});
+        cursor.moveToFirst();
+        while (cursor.getPosition() != cursor.getCount()) {
+            createDate = cursor.getLong(0);
+            cursor.moveToNext();
+        }
+        if (createDate != 0) {
+            return TimeUtils.milliseconds2String(createDate);
+        }else{
+            return "2010-10-25 12:00:00";
+        }
     }
 
 

@@ -30,4 +30,30 @@ public class ViewUtils {
             }
         });
     }
+
+    public static void canCancelRadioButton(final RadioButton rbJlzmYes, final onBackResult backResult) {
+        rbJlzmYes.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (rbJlzmYes.isChecked()) {
+                        rbJlzmYes.setChecked(false);
+                        if (backResult != null) {
+                            backResult.backResult(false);
+                        }
+                    } else {
+                        rbJlzmYes.setChecked(true);
+                        if (backResult != null) {
+                            backResult.backResult(true);
+                        }
+                    }
+                }
+                return true;
+            }
+        });
+    }
+
+    public interface onBackResult {
+        void backResult(boolean b);
+    }
 }

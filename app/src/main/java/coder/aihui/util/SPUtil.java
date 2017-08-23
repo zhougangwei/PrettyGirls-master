@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import coder.aihui.base.Content;
+
 /**
  * SharedPreferences统一管理类
  */
@@ -301,6 +303,8 @@ public class SPUtil {
      */
     public static String getUserId(Context context) {
         return getString(context,"userID","");
+    }public static String getUserAccount(Context context) {
+        return getString(context,Content.USER_ACCOUNT,"");
     }
 
     /**
@@ -314,5 +318,9 @@ public class SPUtil {
 
     public static String getHospitalName(Context context) {
         return getString(context,"hospitalName","");
+    }
+
+    public static String getPassWord(Context context) {
+        return getString(context, Content.PASSWORD,"");
     }
 }

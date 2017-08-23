@@ -5,17 +5,21 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import coder.aihui.R;
 import coder.aihui.base.AppActivity;
@@ -27,22 +31,30 @@ import coder.aihui.ui.main.MainActivity;
 import coder.aihui.util.MD5Util;
 import coder.aihui.util.SPUtil;
 import coder.aihui.util.ToastUtil;
+import coder.aihui.util.ViewUtils;
 
 public class LoginActivity extends AppActivity {
 
 
     @BindView(R.id.et_user)
-    EditText     mEtUser;
+    EditText mEtUser;
     @BindView(R.id.et_password)
-    EditText     mEtPassword;
+    EditText mEtPassword;
     @BindView(R.id.tv_config)
-    TextView     mTvConfig;
+    TextView mTvConfig;
+
+    @BindView(R.id.tv_hos)
+    TextView     mTvHos;
     @BindView(R.id.button)
     Button       mButton;
     @BindView(R.id.login_progress)
     ProgressBar  mProgressView;
     @BindView(R.id.login_form)
     LinearLayout mLoginFormView;
+    @BindView(R.id.rb)
+    RadioButton  mRb;
+    @BindView(R.id.circleImageView)
+    ImageView    mCircleImageView;
 
     private UserLoginTask mAuthTask = null;
     private boolean       isLogin   = false;
@@ -56,14 +68,46 @@ public class LoginActivity extends AppActivity {
     @Override
     protected void initView() {
 
-
         isLogin = SPUtil.getBoolean(this, "isLogin", false);
+
         //如果是已经登录的 就直接进去了
         if (isLogin) {
             startActivity(new Intent(LoginActivity.this
                     , MainActivity.class
             ));
             finish();
+        }
+        ViewUtils.canCancelRadioButton(mRb, new ViewUtils.onBackResult() {
+            @Override
+            public void backResult(boolean b) {
+                SPUtil.saveBoolean(LoginActivity.this, Content.ISREMEMBERPW, b);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        String userId = SPUtil.getUserAccount(this);
+        String passWord = SPUtil.getPassWord(this);
+        String hospitalName = SPUtil.getHospitalName(this);
+        boolean isRememberPw = SPUtil.getBoolean(this, Content.ISREMEMBERPW, false);
+
+        if (isRememberPw) {
+            if (!TextUtils.isEmpty(passWord)) {
+                mEtPassword.setText(passWord);
+            }
+        }
+        if (!TextUtils.isEmpty(userId)) {
+            mEtUser.setText(userId);
+        }
+        if (!TextUtils.isEmpty(passWord)) {
+            mEtPassword.setText(passWord);
+        }
+
+        if (!TextUtils.isEmpty(hospitalName)) {
+            mTvHos.setText(hospitalName);
         }
 
     }
@@ -90,8 +134,6 @@ public class LoginActivity extends AppActivity {
 
     //对比本地数据库 然后查询
     private void attemptLogin() {
-
-
         mEtUser.setError(null);
         mEtPassword.setError(null);
         // Store values at the time of the login attempt.
@@ -106,7 +148,6 @@ public class LoginActivity extends AppActivity {
         if (TextUtils.isEmpty(userId)) {
 
             SPUtil.saveString(this, "userName", userId);
-
             //mEtUser.setError(getString(R.string.error_field_required));
             focusView = mEtUser;
             cancel = true;
@@ -125,8 +166,6 @@ public class LoginActivity extends AppActivity {
             focusView = mEtPassword;
             cancel = true;
         }
-
-
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -187,6 +226,13 @@ public class LoginActivity extends AppActivity {
         }
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
 
     /**
      * Represents an asynchronous login/registration task used to authenticate
@@ -229,8 +275,6 @@ public class LoginActivity extends AppActivity {
                 SPUtil.saveString(LoginActivity.this, "hospitalName", ss.getHOSPITAL_NAME());//登陆后放入医院
                 SPUtil.saveString(LoginActivity.this, "userFuncs", ss.getUSER_FUNCS() != null ? ss.getUSER_FUNCS() : "");//登陆后放入用户权限
                 SPUtil.saveBoolean(LoginActivity.this, "isLogin", true);
-
-
                 //					activity.startActivityForResult(intent, IntentContent.INDEXHOME_INTENT);
                 return true;
             } else {

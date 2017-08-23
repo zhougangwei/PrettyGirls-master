@@ -61,10 +61,7 @@
             android:name=".ui.login.ConfigActivity"
             android:windowSoftInputMode="stateHidden">
         </activity>
-        <activity
-            android:name=".aaaa"
-            android:label="@string/title_activity_aaaa">
-        </activity>
+
         <activity
             android:name=".ui.assetcheck.AssetCheckActivity"
             android:label="资产清点">

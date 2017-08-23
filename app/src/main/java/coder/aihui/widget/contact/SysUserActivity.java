@@ -124,7 +124,7 @@ public class SysUserActivity extends AppActivity {
             };
         } else {
             mTvOk.setVisibility(View.GONE);
-            mCommonAdapter = new CommonAdapter<SYS_USER>(this, R.layout.item_text_pd30, mDatas) {
+            mCommonAdapter = new CommonAdapter<SYS_USER>(this, R.layout.item_text_pd20, mDatas) {
                 @Override
                 protected void convert(ViewHolder holder, final SYS_USER bean, int position) {
                     holder.setText(R.id.tv_name, bean.getUSER_NAME());

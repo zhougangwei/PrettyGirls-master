@@ -1,15 +1,19 @@
 package coder.aihui.ui.login;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import coder.aihui.R;
 import coder.aihui.base.AppActivity;
@@ -22,6 +26,7 @@ import coder.aihui.ui.main.DownView;
 import coder.aihui.util.AndroidUtils;
 import coder.aihui.util.SPUtil;
 import coder.aihui.util.ToastUtil;
+import coder.aihui.util.ViewUtils;
 
 import static coder.aihui.ui.main.DownPresenter.SYS_USER_DOWN;
 import static coder.aihui.ui.main.DownPresenter.WEB_SERVICE;
@@ -41,6 +46,10 @@ public class ConfigActivity extends AppActivity implements DownView {
     DonutProgress  mDonutProgress;
     @BindView(R.id.rl_progress)
     RelativeLayout mRlProgress;
+    @BindView(R.id.iv_back)
+    ImageView      mIvBack;
+    @BindView(R.id.rb)
+    RadioButton    mRb;
 
     private DownPresenter mPresenter;
 
@@ -59,11 +68,19 @@ public class ConfigActivity extends AppActivity implements DownView {
     protected void initView() {
         //初始化标题
         //initToolbar();
+        mTvTitle.setText("新用户配置");
         initData();
+
+        ViewUtils.canCancelRadioButton(mRb, new ViewUtils.onBackResult() {
+            @Override
+            public void backResult(boolean b) {
+
+            }
+        });
+
     }
 
     private void initData() {
-
         String wsAddress = SPUtil.getString(ConfigActivity.this, Content.WS_ADDRESS, "");
         if (!TextUtils.isEmpty(wsAddress)) {
             mEtAddress.setText(wsAddress);      //回显地址
@@ -72,11 +89,19 @@ public class ConfigActivity extends AppActivity implements DownView {
     }
 
 
-    @OnClick(R.id.bt_sure)
-    public void onViewClicked() {
+    @OnClick({R.id.bt_sure, R.id.iv_back})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.bt_sure:
+                //测试地址
+                testWsAddress();
+                break;
+            case R.id.iv_back:
+                finish();
+                break;
+        }
 
-        //测试地址
-        testWsAddress();
+
     }
 
 
@@ -179,6 +204,15 @@ public class ConfigActivity extends AppActivity implements DownView {
     public void showProgress(int num, int type) {
         mDonutProgress.setProgress(num);
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+
 
  /*   @Override
     public void showLoading(int type) {

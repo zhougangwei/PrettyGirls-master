@@ -40,7 +40,7 @@
                 <TextView
                     android:id="@+id/tv_wzmc"
                     style="@style/tv_weight1_rt25"
-                    android:text="打印机"/>
+                  />
             </LinearLayout>
 
             <include layout="@layout/line"></include>
@@ -57,7 +57,7 @@
                 <TextView
                     android:id="@+id/tv_dept"
                     style="@style/tv_weight1_rt25"
-                    android:text="门诊"/>
+                   />
             </LinearLayout>
 
             <include layout="@layout/line"></include>
@@ -73,7 +73,7 @@
                 <TextView
                     android:id="@+id/tv_ggxh"
                     style="@style/tv_weight1_rt25"
-                    android:text="HP1020"/>
+                    />
             </LinearLayout>
 
             <include layout="@layout/line"></include>
@@ -88,7 +88,7 @@
                 <TextView
                     android:id="@+id/tv_ysr"
                     style="@style/tv_weight1_rt25"
-                    android:text="ADMIN"/>
+                   />
             </LinearLayout>
 
             <include layout="@layout/line"></include>
@@ -103,7 +103,7 @@
                 <EditText
                     android:id="@+id/et_ccbh"
                     style="@style/et_weight1_rt25_start"
-                    android:text="11111111"/>
+                    />
             </LinearLayout>
 
             <include layout="@layout/line"></include>
@@ -120,7 +120,7 @@
                 <EditText
                     android:id="@+id/et_zczh"
                     style="@style/et_weight1_rt25_start"
-                    android:text="打印机"/>
+                   />
             </LinearLayout>
 
             <include layout="@layout/line"></include>
@@ -137,7 +137,7 @@
                 <TextView
                     android:id="@+id/tv_zczyxq"
                     style="@style/tv_weight1_rt25"
-                    android:text="2013-10-10"/>
+                    />
 
                 <include layout="@layout/include_detail"></include>
 
@@ -157,7 +157,7 @@
                 <TextView
                     android:id="@+id/tv_jysynx"
                     style="@style/tv_weight1_rt25"
-                    android:text="3"/>
+                  />
 
                 <include layout="@layout/include_detail"></include>
             </LinearLayout>
@@ -176,7 +176,7 @@
                 <EditText
                     android:id="@+id/et_azgcs"
                     style="@style/et_weight1_rt25_start"
-                    android:text="李某某"/>
+                    />
             </LinearLayout>
 
 
@@ -197,7 +197,7 @@
                 <EditText
                     android:id="@+id/et_gcsdh"
                     style="@style/et_weight1_rt25_start"
-                    android:text="1838381232"/>
+                    />
             </LinearLayout>
 
             <include layout="@layout/line"></include>
@@ -217,7 +217,7 @@
                 <EditText
                     android:id="@+id/et_bxdw"
                     style="@style/et_weight1_rt25_start"
-                    android:text="1838381232"/>
+                    />
             </LinearLayout>
 
             <include layout="@layout/line"></include>
@@ -237,7 +237,7 @@
                 <EditText
                     android:id="@+id/et_bxlxr"
                     style="@style/et_weight1_rt25_start"
-                    android:text="1838381232"/>
+                    />
             </LinearLayout>
 
             <include layout="@layout/line"></include>
@@ -257,7 +257,7 @@
                 <EditText
                     android:id="@+id/et_bxdh"
                     style="@style/et_weight1_rt25_start"
-                    android:text="1838381232"/>
+                    />
             </LinearLayout>
 
             <include layout="@layout/line"></include>
@@ -327,7 +327,7 @@
                 <TextView
                     android:id="@+id/tv_pjmx"
                     style="@style/tv_weight1_rt25"
-                    android:text="3"/>
+                    />
 
                 <include layout="@layout/include_detail"></include>
             </LinearLayout>

@@ -28,7 +28,7 @@ public class PUR_CONTRACT_PLAN_DETAIL implements Serializable, Comparable<PUR_CO
     private Integer CHECK_SL;
     private Integer CHECK_STATUS;       //1是已检 2是未检
     private String  DH_ID;
-    private Boolean CHECK_ISCHECKED;
+    private Boolean CHECK_ISCHECKED;    //打钩用的 记录是否打钩状态
     private Integer ALQJ;
     private Integer JLZM;
     private Integer WGJC;

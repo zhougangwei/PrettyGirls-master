@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.utils.TimeUtils;
 import com.bumptech.glide.Glide;
+import com.google.gson.reflect.TypeToken;
 import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
 import com.jzxiang.pickerview.listener.OnDateSetListener;
@@ -45,8 +46,11 @@ import coder.aihui.data.bean.AZYS_MX;
 import coder.aihui.data.bean.DialogBean;
 import coder.aihui.data.bean.PUR_CONTRACT_PLAN_DETAIL;
 import coder.aihui.data.bean.gen.AZYS_MXDao;
+import coder.aihui.data.normalbean.PjmxBean;
 import coder.aihui.ui.assetcheck.GifSizeFilter;
 import coder.aihui.ui.bz.BzActivity;
+import coder.aihui.util.GsonUtil;
+import coder.aihui.util.ListUtils;
 import coder.aihui.util.NumberChooseDialog;
 import coder.aihui.util.ThreadUtils;
 import coder.aihui.util.ToastUtil;
@@ -158,8 +162,9 @@ public class AzysDetailActivity extends AppActivity {
         mInstallDetailListAdapter = new InstallDetailListAdapter(mMXList, AzysDetailActivity.this);
         mSlDt.setAdapter(mInstallDetailListAdapter);
         initPhoto();
-        initGetIntent();
         initData();
+        initGetIntent();
+
     }
 
 
@@ -202,7 +207,7 @@ public class AzysDetailActivity extends AppActivity {
                 gotoChooseNx();
                 break;
             case R.id.iv_qianming:  //签名
-                QianMingUtils.getInstance().showQianming(this, new QianMingUtils.OnSure() {
+                new QianMingUtils().showQianming(this, new QianMingUtils.OnSure() {
                     @Override
                     public void backResult(String url) {
                         if (!url.startsWith("错误")) {
@@ -273,7 +278,10 @@ public class AzysDetailActivity extends AppActivity {
                 //配件回来的
                 case PJMX_REQUEST_CODE:
                     mParts = data.getStringExtra("parts");
-
+                    //变更数目
+                    int partsnum = data.getIntExtra("partsnum", -1);
+                    bean.setPARTS(mParts);
+                    mTvPjmx.setText(partsnum == -1 ? "" : partsnum + "");
                     break;
 
             }
@@ -369,7 +377,7 @@ public class AzysDetailActivity extends AppActivity {
         if (!TextUtils.isEmpty(jysynx)) {
             bean.setJYSYNX(Float.parseFloat(jysynx));
         }
-        bean.setPARTS(mParts);
+
         //图片的
         bean.setZMZP_URL(mPicMap.get(ZMZ));
         bean.setCMZP_URL(mPicMap.get(CMZ));
@@ -393,18 +401,15 @@ public class AzysDetailActivity extends AppActivity {
             }
         }
         bean.setCHECK_ITEMS(sb.toString());
-
-
         for (int i = 0; i < mIdList.size(); i++) {
             bean.setID(Long.parseLong(mIdList.get(i)));
             mDaoSession.insertOrReplace(bean);
         }
-
         Intent intent = new Intent();
         intent.putExtra("num", mIdList.size());
+        intent.putExtra(AZYS_DETAIL_IDS, ListUtils.listToStrings(mIdList));
+
         setResult(RESULT_OK, intent);
-
-
         finish();
     }
 
@@ -447,96 +452,116 @@ public class AzysDetailActivity extends AppActivity {
         mIdList = Arrays.asList(split);
         //第一次进来
         if (isFirstTime && split.length > 0) {
-            bean = new PUR_CONTRACT_PLAN_DETAIL();
+            bean = mDaoSession.getPUR_CONTRACT_PLAN_DETAILDao().load(Long.parseLong(mIdList.get(0)));
         } else if (!isFirstTime && split.length == 1) {
             bean = mDaoSession.getPUR_CONTRACT_PLAN_DETAILDao().load(Long.parseLong(ids));
-            backShow();
         }
+        //配件
+        mParts = bean.getPARTS();
+
+        backShow();
     }
 
 
     //回显
     private void backShow() {
-        {
-            if (!TextUtils.isEmpty(bean.getCD_AZR())) {     //安装工程师
-                mEtAzgcs.setText(bean.getCD_AZR());
-            }
 
-            mEtGcsdh.setText(bean.getCD_AZRDH());      //安装工程师的电话
-            //备注
-            //.setText(bean.getCD_REMARK());         //备注
+        if (!TextUtils.isEmpty(bean.getCD_AZR())) {     //安装工程师
+            mEtAzgcs.setText(bean.getCD_AZR());
+        }
 
-            mTvWzmc.setText(bean.getWZMC());
-            mTvDept.setText(bean.getDEPT_NAME());
-            mTvGgxh.setText(bean.getGGXH());
-            mEtCcbh.setText(bean.getCCBH());
-            mEtZczh.setText(bean.getZCZH());
+        mEtGcsdh.setText(bean.getCD_AZRDH());      //安装工程师的电话
+        //备注
+        //.setText(bean.getCD_REMARK());         //备注
 
-            Date qsdqsj = bean.getQSDQSJ();
-            if (qsdqsj != null) {
-                //证书到期时间
-                String zsdqsj = new SimpleDateFormat("yyyy-MM-dd").format(qsdqsj);
-                mTvZczyxq.setText(zsdqsj);
-            }
-            //建议使用年限
-            if (bean.getJYSYNX() != null) {
-                mTvJysynx.setText(bean.getJYSYNX() + "");
-            }
+        mTvWzmc.setText(bean.getWZMC());
+        mTvDept.setText(bean.getDEPT_NAME());
+        mTvGgxh.setText(bean.getGGXH());
+        mEtCcbh.setText(bean.getCCBH());
+        mEtZczh.setText(bean.getZCZH());
 
-            String check_items = bean.getCHECK_ITEMS();
-            if (check_items != null) {
-                if (!TextUtils.isEmpty(check_items)) {
-                    String[] split = check_items.split(",");
-                    for (int i = 0; i < mMXList.size(); i++) {
-                        for (int j = 0; j < split.length; j++) {
-                            if (mMXList.get(i).getITEM_ID().toString().equals(split[j])) {
-                                mMXList.get(i).setIsChecked(true);
-                            }
+        Date qsdqsj = bean.getQSDQSJ();
+        if (qsdqsj != null) {
+            //证书到期时间
+            String zsdqsj = new SimpleDateFormat("yyyy-MM-dd").format(qsdqsj);
+            mTvZczyxq.setText(zsdqsj);
+        }
+        //建议使用年限
+        if (bean.getJYSYNX() != null) {
+            mTvJysynx.setText(bean.getJYSYNX() + "");
+        }
+
+        String check_items = bean.getCHECK_ITEMS();
+        if (check_items != null) {
+            if (!TextUtils.isEmpty(check_items)) {
+                String[] split = check_items.split(",");
+                for (int i = 0; i < mMXList.size(); i++) {
+                    for (int j = 0; j < split.length; j++) {
+                        if (mMXList.get(i).getITEM_ID().toString().equals(split[j])) {
+                            mMXList.get(i).setIsChecked(true);
                         }
                     }
-                    //   mInstallDetailListAdapter.notifyDataSetChanged();
                 }
+                mInstallDetailListAdapter.notifyDataSetChanged();
             }
-            if (bean.getBXDW_NAME() != null) {
-                mEtBxdw.setText(bean.getBXDW_NAME());
-            }
-
-            if (bean.getLXRMC() != null) {
-                mEtBxlxr.setText(bean.getLXRMC());
-            }
-
-            if (bean.getLXFS() != null) {
-                mEtBxdh.setText(bean.getLXFS().toString());
-            }
-            //验收签名那里的
-            if (bean.getQMID() != null) {
-                mEtInputId.setText(bean.getQMID());
-            }
-            //照片的
-            String frontUrl = bean.getZMZP_URL();
-            String sideUrl = bean.getCMZP_URL();
-            String mpUrl = bean.getMPZ_URL();
-            String qmUrl = bean.getKSQSR_FILE_URL();
-
-            mPicMap.put(ZMZ, frontUrl);
-            mPicMap.put(CMZ, sideUrl);
-            mPicMap.put(MPZ, mpUrl);
-            mPicMap.put(QMZ, qmUrl);
+        }
 
 
-            for (String s : mPicMap.keySet()) {
-                String url = mPicMap.get(s);
-                if (!TextUtils.isEmpty(url)) {
-                    Glide.with(this).load(url).into(ImageMap.get(s));
-                }
-            }
+        //保修单位
+        if (bean.getBXDW_NAME() != null) {
+            mEtBxdw.setText(bean.getBXDW_NAME());
+        }
 
+        //联系人
+        if (bean.getLXRMC() != null) {
+            mEtBxlxr.setText(bean.getLXRMC());
+        }
+        //联系方式
+        if (bean.getLXFS() != null) {
+            mEtBxdh.setText(bean.getLXFS().toString());
+        }
+        //验收签名那里的
+        if (bean.getQMID() != null) {
+            mEtInputId.setText(bean.getQMID());
+        }
+
+        //配件
+        setPjsl();
+
+        //照片的
+        String frontUrl = bean.getZMZP_URL();
+        String sideUrl = bean.getCMZP_URL();
+        String mpUrl = bean.getMPZ_URL();
+        String qmUrl = bean.getKSQSR_FILE_URL();
+
+        mPicMap.put(ZMZ, frontUrl);
+        mPicMap.put(CMZ, sideUrl);
+        mPicMap.put(MPZ, mpUrl);
+        mPicMap.put(QMZ, qmUrl);
+
+        for (String s : mPicMap.keySet()) {
+            String url = mPicMap.get(s);
+            if (!TextUtils.isEmpty(url)) {
+                Glide.with(this).load(url).into(ImageMap.get(s));
+            }
         }
 
 
     }
 
+
+    //显示配件的数量
+    private void setPjsl() {
+        if (!TextUtils.isEmpty(mParts)) {
+            List<PjmxBean> list = GsonUtil.parseJsonToList(mParts, new TypeToken<List<PjmxBean>>() {
+            }.getType());
+            mTvPjmx.setText(list.size() + "");
+        }
+    }
+
     private void initData() {
+
+
         List<AZYS_MX> list = mDaoSession.getAZYS_MXDao().queryBuilder()
                 .orderAsc(AZYS_MXDao.Properties.ITEM_ID)
                 .list();
@@ -549,6 +574,7 @@ public class AzysDetailActivity extends AppActivity {
             });
             return;
         }
+        //配件个数
         mMXList.addAll(list);
         mInstallDetailListAdapter.notifyDataSetChanged();
 

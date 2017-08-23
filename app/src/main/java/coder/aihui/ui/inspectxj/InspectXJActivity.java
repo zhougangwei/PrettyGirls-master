@@ -496,7 +496,7 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
         upBean.setCount(0);
         upBean.setBigType(mBigType[2]);
         upBean.setPropertie(new Property[]{INSPECT_REPDao.Properties.SYNC_FLAG});
-      //  upBean.setWhereconditions(new WhereCondition[]{INSPECT_REPDao.Properties.INSR_TYPE.eq("XJ"),INSPECT_REPDao.Properties.SYNC_FLAG.isNull()});
+        upBean.setWhereconditions(new WhereCondition[]{INSPECT_REPDao.Properties.INSR_TYPE.eq("XJ"),INSPECT_REPDao.Properties.SYNC_FLAG.isNull()});
 
         UpBean upBean2 = new UpBean();
         upBean2.setEnties("coder.aihui.data.bean.INSPECT_REPS");

@@ -8,9 +8,10 @@
         style="@style/text_item_install"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:padding="30px"
-        android:text="验收分组"
-        android:textColor="@color/textcolor"
+        android:text="选择验收分组"
+        android:textColor="#3e6cdc"
         android:textSize="15sp"/>
 
     <include
@@ -32,15 +33,34 @@
         layout="@layout/line"
         ></include>
 
-    <TextView
-        android:id="@+id/add"
-        style="@style/text_item_install"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="30px"
-        android:text="添加新的单号"
-        android:textColor="@color/textcolor"
-        android:textSize="15sp"/>
+        android:layout_height="88px">
 
+        <TextView
+            android:id="@+id/cancel"
 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#d2d2d2"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/white"
+            android:textSize="32px"/>
+
+        <TextView
+            android:id="@+id/add"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/Active"
+            android:gravity="center"
+            android:text="添加"
+            android:textColor="@color/white"
+            android:textSize="32px"/>
+
+    </LinearLayout>
 </LinearLayout>

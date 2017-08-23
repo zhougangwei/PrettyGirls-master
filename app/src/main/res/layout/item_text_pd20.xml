@@ -10,7 +10,7 @@
         android:layout_marginLeft="30px"
         android:textSize="35px"
         android:text="来一个"
-        android:padding="30px"
+        android:padding="20px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>

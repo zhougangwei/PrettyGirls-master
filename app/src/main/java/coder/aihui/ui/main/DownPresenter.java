@@ -270,11 +270,11 @@ public class DownPresenter implements RxBusPresenter {
     }
 
     //上传数据http
-    public void gotoUp(Map map) {
-        mRemoteMyDataSource.gotoUpJson(PUR_CONTRACT_PLAN_UP, map, new MyLoadDatasCallback(PUR_CONTRACT_PLAN_UP) {
+    public void gotoUp(Map map, final Integer type) {
+        mRemoteMyDataSource.gotoUpJson(type, map, new MyLoadDatasCallback(PUR_CONTRACT_PLAN_UP) {
             @Override
             public void onDatasLoadedProgress(int index) {
-
+                mView.showProgress(index, type);
             }
         });
     }

@@ -86,7 +86,7 @@ public class ContactActivity extends AppActivity {
         mRv = (RecyclerView) findViewById(R.id.rv);
         mRv.setLayoutManager(mManager = new LinearLayoutManager(this));
 
-        mCommonAdapter = new CommonAdapter<PUB_COMPANY>(this, R.layout.item_text_pd30, mDatas) {
+        mCommonAdapter = new CommonAdapter<PUB_COMPANY>(this, R.layout.item_text_pd20, mDatas) {
 
             @Override
             protected void convert(ViewHolder holder, final PUB_COMPANY bean, int position) {

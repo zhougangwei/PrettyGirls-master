@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.text.TextUtils;
 import android.view.MotionEvent;
@@ -52,14 +53,11 @@ public class QianMingUtils implements View.OnClickListener {
 
     private Canvas mCanvas;
 
-    private static QianMingUtils mLoadDataManager = new QianMingUtils();
 
-    private QianMingUtils() {
-    }
+    private boolean isFirstTime = true;
 
-    public static QianMingUtils getInstance() {
-        return mLoadDataManager;
-    }
+
+
 
 
     public void showQianming(Activity activity, OnSure onSure) {
@@ -80,9 +78,9 @@ public class QianMingUtils implements View.OnClickListener {
         tvQuit.setOnClickListener(this);
         tvSave.setOnClickListener(this);
 
-        // 1. 创建空白纸张
-        bitmap = Bitmap.createBitmap(800, 800, Bitmap.Config.ARGB_8888);
 
+        // 1. 创建空白纸张
+        bitmap = Bitmap.createBitmap(800,800 , Bitmap.Config.ARGB_8888);
         // 2. 创建画板
         mCanvas = new Canvas(bitmap);
 
@@ -105,6 +103,13 @@ public class QianMingUtils implements View.OnClickListener {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
+                if(isFirstTime){
+                    isFirstTime = false;
+                    int measuredWidth = mIv_image.getMeasuredWidth();
+                    int measuredHeight = mIv_image.getMeasuredHeight();
+                    bitmap.setWidth(measuredWidth);
+                    bitmap.setHeight(measuredHeight);
+                }
                 switch (event.getAction()) { // 区分事件类型
                     case MotionEvent.ACTION_DOWN: // 按下
                         //						bitmap.setPixel((int)event.getX(), (int)event.getY(), Color.BLACK);
@@ -143,8 +148,8 @@ public class QianMingUtils implements View.OnClickListener {
 
     private OnSure mOnSure;
 
-    public interface OnSure {
-        public void backResult(String url);
+    public  interface OnSure {
+         void backResult(String url);
     }
 
 
@@ -204,12 +209,15 @@ public class QianMingUtils implements View.OnClickListener {
 
 
         Observable.just(bitmap)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
                 .map(new Func1<Bitmap, Bitmap>() {
                     @Override
                     public Bitmap call(Bitmap bitmap) {
                         return BitmapDeleteNoUseSpaceUtil.deleteNoUseWhiteSpace(bitmap);
                     }
-                }).subscribeOn(Schedulers.io())
+                })
+                .observeOn(Schedulers.io())
                 .map(new Func1<Bitmap, String>() {
                     @Override
                     public String call(Bitmap bitmap) {
@@ -245,12 +253,13 @@ public class QianMingUtils implements View.OnClickListener {
                     return true;
                 }
             }
-        }).subscribeOn(AndroidSchedulers.mainThread())
+        })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<String>() {
                     @Override
                     public void call(String mUrl) {
                         mOnSure.backResult(mUrl);
+                        mDialog.dismiss();
                     }
                 });
 

@@ -71,6 +71,9 @@ public class Content {
     //编辑
     public static final int ASSET_EDIT_REQUEST_CODE       = 21;
 
+    //安装验收明细
+    public static final int AZYS_DETAIL_REQUEST_CODE       = 22;
+
 
 
     //供货单位1 生产厂家2 保修单位3
@@ -92,7 +95,7 @@ public class Content {
     public static final int    ASSET_QUERY          = 3;
     public static final int    ASSET_CHECK          = 4;
     public static final String INSPECT_PNAME        = "inspect_pname";
-
+    public static final String ISREMEMBERPW         = "isrememberpw";
 
 
     /**

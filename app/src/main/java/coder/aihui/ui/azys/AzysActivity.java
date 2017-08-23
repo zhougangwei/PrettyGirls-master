@@ -47,12 +47,18 @@ import coder.aihui.ui.main.DownPresenter;
 import coder.aihui.ui.main.DownView;
 import coder.aihui.util.GsonUtil;
 import coder.aihui.util.ToastUtil;
+import coder.aihui.util.viewutil.ProcessDialogUtil;
 import coder.aihui.widget.MyArrayAdapter;
+import coder.aihui.widget.MyProgressDialog;
 import coder.aihui.widget.contact.LessUserActivity;
 import coder.aihui.widget.popwindow.MenuPopup;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+
+import static coder.aihui.app.MyApplication.daoSession;
+import static coder.aihui.base.Content.AZYS_LIST_REQUEST_CODE;
+import static coder.aihui.ui.main.DownPresenter.PUR_CONTRACT_PLAN_UP;
 
 
 public class AzysActivity extends AppActivity implements DownView, TabLayout.OnTabSelectedListener {
@@ -106,7 +112,16 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
     private List<PUR_CONTRACT_PLAN> mAllList     = new ArrayList<>();
     private List<PUR_CONTRACT_PLAN> mCheckList   = new ArrayList<>();
     private List<PUR_CONTRACT_PLAN> mUnCheckList = new ArrayList<>();
-    private String mSearchTypeText;        //搜索的类型
+    /**
+     * <string-array name="azys">
+     * <item>科室</item>
+     * <item>供应商名称</item>
+     * <item>合同号</item>
+     * <item>名称</item>
+     * </string-array>
+     */
+    private String           mSearchTypeString;        //搜索的类型
+    private MyProgressDialog mProgressDialog;
 
     @Override
     protected int getContentViewId() {
@@ -121,9 +136,13 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
 
     @Override
     protected void initView() {
+
+        mProgressDialog = ProcessDialogUtil.createNoCancelDialog("上传安装验收数据", this);
+
         mTvTitle.setText("安装验收");
         mUpDownList.add("上传数据");
-        mSearchTypeText = AzysActivity.this.getResources().getStringArray(R.array.azys)[0];
+        mUpDownList.add("清空数据");
+        mSearchTypeString = AzysActivity.this.getResources().getStringArray(R.array.azys)[0];
 
         mLoadingList.add(new LoadingBean(mAllList, false));
         mLoadingList.add(new LoadingBean(mCheckList, false));
@@ -152,12 +171,12 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
         mSpSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mSearchTypeText = AzysActivity.this.getResources().getStringArray(R.array.azys)[position];
+                mSearchTypeString = AzysActivity.this.getResources().getStringArray(R.array.azys)[position];
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mSearchTypeText = AzysActivity.this.getResources().getStringArray(R.array.azys)[0];
+                mSearchTypeString = AzysActivity.this.getResources().getStringArray(R.array.azys)[0];
             }
         });
     }
@@ -206,12 +225,17 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
         viewChecked.setAdapter(mCheckedAdapter);
         viewUnchecked.setAdapter(mUnCheckedAdapter);
 
+        refreshAllData();
 
+
+    }
+
+
+    //刷新所有的数据
+    private void refreshAllData() {
         for (int i = 0; i < mLoadingList.size(); i++) {
-            showSearch(mSearchTypeText, i, mLoadingList.get(i).list);
+            showSearch(mSearchTypeString, i, mLoadingList.get(i).list);
         }
-
-
     }
 
     /**
@@ -235,7 +259,7 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
                     if (lastVisibleItem >= totalItemCount - 4 && dy > 0) {
                         if (!dataList.get(finalI).isLoading) {
                             dataList.get(finalI).isLoading = true;
-                            showSearch(mSearchTypeText, CurrentWhich, dataList.get(finalI).list);
+                            showSearch(mSearchTypeString, CurrentWhich, dataList.get(finalI).list);
                             dataList.get(finalI).isLoading = false;
                         }
                     }
@@ -253,7 +277,7 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
 
                 Intent intent = new Intent(AzysActivity.this, AzysListActivity.class);
                 intent.putExtra("htmxId", bean.getHTMX_ID());
-                startActivity(intent);
+                startActivityForResult(intent, AZYS_LIST_REQUEST_CODE);
             }
         });
 
@@ -268,6 +292,21 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
         holder.setText(R.id.tv_all, "总数(" + yssl + ")");
         holder.setText(R.id.tv_check, "已验(" + check_sl + ")");
         holder.setText(R.id.tv_uncheck, "未验(" + uncheck_sl + ")");
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                //列表
+                case AZYS_LIST_REQUEST_CODE:
+                    break;
+            }
+        }
+
 
     }
 
@@ -303,10 +342,15 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
 
     //文字搜索
     private void doTextSearch() {
-        showSearch(mSearchTypeText, CurrentWhich, mLoadingList.get(CurrentWhich).list);
+        showSearch(mSearchTypeString, CurrentWhich, mLoadingList.get(CurrentWhich).list);
     }
 
 
+    /**
+     * @param searchId
+     * @param type
+     * @param searchList
+     */
     private void showSearch(String searchId, int type, List searchList) {
 
         String s = mEtSearch.getText().toString();
@@ -388,9 +432,21 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
             mUpdownPopup = new MenuPopup(this, mUpDownList, new MenuPopup.BackReslut() {
                 @Override
                 public void onBackResult(String string) {
-                    if ("上传数据".equals(string)) {
-                        gotoUpdata();
+
+                    switch (string) {
+                        case "清空数据":
+                            clearAll();
+                            break;
+                        case "上传数据":
+                            mProgressDialog.show();
+                            gotoUpdata();
+                            break;
+                        default:
+                            break;
+
                     }
+                    mUpdownPopup.dismiss();
+
                 }
             });
         }
@@ -403,9 +459,20 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
         HashMap<String, String> map = new HashMap<>();
         String json = getupJson();
         map.put("dataJson", json);
-        mDownPresenter.gotoUp(map);
+        mDownPresenter.gotoUp(map, PUR_CONTRACT_PLAN_UP);
 
     }
+
+    private void clearAll() {
+        //清空数据
+        daoSession.getPUR_CONTRACT_PLAN_DETAILDao().deleteAll();
+        daoSession.getPUR_CONTRACT_PLANDao().deleteAll();
+        daoSession.getAZYS_MXDao().deleteAll();
+        refreshAllData();
+        ToastUtil.showToast("清空完成");
+
+    }
+
 
     private String getupJson() {
         List<PUR_CONTRACT_PLAN_DETAIL> ll = mDaoSession.getPUR_CONTRACT_PLAN_DETAILDao().queryBuilder()
@@ -428,14 +495,10 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
 
             mDaoSession.update(ll.get(i));
             treeMap.put(ll.get(i).getDH_ID(), ll.get(i).getYSR_IDS());
-
-
         }
-
 
         StringBuilder sb1 = new StringBuilder();
         StringBuilder sb2 = new StringBuilder();
-
 
         Iterator ite = treeMap.keySet().iterator();
         while (ite.hasNext()) {
@@ -452,9 +515,7 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
         //切掉最后一个
         String substring2 = string2.substring(0, string2.length() - 1);        //验收人
 
-
         //String url = "";
-
 
         String json = GsonUtil.parseListToJson(ll);
 
@@ -486,6 +547,13 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
 
     }
 
+
+    /**
+     * 获取数目
+     *
+     * @param type
+     * @return
+     */
     public Long getAccount(int type) {
         QueryBuilder<PUR_CONTRACT_PLAN> qb = mDaoSession.getPUR_CONTRACT_PLANDao().queryBuilder();
         switch (type) {
@@ -515,6 +583,7 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
                 .subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
+                        mProgressDialog.dismiss();
                         ToastUtil.showToast("上传成功!");
                     }
                 });
@@ -527,6 +596,7 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
                 .subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
+                        mProgressDialog.dismiss();
                         ToastUtil.showToast("上传失败!");
                     }
                 });
@@ -539,11 +609,9 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
                 .subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        //进度显示多少
-
+                        mProgressDialog.setProgress(integer);
                     }
                 });
-
     }
 
     @Override

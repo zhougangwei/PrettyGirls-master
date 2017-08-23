@@ -44,6 +44,7 @@ import coder.aihui.widget.autoview.AutoRecyclerView;
 
 import static coder.aihui.R.id.tv_ys;
 import static coder.aihui.base.Content.AZYS_DETAIL_IDS;
+import static coder.aihui.base.Content.AZYS_DETAIL_REQUEST_CODE;
 import static coder.aihui.base.Content.SB_IDS;
 
 
@@ -98,6 +99,7 @@ public class AzysListActivity extends AppActivity {
 
     @Override
     protected void initView() {
+        mTvTitle.setText("设备验收");
         initGetIntent();
         initRecycleView();
         initDatas();
@@ -121,16 +123,17 @@ public class AzysListActivity extends AppActivity {
     private void initDatas() {
         List<PUR_CONTRACT_PLAN_DETAIL> list = mDaoSession.getPUR_CONTRACT_PLAN_DETAILDao().queryBuilder().
                 where(PUR_CONTRACT_PLAN_DETAILDao.Properties.HTMX_ID.eq(mHtmxId)).list();
-
         updateDh();
-
-        if (list != null && list.size() != 0) {
+        //没数据说明是第一次进来
+        if (list != null && list.size() != 0) {     //有数据
+            mDatas.clear();
             mDatas.addAll(list);
             IsFirstTime = false;
-        } else {
+        } else {                                    //没数据
             IsFirstTime = true;
-            initFirstData();
+            initFirstData();                        //新建数据
         }
+        mAdapter.notifyDataSetChanged();
     }
 
 
@@ -143,18 +146,37 @@ public class AzysListActivity extends AppActivity {
 
         mAdapter = new CommonAdapter<PUR_CONTRACT_PLAN_DETAIL>(this, R.layout.item_text_num_point, mDatas) {
             @Override
-            protected void convert(final ViewHolder holder, final PUR_CONTRACT_PLAN_DETAIL o, final int position) {
+            protected void convert(final ViewHolder holder, final PUR_CONTRACT_PLAN_DETAIL bean, final int position) {
                 holder.setText(R.id.num, (position + 1) + "");
+                //显示是否是已点击了
+                if (bean.getCHECK_STATUS() == 1) {
+                    holder.setVisible(R.id.iv_point, true);
+                } else {
+                    holder.setVisible(R.id.iv_point, false);
+                }
+
                 holder.setOnClickListener(R.id.rv, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //有的增加没的删除
-                        if (!sonBeanIdList.contains(o.getID() + "")) {
-                            holder.setBackgroundRes(R.id.rv, R.color.chooseGrey);
-                            sonBeanIdList.add(o.getID() + "");
+
+                        //已检的直接跳,未检的打上勾
+                        if (bean.getCHECK_STATUS() == 1) {
+                            Intent intent = new Intent(AzysListActivity.this
+                                    , AzysDetailActivity.class);
+                            String ids = bean.getID() + "";
+                            intent.putExtra(AZYS_DETAIL_IDS, ids);
+                            intent.putExtra("isFirstTime", false);
+
+                            startActivityForResult(intent, AZYS_DETAIL_REQUEST_CODE);
                         } else {
-                            holder.setBackgroundRes(R.id.rv, R.color.white);
-                            sonBeanIdList.remove(o.getID() + "");
+                            //有的增加没的删除
+                            if (!sonBeanIdList.contains(bean.getID() + "")) {
+                                holder.setBackgroundRes(R.id.rv, R.color.red);
+                                sonBeanIdList.add(bean.getID() + "");
+                            } else {
+                                holder.setBackgroundRes(R.id.rv, R.color.white);
+                                sonBeanIdList.remove(bean.getID() + "");
+                            }
                         }
                     }
                 });
@@ -175,7 +197,6 @@ public class AzysListActivity extends AppActivity {
             mList.add(sonBean);
             mDaoSession.insertOrReplace(sonBean);
         }
-
         mDatas.addAll(mList);
     }
 
@@ -196,15 +217,11 @@ public class AzysListActivity extends AppActivity {
 
     private void gotoPxgl() {
 
-        if (sonBeanIdList.size() == 0) {
-            return;
-        }
-        Integer mcggid = mDaoSession.getPUR_CONTRACT_PLAN_DETAILDao().load(Long.valueOf(sonBeanIdList.get(0)))
+        Integer mcggid = mDaoSession.getPUR_CONTRACT_PLAN_DETAILDao().load(Long.valueOf(mDatas.get(0).getID()))
                 .getMCGGID();
         Intent intent = new Intent(this, PxglDetailActivity.class);
         intent.putExtra(SB_IDS, mcggid + "");
-
-        startActivity(intent);
+        startActivityForResult(intent, Content.AZYS_DETAIL_REQUEST_CODE);
 
 
     }
@@ -220,8 +237,6 @@ public class AzysListActivity extends AppActivity {
         } else {
             gotoYs();
         }
-
-
     }
 
     //跳转到验收页面
@@ -229,8 +244,8 @@ public class AzysListActivity extends AppActivity {
         Intent intent = new Intent(this, AzysDetailActivity.class);
         String ids = ListUtils.listToStrings(sonBeanIdList);
         intent.putExtra(AZYS_DETAIL_IDS, ids);
-        intent.putExtra("isFirstTime", IsFirstTime);
-        startActivityForResult(intent, Content.AZYS_LIST_REQUEST_CODE);
+        intent.putExtra("isFirstTime", true);
+        startActivityForResult(intent, Content.AZYS_DETAIL_REQUEST_CODE);
     }
 
 
@@ -239,10 +254,9 @@ public class AzysListActivity extends AppActivity {
 
         //跳窗的dialog
         View view = View.inflate(this, R.layout.installlist_numlist, null);
-
-
         RecyclerView rv = (RecyclerView) view.findViewById(R.id.rv);
         TextView add = (TextView) view.findViewById(R.id.add);
+        TextView cancel = (TextView) view.findViewById(R.id.cancel);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
 
@@ -261,6 +275,12 @@ public class AzysListActivity extends AppActivity {
             }
         });
 
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+            }
+        });
         mDhAdapter = new CommonAdapter<DHBean>(this, R.layout.item_text_pd30, mDHList) {
             @Override
             protected void convert(ViewHolder holder, DHBean dhBean, int position) {
@@ -268,6 +288,7 @@ public class AzysListActivity extends AppActivity {
                 holder.setOnClickListener(R.id.tv_name, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        mDialog.dismiss();
                         gotoYs();
                     }
                 });
@@ -306,9 +327,10 @@ public class AzysListActivity extends AppActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case Content.AZYS_LIST_REQUEST_CODE:
+                case Content.AZYS_DETAIL_REQUEST_CODE:
                     int num = data.getIntExtra("num", 0);       //验收了几台
                     mFatherBean.setCHECK_SL(num);
+                    initDatas();            //刷新下数据
                     break;
             }
         }
