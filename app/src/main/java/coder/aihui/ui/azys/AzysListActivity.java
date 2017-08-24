@@ -41,11 +41,15 @@ import coder.aihui.util.GsonUtil;
 import coder.aihui.util.ListUtils;
 import coder.aihui.util.ToastUtil;
 import coder.aihui.widget.autoview.AutoRecyclerView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
-import static coder.aihui.R.id.tv_ys;
 import static coder.aihui.base.Content.AZYS_DETAIL_IDS;
 import static coder.aihui.base.Content.AZYS_DETAIL_REQUEST_CODE;
 import static coder.aihui.base.Content.SB_IDS;
+import static coder.aihui.base.Content.USER_ID_LIST;
+import static coder.aihui.base.Content.USER_NAME_LIST;
 
 
 public class AzysListActivity extends AppActivity {
@@ -64,26 +68,28 @@ public class AzysListActivity extends AppActivity {
     LinearLayout     mLlNames;
     @BindView(R.id.rv)
     AutoRecyclerView mRv;
-    @BindView(tv_ys)
+    @BindView(R.id.tv_ys)
     TextView         mTvYs;
 
     @BindView(R.id.iv_pxgl)
     ImageView mIvPxgl;
+    @BindView(R.id.tv_ryname)
+    TextView  mTvRyname;
 
-
-    ArrayList<PUR_CONTRACT_PLAN_DETAIL> mDatas      = new ArrayList();
-    boolean                             IsFirstTime = true;
-    private PUR_CONTRACT_PLAN mFatherBean;
+    ArrayList<PUR_CONTRACT_PLAN_DETAIL> mDatas = new ArrayList();
+    //boolean                             IsFirstTime = true;         //是否是第一次进来 决定了是否需要新建单号表
+    private PUR_CONTRACT_PLAN mFatherBean;                          //主对象
     private List<PUR_CONTRACT_PLAN_DETAIL> mList = new ArrayList<>();
     private Long mHtmxId;
 
 
     //哪些设备是需要跳往下一个页面的
-    ArrayList<String> sonBeanIdList = new ArrayList();
+    ArrayList<String> mSonBeanIdList = new ArrayList();
     private CommonAdapter<PUR_CONTRACT_PLAN_DETAIL> mAdapter;
     private AlertDialog                             mDialog;
     private List<DHBean> mDHList = new ArrayList<>();
     private CommonAdapter<DHBean> mDhAdapter;
+    private ArrayList<String>     mUserIdList;
 
 
     @Override
@@ -102,15 +108,18 @@ public class AzysListActivity extends AppActivity {
         mTvTitle.setText("设备验收");
         initGetIntent();
         initRecycleView();
-        initDatas();
+        refreshDatas();
     }
 
     private void initGetIntent() {
         Intent intent = getIntent();
-
         mHtmxId = intent.getLongExtra("htmxId", -1L);
+        ArrayList<String> mUserNameList = intent.getStringArrayListExtra(USER_NAME_LIST);   //验收人名字的集合 方便显示
+        mUserIdList = intent.getStringArrayListExtra(USER_ID_LIST);             //验收人
 
-        mFatherBean = mDaoSession.getPUR_CONTRACT_PLANDao().load(mHtmxId);
+        mTvRyname.setText(ListUtils.listToStrings(mUserNameList));
+        mFatherBean = mDaoSession.getPUR_CONTRACT_PLANDao().load(mHtmxId);      //主对象
+        mFatherBean.setYSR_IDS(ListUtils.listToStrings(mUserIdList));           //动态变化 随时变
 
         mTvName.setText(mFatherBean.getWZMC());
         mTvGgxh.setText(mFatherBean.getGGXH());
@@ -120,7 +129,7 @@ public class AzysListActivity extends AppActivity {
 
 
     //区分对待是否是第一次进入
-    private void initDatas() {
+    private void refreshDatas() {
         List<PUR_CONTRACT_PLAN_DETAIL> list = mDaoSession.getPUR_CONTRACT_PLAN_DETAILDao().queryBuilder().
                 where(PUR_CONTRACT_PLAN_DETAILDao.Properties.HTMX_ID.eq(mHtmxId)).list();
         updateDh();
@@ -128,10 +137,15 @@ public class AzysListActivity extends AppActivity {
         if (list != null && list.size() != 0) {     //有数据
             mDatas.clear();
             mDatas.addAll(list);
-            IsFirstTime = false;
+            //IsFirstTime = false;
         } else {                                    //没数据
-            IsFirstTime = true;
+            //IsFirstTime = true;
             initFirstData();                        //新建数据
+        }
+        for (PUR_CONTRACT_PLAN_DETAIL data : mDatas) {
+            if (data.getIS_UP() != 1) {
+                data.setYSR_IDS(mFatherBean.getYSR_IDS()); //已经上传过的数据就不给改了
+            }
         }
         mAdapter.notifyDataSetChanged();
     }
@@ -154,7 +168,6 @@ public class AzysListActivity extends AppActivity {
                 } else {
                     holder.setVisible(R.id.iv_point, false);
                 }
-
                 holder.setOnClickListener(R.id.rv, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -166,16 +179,15 @@ public class AzysListActivity extends AppActivity {
                             String ids = bean.getID() + "";
                             intent.putExtra(AZYS_DETAIL_IDS, ids);
                             intent.putExtra("isFirstTime", false);
-
                             startActivityForResult(intent, AZYS_DETAIL_REQUEST_CODE);
                         } else {
                             //有的增加没的删除
-                            if (!sonBeanIdList.contains(bean.getID() + "")) {
+                            if (!mSonBeanIdList.contains(bean.getID() + "")) {
                                 holder.setBackgroundRes(R.id.rv, R.color.red);
-                                sonBeanIdList.add(bean.getID() + "");
+                                mSonBeanIdList.add(bean.getID() + "");
                             } else {
                                 holder.setBackgroundRes(R.id.rv, R.color.white);
-                                sonBeanIdList.remove(bean.getID() + "");
+                                mSonBeanIdList.remove(bean.getID() + "");
                             }
                         }
                     }
@@ -227,24 +239,21 @@ public class AzysListActivity extends AppActivity {
     }
 
     private void gotoChooseForm() {
-
-        if (sonBeanIdList.size() == 0) {
+        if (mSonBeanIdList.size() == 0) {
             ToastUtil.showToast("请选择设备!");
             return;
         }
-        if (!IsFirstTime) {
-            gotoChooseList();
-        } else {
-            gotoYs();
-        }
+        gotoChooseList();
+
     }
 
     //跳转到验收页面
-    private void gotoYs() {
+    private void gotoYs(Long dh) {
         Intent intent = new Intent(this, AzysDetailActivity.class);
-        String ids = ListUtils.listToStrings(sonBeanIdList);
+        String ids = ListUtils.listToStrings(mSonBeanIdList);
         intent.putExtra(AZYS_DETAIL_IDS, ids);
         intent.putExtra("isFirstTime", true);
+        intent.putExtra("dh", dh);
         startActivityForResult(intent, Content.AZYS_DETAIL_REQUEST_CODE);
     }
 
@@ -260,6 +269,7 @@ public class AzysListActivity extends AppActivity {
 
         rv.setLayoutManager(new LinearLayoutManager(this));
 
+        //添加新合同
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -268,10 +278,9 @@ public class AzysListActivity extends AppActivity {
                 dhBean.setDh(contract_id + "-" + (mDHList.size() + 1));
                 dhBean.setWzmc(mFatherBean.getWZMC());
                 dhBean.setContractId(mFatherBean.getCONTRACT_ID() + "");
+                dhBean.setHtmxId(mFatherBean.getHTMX_ID());
                 mDaoSession.insertOrReplace(dhBean);
                 updateDh();
-                mDhAdapter.notifyDataSetChanged();
-
             }
         });
 
@@ -283,13 +292,32 @@ public class AzysListActivity extends AppActivity {
         });
         mDhAdapter = new CommonAdapter<DHBean>(this, R.layout.item_text_pd30, mDHList) {
             @Override
-            protected void convert(ViewHolder holder, DHBean dhBean, int position) {
+            protected void convert(ViewHolder holder, final DHBean dhBean, int position) {
                 holder.setText(R.id.tv_name, dhBean.getDh());
                 holder.setOnClickListener(R.id.tv_name, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mDialog.dismiss();
-                        gotoYs();
+                        //合同号相同的 则合并
+                        //查询当前dhBean的 dhId 内的数据 是否有htmxid一样的
+                        List<DHBean> list = mDaoSession.getDHBeanDao().queryBuilder().where(
+                                DHBeanDao.Properties.Dh.eq(dhBean.getDh())
+                        ).list();
+                        List<String> getHtmxId = ListUtils.ListFiled2list(list, "getHtmxId", DHBean.class);
+
+                        if (!getHtmxId.contains(mFatherBean.getHTMX_ID() + "")) {
+                            //新建一个Danhaobean  是为了 单号表渲染的时候 是一个个对象  不用拆分不同设备
+                            DHBean newDhBean = new DHBean();
+                            //除了主键id不能一样 其余的都一样
+                            newDhBean.setContractId(mFatherBean.getCONTRACT_ID() + "");
+                            newDhBean.setWzmc(mFatherBean.getWZMC());
+                            newDhBean.setHtmxId(mFatherBean.getHTMX_ID());
+                            newDhBean.setDh(dhBean.getDh());
+                            long newDhBeanId = mDaoSession.insertOrReplace(newDhBean);
+                            gotoYs(newDhBeanId);
+                        }else{
+                            gotoYs(dhBean.getId());
+                        }
                     }
                 });
             }
@@ -305,6 +333,7 @@ public class AzysListActivity extends AppActivity {
             Integer con_id = mFatherBean.getCONTRACT_ID();
             DHBean dhBean = new DHBean();
             dhBean.setDh(con_id + "-1");
+            dhBean.setHtmxId(mFatherBean.getHTMX_ID());
             dhBean.setWzmc(mFatherBean.getWZMC());
             dhBean.setContractId(mFatherBean.getCONTRACT_ID() + "");
             mDaoSession.insertOrReplace(dhBean);
@@ -315,11 +344,27 @@ public class AzysListActivity extends AppActivity {
     }
 
     private void updateDh() {
-        mDHList.clear();
-        //单号的
-        List<DHBean> dhBeanList = mDaoSession.getDHBeanDao().queryBuilder().where(DHBeanDao.Properties.ContractId.eq(mFatherBean.getCONTRACT_ID() + ""))
-                .list();
-        mDHList.addAll(dhBeanList);
+
+        //只要单号相同的数据
+        mDaoSession.getDHBeanDao().queryBuilder().where(DHBeanDao.Properties.ContractId.eq(mFatherBean.getCONTRACT_ID() + ""))
+                .orderAsc(DHBeanDao.Properties.Dh)                  //更具单号升序
+                .rx().oneByOne().distinctUntilChanged(new Func1<DHBean, String>() {
+            @Override
+            public String call(DHBean dhBean) {
+                return dhBean.getDh();
+            }
+        }).toList().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<List<DHBean>>() {
+            @Override
+            public void call(List<DHBean> dhBeen) {
+                mDHList.clear();
+                mDHList.addAll(dhBeen);
+                if (mDhAdapter != null) {
+                    mDhAdapter.notifyDataSetChanged();
+                }
+
+            }
+        });
+
     }
 
     @Override
@@ -328,9 +373,13 @@ public class AzysListActivity extends AppActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case Content.AZYS_DETAIL_REQUEST_CODE:
+
+
                     int num = data.getIntExtra("num", 0);       //验收了几台
                     mFatherBean.setCHECK_SL(num);
-                    initDatas();            //刷新下数据
+                    mDaoSession.insertOrReplace(mFatherBean);    //变更
+                    mSonBeanIdList.clear();     //清空已选的数据
+                    refreshDatas();            //刷新下数据
                     break;
             }
         }
@@ -419,4 +468,9 @@ public class AzysListActivity extends AppActivity {
         ButterKnife.bind(this);
     }
 
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+        finish();
+    }
 }

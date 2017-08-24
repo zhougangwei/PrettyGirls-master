@@ -21,6 +21,16 @@ import butterknife.OnClick;
 import coder.aihui.R;
 import coder.aihui.base.AppActivity;
 import coder.aihui.base.BaseFragment;
+import coder.aihui.data.bean.YsrBean;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
+
+import static coder.aihui.base.Content.USER_ID_LIST;
+import static coder.aihui.base.Content.USER_NAME_LIST;
+import static coder.aihui.ui.main.DownPresenter.AZYS_DOWN;
+import static coder.aihui.ui.main.DownPresenter.INSPECT_PLAN_DOWN;
 
 public class LessUserActivity extends AppActivity {
 
@@ -34,7 +44,8 @@ public class LessUserActivity extends AppActivity {
     @BindView(R.id.tv_ok)
     TextView mTvOk;
     private List<UserBean> mDatas = new ArrayList();     //对应的是id和name
-    private CommonAdapter mCommonAdapter;
+    private CommonAdapter      mCommonAdapter;
+    private ArrayList<Integer> mUserIdList; //已打钩的User集合
 
     @Override
     protected int getContentViewId() {
@@ -47,7 +58,7 @@ public class LessUserActivity extends AppActivity {
     }
 
 
-    private void initData() {
+    private void initXJData() {
 
         final List<UserBean> list = new ArrayList<>();      //临时数据存储
         Cursor cursor = mDb.rawQuery("select distinct a.INSEE__USER__ID as ID,ic_selected.USER__NAME as NAME from INSPECT__EXT__EXECUTOR a, SYS__USER ic_selected where a.INSEE__USER__ID=ic_selected.USER__ID ", new String[]{});
@@ -63,19 +74,14 @@ public class LessUserActivity extends AppActivity {
             cursor.moveToNext();
         }
 
-
-        Intent intent = getIntent();
-        //已打钩的User集合
-        ArrayList<Integer> userIdList = intent.getIntegerArrayListExtra("userIdList");
-
-        if (userIdList != null && userIdList.size() != 0) {
+        if (mUserIdList != null && mUserIdList.size() != 0) {
             for (int i = 0; i < list.size(); i++) {
-                if (userIdList.contains(list.get(i).id)) {
+                if (mUserIdList.contains(list.get(i).id)) {
                     list.get(i).isCheck = true;         //回显打钩
                 }
             }
         }
-
+        mDatas.clear();
         mDatas.addAll(list);
         mCommonAdapter.notifyDataSetChanged();
 
@@ -87,19 +93,72 @@ public class LessUserActivity extends AppActivity {
         mRv.setLayoutManager(new LinearLayoutManager(this));
         mCommonAdapter = new CommonAdapter<UserBean>(this, R.layout.item_text_cb, mDatas) {
             @Override
-            protected void convert(ViewHolder holder, UserBean bean, int position) {
-
+            protected void convert(final ViewHolder holder, final UserBean bean, int position) {
                 String name = bean.name;
-                Boolean ischeck = bean.isCheck;
-
+                boolean ischeck = bean.isCheck;
                 holder.setText(R.id.tv_name, name);
+
+
                 holder.setChecked(R.id.cb, ischeck);
+
+                holder.setOnClickListener(R.id.cb, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        holder.setChecked(R.id.cb, !bean.getCheck());
+                        bean.setCheck(!bean.getCheck());
+                    }
+                });
+
+
             }
         };
         mRv.setAdapter(mCommonAdapter);
-        initData();
+        Intent intent = getIntent();
+        int type = intent.getIntExtra("type", -1);
+        mUserIdList = intent.getIntegerArrayListExtra(USER_ID_LIST);    //已点击的 回显
 
+        switch (type) {
+            case AZYS_DOWN:         //安装验收的
+                initAZData();
+                break;
+            case INSPECT_PLAN_DOWN: //巡检
+                initXJData();
+                break;
+            default:
+                break;
+        }
+    }
 
+    private void initAZData() {
+        mDaoSession.getYsrBeanDao().queryBuilder().rx().oneByOne().subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .map(new Func1<YsrBean, UserBean>() {
+                    @Override
+                    public UserBean call(YsrBean ysrBean) {
+                        UserBean userBean = new UserBean();
+                        userBean.isCheck = false;
+                        userBean.id = ysrBean.getPurYsrId().intValue();
+                        userBean.name = ysrBean.getUserName();
+                        return userBean;
+                    }
+                })
+                .toList()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<UserBean>>() {
+                    @Override
+                    public void call(List<UserBean> list) {
+                        if (mUserIdList != null && mUserIdList.size() != 0) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (mUserIdList.contains(list.get(i).id)) {
+                                    list.get(i).isCheck = true;         //回显打钩
+                                }
+                            }
+                        }
+                        mDatas.clear();
+                        mDatas.addAll(list);
+                        mCommonAdapter.notifyDataSetChanged();
+                    }
+                });
     }
 
     @Override
@@ -134,8 +193,8 @@ public class LessUserActivity extends AppActivity {
             }
         }
         Intent intent = new Intent();
-        intent.putExtra("userIdList", userChooseIds);
-        intent.putExtra("userNameList", userNameList);
+        intent.putExtra(USER_ID_LIST, userChooseIds);
+        intent.putExtra(USER_NAME_LIST, userNameList);
         setResult(RESULT_OK, intent);
         finish();
 
@@ -146,6 +205,30 @@ public class LessUserActivity extends AppActivity {
         String  name;
         Integer id;
         Boolean isCheck;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public Boolean getCheck() {
+            return isCheck;
+        }
+
+        public void setCheck(Boolean check) {
+            isCheck = check;
+        }
     }
 
 

@@ -50,7 +50,7 @@ import rx.schedulers.Schedulers;
 import static coder.aihui.app.MyApplication.daoSession;
 import static coder.aihui.app.MyApplication.mContext;
 import static coder.aihui.ui.main.DownPresenter.COMPANY_DOWN;
-import static coder.aihui.ui.main.DownPresenter.PUR_CONTRACT_PLAN_DOWN;
+import static coder.aihui.ui.main.DownPresenter.AZYS_DOWN;
 import static coder.aihui.ui.main.DownPresenter.PXGL_SB_DOWN;
 
 /**
@@ -467,18 +467,27 @@ public class RemoteMyDataSource implements MyDataSource {
                 return MyRetrofit.getRetrofit()
                         .create(AiHuiLoginServices.class)
                         .getComPanies(4);
-            case PUR_CONTRACT_PLAN_DOWN:
-                return Observable.mergeDelayError(MyRetrofit.getRetrofit()
-                        .create(AiHuiLoginServices.class)
-                        .getAzysDatas(getMaxAzystime(), 1), MyRetrofit.getRetrofit()
-                        .create(AiHuiLoginServices.class)
-                        .getAzysMx());
+            case AZYS_DOWN:
+                return Observable.mergeDelayError(
+                        MyRetrofit.getRetrofit()
+                                .create(AiHuiLoginServices.class)
+                                .getAzysDatas(getMaxAzystime(), 1),         //安装验收数据
+                        MyRetrofit.getRetrofit()
+                                .create(AiHuiLoginServices.class)           //验收明细的数据
+                                .getAzysMx(),
+                        MyRetrofit.getRetrofit()
+                                .create(AiHuiLoginServices.class)           //验收明细的数据
+                                .getAzysYsr()
+                );
+
             case PXGL_SB_DOWN:
-                return Observable.mergeDelayError(MyRetrofit.getRetrofit()
-                        .create(AiHuiLoginServices.class)
-                        .getPpmc(), MyRetrofit.getRetrofit()
-                        .create(AiHuiLoginServices.class)
-                        .getWzmc());
+                return Observable.mergeDelayError(
+                        MyRetrofit.getRetrofit()
+                                .create(AiHuiLoginServices.class)
+                                .getPpmc(),
+                        MyRetrofit.getRetrofit()
+                                .create(AiHuiLoginServices.class)
+                                .getWzmc());
 
 
         }
@@ -501,7 +510,7 @@ public class RemoteMyDataSource implements MyDataSource {
         }
         if (createDate != 0) {
             return TimeUtils.milliseconds2String(createDate);
-        }else{
+        } else {
             return "2010-10-25 12:00:00";
         }
     }

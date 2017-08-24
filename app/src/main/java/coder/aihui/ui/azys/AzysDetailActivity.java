@@ -43,9 +43,12 @@ import coder.aihui.base.AppActivity;
 import coder.aihui.base.BaseFragment;
 import coder.aihui.base.Content;
 import coder.aihui.data.bean.AZYS_MX;
+import coder.aihui.data.bean.DHBean;
 import coder.aihui.data.bean.DialogBean;
 import coder.aihui.data.bean.PUR_CONTRACT_PLAN_DETAIL;
+import coder.aihui.data.bean.YsrBean;
 import coder.aihui.data.bean.gen.AZYS_MXDao;
+import coder.aihui.data.bean.gen.YsrBeanDao;
 import coder.aihui.data.normalbean.PjmxBean;
 import coder.aihui.ui.assetcheck.GifSizeFilter;
 import coder.aihui.ui.bz.BzActivity;
@@ -57,6 +60,9 @@ import coder.aihui.util.ToastUtil;
 import coder.aihui.util.viewutil.QianMingUtils;
 import coder.aihui.widget.ListBottomDialog;
 import coder.aihui.widget.ScrollViewWithListView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 import static coder.aihui.R.id.tv_zczyxq;
 import static coder.aihui.base.Content.AZYS_DETAIL_IDS;
@@ -146,6 +152,7 @@ public class AzysDetailActivity extends AppActivity {
     final static String CMZ = "sideUrl";//侧面照
     final static String MPZ = "mpUrl";//铭牌照
     final static String QMZ = "qmUrl";//签名照
+    final static String[] ZP_STRINGS = {ZMZ, CMZ, MPZ};
 
     //图片所在地址
     HashMap<String, String> mPicMap = new HashMap<>();
@@ -155,6 +162,8 @@ public class AzysDetailActivity extends AppActivity {
     private String                   mBz; //备注
     private InstallDetailListAdapter mInstallDetailListAdapter;
     private String                   mParts;      //配件的返回
+    private long                     mDhId;          //单号
+    private Boolean                  mIsFirstTime;//区分是批量进来还是单次进来回显
 
 
     @Override
@@ -164,9 +173,163 @@ public class AzysDetailActivity extends AppActivity {
         initPhoto();
         initData();
         initGetIntent();
+        backShow();
+    }
+
+    //初始化照片
+    private void initPhoto() {
+        ImageView iv_Zmz = (ImageView) mRlZmz.findViewById(R.id.iv_pic);
+        ImageView iv_Cmz = (ImageView) mRlCmz.findViewById(R.id.iv_pic);
+        ImageView iv_Mpz = (ImageView) mRlMpz.findViewById(R.id.iv_pic);
+
+        mTvTitle.setText("设备验收详情");
+        TextView tv_Zmz = (TextView) mRlZmz.findViewById(R.id.tv_word);
+        TextView tv_Cmz = (TextView) mRlCmz.findViewById(R.id.tv_word);
+        TextView tv_Mpz = (TextView) mRlMpz.findViewById(R.id.tv_word);
+        tv_Zmz.setText("正面照");
+        tv_Cmz.setText("侧面照");
+        tv_Mpz.setText("铭牌照");
+
+        ImageMap.put(ZMZ, iv_Zmz);
+        ImageMap.put(CMZ, iv_Cmz);
+        ImageMap.put(MPZ, iv_Mpz);
+    }
+
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+        List<AZYS_MX> list = mDaoSession.getAZYS_MXDao().queryBuilder()
+                .orderAsc(AZYS_MXDao.Properties.ITEM_ID)
+                .list();
+        if (list == null || list.size() == 0) {
+            ThreadUtils.runOnMainThread(new Runnable() {
+                @Override
+                public void run() {
+                    ToastUtil.showToast("请确定是否没有明细数据...");
+                }
+            });
+            return;
+        }
+        //配件个数
+        mMXList.addAll(list);
+        mInstallDetailListAdapter.notifyDataSetChanged();
 
     }
 
+
+    /**
+     * 初始化传递数据
+     */
+    private void initGetIntent() {
+        Intent intent = getIntent();
+        String ids = intent.getStringExtra(AZYS_DETAIL_IDS);
+        //区分是批量进来还是单次进来回显
+        mIsFirstTime = intent.getBooleanExtra("isFirstTime", true);
+        mDhId = intent.getLongExtra("dh", -1L);
+
+        String[] split = ids.split(",");
+        mIdList = Arrays.asList(split);
+        //第一次进来
+        if (mIsFirstTime && split.length > 0) {
+            bean = mDaoSession.getPUR_CONTRACT_PLAN_DETAILDao().load(Long.parseLong(mIdList.get(0)));
+        } else if (!mIsFirstTime && split.length == 1) {
+            bean = mDaoSession.getPUR_CONTRACT_PLAN_DETAILDao().load(Long.parseLong(ids));
+        }
+        //配件
+        mParts = bean.getPARTS();
+    }
+
+
+    //回显
+    private void backShow() {
+
+
+        showCurrentYsr();
+
+
+        if (!TextUtils.isEmpty(bean.getCD_AZR())) {     //安装工程师
+            mEtAzgcs.setText(bean.getCD_AZR());
+        }
+
+        mEtGcsdh.setText(bean.getCD_AZRDH());      //安装工程师的电话
+        //备注
+        //.setText(bean.getCD_REMARK());         //备注
+
+        mTvWzmc.setText(bean.getWZMC());
+        mTvDept.setText(bean.getDEPT_NAME());
+        mTvGgxh.setText(bean.getGGXH());
+        mEtCcbh.setText(bean.getCCBH());
+        mEtZczh.setText(bean.getZCZH());
+
+        Date qsdqsj = bean.getQSDQSJ();
+        if (qsdqsj != null) {
+            //证书到期时间
+            String zsdqsj = new SimpleDateFormat("yyyy-MM-dd").format(qsdqsj);
+            mTvZczyxq.setText(zsdqsj);
+        }
+        //建议使用年限
+        if (bean.getJYSYNX() != null) {
+            mTvJysynx.setText(bean.getJYSYNX() + "");
+        }
+
+        String check_items = bean.getCHECK_ITEMS();
+        if (check_items != null) {
+            if (!TextUtils.isEmpty(check_items)) {
+                String[] split = check_items.split(",");
+                for (int i = 0; i < mMXList.size(); i++) {
+                    for (int j = 0; j < split.length; j++) {
+                        if (mMXList.get(i).getITEM_ID().toString().equals(split[j])) {
+                            mMXList.get(i).setIsChecked(true);
+                        }
+                    }
+                }
+                mInstallDetailListAdapter.notifyDataSetChanged();
+            }
+        }
+
+
+        //保修单位
+        if (bean.getBXDW_NAME() != null) {
+            mEtBxdw.setText(bean.getBXDW_NAME());
+        }
+
+        //联系人
+        if (bean.getLXRMC() != null) {
+            mEtBxlxr.setText(bean.getLXRMC());
+        }
+        //联系方式
+        if (bean.getLXFS() != null) {
+            mEtBxdh.setText(bean.getLXFS().toString());
+        }
+        //验收签名那里的
+        if (bean.getQMID() != null) {
+            mEtInputId.setText(bean.getQMID());
+        }
+
+        //配件
+        setPjsl();
+
+        //照片的
+        String frontUrl = bean.getZMZP_URL();
+        String sideUrl = bean.getCMZP_URL();
+        String mpUrl = bean.getMPZ_URL();
+        String qmUrl = bean.getKSQSR_FILE_URL();
+
+        mPicMap.put(ZMZ, frontUrl);
+        mPicMap.put(CMZ, sideUrl);
+        mPicMap.put(MPZ, mpUrl);
+        mPicMap.put(QMZ, qmUrl);
+
+        for (String s : mPicMap.keySet()) {
+            String url = mPicMap.get(s);
+            if (!TextUtils.isEmpty(url)) {
+                Glide.with(this).load(url).into(ImageMap.get(s));
+            }
+        }
+
+
+    }
 
     @OnClick({R.id.iv_back, R.id.tv_ok, R.id.ll_pjmx, R.id.ll_bz, R.id.rl_zmz,
             R.id.rl_cmz,
@@ -213,6 +376,7 @@ public class AzysDetailActivity extends AppActivity {
                         if (!url.startsWith("错误")) {
                             Glide.with(AzysDetailActivity.this).load(url)
                                     .into(mIvQianming);
+                            mPicMap.put(QMZ, url);
                         } else {
                             ToastUtil.showToast(url);
                         }
@@ -289,6 +453,9 @@ public class AzysDetailActivity extends AppActivity {
     }
 
 
+    /**
+     * @param type  选的是哪个照片
+     */
     private void gotoChoosePic(String type) {
 
         whichPic = type;
@@ -315,6 +482,50 @@ public class AzysDetailActivity extends AppActivity {
         startActivityForResult(intent, BZ_REQUEST_CODE);
 
     }
+
+
+    @Override
+    protected int getContentViewId() {
+        return R.layout.activity_azys_detail;
+    }
+
+    @Override
+    protected BaseFragment getFirstFragment() {
+        return null;
+    }
+
+
+
+    //显示当前验收人
+    private void showCurrentYsr() {
+        String ysr_ids = bean.getYSR_IDS();
+        Object[] split = ysr_ids.split(",");
+        mDaoSession.getYsrBeanDao().queryBuilder().where(YsrBeanDao.Properties.PurYsrId.in(split)).rx()
+                .list()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<YsrBean>>() {
+                    @Override
+                    public void call(List<YsrBean> ysrLists) {
+                        StringBuilder sb = new StringBuilder();
+                        for (int j = 0; j < ysrLists.size(); j++) {
+                            sb.append(ysrLists.get(j).getUserName());
+                        }
+                        mTvYsr.setText(sb.toString());
+                    }
+                });
+    }
+
+
+    //显示配件的数量
+    private void setPjsl() {
+        if (!TextUtils.isEmpty(mParts)) {
+            List<PjmxBean> list = GsonUtil.parseJsonToList(mParts, new TypeToken<List<PjmxBean>>() {
+            }.getType());
+            mTvPjmx.setText(list.size() + "");
+        }
+    }
+
 
     //去保存
     private void gotoSave() {
@@ -405,179 +616,22 @@ public class AzysDetailActivity extends AppActivity {
             bean.setID(Long.parseLong(mIdList.get(i)));
             mDaoSession.insertOrReplace(bean);
         }
+
+        //单点进来的 单号数目不变
+        if (mIsFirstTime) {
+            //单号
+            DHBean dhBean = mDaoSession.getDHBeanDao().load(mDhId);
+            bean.setDH_ID(dhBean.getDh());
+            dhBean.setNum((dhBean.getNum() == null ? 0 : dhBean.getNum()) + mIdList.size());
+            mDaoSession.insertOrReplace(dhBean);      //订单号数目的变更
+        }
+
         Intent intent = new Intent();
         intent.putExtra("num", mIdList.size());
         intent.putExtra(AZYS_DETAIL_IDS, ListUtils.listToStrings(mIdList));
 
         setResult(RESULT_OK, intent);
         finish();
-    }
-
-    @Override
-    protected int getContentViewId() {
-        return R.layout.activity_azys_detail;
-    }
-
-    @Override
-    protected BaseFragment getFirstFragment() {
-        return null;
-    }
-
-
-    //初始化照片
-    private void initPhoto() {
-        ImageView iv_Zmz = (ImageView) mRlZmz.findViewById(R.id.iv_pic);
-        ImageView iv_Cmz = (ImageView) mRlCmz.findViewById(R.id.iv_pic);
-        ImageView iv_Mpz = (ImageView) mRlMpz.findViewById(R.id.iv_pic);
-
-        mTvTitle.setText("设备验收详情");
-        TextView tv_Zmz = (TextView) mRlZmz.findViewById(R.id.tv_word);
-        TextView tv_Cmz = (TextView) mRlCmz.findViewById(R.id.tv_word);
-        TextView tv_Mpz = (TextView) mRlMpz.findViewById(R.id.tv_word);
-        tv_Zmz.setText("正面照");
-        tv_Cmz.setText("侧面照");
-        tv_Mpz.setText("铭牌照");
-
-        ImageMap.put(ZMZ, iv_Zmz);
-        ImageMap.put(CMZ, iv_Cmz);
-        ImageMap.put(MPZ, iv_Mpz);
-    }
-
-    private void initGetIntent() {
-        Intent intent = getIntent();
-        String ids = intent.getStringExtra(AZYS_DETAIL_IDS);
-        //区分是批量进来还是单次进来回显
-        Boolean isFirstTime = intent.getBooleanExtra("isFirstTime", true);
-        String[] split = ids.split(",");
-        mIdList = Arrays.asList(split);
-        //第一次进来
-        if (isFirstTime && split.length > 0) {
-            bean = mDaoSession.getPUR_CONTRACT_PLAN_DETAILDao().load(Long.parseLong(mIdList.get(0)));
-        } else if (!isFirstTime && split.length == 1) {
-            bean = mDaoSession.getPUR_CONTRACT_PLAN_DETAILDao().load(Long.parseLong(ids));
-        }
-        //配件
-        mParts = bean.getPARTS();
-
-        backShow();
-    }
-
-
-    //回显
-    private void backShow() {
-
-        if (!TextUtils.isEmpty(bean.getCD_AZR())) {     //安装工程师
-            mEtAzgcs.setText(bean.getCD_AZR());
-        }
-
-        mEtGcsdh.setText(bean.getCD_AZRDH());      //安装工程师的电话
-        //备注
-        //.setText(bean.getCD_REMARK());         //备注
-
-        mTvWzmc.setText(bean.getWZMC());
-        mTvDept.setText(bean.getDEPT_NAME());
-        mTvGgxh.setText(bean.getGGXH());
-        mEtCcbh.setText(bean.getCCBH());
-        mEtZczh.setText(bean.getZCZH());
-
-        Date qsdqsj = bean.getQSDQSJ();
-        if (qsdqsj != null) {
-            //证书到期时间
-            String zsdqsj = new SimpleDateFormat("yyyy-MM-dd").format(qsdqsj);
-            mTvZczyxq.setText(zsdqsj);
-        }
-        //建议使用年限
-        if (bean.getJYSYNX() != null) {
-            mTvJysynx.setText(bean.getJYSYNX() + "");
-        }
-
-        String check_items = bean.getCHECK_ITEMS();
-        if (check_items != null) {
-            if (!TextUtils.isEmpty(check_items)) {
-                String[] split = check_items.split(",");
-                for (int i = 0; i < mMXList.size(); i++) {
-                    for (int j = 0; j < split.length; j++) {
-                        if (mMXList.get(i).getITEM_ID().toString().equals(split[j])) {
-                            mMXList.get(i).setIsChecked(true);
-                        }
-                    }
-                }
-                mInstallDetailListAdapter.notifyDataSetChanged();
-            }
-        }
-
-
-        //保修单位
-        if (bean.getBXDW_NAME() != null) {
-            mEtBxdw.setText(bean.getBXDW_NAME());
-        }
-
-        //联系人
-        if (bean.getLXRMC() != null) {
-            mEtBxlxr.setText(bean.getLXRMC());
-        }
-        //联系方式
-        if (bean.getLXFS() != null) {
-            mEtBxdh.setText(bean.getLXFS().toString());
-        }
-        //验收签名那里的
-        if (bean.getQMID() != null) {
-            mEtInputId.setText(bean.getQMID());
-        }
-
-        //配件
-        setPjsl();
-
-        //照片的
-        String frontUrl = bean.getZMZP_URL();
-        String sideUrl = bean.getCMZP_URL();
-        String mpUrl = bean.getMPZ_URL();
-        String qmUrl = bean.getKSQSR_FILE_URL();
-
-        mPicMap.put(ZMZ, frontUrl);
-        mPicMap.put(CMZ, sideUrl);
-        mPicMap.put(MPZ, mpUrl);
-        mPicMap.put(QMZ, qmUrl);
-
-        for (String s : mPicMap.keySet()) {
-            String url = mPicMap.get(s);
-            if (!TextUtils.isEmpty(url)) {
-                Glide.with(this).load(url).into(ImageMap.get(s));
-            }
-        }
-
-
-    }
-
-
-    //显示配件的数量
-    private void setPjsl() {
-        if (!TextUtils.isEmpty(mParts)) {
-            List<PjmxBean> list = GsonUtil.parseJsonToList(mParts, new TypeToken<List<PjmxBean>>() {
-            }.getType());
-            mTvPjmx.setText(list.size() + "");
-        }
-    }
-
-    private void initData() {
-
-
-        List<AZYS_MX> list = mDaoSession.getAZYS_MXDao().queryBuilder()
-                .orderAsc(AZYS_MXDao.Properties.ITEM_ID)
-                .list();
-        if (list == null || list.size() == 0) {
-            ThreadUtils.runOnMainThread(new Runnable() {
-                @Override
-                public void run() {
-                    ToastUtil.showToast("请确定是否没有明细数据...");
-                }
-            });
-            return;
-        }
-        //配件个数
-        mMXList.addAll(list);
-        mInstallDetailListAdapter.notifyDataSetChanged();
-
     }
 
     @Override

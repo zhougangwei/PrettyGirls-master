@@ -54,7 +54,7 @@ public class DownPresenter implements RxBusPresenter {
     public static final int INSPECT_PLAN_DOWN        = 3;         //下载巡检计划
     public static final int INSPECT_INIT_DOWN        = 4;         //下载巡检初始化
     public static final int INSPECT_TEMPLETITEM_DOWN = 5;         //下载巡检模板
-    public static final int PUR_CONTRACT_PLAN_DOWN   = 6;         //下载安装验收
+    public static final int AZYS_DOWN                = 6;         //下载安装验收
     public static final int PXGL_SB_DOWN             = 7;         //下载培训管理设备
 
     public static final int PUR_CONTRACT_PLAN_UP = 8;         //上传安装验收
@@ -179,7 +179,6 @@ public class DownPresenter implements RxBusPresenter {
                 String wsAddress = SPUtil.getWsAddress(mContext);
                 List list1 = new ArrayList();
                 list1.add(userId);
-
                 WebService2000Util ws2 = new WebService2000Util(new WebService2000Util.OnCallBack() {
                     @Override
                     public void callBack(String result) {

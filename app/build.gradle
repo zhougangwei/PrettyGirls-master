@@ -14,7 +14,7 @@ buildscript {
 
 
 greendao {
-    schemaVersion 16
+    schemaVersion 18
     daoPackage 'coder.aihui.data.bean.gen'
     targetGenDir 'src/main/java'
 }

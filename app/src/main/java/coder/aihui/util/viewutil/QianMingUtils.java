@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.text.TextUtils;
 import android.view.MotionEvent;
@@ -24,6 +23,7 @@ import java.util.ArrayList;
 import coder.aihui.R;
 import coder.aihui.util.BitmapDeleteNoUseSpaceUtil;
 import coder.aihui.util.FileUtil;
+import coder.aihui.util.ToastUtil;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -54,10 +54,6 @@ public class QianMingUtils implements View.OnClickListener {
     private Canvas mCanvas;
 
 
-    private boolean isFirstTime = true;
-
-
-
 
 
     public void showQianming(Activity activity, OnSure onSure) {
@@ -80,7 +76,7 @@ public class QianMingUtils implements View.OnClickListener {
 
 
         // 1. 创建空白纸张
-        bitmap = Bitmap.createBitmap(800,800 , Bitmap.Config.ARGB_8888);
+        bitmap = Bitmap.createBitmap(930,726 , Bitmap.Config.ARGB_8888);
         // 2. 创建画板
         mCanvas = new Canvas(bitmap);
 
@@ -103,13 +99,7 @@ public class QianMingUtils implements View.OnClickListener {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
-                if(isFirstTime){
-                    isFirstTime = false;
-                    int measuredWidth = mIv_image.getMeasuredWidth();
-                    int measuredHeight = mIv_image.getMeasuredHeight();
-                    bitmap.setWidth(measuredWidth);
-                    bitmap.setHeight(measuredHeight);
-                }
+
                 switch (event.getAction()) { // 区分事件类型
                     case MotionEvent.ACTION_DOWN: // 按下
                         //						bitmap.setPixel((int)event.getX(), (int)event.getY(), Color.BLACK);
@@ -170,7 +160,7 @@ public class QianMingUtils implements View.OnClickListener {
                 goToSave();
                 break;
             case R.id.chongqian:       //清除
-                mCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                mCanvas.drawColor(Color.WHITE, PorterDuff.Mode.CLEAR);
                 mIv_image.setImageBitmap(bitmap);
                 break;
 
@@ -206,7 +196,7 @@ public class QianMingUtils implements View.OnClickListener {
 
 
     private void goToSave() {
-
+        mDialog.dismiss();
 
         Observable.just(bitmap)
                 .subscribeOn(Schedulers.io())
@@ -259,7 +249,7 @@ public class QianMingUtils implements View.OnClickListener {
                     @Override
                     public void call(String mUrl) {
                         mOnSure.backResult(mUrl);
-                        mDialog.dismiss();
+                        ToastUtil.showToast("保存成功!");
                     }
                 });
 

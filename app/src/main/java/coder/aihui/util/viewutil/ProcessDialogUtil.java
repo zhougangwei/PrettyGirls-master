@@ -23,6 +23,7 @@ public class ProcessDialogUtil {
         MyProgressDialog  mProgressDialog = new MyProgressDialog(activity);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         mProgressDialog.setMessage(message);
+        mProgressDialog.setMax(100);
         mProgressDialog.setProgress(0);
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setCancelable(false);

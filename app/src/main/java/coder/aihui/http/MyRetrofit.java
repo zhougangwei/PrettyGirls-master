@@ -22,8 +22,6 @@ public class MyRetrofit {
     public static Retrofit getRetrofit() {
         if (retrofit == null) {
             synchronized (MyRetrofit.class) {
-
-
                 Gson gson = GsonUtil.getGson();
                 if (retrofit == null) {
                     retrofit = new Retrofit.Builder()

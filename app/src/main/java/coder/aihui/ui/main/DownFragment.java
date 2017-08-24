@@ -45,7 +45,7 @@ import static coder.aihui.ui.main.DownPresenter.INSPECT_PM_INIT_DOWN;
 import static coder.aihui.ui.main.DownPresenter.INSPECT_PM_PLAN_DOWN;
 import static coder.aihui.ui.main.DownPresenter.INSPECT_PM_TEMPLETITEM_DOWN;
 import static coder.aihui.ui.main.DownPresenter.INSPECT_TEMPLETITEM_DOWN;
-import static coder.aihui.ui.main.DownPresenter.PUR_CONTRACT_PLAN_DOWN;
+import static coder.aihui.ui.main.DownPresenter.AZYS_DOWN;
 import static coder.aihui.ui.main.DownPresenter.PXGL_SB_DOWN;
 import static coder.aihui.ui.main.DownPresenter.WEB_SERVICE;
 
@@ -223,7 +223,7 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
         DownLoadBean pubContractPlanBean = new DownLoadBean();
         pubContractPlanBean.name = "安装验收下载";
         pubContractPlanBean.count = mDaoSession.getPUR_CONTRACT_PLANDao().count() == 0L ? 0 : Integer.parseInt(mDaoSession.getPUR_CONTRACT_PLANDao().count() + "");
-        pubContractPlanBean.type = PUR_CONTRACT_PLAN_DOWN;
+        pubContractPlanBean.type = AZYS_DOWN;
         pubContractPlanBean.way = HTTP;
         pubContractPlanBean.bigType = mBigType[3];
         mDatas.add(pubContractPlanBean);

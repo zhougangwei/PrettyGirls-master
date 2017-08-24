@@ -67,7 +67,10 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
+import static coder.aihui.R.array.inspect;
 import static coder.aihui.base.Content.INSPECT_DETAIL_REQUESET_CODE;
+import static coder.aihui.base.Content.USER_ID_LIST;
+import static coder.aihui.base.Content.USER_NAME_LIST;
 import static java.lang.Long.parseLong;
 
 public class InspectStartActivity extends AppActivity implements TabLayout.OnTabSelectedListener {
@@ -174,7 +177,7 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
 
     @Override
     protected void initView() {
-        mSearchType = getResources().getStringArray(R.array.inspect)[0];
+        mSearchType = getResources().getStringArray(inspect)[0];
         mPagerAdapter = new InspectPagerAdapter(mTitleList, mViewList, this);
         mVp.setAdapter(mPagerAdapter);
 
@@ -211,19 +214,19 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
     }
 
     private void initSpinner() {
-        mSearchAdapter = new MyArrayAdapter<String>(this, R.layout.mysimple_spinner_item, getResources().getStringArray(R.array.inspect));
+        mSearchAdapter = new MyArrayAdapter<String>(this, R.layout.mysimple_spinner_item, getResources().getStringArray(inspect));
         mSearchAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpSearch.setAdapter(mSearchAdapter);
 
         mSpSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mSearchType = InspectStartActivity.this.getResources().getStringArray(R.array.inspect)[position];
+                mSearchType = InspectStartActivity.this.getResources().getStringArray(inspect)[position];
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mSearchType = InspectStartActivity.this.getResources().getStringArray(R.array.inspect)[0];
+                mSearchType = InspectStartActivity.this.getResources().getStringArray(inspect)[0];
             }
         });
     }
@@ -919,9 +922,9 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
 
     //添加巡检人员
     private void gotoAddPeople() {
-
         Intent intent = new Intent(this, LessUserActivity.class);
-        intent.putExtra("userIdList", userChooseIds);
+        intent.putExtra(USER_ID_LIST, userChooseIds);
+        intent.putExtra("type", inspect);
         startActivityForResult(intent, Content.XJ_USER_REQUEST_CODE);
 
     }
@@ -933,8 +936,8 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
             switch (requestCode) {
                 //对应的是巡检的巡检人员
                 case Content.XJ_USER_REQUEST_CODE:
-                    userChooseIds = data.getIntegerArrayListExtra("userIdList");
-                    userChooseNames = data.getStringArrayListExtra("userNameList");
+                    userChooseIds = data.getIntegerArrayListExtra(USER_ID_LIST);
+                    userChooseNames = data.getStringArrayListExtra(USER_NAME_LIST);
                     break;
                 case INSPECT_DETAIL_REQUESET_CODE:
                     for (int i = 0; i < mTitleList.size(); i++) {

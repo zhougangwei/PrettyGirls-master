@@ -7,6 +7,7 @@ import android.util.Log;
 import org.greenrobot.greendao.database.Database;
 
 import coder.aihui.data.bean.gen.CORRECT_ASSETDao;
+import coder.aihui.data.bean.gen.DHBeanDao;
 import coder.aihui.data.bean.gen.DaoMaster;
 import coder.aihui.data.bean.gen.INSPECT_PLANDao;
 import coder.aihui.data.bean.gen.InspectTempletItemDao;
@@ -38,6 +39,7 @@ public class MySQLiteOpenHelper extends DaoMaster.OpenHelper {
         Log.d("数据库升级", "oldVersion:" + oldVersion + "newVersion" + newVersion);
         MigrationHelper.getInstance().migrate(db, INSPECT_PLANDao.class, InspectTempletItemDao.class, PUR_CONTRACT_PLANDao.class
         , CORRECT_ASSETDao.class
+                ,DHBeanDao.class
         );
 
     }

@@ -110,14 +110,8 @@ public class SysUserActivity extends AppActivity {
                     holder.setOnClickListener(R.id.cb, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
-                            if (bean.IS_CHECKED()) {
-                                holder.setChecked(R.id.cb, !bean.IS_CHECKED());
-                                bean.setIS_CHECKED(!bean.IS_CHECKED());
-                            } else {
-                                holder.setChecked(R.id.cb, !bean.IS_CHECKED());
-                            }
-
+                            holder.setChecked(R.id.cb, !bean.IS_CHECKED());
+                            bean.setIS_CHECKED(!bean.IS_CHECKED());
                         }
                     });
                 }
@@ -279,7 +273,6 @@ public class SysUserActivity extends AppActivity {
             case R.id.iv_back:
                 finish();
                 break;
-
 
 
         }

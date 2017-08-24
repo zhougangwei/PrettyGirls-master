@@ -153,7 +153,7 @@ import coder.aihui.R;
                         .show();
                 permissionGrant.onPermissionGranted(CODE_MULTI_PERMISSION);
             } else {
-                //openSettingActivity(activity, "those permission need granted!");
+                //openSettingActivity(mActivity, "those permission need granted!");
             }
 
         }
@@ -257,7 +257,7 @@ import coder.aihui.R;
                 Log.i(TAG, "onRequestPermissionsResult PERMISSION NOT GRANTED");
                 //TODO
                 String[] permissionsHint = activity.getResources().getStringArray(R.array.permissions);
-                //openSettingActivity(activity,  "Result" + permissionsHint[requestCode]);
+                //openSettingActivity(mActivity,  "Result" + permissionsHint[requestCode]);
             }
 
         }

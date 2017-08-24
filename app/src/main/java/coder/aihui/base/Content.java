@@ -38,7 +38,7 @@ public class Content {
     //培训管理设备
     public static final int PXGL_WZ_REQUEST_CODE   = 9;
 
-
+        //安装验收列表
     public static final int AZYS_LIST_REQUEST_CODE = 10;
 
     //备注
@@ -74,6 +74,9 @@ public class Content {
     //安装验收明细
     public static final int AZYS_DETAIL_REQUEST_CODE       = 22;
 
+    //验收人
+    public static final int AZYS_YSR_REQUEST_CODE       = 23;
+
 
 
     //供货单位1 生产厂家2 保修单位3
@@ -108,6 +111,9 @@ public class Content {
      */
     public static String CHECKED_USER_IDS   = "checkedUser";
     public static String CHECKED_USER_NAMES = "checkedUserNames";
+    public static String USER_ID_LIST ="userIdList";
+    public static String USER_NAME_LIST ="userNameList";
+
 
     /**
      * 设备

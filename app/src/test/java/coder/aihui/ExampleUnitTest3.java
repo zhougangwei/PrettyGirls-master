@@ -19,7 +19,7 @@ import static coder.aihui.ui.main.DownPresenter.INSPECT_PM_INIT_DOWN;
 import static coder.aihui.ui.main.DownPresenter.INSPECT_PM_PLAN_DOWN;
 import static coder.aihui.ui.main.DownPresenter.INSPECT_PM_TEMPLETITEM_DOWN;
 import static coder.aihui.ui.main.DownPresenter.INSPECT_TEMPLETITEM_DOWN;
-import static coder.aihui.ui.main.DownPresenter.PUR_CONTRACT_PLAN_DOWN;
+import static coder.aihui.ui.main.DownPresenter.AZYS_DOWN;
 import static coder.aihui.ui.main.DownPresenter.PXGL_SB_DOWN;
 import static coder.aihui.ui.main.DownPresenter.WEB_SERVICE;
 
@@ -150,7 +150,7 @@ public class ExampleUnitTest3 {
             //下载安装验收
             DownLoadBean pubContractPlanBean = new DownLoadBean();
             pubContractPlanBean.name = "安装验收下载";
-            pubContractPlanBean.type = PUR_CONTRACT_PLAN_DOWN;
+            pubContractPlanBean.type = AZYS_DOWN;
             pubContractPlanBean.way = HTTP;
             pubContractPlanBean.bigType = mBigType[3];
             mDatas.add(pubContractPlanBean);

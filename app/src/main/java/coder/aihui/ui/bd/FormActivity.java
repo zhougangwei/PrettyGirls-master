@@ -19,6 +19,7 @@ import coder.aihui.R;
 import coder.aihui.base.AppActivity;
 import coder.aihui.base.BaseFragment;
 import coder.aihui.data.bean.DHBean;
+import coder.aihui.data.bean.gen.DHBeanDao;
 
 public class FormActivity extends AppActivity {
 
@@ -51,6 +52,17 @@ public class FormActivity extends AppActivity {
     @Override
     protected void initView() {
         initRecycleView();
+        initData();
+    }
+
+    private void initData() {
+
+        //查询所有单号的数据 渲染进去
+        List<DHBean> dhBeen = mDaoSession.getDHBeanDao().queryBuilder().orderAsc(
+                DHBeanDao.Properties.ContractId,DHBeanDao.Properties.Dh
+        ).list();
+        mDatas.addAll(dhBeen);
+        mAdapter.notifyDataSetChanged();
     }
 
     private void initRecycleView() {

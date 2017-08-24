@@ -41,5 +41,8 @@ public class MyProgressDialog extends ProgressDialog{
         mHandler.sendMessage(message);
     }
 
-
+    @Override
+    public synchronized void setProgress(int value) {
+        super.setProgress(value);
+    }
 }

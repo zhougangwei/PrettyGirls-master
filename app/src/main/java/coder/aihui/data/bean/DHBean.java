@@ -22,16 +22,22 @@ public class DHBean {
     String  dh;          //单号
     String  wzmc;        //物资名称
     Integer num;        //数量
-    String  contractId;   //对应plan表的 标识
+    String  contractId;   //对应plan表的合同标识 不唯一
+    Long  htmxId;   //对应plan表合同的唯一标识
 
 
-    @Generated(hash = 607489257)
-    public DHBean(Long id, String dh, String wzmc, Integer num, String contractId) {
+
+
+
+    @Generated(hash = 666038802)
+    public DHBean(Long id, String dh, String wzmc, Integer num, String contractId,
+            Long htmxId) {
         this.id = id;
         this.dh = dh;
         this.wzmc = wzmc;
         this.num = num;
         this.contractId = contractId;
+        this.htmxId = htmxId;
     }
 
     @Generated(hash = 259480127)
@@ -76,6 +82,14 @@ public class DHBean {
 
     public void setContractId(String contractId) {
         this.contractId = contractId;
+    }
+
+    public Long getHtmxId() {
+        return this.htmxId;
+    }
+
+    public void setHtmxId(Long htmxId) {
+        this.htmxId = htmxId;
     }
 
 

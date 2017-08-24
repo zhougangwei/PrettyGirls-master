@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,7 +26,6 @@ import org.greenrobot.greendao.query.WhereCondition;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
@@ -47,6 +47,7 @@ import coder.aihui.ui.main.DownPresenter;
 import coder.aihui.ui.main.DownView;
 import coder.aihui.util.GsonUtil;
 import coder.aihui.util.ToastUtil;
+import coder.aihui.util.UpFileManager;
 import coder.aihui.util.viewutil.ProcessDialogUtil;
 import coder.aihui.widget.MyArrayAdapter;
 import coder.aihui.widget.MyProgressDialog;
@@ -54,11 +55,21 @@ import coder.aihui.widget.contact.LessUserActivity;
 import coder.aihui.widget.popwindow.MenuPopup;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.functions.Action1;
+import rx.functions.Func1;
 
 import static coder.aihui.app.MyApplication.daoSession;
 import static coder.aihui.base.Content.AZYS_LIST_REQUEST_CODE;
-import static coder.aihui.ui.main.DownPresenter.PUR_CONTRACT_PLAN_UP;
+import static coder.aihui.base.Content.AZYS_YSR_REQUEST_CODE;
+import static coder.aihui.base.Content.USER_ID_LIST;
+import static coder.aihui.base.Content.USER_NAME_LIST;
+import static coder.aihui.ui.azys.AzysDetailActivity.CMZ;
+import static coder.aihui.ui.azys.AzysDetailActivity.MPZ;
+import static coder.aihui.ui.azys.AzysDetailActivity.QMZ;
+import static coder.aihui.ui.azys.AzysDetailActivity.ZMZ;
+import static coder.aihui.ui.azys.AzysDetailActivity.ZP_STRINGS;
+import static coder.aihui.ui.main.DownPresenter.AZYS_DOWN;
 
 
 public class AzysActivity extends AppActivity implements DownView, TabLayout.OnTabSelectedListener {
@@ -122,6 +133,9 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
      */
     private String           mSearchTypeString;        //搜索的类型
     private MyProgressDialog mProgressDialog;
+    private ArrayList<Integer> mUserIdList = new ArrayList<>();         //选择的验收人
+    private ArrayList<String> mUserNameList;
+
 
     @Override
     protected int getContentViewId() {
@@ -163,6 +177,9 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
 
     }
 
+    /**
+     * 初始化选择器
+     */
     private void initSpinner() {
         mDownPresenter = new DownPresenter(this, mDaoSession);
         mSearchAdapter = new MyArrayAdapter<String>(this, R.layout.mysimple_spinner_item, getResources().getStringArray(R.array.azys));
@@ -270,13 +287,18 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
 
 
     private void showView(ViewHolder holder, final PUR_CONTRACT_PLAN bean) {
+        //跳转到下一个页面
         holder.setOnClickListener(R.id.ll, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                if (mUserIdList == null || mUserIdList.size() == 0) {
+                    ToastUtil.showToast("请选择验收人!");
+                    return;
+                }
                 Intent intent = new Intent(AzysActivity.this, AzysListActivity.class);
                 intent.putExtra("htmxId", bean.getHTMX_ID());
+                intent.putExtra(USER_ID_LIST, mUserIdList);
+                intent.putExtra(USER_NAME_LIST, mUserNameList);
                 startActivityForResult(intent, AZYS_LIST_REQUEST_CODE);
             }
         });
@@ -303,6 +325,13 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
             switch (requestCode) {
                 //列表
                 case AZYS_LIST_REQUEST_CODE:
+                    //刷新视图
+                    refreshAllData();
+                    break;
+                case AZYS_YSR_REQUEST_CODE:
+                    //已点击的 回显
+                    mUserIdList = data.getIntegerArrayListExtra(USER_ID_LIST);
+                    mUserNameList = data.getStringArrayListExtra(USER_NAME_LIST);
                     break;
             }
         }
@@ -351,7 +380,7 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
      * @param type
      * @param searchList
      */
-    private void showSearch(String searchId, int type, List searchList) {
+    private synchronized void showSearch(String searchId, final int type, final List searchList) {
 
         String s = mEtSearch.getText().toString();
         PUR_CONTRACT_PLANDao pur_contract_planDao = mDaoSession.getPUR_CONTRACT_PLANDao();
@@ -390,33 +419,41 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
                 break;
 
         }
-
-        list = qb.where(whereCondition)
+        qb.where(whereCondition)
                 .where(propertyName.like("%" + s + "%"))
-                .list();
-
-        searchList.clear();
-        searchList.addAll(list);
-        switch (type) {
-            case 0:
-                mAllAdapter.notifyDataSetChanged();
-                break;
-            case 1:
-                mCheckedAdapter.notifyDataSetChanged();
-                break;
-            case 2:
-                mUnCheckedAdapter.notifyDataSetChanged();
-                break;
-        }
-
-
+                .rx().list().doOnSubscribe(new Action0() {
+            @Override
+            public void call() {
+                searchList.clear();
+            }
+        })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<PUR_CONTRACT_PLAN>>() {
+                    @Override
+                    public void call(List<PUR_CONTRACT_PLAN> pur_contract_plen) {
+                        searchList.addAll(pur_contract_plen);
+                        switch (type) {
+                            case 0:
+                                mAllAdapter.notifyDataSetChanged();
+                                break;
+                            case 1:
+                                mCheckedAdapter.notifyDataSetChanged();
+                                break;
+                            case 2:
+                                mUnCheckedAdapter.notifyDataSetChanged();
+                                break;
+                        }
+                    }
+                });
     }
 
 
     //选择人
     private void gotoChoosePeople() {
         Intent intent = new Intent(this, LessUserActivity.class);
-        startActivity(intent);
+        intent.putExtra("type", AZYS_DOWN);
+        intent.putExtra(USER_ID_LIST, mUserIdList);
+        startActivityForResult(intent, AZYS_YSR_REQUEST_CODE);
     }
 
     //配置
@@ -438,12 +475,12 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
                             clearAll();
                             break;
                         case "上传数据":
+                            mProgressDialog.setMyMessage("上传数据");
                             mProgressDialog.show();
                             gotoUpdata();
                             break;
                         default:
                             break;
-
                     }
                     mUpdownPopup.dismiss();
 
@@ -456,11 +493,71 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
 
     //去上传数据
     private void gotoUpdata() {
-        HashMap<String, String> map = new HashMap<>();
+
+
+
+        List<PUR_CONTRACT_PLAN_DETAIL> list = mDaoSession.getPUR_CONTRACT_PLAN_DETAILDao().queryBuilder()
+                .where((PUR_CONTRACT_PLAN_DETAILDao.Properties.CHECK_STATUS.eq(1)))
+                .where(PUR_CONTRACT_PLAN_DETAILDao.Properties.IS_UP.eq(2))
+                .list();
+        if(list!=null&&list.size()!=0){
+            for (int i = 0; i < ZP_STRINGS.length; i++) {
+                gotoUpPic(list, ZP_STRINGS[i]);
+            }
+        }
+
+
+
+     /*   HashMap<String, String> map = new HashMap<>();
         String json = getupJson();
         map.put("dataJson", json);
-        mDownPresenter.gotoUp(map, PUR_CONTRACT_PLAN_UP);
+        mDownPresenter.gotoUp(map, PUR_CONTRACT_PLAN_UP);*/
 
+    }
+
+    /**
+     * @param list 上传数据对象的集合
+     * @param type 上传的是正面照还是侧面照的种类
+     */
+    private void gotoUpPic(final List<PUR_CONTRACT_PLAN_DETAIL> list, String type) {
+        getZp(list, type).doOnSubscribe(new Action0() {
+            @Override
+            public void call() {
+                mProgressDialog.setMyMessage("上传图片");
+            }
+        }).filter(new Func1<List<String>, Boolean>() {
+            @Override
+            public Boolean call(List<String> strings) {
+                return strings != null && strings.size() != 0;
+            }
+        }).subscribe(new Action1<List<String>>() {
+                    @Override
+                    public void call(List<String> s) {
+                        upFile(s);
+                    }
+                });
+    }
+
+    private void upFile(List<String> s) {
+        new UpFileManager.Builder()
+                .setImgUrls(s)
+                .setMessage("上传图片").setOnBackResult(new UpFileManager.OnBackResult() {
+            @Override
+            public void gotoSuccess() {
+                mProgressDialog.dismiss();
+            }
+
+            @Override
+            public void goToFail(String str) {
+                mProgressDialog.dismiss();
+            }
+
+            @Override
+            public void goToProgress(long totalBytes, long l) {
+                mProgressDialog.setProgress((int) (totalBytes / l));
+
+            }
+        }).build().uploadImg();
     }
 
     private void clearAll() {
@@ -468,9 +565,38 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
         daoSession.getPUR_CONTRACT_PLAN_DETAILDao().deleteAll();
         daoSession.getPUR_CONTRACT_PLANDao().deleteAll();
         daoSession.getAZYS_MXDao().deleteAll();
+        daoSession.getDHBeanDao().deleteAll();
         refreshAllData();
         ToastUtil.showToast("清空完成");
 
+
+    }
+
+
+    private Observable<List<String>> getZp(List<PUR_CONTRACT_PLAN_DETAIL> list, final String type) {
+        return Observable.from(list)
+                .map(new Func1<PUR_CONTRACT_PLAN_DETAIL, String>() {
+                    @Override
+                    public String call(PUR_CONTRACT_PLAN_DETAIL pur_contract_plan_detail) {
+                        switch (type) {
+                            case ZMZ:
+                                return pur_contract_plan_detail.getZMZP_URL();
+                            case CMZ:
+                                return pur_contract_plan_detail.getCMZP_URL();
+                            case MPZ:
+                                return pur_contract_plan_detail.getMPZ_URL();
+                            case QMZ:
+                                return pur_contract_plan_detail.getKSQSR_FILE_URL();
+                            default:
+                                return null;
+                        }
+                    }
+                }).filter(new Func1<String, Boolean>() {
+                    @Override
+                    public Boolean call(String s) {
+                        return !TextUtils.isEmpty(s);
+                    }
+                }).toList();
     }
 
 
@@ -489,10 +615,8 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
         TreeMap<String, String> treeMap = new TreeMap<String, String>();
 
         for (int i = 0; i < ll.size(); i++) {
-
             //一个单号对应几个验收人
             ll.get(i).setYSSJ(new Date());
-
             mDaoSession.update(ll.get(i));
             treeMap.put(ll.get(i).getDH_ID(), ll.get(i).getYSR_IDS());
         }
