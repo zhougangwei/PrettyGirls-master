@@ -139,7 +139,8 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     private List<View> mTabViewList = new ArrayList<>();
     private DownPresenter mDownPresenter;
     private int mWhichSelect = 0;               //当前选中的是哪个
-    private MyProgressDialog mProgressDialog;
+    private MyProgressDialog  mProgressDialog;
+    private SlideFromTopPopup mPopWindow;
 
     @Override
     protected int getContentViewId() {
@@ -153,7 +154,6 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
 
     @Override
     protected void initView() {
-
 
         mProgressDialog = ProcessDialogUtil.createNoCancelDialog("上传巡检数据", this);
         mDownPresenter = new DownPresenter(this, mDaoSession);
@@ -231,7 +231,7 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
         showDialogs.add("全部");
         showDialogs.add("计划");
         showDialogs.add("临时");
-        SlideFromTopPopup popWindow = new SlideFromTopPopup(this, showDialogs, new SlideFromTopPopup.onBackResult() {
+        mPopWindow = new SlideFromTopPopup(this, showDialogs, new SlideFromTopPopup.onBackResult() {
             @Override
             public void backResult(String string) {
                 switch (string) {
@@ -244,14 +244,13 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
                     case "临时":
 
                         break;
-
                     default:
                         break;
-
                 }
+                mPopWindow.dismiss();
             }
         });
-        popWindow.showPopupWindow(v);
+        mPopWindow.showPopupWindow(v);
     }
 
 
@@ -291,6 +290,7 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
 
     }
 
+    //初始化列表视图
     private void initRecycleView() {
 
         RecyclerView viewChecked = (RecyclerView) View.inflate(this, R.layout.recycleview, null);
@@ -307,10 +307,8 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
 
         mPagerAdapter.notifyDataSetChanged();
 
-
         //设置滚动加载监听,同时加载数据
         setScrollListener(mViewList, mDataList);
-
 
         mCheckAdapter = new CommonAdapter<INSPECT_PLAN>(this, R.layout.item_inspect, mCheckList) {
             @Override
@@ -318,8 +316,6 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
                 showItemView(holder, o, CHECK_PLAN);
             }
         };
-
-
         mUncheckAdapter = new CommonAdapter<INSPECT_PLAN>(this, R.layout.item_inspect, mUnCheckList) {
             @Override
             protected void convert(ViewHolder holder, INSPECT_PLAN o, int position) {
@@ -335,8 +331,6 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
         viewChecked.setAdapter(mCheckAdapter);
         viewUnchecked.setAdapter(mUncheckAdapter);
         viewOverdue.setAdapter(mOverDueAdapter);
-
-
     }
 
 
@@ -496,7 +490,7 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
         upBean.setCount(0);
         upBean.setBigType(mBigType[2]);
         upBean.setPropertie(new Property[]{INSPECT_REPDao.Properties.SYNC_FLAG});
-        upBean.setWhereconditions(new WhereCondition[]{INSPECT_REPDao.Properties.INSR_TYPE.eq("XJ"),INSPECT_REPDao.Properties.SYNC_FLAG.isNull()});
+        upBean.setWhereconditions(new WhereCondition[]{INSPECT_REPDao.Properties.INSR_TYPE.eq("XJ"), INSPECT_REPDao.Properties.SYNC_FLAG.isNull()});
 
         UpBean upBean2 = new UpBean();
         upBean2.setEnties("coder.aihui.data.bean.INSPECT_REPS");
@@ -508,7 +502,7 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
         upBean2.setCount(0);
         upBean2.setBigType(mBigType[2]);
         upBean2.setPropertie(new Property[]{INSPECT_REPSDao.Properties.SYNC_FLAG});
-        upBean2.setWhereconditions(new WhereCondition[]{INSPECT_REPSDao.Properties.INSR_TYPE.eq("XJ"),INSPECT_REPSDao.Properties.SYNC_FLAG.isNull()});
+        upBean2.setWhereconditions(new WhereCondition[]{INSPECT_REPSDao.Properties.INSR_TYPE.eq("XJ"), INSPECT_REPSDao.Properties.SYNC_FLAG.isNull()});
 
         list.add(upBean);
         list.add(upBean2);

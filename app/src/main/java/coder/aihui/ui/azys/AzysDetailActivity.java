@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -57,6 +56,7 @@ import coder.aihui.util.ListUtils;
 import coder.aihui.util.NumberChooseDialog;
 import coder.aihui.util.ThreadUtils;
 import coder.aihui.util.ToastUtil;
+import coder.aihui.util.Utils;
 import coder.aihui.util.viewutil.QianMingUtils;
 import coder.aihui.widget.ListBottomDialog;
 import coder.aihui.widget.ScrollViewWithListView;
@@ -148,10 +148,10 @@ public class AzysDetailActivity extends AppActivity {
     private String whichPic;                //哪张图片
     private Map<String, ImageView> ImageMap = new HashMap<>(); //ImageView的集合
 
-    final static String ZMZ = "frontUrl";//正面照
-    final static String CMZ = "sideUrl";//侧面照
-    final static String MPZ = "mpUrl";//铭牌照
-    final static String QMZ = "qmUrl";//签名照
+    final static String   ZMZ        = "frontUrl";//正面照
+    final static String   CMZ        = "sideUrl";//侧面照
+    final static String   MPZ        = "mpUrl";//铭牌照
+    final static String   QMZ        = "qmUrl";//签名照
     final static String[] ZP_STRINGS = {ZMZ, CMZ, MPZ};
 
     //图片所在地址
@@ -425,13 +425,9 @@ public class AzysDetailActivity extends AppActivity {
                 case Content.REQUEST_PIC_CHOOSE:
                     List<Uri> uris = Matisse.obtainResult(data);
                     ImageView imageView = ImageMap.get(whichPic);
-                    ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
-                    layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
-                    layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                    imageView.setLayoutParams(layoutParams);
                     if (!TextUtils.isEmpty(whichPic)) {
                         Glide.with(this).load(uris.get(0)).into(imageView);
-                        mPicMap.put(whichPic, uris.get(0).toString());
+                        mPicMap.put(whichPic, Utils.getRealPathFromUri(uris.get(0)));
                     }
                     break;
 
@@ -454,7 +450,7 @@ public class AzysDetailActivity extends AppActivity {
 
 
     /**
-     * @param type  选的是哪个照片
+     * @param type 选的是哪个照片
      */
     private void gotoChoosePic(String type) {
 
@@ -493,7 +489,6 @@ public class AzysDetailActivity extends AppActivity {
     protected BaseFragment getFirstFragment() {
         return null;
     }
-
 
 
     //显示当前验收人

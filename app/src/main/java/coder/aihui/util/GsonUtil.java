@@ -50,6 +50,7 @@ public class GsonUtil {
                .registerTypeAdapter(double.class, new DoubleDefault0Adapter())
                .registerTypeAdapter(Long.class, new LongDefault0Adapter())
                .registerTypeAdapter(long.class, new LongDefault0Adapter())
+
                .setDateFormat("yyyy-MM-dd HH:mm:ss").create();
        return  gson;
    };

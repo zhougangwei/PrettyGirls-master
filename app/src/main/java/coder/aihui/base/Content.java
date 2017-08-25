@@ -15,7 +15,7 @@ public class Content {
 
     public static final String PASSWORD     = "password";             //密码
     public static final String USER_ACCOUNT = "user_account";      //账号
-    public static final String WS_ADDRESS = "wsAddress";      //账号
+    public static final String WS_ADDRESS   = "wsAddress";      //账号
 
     //资产清点配置
     public static final int REQUEST_CONFIG        = 1;
@@ -38,7 +38,7 @@ public class Content {
     //培训管理设备
     public static final int PXGL_WZ_REQUEST_CODE   = 9;
 
-        //安装验收列表
+    //安装验收列表
     public static final int AZYS_LIST_REQUEST_CODE = 10;
 
     //备注
@@ -48,7 +48,7 @@ public class Content {
     public static final int PJMX_REQUEST_CODE = 12;
 
     //预转科
-    public static final int YZK_REQUEST_CODE = 13;
+    public static final int YZK_REQUEST_CODE         = 13;
     //培训管理明细
     public static final int PXGL_DETAIL_REQUEST_CODE = 14;
 
@@ -56,27 +56,26 @@ public class Content {
     public static final int FILE_PICK_REQUEST_CODE = 15;
 
     //跳往巡检明细一级页面
-    public static final int INSPECT_DETAIL_REQUESET_CODE =16;
+    public static final int INSPECT_DETAIL_REQUESET_CODE = 16;
 
     //跳往巡检明细二级页面
-    public static final int INSPECT_DETAIL2_REQUESET_CODE =17;
+    public static final int INSPECT_DETAIL2_REQUESET_CODE = 17;
 
     //巡检配置
-    public static final int INSPECT_CONFIG_REQUESET_CODE =18;
+    public static final int INSPECT_CONFIG_REQUESET_CODE = 18;
 
     //开始巡检
-    public static final int INSPECT_START_REQUESET_CODE =19;
+    public static final int INSPECT_START_REQUESET_CODE = 19;
     //品牌名称
-    public static final int PPMC_REQUEST_CODE       = 20;
+    public static final int PPMC_REQUEST_CODE           = 20;
     //编辑
-    public static final int ASSET_EDIT_REQUEST_CODE       = 21;
+    public static final int ASSET_EDIT_REQUEST_CODE     = 21;
 
     //安装验收明细
-    public static final int AZYS_DETAIL_REQUEST_CODE       = 22;
+    public static final int AZYS_DETAIL_REQUEST_CODE = 22;
 
     //验收人
-    public static final int AZYS_YSR_REQUEST_CODE       = 23;
-
+    public static final int AZYS_YSR_REQUEST_CODE = 23;
 
 
     //供货单位1 生产厂家2 保修单位3
@@ -111,8 +110,8 @@ public class Content {
      */
     public static String CHECKED_USER_IDS   = "checkedUser";
     public static String CHECKED_USER_NAMES = "checkedUserNames";
-    public static String USER_ID_LIST ="userIdList";
-    public static String USER_NAME_LIST ="userNameList";
+    public static String USER_ID_LIST       = "userIdList";
+    public static String USER_NAME_LIST     = "userNameList";
 
 
     /**
@@ -125,15 +124,19 @@ public class Content {
     public static String AZYS_DETAIL_IDS = "azys_detail_ids";
 
 
-
-    public static String PPMC_IDS = "ppmc_ids";
+    public static String PPMC_IDS   = "ppmc_ids";
     public static String PPMC_NAMES = "ppmc_names";
     /**
      * 设备的ID的集合
      */
-    public static String SB_IDS = "sb_ids";
+    public static String SB_IDS     = "sb_ids";
 
 
     public static String FJ_PATH = "paths";
+
+    //成功
+    public static       int WEB_RESP_CODE_SUCCESS = 1;
+    //token
+    public static final int TOKEN_EXPRIED         = 2;
 
 }
