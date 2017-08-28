@@ -9,5 +9,18 @@ package coder.aihui.rxbus.event;
  * @ 更新描述  ${TODO}
  */
 
-public class MainEvent {
+public class DownEvent {
+    private int Id;
+
+    public DownEvent(int id) {
+        Id = id;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
 }

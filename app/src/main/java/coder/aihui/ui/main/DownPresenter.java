@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 import coder.aihui.base.RxBusPresenter;
+import coder.aihui.data.bean.DownLoadBean;
 import coder.aihui.data.bean.gen.DaoSession;
 import coder.aihui.data.source.MyDataSource;
 import coder.aihui.data.source.remote.RemoteMyDataSource;
 import coder.aihui.http.WebService2000Util;
 import coder.aihui.rxbus.RxBus;
-import coder.aihui.rxbus.event.MainEvent;
 import coder.aihui.util.AndroidUtils;
 import coder.aihui.util.LogUtil;
 import coder.aihui.util.SPUtil;
@@ -102,7 +102,7 @@ public class DownPresenter implements RxBusPresenter {
 
     @Override
     public void onStart() {
-        RxBus.getInstance().post(new MainEvent());
+
     }
 
     @Override

@@ -42,9 +42,11 @@ import coder.aihui.data.bean.PUR_CONTRACT_PLAN_DETAIL;
 import coder.aihui.data.bean.gen.PUR_CONTRACT_PLANDao;
 import coder.aihui.data.bean.gen.PUR_CONTRACT_PLAN_DETAILDao;
 import coder.aihui.data.normalbean.UpPicBean;
+import coder.aihui.ui.contact.LessUserActivity;
 import coder.aihui.ui.inspectxj.InspectPagerAdapter;
 import coder.aihui.ui.main.DownPresenter;
 import coder.aihui.ui.main.DownView;
+import coder.aihui.util.AndroidUtils;
 import coder.aihui.util.GsonUtil;
 import coder.aihui.util.ListUtils;
 import coder.aihui.util.ToastUtil;
@@ -52,7 +54,6 @@ import coder.aihui.util.UpPicClient;
 import coder.aihui.util.viewutil.ProcessDialogUtil;
 import coder.aihui.widget.MyArrayAdapter;
 import coder.aihui.widget.MyProgressDialog;
-import coder.aihui.widget.contact.LessUserActivity;
 import coder.aihui.widget.popwindow.MenuPopup;
 import rx.Observable;
 import rx.Subscriber;
@@ -60,6 +61,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 import static coder.aihui.R.id.ll;
 import static coder.aihui.app.MyApplication.daoSession;
@@ -140,7 +142,7 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
     private ArrayList<Integer> mUserIdList = new ArrayList<>();         //选择的验收人
     private ArrayList<String>              mUserNameList;
     private List<PUR_CONTRACT_PLAN_DETAIL> mUpList;             //待上传的数据
-    private List<String>                   mUpPicList;          //待上传的照片
+    private List<String> mUpPicList = new ArrayList<>();        //待上传的照片
 
 
     @Override
@@ -510,6 +512,7 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
      */
     private void gotoUpPic(final List<PUR_CONTRACT_PLAN_DETAIL> list) {
 
+        mUpPicList.clear();
         Observable.create(new Observable.OnSubscribe<List<String>>() {
             @Override
             public void call(Subscriber<? super List<String>> subscriber) {
@@ -518,33 +521,37 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
                 }
                 subscriber.onCompleted();
             }
-        }).filter(new Func1<List<String>, Boolean>() {
-            @Override
-            public Boolean call(List<String> strings) {
-                return strings != null && strings.size() != 0;
-            }
         }).doOnNext(new Action1<List<String>>() {
+            @Override
+            public void call(List<String> strings) {
+                boolean b = (strings != null && strings.size() != 0);
+                if (b) {
+                    mUpPicList.addAll(strings);
+                }
+            }
+        }).map(new Func1<List<String>, List<String>>() {
+            @Override
+            public List call(List<String> strings) {
+                return mUpPicList;
+            }
+        }).observeOn(AndroidSchedulers.mainThread())
+                .filter(new Func1<List<String>, Boolean>() {
                     @Override
-                    public void call(List<String> strings) {
-                        mUpPicList.addAll(strings);
+                    public Boolean call(List<String> strings) {
+                        boolean b = (strings != null && strings.size() != 0);
+                        if (!b) {
+                            mProgressDialog.dismiss();
+                        }
+                        return b;
                     }
-                })
+                }).distinctUntilChanged()                                   //不传重复的图片
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
                         mProgressDialog.setMyMessage("上传图片");
                     }
-                }).map(new Func1<List<String>, List<String>>() {
-            @Override
-            public List call(List<String> strings) {
-                return mUpPicList;
-            }
-        }).filter(new Func1<List<String>, Boolean>() {
-            @Override
-            public Boolean call(List<String> strings) {
-                return strings != null && strings.size() != 0;
-            }
-        }).distinctUntilChanged()                                   //不传重复的图片
+                })
+                .observeOn(Schedulers.io())
                 .subscribe(new Action1<List<String>>() {
                     @Override
                     public void call(List<String> s) {
@@ -563,6 +570,7 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
                 //处理返回的照片的数据
                 solvePicData(recode);
             }
+
             @Override
             public void gotoFinish() {
                 ToastUtil.showToast("上传图片成功!");
@@ -588,10 +596,16 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
      * 上传完成的Json
      */
     private void gotoUpJson() {
-        HashMap<String, String> map = new HashMap<>();
-        String json = getupJson();
-        map.put("dataJson", json);
-        mDownPresenter.gotoUp(map, PUR_CONTRACT_PLAN_UP);
+        Observable.just(1).observeOn(Schedulers.io())
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer o) {
+                        HashMap<String, String> map = new HashMap<>();
+                        String json = getupJson();
+                        map.put("dataJson", json);
+                        mDownPresenter.gotoUp(map, PUR_CONTRACT_PLAN_UP);
+                    }
+                });
     }
 
     /**
@@ -675,11 +689,9 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
         String string = sb1.toString();
         //切掉最后一个
         String substring = string.substring(0, string.length() - 1);        //单号
-
         String string2 = sb2.toString();
         //切掉最后一个
         String substring2 = string2.substring(0, string2.length() - 1);        //验收人
-
         //String url = "";
 
         String json = GsonUtil.parseListToJson(mUpList);
@@ -754,14 +766,15 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
     }
 
     @Override
-    public void showFault(int type, String wrong) {
+    public void showFault(final int type, final String wrong) {
         Observable.just(type)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
                         mProgressDialog.dismiss();
-                        ToastUtil.showToast("上传失败!");
+                        //弹框显示错误原因
+                        AndroidUtils.showErrorMsg("下载失败", wrong, AzysActivity.this);
                     }
                 });
     }

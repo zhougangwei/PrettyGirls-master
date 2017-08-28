@@ -4,7 +4,6 @@ package coder.aihui.ui.main;
 import coder.aihui.app.BaseView;
 import coder.aihui.base.RxBusPresenter;
 import coder.aihui.rxbus.RxBus;
-import coder.aihui.rxbus.event.MainEvent;
 import coder.aihui.util.LogUtil;
 import rx.Subscription;
 import rx.functions.Action1;
@@ -28,7 +27,7 @@ public class HomePresenter implements RxBusPresenter {
     }
     @Override
     public void onStart() {
-        RxBus.getInstance().post(new MainEvent());
+
     }
 
     @Override
@@ -48,7 +47,6 @@ public class HomePresenter implements RxBusPresenter {
         //用于注销
         RxBus.getInstance().addSubscription(this, subscription);
     }
-
     @Override
     public void unregisterRxBus() {
         mRxBus.unSubscribe(this);

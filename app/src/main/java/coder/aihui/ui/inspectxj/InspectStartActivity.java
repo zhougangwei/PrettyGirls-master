@@ -62,7 +62,7 @@ import coder.aihui.util.SPUtil;
 import coder.aihui.util.ToastUtil;
 import coder.aihui.widget.AlertListDialogUtil;
 import coder.aihui.widget.MyArrayAdapter;
-import coder.aihui.widget.contact.LessUserActivity;
+import coder.aihui.ui.contact.LessUserActivity;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;

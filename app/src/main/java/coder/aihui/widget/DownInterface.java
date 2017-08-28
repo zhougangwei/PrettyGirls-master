@@ -1,4 +1,4 @@
-package coder.aihui.widget.contact;
+package coder.aihui.widget;
 
 /**
  * @ 创建者   zhou

@@ -1,4 +1,4 @@
-package coder.aihui.ui.main;
+package coder.aihui.data.bean;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

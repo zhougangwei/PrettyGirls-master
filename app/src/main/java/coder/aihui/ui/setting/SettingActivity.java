@@ -5,7 +5,8 @@ import android.widget.LinearLayout;
 
 import butterknife.BindView;
 import coder.aihui.R;
-import coder.aihui.base.BaseActivity;
+import coder.aihui.base.AppActivity;
+import coder.aihui.base.BaseFragment;
 
 /**
  * @ 创建者   zhou
@@ -16,7 +17,7 @@ import coder.aihui.base.BaseActivity;
  * @ 更新描述  ${TODO}
  */
 
-public class SettingActivity extends BaseActivity  {
+public class SettingActivity extends AppActivity {
 
 
     @BindView(R.id.iv_back)
@@ -30,6 +31,16 @@ public class SettingActivity extends BaseActivity  {
     @Override
     protected int getContentViewId() {
         return R.layout.fragment_setting;
+    }
+
+    @Override
+    protected BaseFragment getFirstFragment() {
+        return null;
+    }
+
+    @Override
+    protected void initView() {
+
     }
 
     @Override

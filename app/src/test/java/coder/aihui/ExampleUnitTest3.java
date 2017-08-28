@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import coder.aihui.ui.main.DownLoadBean;
+import coder.aihui.data.bean.DownLoadBean;
 import coder.aihui.util.ListUtils;
 
 import static coder.aihui.ui.main.DownFragment.mBigType;

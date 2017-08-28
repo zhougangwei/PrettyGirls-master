@@ -20,7 +20,7 @@ import coder.aihui.base.AppActivity;
 import coder.aihui.base.BaseFragment;
 import coder.aihui.base.Content;
 import coder.aihui.http.WebService2000Util;
-import coder.aihui.ui.main.DownLoadBean;
+import coder.aihui.data.bean.DownLoadBean;
 import coder.aihui.ui.main.DownPresenter;
 import coder.aihui.ui.main.DownView;
 import coder.aihui.util.AndroidUtils;
@@ -107,12 +107,10 @@ public class ConfigActivity extends AppActivity implements DownView {
 
     private void testWsAddress() {
         String wsAddress = mEtAddress.getText().toString().trim();
-        if (AndroidUtils.isConnect(ConfigActivity.this)) {
+        if (!AndroidUtils.isConnect(ConfigActivity.this)) {
             ToastUtil.showToast("请检查网络!");
         }
         // 加载配置的WS地址
-
-
         try {
             final String testUrl;
             if (wsAddress.contains("http://")) {

@@ -1,7 +1,5 @@
 package coder.aihui;
 
-import android.util.Log;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -17,10 +15,7 @@ import java.util.TreeMap;
 import coder.aihui.data.bean.PUR_CONTRACT_PLAN_DETAIL;
 import coder.aihui.data.bean.gen.DaoSession;
 import coder.aihui.data.bean.gen.PUR_CONTRACT_PLAN_DETAILDao;
-import coder.aihui.http.AiHuiLoginServices;
-import coder.aihui.http.MyRetrofit;
 import coder.aihui.util.GsonUtil;
-import rx.functions.Action1;
 
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
@@ -101,14 +96,14 @@ public class ExampleUnitTest2 {
         Map<String, String> map = new HashMap<>();
         map.put("dataJson", finaljson);
 
-        MyRetrofit.getRetrofit()
+        /*MyRetrofit.getRetrofit()
                 .create(AiHuiLoginServices.class)
                 .upLoadPurPlan(map).subscribe(new Action1<String>() {
             @Override
             public void call(String s) {
                 Log.d("ExampleUnitTest2", s);
             }
-        });
+        });*/
 
     }
 

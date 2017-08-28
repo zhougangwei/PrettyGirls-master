@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
@@ -27,6 +26,8 @@ import java.io.IOException;
 import java.util.Vector;
 
 import coder.aihui.R;
+import coder.aihui.base.AppActivity;
+import coder.aihui.base.BaseFragment;
 import coder.aihui.zxing.camera.CameraManager;
 import coder.aihui.zxing.view.ViewfinderView;
 
@@ -34,7 +35,7 @@ import coder.aihui.zxing.view.ViewfinderView;
  * Initial the camera
  * @author Ryan.Tang
  */
-public class MipcaActivityCapture extends AppCompatActivity implements Callback {
+public class MipcaActivityCapture extends AppActivity implements Callback {
 
 	private CaptureActivityHandler handler;
 	private ViewfinderView         viewfinderView;
@@ -47,16 +48,23 @@ public class MipcaActivityCapture extends AppCompatActivity implements Callback 
 	private static final float BEEP_VOLUME = 0.10f;
 	private boolean vibrate;
 
-	/** Called when the activity is first created. */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	protected int getContentViewId() {
+		return R.layout.activity_capture;
+	}
 
+	@Override
+	protected BaseFragment getFirstFragment() {
+		return null;
+	}
+
+	@Override
+	protected void initView() {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);  //无title
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);  //全屏
 
-		setContentView(R.layout.activity_capture);
+
 		//ViewUtil.addTopView(getApplicationContext(), this, R.string.scan_card);
 		CameraManager.init(getApplication());
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);

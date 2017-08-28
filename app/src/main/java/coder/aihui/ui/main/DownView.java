@@ -13,7 +13,6 @@ public interface DownView extends BaseView {
 
     void showProgress(int num, int type);   //显示进度
 
-
 /*    void showLoading(int type);         //显示数据下载时候的加载
 
     void closeLoading(int type);       //数据加载结束 关闭显示*/

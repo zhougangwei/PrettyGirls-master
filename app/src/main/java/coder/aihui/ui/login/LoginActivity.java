@@ -61,29 +61,10 @@ public class LoginActivity extends AppActivity {
 
 
     @Override
-    protected BaseFragment getFirstFragment() {
-        return null;
-    }
-
-    @Override
-    protected void initView() {
-
-        isLogin = SPUtil.getBoolean(this, "isLogin", false);
-
-        //如果是已经登录的 就直接进去了
-        if (isLogin) {
-            startActivity(new Intent(LoginActivity.this
-                    , MainActivity.class
-            ));
-            finish();
-        }
-        ViewUtils.canCancelRadioButton(mRb, new ViewUtils.onBackResult() {
-            @Override
-            public void backResult(boolean b) {
-                SPUtil.saveBoolean(LoginActivity.this, Content.ISREMEMBERPW, b);
-            }
-        });
-
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -109,6 +90,32 @@ public class LoginActivity extends AppActivity {
         if (!TextUtils.isEmpty(hospitalName)) {
             mTvHos.setText(hospitalName);
         }
+
+    }
+
+    @Override
+    protected BaseFragment getFirstFragment() {
+        return null;
+    }
+
+    @Override
+    protected void initView() {
+
+        isLogin = SPUtil.getBoolean(this, "isLogin", false);
+
+        //如果是已经登录的 就直接进去了
+        if (isLogin) {
+            startActivity(new Intent(LoginActivity.this
+                    , MainActivity.class
+            ));
+            finish();
+        }
+        ViewUtils.canCancelRadioButton(mRb, new ViewUtils.onBackResult() {
+            @Override
+            public void backResult(boolean b) {
+                SPUtil.saveBoolean(LoginActivity.this, Content.ISREMEMBERPW, b);
+            }
+        });
 
     }
 
@@ -224,13 +231,6 @@ public class LoginActivity extends AppActivity {
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 
 

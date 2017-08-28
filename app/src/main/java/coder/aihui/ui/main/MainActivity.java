@@ -17,9 +17,13 @@ import coder.aihui.R;
 import coder.aihui.base.AppActivity;
 import coder.aihui.base.BaseFragment;
 import coder.aihui.base.Content;
+import coder.aihui.rxbus.RxBus;
+import coder.aihui.rxbus.event.DownEvent;
 import coder.aihui.util.FragmentFactory;
 import coder.aihui.util.PermissionUtils;
 import coder.aihui.util.SPUtil;
+import coder.aihui.util.ToastUtil;
+import rx.functions.Action1;
 
 import static coder.aihui.app.MyApplication.mContext;
 
@@ -37,6 +41,11 @@ public class MainActivity extends AppActivity implements BottomNavigationBar.OnT
     BottomNavigationBar mBottomNavigationBar;
     private int[] titleIds = {R.string.main, R.string.down, R.string.my};
     private BadgeItem mBadgeItem;
+    private long exitTime = 0;
+
+    public static final int MAIN_TAB = 0;
+    public static final int DOWN_TAB = 1;
+    public static final int MY_TAB   = 2;
 
 
     @Override
@@ -47,8 +56,32 @@ public class MainActivity extends AppActivity implements BottomNavigationBar.OnT
         initBottomNavigation();
 
 
+        initRxBus();
+
         requstPermisson();
 
+    }
+
+
+    //事件处理
+    private void initRxBus() {
+        RxBus.getInstance().toObservable(DownEvent.class)
+                .subscribe(new Action1<DownEvent>() {
+                    @Override
+                    public void call(DownEvent downEvent) {
+                        switch (downEvent.getId()) {
+                            case MAIN_TAB:
+                                break;
+                            case DOWN_TAB:
+                                updateUnreadCount();
+                                break;
+                            case MY_TAB:
+
+                                break;
+                        }
+
+                    }
+                });
     }
 
     private void requstPermisson() {
@@ -81,23 +114,27 @@ public class MainActivity extends AppActivity implements BottomNavigationBar.OnT
     //初始化底边栏
     private void initBottomNavigation() {
 
+        //底边栏主页
+        BottomNavigationItem MainItem = new BottomNavigationItem(R.mipmap.sy_pre, titleIds[0]);
 
-        BottomNavigationItem conversationItem = new BottomNavigationItem(R.mipmap.sy_pre, titleIds[0]);
+
+             /* MainItem.setActiveColorResource(R.color.btn_normal);//选中的颜色
+                MainItem.setActiveColorResource();//没选中的颜色*/
+        mBottomNavigationBar.addItem(MainItem);
+
+        //底边栏下载
+        BottomNavigationItem DownItem = new BottomNavigationItem(R.mipmap.xz_pre, titleIds[1]);
+        //        DownItem.setActiveColor(getResources().getColor(R.color.btn_normal));//选中的颜色
+        //        DownItem.setInActiveColor(getResources().getColor(R.color.inActive));//没选中的颜色
         mBadgeItem = new BadgeItem();
         mBadgeItem.setGravity(Gravity.RIGHT);
         mBadgeItem.setTextColorResource(R.color.white);
         mBadgeItem.setBackgroundColor(R.color.red);
         updateUnreadCount();            //用来显示 数据的
-        conversationItem.setBadgeItem(mBadgeItem);
+        DownItem.setBadgeItem(mBadgeItem);
+        mBottomNavigationBar.addItem(DownItem);
 
-             /* conversationItem.setActiveColorResource(R.color.btn_normal);//选中的颜色
-                conversationItem.setActiveColorResource();//没选中的颜色*/
-        mBottomNavigationBar.addItem(conversationItem);
 
-        BottomNavigationItem contactItem = new BottomNavigationItem(R.mipmap.xz_pre, titleIds[1]);
-        //        contactItem.setActiveColor(getResources().getColor(R.color.btn_normal));//选中的颜色
-        //        contactItem.setInActiveColor(getResources().getColor(R.color.inActive));//没选中的颜色
-        mBottomNavigationBar.addItem(contactItem);
         BottomNavigationItem pluginItem = new BottomNavigationItem(R.mipmap.yh_pre, titleIds[2]);
         //        pluginItem.setActiveColor(getResources().getColor(R.color.btn_normal));//选中的颜色
         //        pluginItem.setInActiveColor(getResources().getColor(R.color.inActive));//没选中的颜色
@@ -114,7 +151,7 @@ public class MainActivity extends AppActivity implements BottomNavigationBar.OnT
 
     public void updateUnreadCount() {
         //获取所有没下载的数据
-        int unreadMsgsCount = SPUtil.getInt(mContext, Content.UnDownDatas,10);
+        int unreadMsgsCount = SPUtil.getInt(mContext, Content.UnDownDatas, 10);
         if (unreadMsgsCount > 99) {
             mBadgeItem.setText("99+");
             mBadgeItem.show(true);
@@ -139,8 +176,8 @@ public class MainActivity extends AppActivity implements BottomNavigationBar.OnT
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         BaseFragment fragment = FragmentFactory.getFragment(position);
         if (!fragment.isAdded()) {
-           // addFragment(getFragmentContentId(),fragment,""+position);
-           transaction.add(getFragmentContentId(),fragment,""+position);
+            // addFragment(getFragmentContentId(),fragment,""+position);
+            transaction.add(getFragmentContentId(), fragment, "" + position);
         }
         transaction.show(fragment).commit();
 
@@ -204,4 +241,17 @@ public class MainActivity extends AppActivity implements BottomNavigationBar.OnT
     }
 
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            ToastUtil.showToast("再按一次退出程序!");
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+            System.exit(0);
+        }
+
+    }
 }

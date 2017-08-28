@@ -1,10 +1,6 @@
 package coder.aihui.ui.main;
 
 import coder.aihui.base.RxBusPresenter;
-import coder.aihui.data.bean.gen.DaoSession;
-import coder.aihui.data.source.remote.RemoteMyDataSource;
-import coder.aihui.rxbus.RxBus;
-import coder.aihui.rxbus.event.MainEvent;
 import rx.functions.Action1;
 
 /**
@@ -19,7 +15,7 @@ import rx.functions.Action1;
 public class UpPresenter implements RxBusPresenter {
     @Override
     public void onStart() {
-        RxBus.getInstance().post(new MainEvent());
+
     }
 
     @Override

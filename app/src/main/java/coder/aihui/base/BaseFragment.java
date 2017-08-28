@@ -1,5 +1,6 @@
 package coder.aihui.base;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -25,9 +26,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment i
 
     protected P mPresenter;
 
-    protected BaseActivity mActivity;
-    private   View         mView;
-    public    DaoSession   mDaoSession;
+    protected BaseActivity   mActivity;
+    private   View           mView;
+    public    DaoSession     mDaoSession;
+    public   SQLiteDatabase mDb;
 
     protected abstract void initView();
 
@@ -48,8 +50,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment i
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
-
     }
 
     //添加fragment
@@ -69,6 +69,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment i
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(getLayoutId(), container, false);
         mDaoSession = MyApplication.getIntstance().getDaoSession();
+        mDb = MyApplication.getIntstance().getDatabase();
         mUnbinder = ButterKnife.bind(this, mView);
         mActivity = (BaseActivity) getActivity();
 

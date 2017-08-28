@@ -1,9 +1,5 @@
 package coder.aihui.util;
 
-import android.text.TextUtils;
-
-import com.google.gson.reflect.TypeToken;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -122,43 +118,39 @@ public class UpPicClient {
                 })
                 .last().
                 observeOn(Schedulers.io()).
-                flatMap(new Func1<File, Observable<String>>() {
+                flatMap(new Func1<File, Observable<List<UpPicBean>>>() {
                     @Override
-                    public Observable<String> call(File file) {
+                    public Observable<List<UpPicBean>> call(File file) {
                         MultipartBody build = builder.build();
 
                         return MyRetrofit.getRetrofit()
                                 .create(AiHuiLoginServices.class)
                                 .uploadFiles(build, fileFolder);
                     }
-                }).filter(new Func1<String, Boolean>() {
-            @Override
-            public Boolean call(String s) {
-                return !TextUtils.isEmpty(s);
-            }
-        }).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<String>() {
+                }).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<UpPicBean>>() {
                     @Override
                     public void onCompleted() {
                         mOnBackResult.gotoFinish();
                     }
+
                     @Override
                     public void onError(Throwable e) {
-                        e.printStackTrace();
                         mOnBackResult.goToFail(e.getMessage());
                     }
+
                     @Override
-                    public void onNext(String recode) {
-                        try{
+                    public void onNext(List<UpPicBean> upPicBeen) {
+                        try {
                             //图片只用这个 保证返回码一致
-                            List<UpPicBean> fileArr = GsonUtil.parseJsonToList(recode, new TypeToken<List<UpPicBean>>() {
-                            }.getType());
-                            mOnBackResult.gotoSuccess(fileArr);
-                        }catch (Exception e){
+                            mOnBackResult.gotoSuccess(upPicBeen);
+                        } catch (Exception e) {
                             onError(e);
                         }
                     }
                 });
+
+
     }
 
     interface ProgressListener {

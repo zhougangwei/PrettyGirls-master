@@ -54,9 +54,9 @@ import coder.aihui.util.SPUtil;
 import coder.aihui.util.ToastUtil;
 import coder.aihui.util.viewutil.TextViewUtils;
 import coder.aihui.widget.ListBottomDialog;
-import coder.aihui.widget.contact.ContactActivity;
-import coder.aihui.widget.contact.PpmcActivity;
-import coder.aihui.widget.contact.SysUserActivity;
+import coder.aihui.ui.contact.ContactActivity;
+import coder.aihui.ui.contact.PpmcActivity;
+import coder.aihui.ui.contact.SysUserActivity;
 import coder.aihui.widget.jdaddressselector.ISelectAble;
 
 import static coder.aihui.base.Content.COMPANY_GHDW;

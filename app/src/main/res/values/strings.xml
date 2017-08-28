@@ -1,17 +1,16 @@
 <resources>
-    <string name="app_name">PrettyGirls</string>
+    <string name="app_name">医工云服</string>
     <string name="action_about">关于我</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
-    <string name="large_text">
+    <string name="large_text"></string>
 
-    </string>
     <string name="action_save">save</string>
     <string name="action_share">share</string>
     <string name="meizhi">MeiZhi</string>
     <string name="version_str">PrettyGirls\npleasecallmecoder</string>
     <string name="title_activity_login">登入</string>
 
-    <!-- Strings related to login -->
+    <!-- Strnamegs related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_username">请输入账号</string>
     <string name="prompt_password">请输入密码</string>
@@ -24,7 +23,7 @@
     <string name="permission_rationale">权限不够</string>
 
     <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
-    <!--主页面的显示-->
+    <!--主页面的name-->
     <string name="main">主页</string>
     <string name="down">下载</string>
     <string name="my">我的</string>

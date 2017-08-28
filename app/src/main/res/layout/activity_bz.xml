@@ -8,7 +8,9 @@
     android:padding="20px"
     tools:context="coder.aihui.ui.bz.BzActivity">
 
-    <TextView
+    <EditText
+
+        android:gravity="start"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:hint="请输入评论!"

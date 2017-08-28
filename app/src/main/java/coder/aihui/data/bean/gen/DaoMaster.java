@@ -22,6 +22,7 @@ public class DaoMaster extends AbstractDaoMaster {
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(Database db, boolean ifNotExists) {
         AZYS_MXDao.createTable(db, ifNotExists);
+        CORRECT_ASSETDao.createTable(db, ifNotExists);
         DHBeanDao.createTable(db, ifNotExists);
         DqxqOutBeanDao.createTable(db, ifNotExists);
         UserDao.createTable(db, ifNotExists);
@@ -47,13 +48,13 @@ public class DaoMaster extends AbstractDaoMaster {
         SYS_DEPTDao.createTable(db, ifNotExists);
         SYS_PARAMDao.createTable(db, ifNotExists);
         SYS_USERDao.createTable(db, ifNotExists);
-        CORRECT_ASSETDao.createTable(db, ifNotExists);
         YsrBeanDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
         AZYS_MXDao.dropTable(db, ifExists);
+        CORRECT_ASSETDao.dropTable(db, ifExists);
         DHBeanDao.dropTable(db, ifExists);
         DqxqOutBeanDao.dropTable(db, ifExists);
         UserDao.dropTable(db, ifExists);
@@ -79,7 +80,6 @@ public class DaoMaster extends AbstractDaoMaster {
         SYS_DEPTDao.dropTable(db, ifExists);
         SYS_PARAMDao.dropTable(db, ifExists);
         SYS_USERDao.dropTable(db, ifExists);
-        CORRECT_ASSETDao.dropTable(db, ifExists);
         YsrBeanDao.dropTable(db, ifExists);
     }
 
@@ -100,6 +100,7 @@ public class DaoMaster extends AbstractDaoMaster {
     public DaoMaster(Database db) {
         super(db, SCHEMA_VERSION);
         registerDaoClass(AZYS_MXDao.class);
+        registerDaoClass(CORRECT_ASSETDao.class);
         registerDaoClass(DHBeanDao.class);
         registerDaoClass(DqxqOutBeanDao.class);
         registerDaoClass(UserDao.class);
@@ -125,7 +126,6 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(SYS_DEPTDao.class);
         registerDaoClass(SYS_PARAMDao.class);
         registerDaoClass(SYS_USERDao.class);
-        registerDaoClass(CORRECT_ASSETDao.class);
         registerDaoClass(YsrBeanDao.class);
     }
 

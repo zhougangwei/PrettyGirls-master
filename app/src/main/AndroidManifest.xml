@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
@@ -16,11 +17,12 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
 
     <application
         android:name=".app.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -28,11 +30,16 @@
             android:name="coder.aihui.app.CustomCachingGlideModule"
             android:value="GlideModule"/>
 
-        <activity
-            android:name=".ui.home.HomeActivity"
-            android:label="@string/app_name">
-        </activity>
-        <activity android:name=".ui.girl.GirlActivity"/>
+        <meta-data
+            android:name="com.taobao.android.hotfix.IDSECRET"
+            android:value="24601821-1" />
+        <meta-data
+            android:name="com.taobao.android.hotfix.APPSECRET"
+            android:value="2a69364290ad59ac5fbec2251d7cb98f" />
+        <meta-data
+            android:name="com.taobao.android.hotfix.RSASECRET"
+            android:value="MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQChmmWQ83dDEtkIoQyAiT7jaLiit5u+KlpL8ZHP/iyWH2ZMeWo/c8CTSTXAnwXm+AXhHzbtMqxnUkiFgEqfTUuVYhjoJNxd/uP2nHLl1KCsMMn0IhdYna0o/lHHq8/qLsXu0kCBLPZnSbiBQg9Lb52jIYOh7tzzAPyCpRlg4oh14cirYAe+B2yq2Ni8nNmkc+Qcj+My0FEzmuuNg/C52G/BcGU1M2DtEobf0B0VE93sEaPA+pT5Kox4jzSsRC+5L0RiwS7ea+sL09R5wGAfiCV7X+2aDKCpAwAnE2IpYDn7ao2bz3CizrYUbyIGvXtRYjB468b/iMDzMXa/Dz28VKDRAgMBAAECggEAD6VMGgmITWUgwBYfiL5A6XF1FsPh/zpIfbvImzOHi41EsTi8EaKaTWg0HQ8IWkE/CHmmLrbOPD6aKNqv3tZz7+WMdcVD1JHd7j1dXmUEnUcn9kvqqLizUBm3PzaiLZETtriCaD87J+raQyFrK6mFwIp5HQ9sMtawm9FyMJAeGBN5meeWs9DPd8ZCDDETKibUhZZUh3MJlvXoQOYXi5TjygVqQ/oIds4QpnMYx/5B8dWVhy+D+lxyEDfmhDeJ0n9K5ZnkChW7x8iwBjY7tYPzhkCybBQcvGdCgOrejw/SKW8hupNFZUvM6HeLiLju/J/mBz/GJKZVA2CjzHl+bmhQ1QKBgQDS/xzD0J/gxiRL7pVaFm/0sxMzr597T8kRUYjBaDEukNV0J1KctRkxjMXS1/UgpcC82MvDz71u2R1UeXfxzPyK38qPF3hU5xpHs/dBJNY8jVwbUk/mD1J3OIHaer65IalCjiVWDeRwPrjcD3Ch+WxKdVavE8wpjs/TABdjVIXtewKBgQDEEkq+zqO7epq8PAJwx1kpIaKwAWmutpyBZgyEGcFsukKSGkCcznInRJs0xUnpsVWl9UDiwgpzad2nEA6cVSKml98d0kH8UiLnJ0DAk/xjaggm0NBYS39vyespRgltbvxarevzbCgyYHyJfuL9rGku382FzujyLxjtfsPE8eyrIwKBgQCRqph0Q4qtBn42gd9QU581Q5AlJcEnw7xfnXeZdtJFgK4sw50QHSLoh3RnjLppsKUwe0epxrjUV0YddMKvB8LuKXRRd3WWv/nvuLohmknhggItxpTsknVvY26apBUaALg2/6WdFHg6WcMMAgjTejwd54ZR1owjwLmPxUdgRxEzEwKBgB/qilg88tIVxxJVAmCxUoYrf3v+/uD9wMQfhHIMbzvvpd56f4IG6PYTaOBSLRHpV/PH1GQVCfZ3iSkkp/wyr41Gs377NtqH1D6kWRn//NmB7QnEe+WjhH8B81GooOg7ZMCuBvZ86J4qrpsDGJgKdKS4sY/SeoDRwdEHDX8FkmzZAoGBALDC0p9wNDORCb6z/CpJkDJo4UmObtZHegZOkd6Q5VXDw00fU22YJIRUJkxLhg8TsW8vHYnx2FIxaQdXjUZgl/TrdDVvyPJ1kJteNZOo+xwY1cSoYdTqiBoM6udKjhrbEWuKJHDLKAWPhqJk06G0WmnzN14sgWtz5GsayiUz2j+G"/>
+
         <activity
             android:name=".ui.main.MainActivity"
             android:windowSoftInputMode="stateHidden">
@@ -65,11 +72,7 @@
         <activity
             android:name=".ui.assetcheck.AssetCheckActivity"
             android:label="资产清点">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".ui.assetcheck.AssetQueryConfigActivity">
         </activity>
@@ -88,22 +91,19 @@
                 android:resource="@xml/file_paths_public"/>
         </provider>
 
+
         <activity
             android:name=".ui.assetquery.AssetQueryActivity"
             android:label="台账查询"
             android:windowSoftInputMode="stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
-            android:name=".widget.contact.ContactActivity"
+            android:name=".ui.contact.ContactActivity"
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
-            android:name=".widget.contact.SysUserActivity"
+            android:name=".ui.contact.SysUserActivity"
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity android:name=".ui.assetcheck.AssetDetailActivity">
@@ -117,23 +117,15 @@
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
-            android:name=".widget.contact.LessUserActivity"
+            android:name=".ui.contact.LessUserActivity"
             android:label="少量联系人">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.azys.AzysActivity"
             android:label="安装验收"
             android:windowSoftInputMode="stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.azys.AzysConfigActivity"
@@ -148,24 +140,16 @@
         <activity
             android:name=".ui.azys.PjmxActivity"
             android:label="培训管理主">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".ui.bz.BzActivity">
         </activity>
-        <activity android:name=".widget.contact.WzActivity">
+        <activity android:name=".ui.contact.WzActivity">
         </activity>
         <activity
             android:name=".ui.pxgl.PxglDetailActivity"
             android:label="培训管理明细">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".ui.assetcheck.YzkActivity">
         </activity>
@@ -179,7 +163,7 @@
         </activity>
         <activity android:name=".ui.inspectxj.InspectConfigActivity">
         </activity>
-        <activity android:name=".widget.contact.PpmcActivity">
+        <activity android:name=".ui.contact.PpmcActivity">
         </activity>
     </application>
 

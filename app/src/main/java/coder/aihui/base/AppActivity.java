@@ -1,5 +1,6 @@
 package coder.aihui.base;
 
+import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.squareup.leakcanary.RefWatcher;
+import com.taobao.sophix.SophixManager;
 import com.zhy.autolayout.AutoFrameLayout;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.AutoRelativeLayout;
@@ -21,6 +23,7 @@ import java.util.Set;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import coder.aihui.R;
 import coder.aihui.app.MyApplication;
 import coder.aihui.data.bean.INSPECT_GROUP;
 import coder.aihui.data.bean.IN_ASSET;
@@ -34,30 +37,26 @@ import coder.aihui.data.bean.gen.REPAIR_PLACEDao;
 import coder.aihui.util.ToastUtil;
 import coder.aihui.zxing.decoding.MipcaActivityCapture;
 
+import static coder.aihui.app.MyApplication.IsNeedRestart;
+import static coder.aihui.app.MyApplication.isActive;
+
 /**
  * Created by renlei on 2016/5/23.
  */
-public abstract class AppActivity extends BaseActivity  {
+public abstract class AppActivity extends BaseActivity {
 
     private static final String  LAYOUT_LINEARLAYOUT   = "LinearLayout";
     private static final String  LAYOUT_FRAMELAYOUT    = "FrameLayout";
     private static final String  LAYOUT_RELATIVELAYOUT = "RelativeLayout";
     public static final  Integer BAR_CODE              = 1;
     Unbinder mUnbinder;
-  //  private BottomDialog   mDeptDialog;           //底部弹窗 科室或者地理位子的
+    //  private BottomDialog   mDeptDialog;           //底部弹窗 科室或者地理位子的
 
     public static final SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    public  DaoSession     mDaoSession;
-    public  SQLiteDatabase mDb;
+    public DaoSession     mDaoSession;
+    public SQLiteDatabase mDb;
 
-    //获取第一个fragment
-    protected abstract BaseFragment getFirstFragment();
-
-    //获取Intent
-    protected void handleIntent(Intent intent) {
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +95,49 @@ public abstract class AppActivity extends BaseActivity  {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!isActive) {
+            //app 从后台唤醒，进入前台
+            isActive = true;
+        }
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (!isAppOnForeground()) {
+            //app 进入后台
+            isActive = false;
+            //全局变量isActive = false 记录当前已经进入后台
+            if (IsNeedRestart) {
+                SophixManager.getInstance().killProcessSafely();
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mUnbinder.unbind();
+        mUnbinder = null;
+        RefWatcher refWatcher = MyApplication.getRefWatcher(this);
+        refWatcher.watch(this);
+        ActivityManager.getInstance().finishActivity(this);
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
+
+    }
+
+    //获取第一个fragment
+    protected abstract BaseFragment getFirstFragment();
+
+    //获取Intent
+    protected void handleIntent(Intent intent) {
+
+    }
+
     protected abstract void initView();
 
     //沉浸式
@@ -112,18 +154,6 @@ public abstract class AppActivity extends BaseActivity  {
     @Override
     protected int getFragmentContentId() {
         return 0;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mUnbinder.unbind();
-        mUnbinder = null;
-        RefWatcher refWatcher = MyApplication.getRefWatcher(this);
-        refWatcher.watch(this);
-        ActivityManager.getInstance().finishActivity(this);
-
-
     }
 
     @Override
@@ -148,13 +178,27 @@ public abstract class AppActivity extends BaseActivity  {
     }
 
 
+    public boolean isAppOnForeground() {
+        // Returns a list of application processes that are running on the
+        // device
 
+        android.app.ActivityManager activityManager = (android.app.ActivityManager) getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+        String packageName = getApplicationContext().getPackageName();
 
+        List<RunningAppProcessInfo> appProcesses = activityManager
+                .getRunningAppProcesses();
+        if (appProcesses == null)
+            return false;
 
-
-
-
-
+        for (RunningAppProcessInfo appProcess : appProcesses) {
+            // The name of the process that this object is associated with.
+            if (appProcess.processName.equals(packageName)
+                    && appProcess.importance == RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     //打开相机
@@ -230,8 +274,6 @@ public abstract class AppActivity extends BaseActivity  {
     public void doSaveListData(Set<String> set) {
 
     }
-
-
 
 
     public void gotoActivity(Class clazz) {

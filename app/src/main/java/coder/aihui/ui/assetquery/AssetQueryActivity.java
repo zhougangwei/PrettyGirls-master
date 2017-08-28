@@ -1,6 +1,8 @@
 package coder.aihui.ui.assetquery;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -24,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import coder.aihui.R;
 import coder.aihui.base.AppActivity;
@@ -48,25 +51,27 @@ import static coder.aihui.app.MyApplication.daoSession;
 public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSelectedListener {
 
     @BindView(R.id.iv_scan)
-    LinearLayout mIvScan;
+    LinearLayout         mIvScan;
     @BindView(R.id.iv_search)
-    LinearLayout mIvSearch;
+    LinearLayout         mIvSearch;
     @BindView(R.id.iv_config)
-    LinearLayout mIvConfig;
+    LinearLayout         mIvConfig;
     @BindView(R.id.iv_back)
-    ImageView    mIvBack;
+    ImageView            mIvBack;
     @BindView(R.id.tv_title)
-    TextView     mTvTitle;
+    TextView             mTvTitle;
     @BindView(R.id.sp_search)
-    Spinner      mSpSearch;
+    Spinner              mSpSearch;
     @BindView(R.id.et_search)
-    EditText     mEtSearch;
+    EditText             mEtSearch;
     @BindView(R.id.tv_search)
-    TextView     mTvSearch;
+    TextView             mTvSearch;
     @BindView(R.id.tb)
-    TabLayout    mTb;
+    TabLayout            mTb;
     @BindView(R.id.vp)
-    ViewPager    mVp;
+    ViewPager            mVp;
+    @BindView(R.id.back_top)
+    FloatingActionButton mBackTop;
 
     private String mDeptName;
     private String mDeptIds;
@@ -89,7 +94,7 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
 
     private List<RecyclerView> mViewList = new ArrayList<>();
 
-
+    //数据持有的集合 持有两个数据
     private List<LoadingBean> mDataList = new ArrayList<>();
     private CommonAdapter<IN_ASSET> mAllAdapter;
     private CommonAdapter<IN_ASSET> mCorrectAdapter;
@@ -109,6 +114,13 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
     private String                 mSearchTypeString;
     private int                    CurrentWhich; //当前选择的是哪个
 
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 
     @Override
     protected int getContentViewId() {
@@ -253,7 +265,7 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
         holder.setText(R.id.tv_location, bean.getDDMC());
     }
 
-    @OnClick({R.id.iv_scan, R.id.iv_search, R.id.iv_config, R.id.iv_back, R.id.tv_search})
+    @OnClick({R.id.iv_scan, R.id.iv_search, R.id.iv_config, R.id.iv_back, R.id.tv_search,R.id.back_top})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_scan:
@@ -271,6 +283,9 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
                 break;
             case R.id.tv_search:
                 gotoTextSearch();       //文字搜索
+                break;
+            case R.id.back_top:
+                mViewList.get(CurrentWhich).scrollToPosition(0);
                 break;
         }
     }
@@ -554,4 +569,6 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
     public void onTabReselected(TabLayout.Tab tab) {
 
     }
+
+
 }

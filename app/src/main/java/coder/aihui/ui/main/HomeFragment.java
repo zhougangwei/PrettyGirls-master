@@ -50,7 +50,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements BaseVie
 
         mPresenter = new HomePresenter(this);
 
-
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
         mRv.setLayoutManager(gridLayoutManager);
 

@@ -25,19 +25,21 @@ import java.util.Map;
 
 import coder.aihui.app.BaseView;
 import coder.aihui.base.Content;
+import coder.aihui.data.bean.DownLoadBean;
 import coder.aihui.data.bean.DqxqOutBean;
 import coder.aihui.data.bean.gen.DaoSession;
 import coder.aihui.data.source.MyDataSource;
 import coder.aihui.http.AiHuiLoginServices;
 import coder.aihui.http.MyRetrofit;
 import coder.aihui.http.WebServiceUtil;
-import coder.aihui.ui.main.DownLoadBean;
 import coder.aihui.ui.main.DownView;
 import coder.aihui.ui.main.UpBean;
 import coder.aihui.util.GsonUtil;
 import coder.aihui.util.SPUtil;
 import coder.aihui.util.ToastUtil;
 import coder.aihui.widget.MyProgressDialog;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -49,8 +51,8 @@ import rx.schedulers.Schedulers;
 
 import static coder.aihui.app.MyApplication.daoSession;
 import static coder.aihui.app.MyApplication.mContext;
-import static coder.aihui.ui.main.DownPresenter.COMPANY_DOWN;
 import static coder.aihui.ui.main.DownPresenter.AZYS_DOWN;
+import static coder.aihui.ui.main.DownPresenter.COMPANY_DOWN;
 import static coder.aihui.ui.main.DownPresenter.PXGL_SB_DOWN;
 
 /**
@@ -436,24 +438,38 @@ public class RemoteMyDataSource implements MyDataSource {
 
     public void gotoUpJson(Integer type, Map<String, String> jsonMap, final LoadDatasCallback callback) {
 
-        MyRetrofit.getRetrofit()
-                .create(AiHuiLoginServices.class)
-                .upLoadPurPlan(jsonMap)
+        Observable.just(jsonMap)
                 .observeOn(Schedulers.io())
+                .map(new Func1<Map<String, String>, RequestBody>() {
+                    @Override
+                    public RequestBody call(Map<String, String> map) {
+                        FormBody.Builder builder = new FormBody.Builder();
+                        for (String k : map.keySet()) {
+                            builder.add(k, map.get(k));
+                        }
+                        FormBody body = builder.build();
+                        return body;
+                    }
+                }).flatMap(new Func1<RequestBody, Observable<String>>() {
+            @Override
+            public Observable<String> call(RequestBody requestBody) {
+                return MyRetrofit.getStringRetrofit()
+                        .create(AiHuiLoginServices.class)
+                        .upLoadPurPlan(requestBody);
+            }
+        }).observeOn(Schedulers.io())
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
                         callback.onDataFinished();
                     }
-
                     @Override
                     public void onError(Throwable e) {
                         callback.onDataNotAvailable(e.getMessage());
                     }
-
                     @Override
                     public void onNext(String s) {
-                        Log.d("RemoteMyDataSource", s);
+                        Log.d("RemoteMyDataSourceJson", s);
                     }
                 });
 
@@ -479,7 +495,6 @@ public class RemoteMyDataSource implements MyDataSource {
                                 .create(AiHuiLoginServices.class)           //验收明细的数据
                                 .getAzysYsr()
                 );
-
             case PXGL_SB_DOWN:
                 return Observable.mergeDelayError(
                         MyRetrofit.getRetrofit()

@@ -12,14 +12,18 @@ import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import butterknife.BindView;
 import coder.aihui.R;
 import coder.aihui.base.BaseFragment;
 import coder.aihui.base.Content;
+import coder.aihui.data.bean.DownLoadBean;
 import coder.aihui.data.bean.gen.INSPECT_PLANDao;
-import coder.aihui.rxbus.event.MainEvent;
+import coder.aihui.rxbus.RxBus;
+import coder.aihui.rxbus.event.DownEvent;
+import coder.aihui.rxbus.event.UIEvent;
 import coder.aihui.util.AndroidUtils;
 import coder.aihui.util.ColorsUtil;
 import coder.aihui.util.ListUtils;
@@ -27,8 +31,8 @@ import coder.aihui.util.ListViewUtil;
 import coder.aihui.util.LogUtil;
 import coder.aihui.util.SPUtil;
 import coder.aihui.util.ToastUtil;
+import coder.aihui.widget.MyDecoration;
 import coder.aihui.widget.MyProgressButton;
-import coder.aihui.widget.contact.MyDecoration;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -36,6 +40,7 @@ import rx.schedulers.Schedulers;
 
 import static coder.aihui.app.MyApplication.mContext;
 import static coder.aihui.ui.main.DownPresenter.ASSET_DOWN;
+import static coder.aihui.ui.main.DownPresenter.AZYS_DOWN;
 import static coder.aihui.ui.main.DownPresenter.COMPANY_DOWN;
 import static coder.aihui.ui.main.DownPresenter.HTTP;
 import static coder.aihui.ui.main.DownPresenter.INIT_DOWN;
@@ -45,9 +50,9 @@ import static coder.aihui.ui.main.DownPresenter.INSPECT_PM_INIT_DOWN;
 import static coder.aihui.ui.main.DownPresenter.INSPECT_PM_PLAN_DOWN;
 import static coder.aihui.ui.main.DownPresenter.INSPECT_PM_TEMPLETITEM_DOWN;
 import static coder.aihui.ui.main.DownPresenter.INSPECT_TEMPLETITEM_DOWN;
-import static coder.aihui.ui.main.DownPresenter.AZYS_DOWN;
 import static coder.aihui.ui.main.DownPresenter.PXGL_SB_DOWN;
 import static coder.aihui.ui.main.DownPresenter.WEB_SERVICE;
+import static coder.aihui.ui.main.MainActivity.DOWN_TAB;
 
 /**
  * @ 创建者   zhou
@@ -74,26 +79,23 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
     public static final String[]     mBigType     = new String[]{"台账", "巡检", "PM", "安装验收"};
     private             List<String> mBigTypeList = new ArrayList<>();
     private List<String> mTypeList;
-
+    HashSet<Integer> DownSet = new HashSet<>();         //已下载的类型的集合 因为一个下载按钮会对应多个下载表 所以区别对待
 
     @Override
     protected void initView() {
-
         mPresenter = new DownPresenter(this, mDaoSession);
-        mPresenter.registerRxBus(MainEvent.class, new Action1<MainEvent>() {
-            @Override
-            public void call(MainEvent mainEvent) {
-            }
-        });
         //初始进度条
         MyProgressButton.initStatusString(new String[]{"下载", "暂停", "完成", "错误", "删除", "更新"});
         //初始话列表的下载
         initRecycle();
         //初始化名字 以后要加就加这里
         initTextName();
-        SPUtil.saveInt(mContext, Content.UnDownDatas, mDatas.size());   //显示几个小红点
+
+        if (SPUtil.getInt(mContext, Content.UnDownDatas, 0) == 0) {
+            SPUtil.saveInt(mContext, Content.UnDownDatas, mDatas.size());   //显示几个小红点
+        }
         //更新显示 数目未下载数目
-        ((MainActivity) mActivity).updateUnreadCount();
+        RxBus.getInstance().post(new DownEvent(DOWN_TAB));
     }
 
     private void initTextName() {
@@ -261,7 +263,7 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
 
                 int i = mTypeList.indexOf(integer + "");
                 View view = ListViewUtil.getViewByPosition(i, mRv);
-                LogUtil.d(integer + "");
+
                 if (view == null) {
                     LogUtil.e(integer + "");
                 } else {
@@ -284,7 +286,6 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
 
     //下载成功的
     public void showNormal(int type) {
-
         Observable.just(type)
                 .compose(this.<Integer>bindToLife())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Integer>() {
@@ -297,10 +298,19 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
                 mcp.setMorphingCircle(false);
                 mcp.setMorphingNormal(false);
                 mcp.normal(2);
-                Integer anInt = SPUtil.getInt(mContext, Content.UnDownDatas, 10);
-                SPUtil.saveInt(mContext, Content.UnDownDatas, anInt - 1);
+
+                if (!DownSet.contains(type)) {
+                    Integer anInt = SPUtil.getInt(mContext, Content.UnDownDatas, mDatas.size());
+                    DownSet.add(type);
+                    SPUtil.saveInt(mContext, Content.UnDownDatas, anInt - 1);
+                }
+
                 //更新主页面上的下载几个显示
-                ((MainActivity) mActivity).updateUnreadCount();
+                RxBus.getInstance().post(new DownEvent(DOWN_TAB));
+                //更新视图
+                if (type == ASSET_DOWN) {
+                    RxBus.getInstance().post(new UIEvent(ASSET_DOWN));
+                }
                 ToastUtil.showToast("下载完成");
 
 
@@ -349,8 +359,8 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
                                 int i = mTypeList.indexOf(type + "");
                                 View view = ListViewUtil.getViewByPosition(i, mRv);
                                 if (view == null) {
-                                    LogUtil.d(i+"");
-                                }else{
+                                    LogUtil.d(i + "");
+                                } else {
                                     MyProgressButton mcp = (MyProgressButton) view.findViewById(R.id.CP_down);
                                     //"下载","暂停","完成","错误","删除","更新"
                                     mcp.download(num);
@@ -398,6 +408,12 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
                 cb.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        if (MyProgressButton.STATE.PROGRESS.equals(cb.getState())) {
+                            ToastUtil.showToast("当前不支持暂停下载!");
+                            cb.normal(3);
+                            return;
+                        }
                         if ("下载".equals(cb.getText()) || "更新".equals(cb.getText()) || "错误".equals(cb.getText()) ||
                                 "完成".equals(cb.getText())
                                 ) {

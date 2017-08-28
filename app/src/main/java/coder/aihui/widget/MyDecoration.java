@@ -1,4 +1,4 @@
-package coder.aihui.widget.contact;
+package coder.aihui.widget;
 
 import android.content.Context;
 import android.content.res.Resources;

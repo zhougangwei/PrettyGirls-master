@@ -21,7 +21,6 @@ import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -564,7 +563,10 @@ public class AssetCheckActivity extends AppActivity implements DownView {
                     mAllDlwzIds = data.getStringExtra("mAllDlwzIds");
                     mAllDlwzName = data.getStringExtra("mAllDlwzName");
                     mTvDlwz.setText(mAllDlwzName);
+
                     //预转科
+                    loadMeinv(0, 10);//这里多线程也要手动控制isLoadingMore
+                    queryAssetInfo();
                     break;
                 case Content.YZK_REQUEST_CODE:
                     //转科成功的数据
@@ -965,10 +967,7 @@ public class AssetCheckActivity extends AppActivity implements DownView {
 
     //显示按钮数目的
     public void queryAssetInfo() {
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
         // 取最大的盘点期次
-
         if (TextUtils.isEmpty(qcid)) {
             AndroidUtils.showErrorMsg("错误", "盘点期次未下载", this);
             return;

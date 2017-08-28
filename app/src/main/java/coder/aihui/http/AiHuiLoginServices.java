@@ -1,7 +1,6 @@
 package coder.aihui.http;
 
 import java.util.List;
-import java.util.Map;
 
 import coder.aihui.data.bean.AZYS_MX;
 import coder.aihui.data.bean.DqxqOutBean;
@@ -10,11 +9,12 @@ import coder.aihui.data.bean.IN_MATERIALS_WZMC;
 import coder.aihui.data.bean.PUB_COMPANY;
 import coder.aihui.data.bean.PUR_CONTRACT_PLAN;
 import coder.aihui.data.bean.YsrBean;
+import coder.aihui.data.normalbean.UpPicBean;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -67,16 +67,15 @@ public interface AiHuiLoginServices {
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("/purContract/sendPurContractDetail.html")
-    Observable<String> upLoadPurPlan(@Body Map<String, String> jsonMap);
+    Observable<String> upLoadPurPlan(@Body RequestBody body);
 
 
     @POST("/fileup/upLoadFile_getId_pda.html?folderName=azys/")
     Observable<String> uploadFiles(@Body MultipartBody imgs);
 
 
-
     @POST("/fileup/upLoadFile_getId_pda.html?/")
-    Observable<String> uploadFiles(@Body MultipartBody body, @Query("folderName") String filename);
+    Observable<List<UpPicBean>> uploadFiles(@Body RequestBody body, @Query("folderName") String filename);
 
 
 }
