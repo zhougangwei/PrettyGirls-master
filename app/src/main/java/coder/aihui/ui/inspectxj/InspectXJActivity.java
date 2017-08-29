@@ -83,7 +83,8 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     ViewPager   mVp;
     @BindView(R.id.fab_xj)
     ImageButton mFabXj;
-
+    @BindView(R.id.tv_title)
+    TextView     mTvTitle;
 
     private List<String>       mTitleList = new ArrayList<>();
     private List<RecyclerView> mViewList  = new ArrayList<>();
@@ -155,6 +156,10 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     @Override
     protected void initView() {
 
+
+
+
+
         mProgressDialog = ProcessDialogUtil.createNoCancelDialog("上传巡检数据", this);
         mDownPresenter = new DownPresenter(this, mDaoSession);
         mPagerAdapter = new InspectPagerAdapter(mTitleList, mViewList, this);
@@ -184,6 +189,14 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     private void initgetIntent() {
         Intent intent = getIntent();
         insrType = intent.getStringExtra("type");       //类型
+        switch (insrType) {
+            case "XJ":
+                mTvTitle.setText("巡检计划");
+                break;
+            case "PM":
+                mTvTitle.setText("PM计划");
+        }
+
     }
 
     private void changeTextOfTab() {

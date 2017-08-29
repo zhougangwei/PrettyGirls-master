@@ -50,19 +50,21 @@ public class MipcaActivityCapture extends AppActivity implements Callback {
 
 	@Override
 	protected int getContentViewId() {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);  //无title
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);  //全屏
 		return R.layout.activity_capture;
 	}
 
 	@Override
 	protected BaseFragment getFirstFragment() {
+
 		return null;
 	}
 
 	@Override
 	protected void initView() {
-		requestWindowFeature(Window.FEATURE_NO_TITLE);  //无title
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);  //全屏
+
 
 
 		//ViewUtil.addTopView(getApplicationContext(), this, R.string.scan_card);

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -68,7 +69,6 @@ import static coder.aihui.R.id.iv_back;
 
 
 public class AssetCheckActivity extends AppActivity implements DownView {
-
 
     @BindView(R.id.linearLayout)
     LinearLayout mLinearLayout;
@@ -227,7 +227,16 @@ public class AssetCheckActivity extends AppActivity implements DownView {
                 holder.setText(R.id.tv_code, bean.getKPBH());
                 holder.setText(R.id.tv_old_code, bean.getKPBH_OLD());
 
-                holder.setText(R.id.rb, bean.getKSMC()); //科室
+
+                String ksmc = bean.getKSMC();
+                if (!TextUtils.isEmpty(bean.getChange_dept())) {
+                    RadioButton rb = holder.getView(R.id.rb);
+                    rb.setText(Html.fromHtml(ksmc + "<font color='#ff0000'>+ (预转科至:" + bean.getChange_dept() + ")</font>"));
+                    //科室
+                } else {
+                    holder.setText(R.id.rb, ksmc); //科室
+                }
+
                 //  holder.setChecked(R.id.rb, bean.getIsCheck());
 
                 //未清点的才显示手动
@@ -235,7 +244,7 @@ public class AssetCheckActivity extends AppActivity implements DownView {
                     holder.setVisible(R.id.tv_hand, false);
                 }
 
-                RadioButton mRb = (RadioButton) holder.getView(R.id.rb);
+                RadioButton mRb = holder.getView(R.id.rb);
                 mRb.setChecked(bean.isFlagChoose());
 
                 //radiobutton 的状态保持
@@ -264,7 +273,7 @@ public class AssetCheckActivity extends AppActivity implements DownView {
                 });
 
                 holder.setText(R.id.tv_location_before, bean.getDDMC());
-                holder.setText(R.id.tv_location_later, bean.getChange_dept() == null ? "" : bean.getChange_dept());
+                holder.setText(R.id.tv_location_later, bean.getDqddmc() == null ? "" : bean.getDqddmc());
 
                 //手动清点
                 holder.setOnClickListener(R.id.tv_hand, new View.OnClickListener() {

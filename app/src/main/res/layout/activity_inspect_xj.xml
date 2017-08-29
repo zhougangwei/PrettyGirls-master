@@ -12,7 +12,9 @@
 
     <include layout="@layout/include_mid_title"></include>
 
-    <include layout="@layout/include_title_text"></include>
+    <include
+        android:id="@+id/tv_title"
+        layout="@layout/include_title_text"></include>
 
     <include layout="@layout/icon_back"></include>
 

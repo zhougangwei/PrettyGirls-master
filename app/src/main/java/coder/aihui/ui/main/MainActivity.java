@@ -1,5 +1,6 @@
 package coder.aihui.ui.main;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,7 @@ import coder.aihui.base.BaseFragment;
 import coder.aihui.base.Content;
 import coder.aihui.rxbus.RxBus;
 import coder.aihui.rxbus.event.DownEvent;
+import coder.aihui.rxbus.event.UIEvent;
 import coder.aihui.util.FragmentFactory;
 import coder.aihui.util.PermissionUtils;
 import coder.aihui.util.SPUtil;
@@ -26,6 +28,7 @@ import coder.aihui.util.ToastUtil;
 import rx.functions.Action1;
 
 import static coder.aihui.app.MyApplication.mContext;
+import static coder.aihui.ui.main.DownPresenter.ASSET_DOWN;
 
 
 public class MainActivity extends AppActivity implements BottomNavigationBar.OnTabSelectedListener {
@@ -62,6 +65,15 @@ public class MainActivity extends AppActivity implements BottomNavigationBar.OnT
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case Content.HOME_REQUEST_CODE:
+                RxBus.getInstance().post(new UIEvent(ASSET_DOWN));
+                break;
+        }
+    }
 
     //事件处理
     private void initRxBus() {
@@ -76,7 +88,6 @@ public class MainActivity extends AppActivity implements BottomNavigationBar.OnT
                                 updateUnreadCount();
                                 break;
                             case MY_TAB:
-
                                 break;
                         }
 

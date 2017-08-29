@@ -7,7 +7,7 @@ public interface MyDataSource {
 
     interface LoadDatasCallback {
 
-        void onDatasLoadedProgress(int index);  //正在保存数据
+        void  onDatasLoadedProgress(int index, String enties);  //正在保存数据
 
         void onDataNotAvailable(String i);      //没拿到数据
 

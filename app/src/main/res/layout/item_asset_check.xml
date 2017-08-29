@@ -74,7 +74,7 @@
                     style="@style/text_assetquery_item"
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="14px"
-                    android:text="手术床"/>
+                    />
 
             </LinearLayout>
 
@@ -95,7 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14px"
-                    android:text="手术床"/>
+                    />
 
             </LinearLayout>
 
@@ -117,7 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14px"
-                    android:text="手术床"/>
+                    />
 
             </LinearLayout>
 
@@ -139,7 +139,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14px"
-                    android:text="手术床"/>
+                    />
 
             </LinearLayout>
 
@@ -163,7 +163,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14px"
-                    android:text="手术床"/>
+                    />
 
             </LinearLayout>
 

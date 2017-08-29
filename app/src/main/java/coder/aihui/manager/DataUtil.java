@@ -76,8 +76,6 @@ public class DataUtil {
         in_asset.setWZMC(cursor.getString(cursor.getColumnIndex("WZMC")));
 
 
-
-
         in_asset.setKPBH_OLD(cursor.getString(cursor.getColumnIndex("KPBH_OLD")));
         in_asset.setKPBH(cursor.getString(cursor.getColumnIndex("KPBH")));
         //后面加的 为了显示

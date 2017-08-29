@@ -221,7 +221,6 @@ public class RemoteMyDataSource implements MyDataSource {
                             return list;
                         }
                     })
-                    .observeOn(Schedulers.io())
                     .filter(new Func1<List, Boolean>() {
                         @Override
                         public Boolean call(List ts) {
@@ -232,6 +231,7 @@ public class RemoteMyDataSource implements MyDataSource {
                             return a;
                         }
                     })
+                    .observeOn(Schedulers.io())
                     .subscribe(new Action1<List>() {
                         @Override
                         public void call(List datas) {
@@ -247,10 +247,9 @@ public class RemoteMyDataSource implements MyDataSource {
                             }
                             for (int j = 0; j < datas.size(); j++) {
                                 mDaossion.insertOrReplace(datas.get(j));
-                                callback.onDatasLoadedProgress(100 * (mDownNum + j + 1) / mTotals);
+                                callback.onDatasLoadedProgress(100 * (mDownNum + j + 1) / mTotals, entitys[finalK]);
                             }
                             mDownNum += datas.size();
-
                             mCountHashMap.put(entitys[finalK], mDownNum);
                             if (mDownNum >= mTotals) {
                                 callback.onDataFinished();
@@ -300,7 +299,7 @@ public class RemoteMyDataSource implements MyDataSource {
                                     JSONObject resJson = new JSONObject(recode);
 
                                     if (resJson.getLong("recode") != 0) {// 返回码不等于
-                                        callback.onDatasLoadedProgress(i);
+                                        callback.onDatasLoadedProgress(i,null);
                                     }
                                 }
                                 gotoChangeFlag(bean.upBean, list);
@@ -371,9 +370,9 @@ public class RemoteMyDataSource implements MyDataSource {
 
 
     class StringListBean {
-        String method;
-        List   datas;
-        UpBean upBean;
+        String method;          //方法
+        List   datas;           //上传照片的耳机和
+        UpBean upBean;          //对象
     }
 
 
@@ -417,14 +416,13 @@ public class RemoteMyDataSource implements MyDataSource {
                                    e.printStackTrace();
                                    callback.onDataNotAvailable("下载错误3,网络错误" + e.getMessage());
                                }
-
                                @Override
                                public void onNext(List list) {
                                    try {
                                        for (int i = 0; i < list.size(); i++) {
                                            Log.d("RemoteMyDataSource", "i:" + list.get(i).getClass().getName() + Thread.currentThread());
                                            mDaossion.insertOrReplace(list.get(i));
-                                           callback.onDatasLoadedProgress((100 * i / list.size()));
+                                           callback.onDatasLoadedProgress((100 * i / list.size()), null);
                                        }
                                    } catch (Exception e) {
                                        callback.onDataNotAvailable("下载错误26" + e.getMessage());

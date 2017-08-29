@@ -40,8 +40,8 @@ public class MyProgressButton extends Button implements ProgressListener {
     private int                    mWidth;
     private int                    mHeight;
     private MyProgressButton.STATE mState;
-    private boolean                morphingCircle;
-    private boolean                morphingNormal;
+    private boolean                morphingCircle;          //变成圆的动画效果状态
+    private boolean                morphingNormal;           //变成普通的的动画效果状态
     private float                  mFromCornerRadius;
     private float                  mToCornerRadius;
     private long                   mDuration;
@@ -118,7 +118,6 @@ public class MyProgressButton extends Button implements ProgressListener {
             if (state == MyProgressButton.STATE.NORMAL) {
                 this.setText(this.resultString);
             }
-
         } else if (this.getWidth() != 0 && !this.morphingCircle && !this.morphingNormal) {
             this.mState = state;
             if (anim) {
@@ -134,7 +133,6 @@ public class MyProgressButton extends Button implements ProgressListener {
                 } else if (this.mState == MyProgressButton.STATE.NORMAL) {
                     this.setText(this.resultString);
                 }
-
                 this.setBound(0);
             }
 
@@ -325,7 +323,68 @@ public class MyProgressButton extends Button implements ProgressListener {
         this.setState(MyProgressButton.STATE.PROGRESS, true);
     }
 
-    static class SavedState extends View.BaseSavedState {
+     class SavedState extends View.BaseSavedState {
+        private boolean morphingNormal;
+        private boolean morphingCircle;
+        private int     mProgress;
+        public  final Creator<MyProgressButton.SavedState> CREATOR = new Creator() {
+            public MyProgressButton.SavedState createFromParcel(Parcel in) {
+                return new MyProgressButton.SavedState(in);
+            }
+            public MyProgressButton.SavedState[] newArray(int size) {
+                return new MyProgressButton.SavedState[size];
+            }
+        };
+
+        public SavedState(Parcelable parcel) {
+            super(parcel);
+        }
+
+        private SavedState(Parcel in) {
+            super(in);
+            this.mProgress = in.readInt();
+            this.morphingCircle = in.readInt() == 1;
+            this.morphingNormal = in.readInt() == 1;
+        }
+
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeInt(this.mProgress);
+            out.writeInt(this.morphingNormal ? 1 : 0);
+            out.writeInt(this.morphingCircle ? 1 : 0);
+        }
+    }
+
+
+    public boolean isMorphingCircle() {
+        return morphingCircle;
+    }
+
+    public void setMorphingCircle(boolean morphingCircle) {
+        this.morphingCircle = morphingCircle;
+    }
+
+    public boolean isMorphingNormal() {
+        return morphingNormal;
+    }
+
+    public void setMorphingNormal(boolean morphingNormal) {
+        this.morphingNormal = morphingNormal;
+    }
+
+
+
+    public  enum STATE {
+        PROGRESS,
+        NORMAL;
+
+        private STATE() {
+        }
+    }
+
+   /*
+
+   static class SavedState extends View.BaseSavedState {
         private boolean morphingNormal;
         private boolean morphingCircle;
         private int     mProgress;
@@ -375,13 +434,24 @@ public class MyProgressButton extends Button implements ProgressListener {
         this.morphingNormal = morphingNormal;
     }
 
-    public static enum STATE {
+
+
+    public  enum STATE {
         PROGRESS,
         NORMAL;
 
         private STATE() {
         }
     }
+
+    原代码
+    public static enum STATE {
+        PROGRESS,
+        NORMAL;
+
+        private STATE() {
+        }
+    }*/
 }
 
 

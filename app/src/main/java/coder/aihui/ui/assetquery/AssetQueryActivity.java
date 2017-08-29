@@ -178,7 +178,6 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mSearchTypeString = AssetQueryActivity.this.getResources().getStringArray(R.array.assetquerycheck)[position];
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 mSearchTypeString = AssetQueryActivity.this.getResources().getStringArray(R.array.assetquerycheck)[0];
@@ -355,7 +354,7 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
                     mAllDlwzName = data.getStringExtra("mAllDlwzName");
                     break;
                 case Content.ASSET_EDIT_REQUEST_CODE:
-                    loadMeinv(2, 0, 10);                //刷新已修改的数据
+                    loadMeinv(1, 0, 10);                //刷新已修改的数据
                     break;
             }
         }
@@ -367,7 +366,7 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
      * @param sql   sql语句
      * @param par   参数
      */
-    private synchronized void querySummaryInAsset(final int which, String sql, String[] par) {
+    private  void querySummaryInAsset(final int which, String sql, String[] par) {
 
         DataUtil.getDatas(mDaoSession, sql, par)
                 .toList()

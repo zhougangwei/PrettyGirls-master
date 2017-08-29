@@ -12,8 +12,14 @@ package coder.aihui.rxbus.event;
 public class UIEvent {
     private int Id;
 
+    /**
+     * @param id 更新的是什么数据 ASSET_DOWN
+     */
     public UIEvent(int id) {
         Id = id;
+    }
+    public UIEvent()
+    {
     }
 
     public int getId() {

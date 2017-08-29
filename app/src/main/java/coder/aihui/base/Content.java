@@ -77,6 +77,9 @@ public class Content {
     //验收人
     public static final int AZYS_YSR_REQUEST_CODE = 23;
 
+    //homeFragment 跳转
+    public static final int HOME_REQUEST_CODE = 23;
+
 
     //供货单位1 生产厂家2 保修单位3
     public static final int COMPANY_GHDW = 1;

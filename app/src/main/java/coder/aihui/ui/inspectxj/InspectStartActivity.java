@@ -188,7 +188,7 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
         mDataList.add(new LoadingBean(mPlanList, false));
         mDataList.add(new LoadingBean(mNoPlanList, false));
 
-        mTvTitle.setText("开始巡检");
+
 
         initGetIntent();
 
@@ -232,10 +232,20 @@ public class InspectStartActivity extends AppActivity implements TabLayout.OnTab
     }
 
     private void initGetIntent() {
+
         Intent intent = getIntent();
         mStartDate = (Date) intent.getSerializableExtra("mStartDate");
         mEndDate = (Date) intent.getSerializableExtra("mEndDate");
+        insrType =  intent.getStringExtra("insrType");
         setTime();
+        switch (insrType) {
+            case "XJ":
+                mTvTitle.setText("开始巡检");
+                break;
+            case "PM":
+                mTvTitle.setText("开始PM");
+                break;
+        }
     }
 
 

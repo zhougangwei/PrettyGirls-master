@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/item_selector"
-    android:layout_width="wrap_content"
-    android:layout_height="50dp">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="wrap_content"
+                android:layout_height="95px"
+                android:background="@drawable/item_selector">
+
     <TextView
-        android:layout_marginLeft="23px"
+        android:background="@drawable/btn_normal"
         android:id="@+id/item_tx"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingLeft="23px"
         android:gravity="center_vertical"
-        android:paddingTop="30px"
         android:paddingBottom="30px"
-        android:textSize="30px"
+        android:paddingTop="30px"
         android:text="选择"
-        android:textColor="#3e6cdc"
-        />
+        android:textColor="@color/black"
 
+        android:textSize="30px"
+        />
+    <!--android:textColor="#3e6cdc"-->
 </RelativeLayout>

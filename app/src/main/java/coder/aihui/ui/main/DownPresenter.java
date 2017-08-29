@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,7 +125,10 @@ public class DownPresenter implements RxBusPresenter {
 
     @Override
     public void unregisterRxBus() {
-        mRxBus.unSubscribe(this);
+        if (mRxBus != null) {
+            mRxBus.unSubscribe(this);
+        }
+
     }
 
 
@@ -139,30 +143,66 @@ public class DownPresenter implements RxBusPresenter {
     //下载初始化
     public void gotoDown(final DownLoadBean bean) {
 
-        getPars(bean).subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
+
+        Observable.create(new Observable.OnSubscribe<DownLoadBean>() {
+            @Override
+            public void call(final Subscriber<? super DownLoadBean> subscriber) {
+                getPars(bean).map(new Func1<DownLoadBean, DownLoadBean>() {
+                    @Override
+                    public DownLoadBean call(DownLoadBean downLoadBean) {
+
+                        for (int i = 0; i < downLoadBean.getEnties().length; i++) {
+                            String s = downLoadBean.getEnties()[i];
+                            String methods = downLoadBean.getMethods()[i];
+
+                            List<String[]> pars = downLoadBean.getPars();
+                            List<String[]> parsNext = new ArrayList<String[]>();
+
+                            if (pars != null && pars.size() > i && pars.get(i) != null && pars.get(i).length > 0) {
+                                String[] strings = downLoadBean.getPars().get(i);
+                                parsNext.add(strings);
+                            }
+                            DownLoadBean downLoadBean1 = new DownLoadBean();
+                            downLoadBean1.setEnties(new String[]{s});
+                            downLoadBean1.setType(downLoadBean.getType());
+                            downLoadBean1.setBigType(downLoadBean.getBigType());
+                            downLoadBean1.setMethods(new String[]{methods});
+                            downLoadBean1.setPars(parsNext);
+                            subscriber.onNext(downLoadBean1);
+                        }
+                        subscriber.onCompleted();
+                        return null;
+                    }
+                }).subscribe();
+
+            }
+        }).subscribeOn(Schedulers.io())
                 .subscribe(new Action1<DownLoadBean>() {
                     @Override
                     public void call(final DownLoadBean mBean) {
                         mRemoteMyDataSource.saveDatas(mBean, new MyLoadDatasCallback(mBean.getType()) {
                             @Override
-                            public void onDatasLoadedProgress(int index) {
-                                Observable.just(index)
-                                        .compose(mView.<Integer>bindToLife())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(new Action1<Integer>() {
-                                            @Override
-                                            public void call(Integer integer) {
-                                                mView.showProgress(integer, mBean.getType());
-                                            }
-                                        });
+                            public void onDatasLoadedProgress(int index, String enties) {
+
+                                //需要一个记录上一个 传的 只有在上一个传到100后才变身!
+                                if (TextUtils.isEmpty(mLastEntie)) {
+                                    mLastEntie = enties;
+                                } else if (index == 100) {
+                                    mLastEntie = "";
+                                } else if (!mLastEntie.equals(enties)) {
+                                    return;
+                                }
+                                Log.d("DownPresenter", "index+mBean.getType():" + (index + ":" + enties) + "(" + Thread.currentThread().getName());
+                                mView.showProgress(index, mBean.getType());
+
                             }
                         });
                     }
                 });
-
-
     }
+
+    String mLastEntie = "";
+
 
     /**
      * 根据不同的获得参数
@@ -248,7 +288,7 @@ public class DownPresenter implements RxBusPresenter {
 
         mRemoteMyDataSource.saveHttpDatas(type, new MyLoadDatasCallback(type) {
             @Override
-            public void onDatasLoadedProgress(int index) {
+            public void onDatasLoadedProgress(int index, String enties) {
                 Observable.just(index).compose(mView.<Integer>bindToLife())
                         .compose(mView.<Integer>bindToLife())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -272,7 +312,7 @@ public class DownPresenter implements RxBusPresenter {
     public void gotoUp(Map map, final Integer type) {
         mRemoteMyDataSource.gotoUpJson(type, map, new MyLoadDatasCallback(PUR_CONTRACT_PLAN_UP) {
             @Override
-            public void onDatasLoadedProgress(int index) {
+            public void onDatasLoadedProgress(int index, String enties) {
                 mView.showProgress(index, type);
             }
         });
@@ -281,7 +321,7 @@ public class DownPresenter implements RxBusPresenter {
     public void gotoUp(List<UpBean> list, final Integer type) {
         mRemoteMyDataSource.gotoUp(list, new MyLoadDatasCallback(type) {
             @Override
-            public void onDatasLoadedProgress(int index) {
+            public void onDatasLoadedProgress(int index, String enties) {
                 mView.showProgress(index, type);
             }
         });

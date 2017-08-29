@@ -20,6 +20,7 @@ import butterknife.Unbinder;
 import coder.aihui.R;
 import coder.aihui.app.BaseView;
 import coder.aihui.base.BaseFragment;
+import coder.aihui.base.Content;
 import coder.aihui.ui.assetcheck.AssetCheckActivity;
 import coder.aihui.ui.assetquery.AssetQueryActivity;
 import coder.aihui.ui.azys.AzysActivity;
@@ -36,6 +37,7 @@ import coder.aihui.util.SPUtil;
  */
 
 public class HomeFragment extends BaseFragment<HomePresenter> implements BaseView {
+
 
 
     @BindView(R.id.rv)
@@ -78,7 +80,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements BaseVie
                     public void onClick(View v) {
                         Intent intent = new Intent(getActivity(), o.className);
                         intent.putExtra("type", o.type);
-                        startActivity(intent);
+                        startActivityForResult(intent, Content.HOME_REQUEST_CODE);
                     }
                 });
             }

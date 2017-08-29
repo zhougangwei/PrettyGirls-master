@@ -19,14 +19,60 @@ import java.util.List;
 public class DownLoadBean implements Cloneable, Serializable {
 
 
-   public String[]       enties;    //对象
-   public String[]       methods;   //方法
-   public List<String[]> pars;        //参数
-   public Integer        type;       //下载的类别
-   public Integer        way;       //下载的方式 http还是webservice
-   public String         name;        //名称
-   public Integer        count;      //数目
-   public String         bigType;      //主体是哪个模块的 如资产清点 巡检...
+    public String[]       enties;    //对象
+    public String[]       methods;   //方法
+    public List<String[]> pars;        //参数
+    public Integer        type;       //下载的类别
+    public Integer        way;       //下载的方式 http还是webservice
+    public String         name;        //名称
+    public Integer        count;      //数目
+    public String         bigType;      //主体是哪个模块的 如资产清点 巡检...
+
+
+    public static final int ON_FINISH   = 2;
+    public static final int ON_PROGRESS = 6;
+    public static final int MISTAKES    = 3;
+    public static final int DOWN        = 0;
+
+
+    /**
+     * "下载","暂停","完成","错误","删除","更新","下载中"
+     * <p>
+     * 0-down
+     * 1-onStop
+     * 2-finish
+     * 3-mistakes
+     * 6-onprogress
+     */
+    public int state = ON_FINISH;             //当前进度条状态 默认完成
+    public int progressNum;               //当前进度条数目
+
+
+    public int getState() {
+        return state;
+    }
+
+    /**
+     * "下载","暂停","完成",,"错误","删除","更新","下载中"
+     * 0-down
+     * 1-onStop
+     * 2-finish
+     * 3-mistakes
+     * 6-onprogress
+     *
+     * @param state
+     */
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public int getProgressNum() {
+        return progressNum;
+    }
+
+    public void setProgressNum(int progressNum) {
+        this.progressNum = progressNum;
+    }
 
 
     public String[] getEnties() {
@@ -104,7 +150,7 @@ public class DownLoadBean implements Cloneable, Serializable {
             ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
             ObjectInputStream ois = new ObjectInputStream(bis);
             return ois.readObject();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
