@@ -66,6 +66,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 import static coder.aihui.R.id.iv_back;
+import static coder.aihui.ui.main.DownPresenter.ASSET_CORRECT_UP;
 
 
 public class AssetCheckActivity extends AppActivity implements DownView {
@@ -173,7 +174,6 @@ public class AssetCheckActivity extends AppActivity implements DownView {
     protected void initView() {
 
         qcid = AndroidUtils.getMaxPcid(mDaoSession);     //初始化获取最大期次
-
 
         mUpDownList.add("上传数据");            //弹框数据
 
@@ -301,7 +301,7 @@ public class AssetCheckActivity extends AppActivity implements DownView {
                 int totalItemCount = mLayoutManager.getItemCount();
                 //lastVisibleItem >= totalItemCount - 4 表示剩下4个item自动加载，各位自由选择
                 // dy>0 表示向下滑动
-                if (lastVisibleItem >= totalItemCount - 4 && dy > 0) {
+                if (lastVisibleItem >= totalItemCount - 4 && dy > 0&& lastVisibleItem != totalItemCount - 1) {
                     if (isLoadingMore) {
                         //不做操作
                     } else {
@@ -382,7 +382,10 @@ public class AssetCheckActivity extends AppActivity implements DownView {
     }
 
     private void gotoUpdata() {
-        //  mDownPresenter.gotoUp();
+
+        Map map = new HashMap<>();
+
+        mDownPresenter.gotoUp(map,ASSET_CORRECT_UP);
 
     }
 

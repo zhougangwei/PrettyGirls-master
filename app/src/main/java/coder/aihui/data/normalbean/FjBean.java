@@ -10,6 +10,9 @@ package coder.aihui.data.normalbean;
  */
 
 public class FjBean {
+
+
+    private Long PxglId;                    //主表的ID
     private String  PXJL_FILE_PATH;		    //附件地址
     private Integer FILE_TYPE;				//附件类型(1培训附件 2培训教材)
     private Integer PXJL_FILE_ID;				//上传到服务器返回的id
@@ -36,5 +39,14 @@ public class FjBean {
 
     public void setPXJL_FILE_ID(Integer PXJL_FILE_ID) {
         this.PXJL_FILE_ID = PXJL_FILE_ID;
+    }
+
+
+    public Long getPxglId() {
+        return PxglId;
+    }
+
+    public void setPxglId(Long pxglId) {
+        PxglId = pxglId;
     }
 }

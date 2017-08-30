@@ -12,7 +12,6 @@ buildscript {
     }
 }
 
-
 greendao {
     schemaVersion 18
     daoPackage 'coder.aihui.data.bean.gen'
@@ -71,6 +70,10 @@ dependencies {
     //自适应
     //沉浸式状态栏
     //选择图片文件
+    compile ('com.aliyun.ams:alicloud-android-hotfix:3.1.0') {
+        exclude(module:'alicloud-android-utdid')
+    }
+    compile 'com.aliyun.ams:alicloud-android-hotfix:3.1.0'
     compile files('libs/zxing.jar')
     compile 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2'
     compile 'com.github.jiang111:CProgressButton:v1.2.7'

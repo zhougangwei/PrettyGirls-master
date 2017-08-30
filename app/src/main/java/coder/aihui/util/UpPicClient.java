@@ -2,14 +2,13 @@ package coder.aihui.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import coder.aihui.app.MyApplication;
 import coder.aihui.data.normalbean.UpPicBean;
 import coder.aihui.http.AiHuiLoginServices;
 import coder.aihui.http.MyRetrofit;
+import coder.aihui.widget.MyProgressDialog;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -38,20 +37,20 @@ public class UpPicClient {
     // private final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/jpg");
 
 
-    private OnBackResult mOnBackResult;
-    private List<String> mImgUrls;
-
-    private String message;
+    private OnBackResult     mOnBackResult;
+    private List<String>     mImgUrls;
+    private MyProgressDialog mProgressDialog;
+    private String           message;
 
 
     private UpPicClient() {
     }
 
     private UpPicClient(Builder builder) {
-
         this.mImgUrls = builder.mImgUrls;
         this.message = builder.message;
         this.mOnBackResult = builder.mOnBackResult;
+        this.mProgressDialog = builder.mProgressDialog;
     }
 
     public static class Builder {
@@ -60,16 +59,25 @@ public class UpPicClient {
 
         private List<String> mImgUrls;
 
-        private String       message;
-        private OnBackResult mOnBackResult;
+        private String           message;
+        private MyProgressDialog mProgressDialog;
+        private OnBackResult     mOnBackResult;
 
 
+        /**
+         * @param imgUrls 图片地址的集合 注意地址别错
+         * @return
+         */
         public Builder setImgUrls(List<String> imgUrls) {
             mImgUrls = imgUrls;
             return this;
         }
 
 
+        /**
+         * @param message 进度条显示的
+         * @return
+         */
         public Builder setMessage(String message) {
             this.message = message;
             return this;
@@ -83,6 +91,23 @@ public class UpPicClient {
         public UpPicClient build() {
             return new UpPicClient(this);
         }
+
+        /**
+         * @param mProgressDialog 显示进度条
+         * @return
+         */
+        public Builder setProgressDialog(MyProgressDialog mProgressDialog) {
+            this.mProgressDialog = mProgressDialog;
+            return this;
+        }
+
+        public Builder setOnDefaultBackResult(OnDefaultResult onBackResult) {
+            this.mOnBackResult = onBackResult;
+            onBackResult.mProgressDialog = this.mProgressDialog;
+            return this;
+        }
+
+
     }
 
 
@@ -91,8 +116,13 @@ public class UpPicClient {
      */
     public synchronized void uploadImg(final String fileFolder) {
 
+        if (mProgressDialog != null) {
+
+            mProgressDialog.show();
+            mProgressDialog.setMyMessage(message);
+        }
         final MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        final Map<String, RequestBody> map = new HashMap<>();
+
         Observable.from(mImgUrls)
                 .map(new Func1<String, File>() {
                     @Override
@@ -191,6 +221,39 @@ public class UpPicClient {
 
             }
         };
+    }
+
+    public abstract static class OnDefaultResult implements OnBackResult {
+
+        MyProgressDialog mProgressDialog;
+
+        @Override
+        public void gotoSuccess(List<UpPicBean> recode) {
+            if (mProgressDialog != null) {
+                mProgressDialog.dismiss();
+            }
+        }
+
+        @Override
+        public void gotoFinish() {
+            if (mProgressDialog != null) {
+                mProgressDialog.dismiss();
+            }
+        }
+
+        @Override
+        public void goToFail(String str) {
+            if (mProgressDialog != null) {
+                mProgressDialog.dismiss();
+            }
+        }
+
+        @Override
+        public void goToProgress(long totalBytes, long l) {
+            if (mProgressDialog != null) {
+                mProgressDialog.setProgress((int) (totalBytes / l));
+            }
+        }
     }
 
 

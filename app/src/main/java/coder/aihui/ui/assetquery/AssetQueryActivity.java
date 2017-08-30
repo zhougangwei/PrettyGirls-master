@@ -147,17 +147,20 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
         mDataList.add(new LoadingBean(new ArrayList(), false));
 
 
-        initSpinner();
+        initSpinner();      //初始化Spinner
+
         mPagerAdapter = new InspectPagerAdapter(mTitleList, mViewList, this);
-        initRecycleView();
         mVp.setAdapter(mPagerAdapter);
         mTb.setupWithViewPager(mVp);
         mTb.addOnTabSelectedListener(this);
 
+        initRecycleView();      //初始化Recyclerview
         initData();
 
     }
 
+
+    //加载数据
     private void initData() {
         for (int i = 0; i < mDataList.size(); i++) {
             loadMeinv(i, mDataList.get(i).list.size(), 10);
@@ -324,7 +327,7 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
                     int lastVisibleItem = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
                     int totalItemCount = mLayoutManager.getItemCount();
                     //lastVisibleItem >= totalItemCount - 4 表示剩下4个item自动加载，各位自由选择
-                    if (lastVisibleItem >= totalItemCount - 4 && dy > 0) {
+                    if (lastVisibleItem >= totalItemCount - 4 && dy > 0&& lastVisibleItem != totalItemCount - 1) {
                         if (!dataList.get(finalI).isLoading) {
                             dataList.get(finalI).isLoading = true;
                             loadMeinv(finalI, dataList.get(finalI).list.size(), 10);//这里多线程也要手动控制isLoadingMore

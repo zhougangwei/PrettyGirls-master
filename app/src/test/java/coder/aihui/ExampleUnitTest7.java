@@ -15,10 +15,9 @@ public class ExampleUnitTest7 {
 
 
     @Mock
-    Context    mContext;    @Mock
-    TextView    mTextView;
-
-
+    Context  mContext;
+    @Mock
+    TextView mTextView;
 
 
     @Before
@@ -26,12 +25,11 @@ public class ExampleUnitTest7 {
         MockitoAnnotations.initMocks(this);
 
     }
+
     @Test
     public void addition_isCorrect() throws Exception {
 
-
     }
-
 
 
 }

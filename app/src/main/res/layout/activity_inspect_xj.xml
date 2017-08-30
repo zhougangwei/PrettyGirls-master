@@ -49,15 +49,17 @@
         android:layout_below="@+id/line">
     </android.support.v4.view.ViewPager>
 
-    <ImageButton
-        android:background="#ffffffff"
+    <coder.aihui.widget.CircleImageView
+        app:border_color="#ffffffff"
         android:id="@+id/fab_xj"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="104px"
+        android:layout_height="104px"
         android:layout_marginLeft="576px"
         android:layout_marginTop="879px"
+        app:border_width="1px"
         android:src="@mipmap/ksxj"
         app:layout_auto_baseheight="width"/>
+    <include layout="@layout/layout_pagenum"/>
 
 
 </RelativeLayout>

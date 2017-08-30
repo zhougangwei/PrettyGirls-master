@@ -91,8 +91,6 @@ public class AndroidUtils {
                     public void onClick(DialogInterface arg0, int arg1) {
                         //					android.os.Process.killProcess(android.os.Process.myPid());
                         //					System.exit(0);
-
-
                     }
                 }).show();
 

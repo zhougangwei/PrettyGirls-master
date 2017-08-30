@@ -1,7 +1,6 @@
 package coder.aihui.ui.inspectxj;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -30,7 +28,6 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import coder.aihui.R;
 import coder.aihui.base.AppActivity;
@@ -47,6 +44,7 @@ import coder.aihui.ui.main.UpBean;
 import coder.aihui.util.AndroidUtils;
 import coder.aihui.util.SPUtil;
 import coder.aihui.util.viewutil.ProcessDialogUtil;
+import coder.aihui.widget.CircleImageView;
 import coder.aihui.widget.MyProgressDialog;
 import coder.aihui.widget.popwindow.MenuPopup;
 import coder.aihui.widget.popwindow.SlideFromTopPopup;
@@ -80,11 +78,17 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     TabLayout    mTb;
 
     @BindView(R.id.vp)
-    ViewPager   mVp;
+    ViewPager       mVp;
     @BindView(R.id.fab_xj)
-    ImageButton mFabXj;
+    CircleImageView mFabXj;
     @BindView(R.id.tv_title)
-    TextView     mTvTitle;
+    TextView        mTvTitle;
+    @BindView(R.id.fab_num)
+    CircleImageView mFabNum;
+    @BindView(R.id.tv_currentNum)
+    TextView        mTvCurrentNum;
+    @BindView(R.id.tv_allNum)
+    TextView        mTvAllNum;
 
     private List<String>       mTitleList = new ArrayList<>();
     private List<RecyclerView> mViewList  = new ArrayList<>();
@@ -143,6 +147,7 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     private MyProgressDialog  mProgressDialog;
     private SlideFromTopPopup mPopWindow;
 
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_inspect_xj;
@@ -155,10 +160,6 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
 
     @Override
     protected void initView() {
-
-
-
-
 
         mProgressDialog = ProcessDialogUtil.createNoCancelDialog("上传巡检数据", this);
         mDownPresenter = new DownPresenter(this, mDaoSession);
@@ -222,7 +223,6 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
                 mYjTabView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
-
                         if (mTb.getSelectedTabPosition() == 0) {
                             showWhichType(v);
                         }
@@ -392,10 +392,12 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
                     int lastVisibleItem = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
+                    int firstVisibleItemPosition = ((LinearLayoutManager) mLayoutManager).findFirstVisibleItemPosition();
                     int totalItemCount = mLayoutManager.getItemCount();
                     //lastVisibleItem >= totalItemCount - 4 表示剩下4个item自动加载，各位自由选择
+                    mTvCurrentNum.setText((firstVisibleItemPosition + 1) + "");
                     // dy>0 表示向下滑动
-                    if (lastVisibleItem >= totalItemCount - 4 && dy > 0) {
+                    if (lastVisibleItem >= totalItemCount - 4 && dy > 0 && lastVisibleItem != totalItemCount - 1) {
                         if (!dataList.get(finalI).isLoading) {
                             dataList.get(finalI).isLoading = true;
                             queryAllCount(finalI, dataList.get(finalI).list.size(), 10);
@@ -628,26 +630,23 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
                         case 0:
                             ((TextView) mTabViewList.get(which).findViewById(R.id.tv_name))
                                     .setText("已检(" + finalNum + ")");
-
                             mCheckList.addAll(inspect_plen);
                             mCheckAdapter.notifyDataSetChanged();
                             break;
                         case 1:
                             ((TextView) mTabViewList.get(which).findViewById(R.id.tv_name))
                                     .setText("未检(" + finalNum + ")");
-
-
                             mUnCheckList.addAll(inspect_plen);
                             mUncheckAdapter.notifyDataSetChanged();
                             break;
                         case 2:
                             ((TextView) mTabViewList.get(which).findViewById(R.id.tv_name))
                                     .setText("过期(" + finalNum + ")");
-
                             mOverDueList.addAll(inspect_plen);
                             mOverDueAdapter.notifyDataSetChanged();
                             break;
                     }
+                    mTvAllNum.setText(finalNum + "");
                 }
             });
         } catch (Exception e) {
@@ -660,23 +659,22 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         mWhichSelect = tab.getPosition();
+        View customView = tab.getCustomView();
+        if (customView != null) {
+            TextView mtv = (TextView)customView .findViewById(R.id.tv_name);
+            String s = mtv.getText().toString();
+            String substring = s.substring(s.indexOf("(") + 1, s.indexOf(")"));//获得数字 渲染下面的数字
+            mTvAllNum.setText(substring + "");
+        }
     }
 
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
-
     }
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 
 

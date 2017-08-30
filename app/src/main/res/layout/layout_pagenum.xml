@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="88px"
+    android:layout_height="88px"
+    android:layout_marginLeft="584px"
+    android:layout_marginTop="1048px"
+    app:layout_auto_baseheight="width"
+    tools:showIn="@layout/activity_inspect_xj">
+
+    <coder.aihui.widget.CircleImageView
+        app:border_width="0px"
+        app:border_color="#d2d2d2"
+        android:id="@+id/fab_num"
+        android:layout_width="88px"
+        android:layout_height="88px"
+        android:scaleType="centerCrop"
+        android:src="#eeeeee"
+        app:layout_auto_baseheight="width"/>
+
+    <TextView
+        android:id="@+id/tv_currentNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/iv_devide"
+        android:layout_centerHorizontal="true"
+        android:text="24"
+        android:textColor="@color/black"
+        android:textSize="24px"/>
+
+    <ImageView
+        android:id="@+id/iv_devide"
+        android:layout_width="58px"
+        android:layout_height="1px"
+        android:layout_centerInParent="true"
+        android:src="#d2d2d2"/>
+
+    <TextView
+        android:id="@+id/tv_allNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_devide"
+        android:layout_centerHorizontal="true"
+        android:text="1235"
+        android:textColor="@color/black"
+        android:textSize="24px"/>
+</RelativeLayout>

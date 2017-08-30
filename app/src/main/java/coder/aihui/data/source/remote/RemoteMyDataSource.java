@@ -53,7 +53,9 @@ import static coder.aihui.app.MyApplication.daoSession;
 import static coder.aihui.app.MyApplication.mContext;
 import static coder.aihui.ui.main.DownPresenter.AZYS_DOWN;
 import static coder.aihui.ui.main.DownPresenter.COMPANY_DOWN;
+import static coder.aihui.ui.main.DownPresenter.PUR_CONTRACT_PLAN_UP;
 import static coder.aihui.ui.main.DownPresenter.PXGL_SB_DOWN;
+import static coder.aihui.ui.main.DownPresenter.PXGL_UP;
 
 /**
  * Created by oracleen on 2016/6/29.
@@ -281,7 +283,11 @@ public class RemoteMyDataSource implements MyDataSource {
                 }).filter(new Func1<StringListBean, Boolean>() {
             @Override
             public Boolean call(StringListBean bean) {
-                return bean.datas != null && bean.datas.size() != 0;
+                boolean b = bean.datas != null && bean.datas.size() != 0;
+                if (!b) {
+                    callback.onDataFinished();
+                }
+                return b;
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -299,7 +305,7 @@ public class RemoteMyDataSource implements MyDataSource {
                                     JSONObject resJson = new JSONObject(recode);
 
                                     if (resJson.getLong("recode") != 0) {// 返回码不等于
-                                        callback.onDatasLoadedProgress(i,null);
+                                        callback.onDatasLoadedProgress(i, null);
                                     }
                                 }
                                 gotoChangeFlag(bean.upBean, list);
@@ -416,6 +422,7 @@ public class RemoteMyDataSource implements MyDataSource {
                                    e.printStackTrace();
                                    callback.onDataNotAvailable("下载错误3,网络错误" + e.getMessage());
                                }
+
                                @Override
                                public void onNext(List list) {
                                    try {
@@ -434,7 +441,7 @@ public class RemoteMyDataSource implements MyDataSource {
 
     }
 
-    public void gotoUpJson(Integer type, Map<String, String> jsonMap, final LoadDatasCallback callback) {
+    public void gotoUpJson(final Integer type, Map<String, String> jsonMap, final LoadDatasCallback callback) {
 
         Observable.just(jsonMap)
                 .observeOn(Schedulers.io())
@@ -451,9 +458,7 @@ public class RemoteMyDataSource implements MyDataSource {
                 }).flatMap(new Func1<RequestBody, Observable<String>>() {
             @Override
             public Observable<String> call(RequestBody requestBody) {
-                return MyRetrofit.getStringRetrofit()
-                        .create(AiHuiLoginServices.class)
-                        .upLoadPurPlan(requestBody);
+                return getRetrofitObserbe(type, requestBody);
             }
         }).observeOn(Schedulers.io())
                 .subscribe(new Subscriber<String>() {
@@ -461,10 +466,12 @@ public class RemoteMyDataSource implements MyDataSource {
                     public void onCompleted() {
                         callback.onDataFinished();
                     }
+
                     @Override
                     public void onError(Throwable e) {
                         callback.onDataNotAvailable(e.getMessage());
                     }
+
                     @Override
                     public void onNext(String s) {
                         Log.d("RemoteMyDataSourceJson", s);
@@ -472,6 +479,20 @@ public class RemoteMyDataSource implements MyDataSource {
                 });
 
 
+    }
+
+    Observable getRetrofitObserbe(int type, RequestBody requestBody) {
+        switch (type) {
+            case PXGL_UP:
+                return MyRetrofit.getStringRetrofit()
+                        .create(AiHuiLoginServices.class)
+                        .upLoadPurPlan(requestBody);
+            case PUR_CONTRACT_PLAN_UP:
+                return MyRetrofit.getStringRetrofit()
+                        .create(AiHuiLoginServices.class)
+                        .upPxjl(requestBody);
+        }
+        return null;
     }
 
 
@@ -501,8 +522,6 @@ public class RemoteMyDataSource implements MyDataSource {
                         MyRetrofit.getRetrofit()
                                 .create(AiHuiLoginServices.class)
                                 .getWzmc());
-
-
         }
         return null;
 

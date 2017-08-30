@@ -44,9 +44,9 @@ import static coder.aihui.app.MyApplication.mContext;
 
 public class DownPresenter implements RxBusPresenter {
     private       CompositeSubscription mCompositeSubscription;
-    private       DownView              mView;
-    private final RemoteMyDataSource    mRemoteMyDataSource;
-    private       DaoSession            mDaoSession;
+    private       DownView              mView;              //视图接口
+    private final RemoteMyDataSource    mRemoteMyDataSource;    //数据操作实现类
+    private       DaoSession            mDaoSession;    //数据库
 
     public static final int ASSET_DOWN   = 1;         //台账
     public static final int INIT_DOWN    = 0;         //初始化
@@ -64,7 +64,8 @@ public class DownPresenter implements RxBusPresenter {
     public static final int INSPECT_PM_PLAN_DOWN        = 10;         //下载PM计划
     public static final int INSPECT_PM_INIT_DOWN        = 11;         //下载PM初始化
     public static final int INSPECT_PM_TEMPLETITEM_DOWN = 12;         //下载PM模板
-
+    public static final int ASSET_CORRECT_UP            = 13;         //上传修改台账的数据
+    public static final int PXGL_UP                     = 14;         //培训管理上传
 
     public static final int SYS_USER_DOWN = 1001;         //下载人员
 
@@ -308,9 +309,15 @@ public class DownPresenter implements RxBusPresenter {
         mDaoSession.getDao(entie).deleteAll();
     }
 
-    //上传数据http
-    public void gotoUp(Map map, final Integer type) {
-        mRemoteMyDataSource.gotoUpJson(type, map, new MyLoadDatasCallback(PUR_CONTRACT_PLAN_UP) {
+    /**
+     * 上传数据http
+     *
+     * @param map  map.put("dataJson", json);
+     * @param type
+     */
+
+    public void gotoUp(Map<String, String> map, final Integer type) {
+        mRemoteMyDataSource.gotoUpJson(type,map, new MyLoadDatasCallback(PUR_CONTRACT_PLAN_UP) {
             @Override
             public void onDatasLoadedProgress(int index, String enties) {
                 mView.showProgress(index, type);
