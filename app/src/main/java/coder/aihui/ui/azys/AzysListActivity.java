@@ -179,6 +179,7 @@ public class AzysListActivity extends AppActivity {
                             String ids = bean.getID() + "";
                             intent.putExtra(AZYS_DETAIL_IDS, ids);
                             intent.putExtra("isFirstTime", false);
+                            intent.putExtra("dh",bean.getDH_ID());
                             startActivityForResult(intent, AZYS_DETAIL_REQUEST_CODE);
                         } else {
                             //有的增加没的删除

@@ -44,13 +44,13 @@ public class MyRetrofit {
                 if (stringRetrofit == null) {
                     stringRetrofit = new Retrofit.Builder()
                             .baseUrl(SPUtil.getString(mContext, Content.WS_ADDRESS, ""))
-                             .addConverterFactory(ToStringConverterFactory.create())
+                            .addConverterFactory(ToStringConverterFactory.create())
                             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                             .client(MyApplication.defaultOkHttpClient())
                             .build();
                 }
             }
         }
-        return retrofit;
+        return stringRetrofit;
     }
 }

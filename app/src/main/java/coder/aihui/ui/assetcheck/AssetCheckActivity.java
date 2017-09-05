@@ -49,6 +49,8 @@ import coder.aihui.data.bean.gen.PDA_ASSET_CHECKDao;
 import coder.aihui.data.bean.gen.PUB_DICTIONARY_ITEMDao;
 import coder.aihui.data.bean.gen.REPAIR_PLACEDao;
 import coder.aihui.manager.DataUtil;
+import coder.aihui.rfid.HandHeldPdaPresenter;
+import coder.aihui.rfid.PdaView;
 import coder.aihui.ui.main.DownPresenter;
 import coder.aihui.ui.main.DownView;
 import coder.aihui.util.AndroidUtils;
@@ -66,10 +68,9 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 import static coder.aihui.R.id.iv_back;
-import static coder.aihui.ui.main.DownPresenter.ASSET_CORRECT_UP;
 
 
-public class AssetCheckActivity extends AppActivity implements DownView {
+public class AssetCheckActivity extends AppActivity implements DownView, PdaView {
 
     @BindView(R.id.linearLayout)
     LinearLayout mLinearLayout;
@@ -158,6 +159,8 @@ public class AssetCheckActivity extends AppActivity implements DownView {
     private HashMap<Long, IN_ASSET> mChooseData = new HashMap<>();  //所有被选中的物资
     private MenuPopup     mUpdownPopup;
     private DownPresenter mDownPresenter;
+    private boolean needRefresh = false;        //是否需要重新刷新数据
+    private HandHeldPdaPresenter mHandHeldPdaPresenter;
 
     @Override
     protected BaseFragment getFirstFragment() {
@@ -187,6 +190,17 @@ public class AssetCheckActivity extends AppActivity implements DownView {
         //查询头信息
         queryAssetInfo();
         //先给初始信息
+
+        try {
+            mHandHeldPdaPresenter = new HandHeldPdaPresenter.PdaBuilder(this)
+                    .setUiView(this)
+                    .registerDefultKeyReciver()
+                    .create();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private void initTextView() {
@@ -383,9 +397,7 @@ public class AssetCheckActivity extends AppActivity implements DownView {
 
     private void gotoUpdata() {
 
-        Map map = new HashMap<>();
 
-        mDownPresenter.gotoUp(map,ASSET_CORRECT_UP);
 
     }
 
@@ -575,8 +587,8 @@ public class AssetCheckActivity extends AppActivity implements DownView {
                     mAllDlwzIds = data.getStringExtra("mAllDlwzIds");
                     mAllDlwzName = data.getStringExtra("mAllDlwzName");
                     mTvDlwz.setText(mAllDlwzName);
-
                     //预转科
+                    needRefresh = true;
                     loadMeinv(0, 10);//这里多线程也要手动控制isLoadingMore
                     queryAssetInfo();
                     break;
@@ -946,7 +958,10 @@ public class AssetCheckActivity extends AppActivity implements DownView {
                     @Override
                     public void onCompleted() {
                         Log.d("AssetQueryActivity2", "mLinshiDatas.size():" + mLinshiDatas.toString());
-                        // mDatas.clear();
+                        if(needRefresh){                //如果是需要重新加载数据的是要清空的,如果不是 则是叠加
+                            mDatas.clear();
+                            needRefresh = !needRefresh;
+                        }
                         mDatas.addAll(mLinshiDatas);
                         mMainAdapter.notifyDataSetChanged();
                         mLinshiDatas.clear();
@@ -1091,6 +1106,32 @@ public class AssetCheckActivity extends AppActivity implements DownView {
 
     @Override
     public void showProgress(int num, int type) {
+
+    }
+
+
+    /**
+     * 以下是Pda视图
+     */
+
+
+    @Override
+    public void pdaInit() {
+
+    }
+
+    @Override
+    public void pdaStartSearch() {
+        ToastUtil.showToast("当前RFID模式开启中.");
+    }
+
+    @Override
+    public void pdaStopSearch() {
+        ToastUtil.showToast("当前RFID已关闭!");
+    }
+
+    @Override
+    public void sendMessage(String needMsg) {
 
     }
 }

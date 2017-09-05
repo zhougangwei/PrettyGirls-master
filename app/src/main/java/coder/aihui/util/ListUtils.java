@@ -43,9 +43,9 @@ public class ListUtils {
 
 
     /**
-     * @param list      源集合
-     * @param methodName    获取目标字段的方法
-     * @param clazz     源对象.class
+     * @param list       源集合
+     * @param methodName 获取目标字段的方法
+     * @param clazz      源对象.class
      * @return
      */
     //做一个转换 将集合中的每个个对象中的某一个字段取出来变成另一个集合
@@ -55,7 +55,7 @@ public class ListUtils {
 
             for (int i = 0; i < list.size(); i++) {
                 Method method = clazz.getDeclaredMethod(methodName);
-                String invoke =  method.invoke(list.get(i)).toString();
+                String invoke = method.invoke(list.get(i)).toString();
                 stringList.add(invoke);
             }
         } catch (Exception e) {
@@ -66,7 +66,15 @@ public class ListUtils {
         return stringList;
     }
 
-    //做一个转换 将集合中的每个个对象中的某一个字段取出来变成另一个集合
+    /**
+     * 做一个转换 将集合中的每个个对象中的某一个字段取出来变成另一个集合
+     *
+     * @param list
+     * @param methodName
+     * @param clazz
+     * @return
+     */
+
     public static String ListFiled2String(List list, String methodName, Class clazz) {
         List<String> stringList = new ArrayList<>();
         try {
@@ -79,6 +87,10 @@ public class ListUtils {
             return "";
         }
         return listToStrings(stringList);
+    }
+
+    public static boolean listIsEmpty(List list) {
+        return list == null || list.size() == 0;
     }
 
 

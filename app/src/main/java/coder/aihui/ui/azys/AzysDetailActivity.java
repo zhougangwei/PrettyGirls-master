@@ -163,7 +163,7 @@ public class AzysDetailActivity extends AppActivity {
     private InstallDetailListAdapter mInstallDetailListAdapter;
     private String                   mParts;      //配件的返回
     private long                     mDhId;          //单号
-    private Boolean                  mIsFirstTime;//区分是批量进来还是单次进来回显
+    private Boolean                  mIsFullCome;//区分是批量进来还是单次进来回显
 
 
     @Override
@@ -225,15 +225,15 @@ public class AzysDetailActivity extends AppActivity {
         Intent intent = getIntent();
         String ids = intent.getStringExtra(AZYS_DETAIL_IDS);
         //区分是批量进来还是单次进来回显
-        mIsFirstTime = intent.getBooleanExtra("isFirstTime", true);
+        mIsFullCome = intent.getBooleanExtra("isFirstTime", true);
         mDhId = intent.getLongExtra("dh", -1L);
 
         String[] split = ids.split(",");
         mIdList = Arrays.asList(split);
         //第一次进来
-        if (mIsFirstTime && split.length > 0) {
+        if (mIsFullCome && split.length > 0) {
             bean = mDaoSession.getPUR_CONTRACT_PLAN_DETAILDao().load(Long.parseLong(mIdList.get(0)));
-        } else if (!mIsFirstTime && split.length == 1) {
+        } else if (!mIsFullCome && split.length == 1) {
             bean = mDaoSession.getPUR_CONTRACT_PLAN_DETAILDao().load(Long.parseLong(ids));
         }
         //配件
@@ -613,7 +613,7 @@ public class AzysDetailActivity extends AppActivity {
         }
 
         //单点进来的 单号数目不变
-        if (mIsFirstTime) {
+        if (mIsFullCome) {
             //单号
             DHBean dhBean = mDaoSession.getDHBeanDao().load(mDhId);
             bean.setDH_ID(dhBean.getDh());

@@ -70,7 +70,7 @@ public class InspectConfigActivity extends AppActivity implements DeptView, Dlwz
     private Date     mEndDate;//查询结束日期23:59
     private TextView mTimeView;
 
-    private int              mSearchCycle = 1;//查询周期  1 今天，2本周 3 本月 4当天向前15天 5当天向前三十天 6当天向前45天 7一个周期 目前是两个月
+    private int mSearchCycle = 1;//查询周期  1 今天，2本周 3 本月 4当天向前15天 5当天向前三十天 6当天向前45天 7一个周期 目前是两个月
     private String[] mStringArray;
 
     @Override
@@ -86,9 +86,11 @@ public class InspectConfigActivity extends AppActivity implements DeptView, Dlwz
     @Override
     protected void initView() {
         mDeptDecotor = new DeptDecotor(this, this);
-        mDlwzDecotor = new DlwzDecotor(this,this);
+        mDlwzDecotor = new DlwzDecotor(this, this);
 
         initGetIntent();
+
+        mTvTitle.setText("巡检配置");
 
 
         mStringArray = getResources().getStringArray(R.array.recycleConfig);
@@ -100,6 +102,15 @@ public class InspectConfigActivity extends AppActivity implements DeptView, Dlwz
         Intent intent = getIntent();
         mStartDate = (Date) intent.getSerializableExtra("mStartDate");
         mEndDate = (Date) intent.getSerializableExtra("mEndDate");
+        String insrType = intent.getStringExtra("insrType");
+        switch (insrType) {
+            case "XJ":
+                mTvTitle.setText("巡检配置");
+                break;
+            case "PM":
+                mTvTitle.setText("PM配置");
+                break;
+        }
         setTime();
     }
 

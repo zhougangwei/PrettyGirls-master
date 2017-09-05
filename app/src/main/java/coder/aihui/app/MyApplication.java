@@ -49,7 +49,7 @@ public class MyApplication extends Application /*implements ReactApplication */ 
         mContext = this;
 
         //配置是否显示log
-        LogUtil.isDebug = true;
+        LogUtil.isDebug = false;
 
         mRefWatcher = LeakCanary.install(this);
 

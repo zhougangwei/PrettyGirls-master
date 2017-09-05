@@ -83,7 +83,7 @@ public class WebServiceUtil extends AsyncTask<Object, Object, String> {
             // 得到远程方法返回的SOAP对象
             Object resultObj = envelop.getResponse();
             //Object resultObj = envelop.bodyIn;
-
+            //{"recode":"0","results":"ok"}         //巡检
             //			System.out.println("调用结束");
             if (resultObj != null) {
                 return resultObj.toString();

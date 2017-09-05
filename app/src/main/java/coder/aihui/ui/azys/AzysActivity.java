@@ -51,6 +51,7 @@ import coder.aihui.ui.main.DownView;
 import coder.aihui.util.AndroidUtils;
 import coder.aihui.util.GsonUtil;
 import coder.aihui.util.ListUtils;
+import coder.aihui.util.SPUtil;
 import coder.aihui.util.ToastUtil;
 import coder.aihui.util.UpPicClient;
 import coder.aihui.util.viewutil.ProcessDialogUtil;
@@ -186,9 +187,9 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
 
 
         initRecycleView();
-
+        mDownPresenter = new DownPresenter(this, mDaoSession);
         initSpinner();
-
+        mUserIdList.add(Integer.valueOf(SPUtil.getUserId(this)));
 
     }
 
@@ -196,7 +197,7 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
      * 初始化选择器
      */
     private void initSpinner() {
-        mDownPresenter = new DownPresenter(this, mDaoSession);
+
         mSearchAdapter = new MyArrayAdapter<String>(this, R.layout.mysimple_spinner_item, getResources().getStringArray(R.array.azys));
         mSearchAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpSearch.setAdapter(mSearchAdapter);
@@ -541,13 +542,14 @@ public class AzysActivity extends AppActivity implements DownView, TabLayout.OnT
             public List call(List<String> strings) {
                 return mUpPicList;
             }
-        }).observeOn(AndroidSchedulers.mainThread())
+        }).last().observeOn(AndroidSchedulers.mainThread())
                 .filter(new Func1<List<String>, Boolean>() {
                     @Override
                     public Boolean call(List<String> strings) {
                         boolean b = (strings != null && strings.size() != 0);
                         if (!b) {
                             mProgressDialog.dismiss();
+                            gotoUpJson();
                         }
                         return b;
                     }

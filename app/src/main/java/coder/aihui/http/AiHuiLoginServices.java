@@ -16,6 +16,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -67,13 +68,20 @@ public interface AiHuiLoginServices {
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("/purContract/sendPurContractDetail.html")
-
     Observable<String> upLoadPurPlan(@Body RequestBody body);
 
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("/purPxjl/savePxjlJson.html")
     Observable<String> upPxjl(@Body RequestBody body);
 
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("{url}")
+    Observable<String> upJson(@Path("url") String url, @Body RequestBody body);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("/inAsset/saveInAssetMsgJson.html")
+    Observable<String> upAssetCorrect(@Body RequestBody body);
 
 
     @POST("/fileup/upLoadFile_getId_pda.html?folderName=azys/")

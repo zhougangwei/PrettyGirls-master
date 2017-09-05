@@ -1,7 +1,6 @@
 package coder.aihui.ui.assetquery;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -22,33 +21,43 @@ import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import coder.aihui.R;
 import coder.aihui.base.AppActivity;
 import coder.aihui.base.BaseFragment;
 import coder.aihui.base.Content;
+import coder.aihui.data.bean.CORRECT_ASSET;
 import coder.aihui.data.bean.IN_ASSET;
 import coder.aihui.data.bean.LoadingBean;
+import coder.aihui.data.bean.gen.CORRECT_ASSETDao;
 import coder.aihui.manager.DataUtil;
 import coder.aihui.ui.assetcheck.AssetDetailActivity;
 import coder.aihui.ui.assetcheck.AssetDetailEditActivity;
 import coder.aihui.ui.assetcheck.AssetQueryConfigActivity;
 import coder.aihui.ui.inspectxj.InspectPagerAdapter;
+import coder.aihui.ui.main.DownPresenter;
+import coder.aihui.ui.main.DownView;
 import coder.aihui.util.AndroidUtils;
+import coder.aihui.util.GsonUtil;
+import coder.aihui.util.ListUtils;
+import coder.aihui.util.ToastUtil;
 import coder.aihui.util.Utils;
+import coder.aihui.util.viewutil.ProcessDialogUtil;
 import coder.aihui.widget.AlertListDialogUtil;
 import coder.aihui.widget.MyArrayAdapter;
+import coder.aihui.widget.MyProgressDialog;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 import static coder.aihui.app.MyApplication.daoSession;
+import static coder.aihui.ui.main.DownPresenter.ASSET_CORRECT_UP;
 
-public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSelectedListener {
+public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSelectedListener, DownView {
 
     @BindView(R.id.iv_scan)
     LinearLayout         mIvScan;
@@ -113,14 +122,9 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
      */
     private String                 mSearchTypeString;
     private int                    CurrentWhich; //当前选择的是哪个
+    private DownPresenter          mDownPresenter;
+    private MyProgressDialog       mProgressDialog;
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
     @Override
     protected int getContentViewId() {
@@ -156,7 +160,9 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
 
         initRecycleView();      //初始化Recyclerview
         initData();
-
+        mDownPresenter = new DownPresenter(this, mDaoSession);   //下载相关
+        mProgressDialog = ProcessDialogUtil.createNoCancelDialog("上传修改台账", this);
+        mProgressDialog.create();
     }
 
 
@@ -181,6 +187,7 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mSearchTypeString = AssetQueryActivity.this.getResources().getStringArray(R.array.assetquerycheck)[position];
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 mSearchTypeString = AssetQueryActivity.this.getResources().getStringArray(R.array.assetquerycheck)[0];
@@ -267,7 +274,7 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
         holder.setText(R.id.tv_location, bean.getDDMC());
     }
 
-    @OnClick({R.id.iv_scan, R.id.iv_search, R.id.iv_config, R.id.iv_back, R.id.tv_search,R.id.back_top})
+    @OnClick({R.id.iv_scan, R.id.iv_search, R.id.iv_config, R.id.iv_back, R.id.tv_search, R.id.back_top, R.id.tv_updata})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_scan:
@@ -288,6 +295,20 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
                 break;
             case R.id.back_top:
                 mViewList.get(CurrentWhich).scrollToPosition(0);
+                break;
+            case R.id.tv_updata://上传数据
+                List<CORRECT_ASSET> list = mDaoSession.getCORRECT_ASSETDao().queryBuilder()
+                        .where(CORRECT_ASSETDao.Properties.IS_UP.eq(0))             //0代表未上传
+                        .orderAsc(CORRECT_ASSETDao.Properties.ID)
+                        .list();
+                if (ListUtils.listIsEmpty(list)) {
+                    ToastUtil.showToast("没有未上传的数据!");
+                    return;
+                }
+                mProgressDialog.show();
+                HashMap<String, String> mapJson = new HashMap<>();
+                mapJson.put("inAsset_json", GsonUtil.parseListToJson(list));
+                mDownPresenter.gotoUp(mapJson, ASSET_CORRECT_UP);
                 break;
         }
     }
@@ -327,7 +348,7 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
                     int lastVisibleItem = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
                     int totalItemCount = mLayoutManager.getItemCount();
                     //lastVisibleItem >= totalItemCount - 4 表示剩下4个item自动加载，各位自由选择
-                    if (lastVisibleItem >= totalItemCount - 4 && dy > 0&& lastVisibleItem != totalItemCount - 1) {
+                    if (lastVisibleItem >= totalItemCount - 4 && dy > 0 && lastVisibleItem != totalItemCount - 1) {
                         if (!dataList.get(finalI).isLoading) {
                             dataList.get(finalI).isLoading = true;
                             loadMeinv(finalI, dataList.get(finalI).list.size(), 10);//这里多线程也要手动控制isLoadingMore
@@ -369,7 +390,7 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
      * @param sql   sql语句
      * @param par   参数
      */
-    private  void querySummaryInAsset(final int which, String sql, String[] par) {
+    private void querySummaryInAsset(final int which, String sql, String[] par) {
 
         DataUtil.getDatas(mDaoSession, sql, par)
                 .toList()
@@ -573,4 +594,20 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
     }
 
 
+    @Override
+    public void showSuccess(int type) {
+        mProgressDialog.dismiss();
+        ToastUtil.showToast("下载成功");
+    }
+
+    @Override
+    public void showFault(int type, String wrong) {
+        mProgressDialog.dismiss();
+        AndroidUtils.showErrorMsg("下载失败", wrong, this);
+    }
+
+    @Override
+    public void showProgress(int num, int type) {
+        mProgressDialog.setProgress(num);
+    }
 }

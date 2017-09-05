@@ -67,6 +67,7 @@ public class DownPresenter implements RxBusPresenter {
     public static final int ASSET_CORRECT_UP            = 13;         //上传修改台账的数据
     public static final int PXGL_UP                     = 14;         //培训管理上传
 
+
     public static final int SYS_USER_DOWN = 1001;         //下载人员
 
 
@@ -143,7 +144,6 @@ public class DownPresenter implements RxBusPresenter {
      */
     //下载初始化
     public void gotoDown(final DownLoadBean bean) {
-
 
         Observable.create(new Observable.OnSubscribe<DownLoadBean>() {
             @Override
@@ -313,11 +313,11 @@ public class DownPresenter implements RxBusPresenter {
      * 上传数据http
      *
      * @param map  map.put("dataJson", json);
-     * @param type
+     * @param type 区分是上传哪个
      */
 
     public void gotoUp(Map<String, String> map, final Integer type) {
-        mRemoteMyDataSource.gotoUpJson(type,map, new MyLoadDatasCallback(PUR_CONTRACT_PLAN_UP) {
+        mRemoteMyDataSource.gotoUpJson(type, map, new MyLoadDatasCallback(PUR_CONTRACT_PLAN_UP) {
             @Override
             public void onDatasLoadedProgress(int index, String enties) {
                 mView.showProgress(index, type);
@@ -325,6 +325,26 @@ public class DownPresenter implements RxBusPresenter {
         });
     }
 
+    /**
+     * 上传数据http
+     *
+     * @param url  上传地址
+     * @param map  map.put("dataJson", json);
+     * @param type 区分是上传哪个
+     */
+    public void gotoUp(String url, Map<String, String> map, final Integer type) {
+        mRemoteMyDataSource.gotoUpJson(url,type, map, new MyLoadDatasCallback(PUR_CONTRACT_PLAN_UP) {
+            @Override
+            public void onDatasLoadedProgress(int index, String enties) {
+                mView.showProgress(index, type);
+            }
+        });
+    }
+
+
+    /**
+     * 上传数据webservice
+     */
     public void gotoUp(List<UpBean> list, final Integer type) {
         mRemoteMyDataSource.gotoUp(list, new MyLoadDatasCallback(type) {
             @Override

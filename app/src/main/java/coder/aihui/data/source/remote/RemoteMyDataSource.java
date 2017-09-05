@@ -1,10 +1,8 @@
 package coder.aihui.data.source.remote;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.blankj.utilcode.utils.TimeUtils;
@@ -51,6 +49,7 @@ import rx.schedulers.Schedulers;
 
 import static coder.aihui.app.MyApplication.daoSession;
 import static coder.aihui.app.MyApplication.mContext;
+import static coder.aihui.ui.main.DownPresenter.ASSET_CORRECT_UP;
 import static coder.aihui.ui.main.DownPresenter.AZYS_DOWN;
 import static coder.aihui.ui.main.DownPresenter.COMPANY_DOWN;
 import static coder.aihui.ui.main.DownPresenter.PUR_CONTRACT_PLAN_UP;
@@ -249,9 +248,11 @@ public class RemoteMyDataSource implements MyDataSource {
                             }
                             for (int j = 0; j < datas.size(); j++) {
                                 mDaossion.insertOrReplace(datas.get(j));
-                                callback.onDatasLoadedProgress(100 * (mDownNum + j + 1) / mTotals, entitys[finalK]);
+                                int i = 100 * (mDownNum + j + 1) / mTotals;
+
+                                callback.onDatasLoadedProgress(i, entitys[finalK]);
                             }
-                            mDownNum += datas.size();
+                            mDownNum += datas.size() + 1;
                             mCountHashMap.put(entitys[finalK], mDownNum);
                             if (mDownNum >= mTotals) {
                                 callback.onDataFinished();
@@ -269,8 +270,7 @@ public class RemoteMyDataSource implements MyDataSource {
      * @param callback 接口回调渲染视图
      */
     public void gotoUp(List<UpBean> upDatas, final LoadDatasCallback callback) {
-        TelephonyManager telephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
-        final String imei = telephonyManager.getDeviceId();//机器的IMEI
+
 
         final String wsAddress = SPUtil.getWsAddress(mContext);
         //找到所有未上传的数据
@@ -301,11 +301,18 @@ public class RemoteMyDataSource implements MyDataSource {
                                 for (int i = 0; i < list.size(); i = i + updateSize) {
                                     List list1 = list.subList(i, (list.size()) > updateSize ? updateSize : (list.size()));
                                     WebServiceUtil ws = new WebServiceUtil();
-                                    String recode = ws.execute(wsAddress, bean.method, list1).get();
+
+                                    List<Object> list2 = new ArrayList<Object>();           //先试试
+                                    //list.add("DATA_RECORD");//
+                                    list2.add(GsonUtil.parseListToJson(list1));//
+
+                                    String recode = ws.execute(wsAddress, bean.method, list2).get();
                                     JSONObject resJson = new JSONObject(recode);
 
                                     if (resJson.getLong("recode") != 0) {// 返回码不等于
                                         callback.onDatasLoadedProgress(i, null);
+                                    } else {
+                                        callback.onDataNotAvailable(resJson.toString() + "");
                                     }
                                 }
                                 gotoChangeFlag(bean.upBean, list);
@@ -438,11 +445,50 @@ public class RemoteMyDataSource implements MyDataSource {
                                }
                            }
                 );
-
     }
 
     public void gotoUpJson(final Integer type, Map<String, String> jsonMap, final LoadDatasCallback callback) {
+        Observable.just(jsonMap)
+                .map(new Func1<Map<String, String>, RequestBody>() {
+                    @Override
+                    public RequestBody call(Map<String, String> map) {
+                        FormBody.Builder builder = new FormBody.Builder();
+                        for (String k : map.keySet()) {
+                            builder.add(k, map.get(k));
+                        }
+                        FormBody body = builder.build();
+                        return body;
+                    }
+                })
+                .observeOn(Schedulers.io())
+                .flatMap(new Func1<RequestBody, Observable<String>>() {
+                    @Override
+                    public Observable<String> call(RequestBody requestBody) {
+                        return getRetrofitObserbe(type, requestBody);
+                    }
+                }).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+                        callback.onDataFinished();
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onDataNotAvailable(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        //{"code":200,"msg":"success"}  上传台账修改的
+                        Log.d("RemoteMyDataSourceJson", s);
+                    }
+                });
+
+
+    }
+
+    public void gotoUpJson(final String url, final Integer type, Map<String, String> jsonMap, final LoadDatasCallback callback) {
         Observable.just(jsonMap)
                 .observeOn(Schedulers.io())
                 .map(new Func1<Map<String, String>, RequestBody>() {
@@ -458,7 +504,7 @@ public class RemoteMyDataSource implements MyDataSource {
                 }).flatMap(new Func1<RequestBody, Observable<String>>() {
             @Override
             public Observable<String> call(RequestBody requestBody) {
-                return getRetrofitObserbe(type, requestBody);
+                return getRetrofitObserbe(url, type, requestBody);
             }
         }).observeOn(Schedulers.io())
                 .subscribe(new Subscriber<String>() {
@@ -483,7 +529,7 @@ public class RemoteMyDataSource implements MyDataSource {
 
     Observable getRetrofitObserbe(int type, RequestBody requestBody) {
         switch (type) {
-            case PXGL_UP:
+            case PXGL_UP:           //培训管理
                 return MyRetrofit.getStringRetrofit()
                         .create(AiHuiLoginServices.class)
                         .upLoadPurPlan(requestBody);
@@ -491,8 +537,19 @@ public class RemoteMyDataSource implements MyDataSource {
                 return MyRetrofit.getStringRetrofit()
                         .create(AiHuiLoginServices.class)
                         .upPxjl(requestBody);
+            case ASSET_CORRECT_UP:
+                return MyRetrofit.getStringRetrofit()
+                        .create(AiHuiLoginServices.class)
+                        .upAssetCorrect(requestBody);
         }
         return null;
+    }
+
+
+    Observable getRetrofitObserbe(String url, int type, RequestBody requestBody) {
+        return MyRetrofit.getStringRetrofit()
+                .create(AiHuiLoginServices.class)
+                .upJson(url, requestBody);
     }
 
 

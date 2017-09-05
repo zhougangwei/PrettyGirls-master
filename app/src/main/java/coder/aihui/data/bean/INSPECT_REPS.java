@@ -7,14 +7,17 @@ import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Entity mapped to table INSPECT__REPS.
  */
 @Entity
-public class INSPECT_REPS {
+public class INSPECT_REPS implements Serializable{
 
+
+    private static final long serialVersionUID = 8612975879490174787L;
     @Id
     @Property(nameInDb = "INSPR__ID")
     private Long    INSPR_ID;

@@ -27,6 +27,9 @@ import coder.aihui.util.AndroidUtils;
 import coder.aihui.util.SPUtil;
 import coder.aihui.util.ToastUtil;
 import coder.aihui.util.ViewUtils;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 import static coder.aihui.ui.main.DownPresenter.SYS_USER_DOWN;
 import static coder.aihui.ui.main.DownPresenter.WEB_SERVICE;
@@ -115,9 +118,9 @@ public class ConfigActivity extends AppActivity implements DownView {
             final String testUrl;
             if (wsAddress.contains("http://")) {
                 int i = wsAddress.indexOf("/", 8);
-                testUrl = wsAddress.substring(0, i == -1 ? wsAddress.length() : i);
+                testUrl = wsAddress.substring(0, i == -1 ? wsAddress.length() : i) + "/";
             } else {
-                testUrl = "http://" + wsAddress;
+                testUrl = "http://" + wsAddress + "/";
             }
 
             // String WSDL =
@@ -200,7 +203,15 @@ public class ConfigActivity extends AppActivity implements DownView {
 
     @Override
     public void showProgress(int num, int type) {
-        mDonutProgress.setProgress(num);
+
+        Observable.just(num).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        mDonutProgress.setProgress(integer);
+                    }
+                });
+
     }
 
     @Override

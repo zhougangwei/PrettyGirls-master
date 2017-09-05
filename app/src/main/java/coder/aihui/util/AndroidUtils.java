@@ -27,6 +27,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import coder.aihui.data.bean.INSPECT_EXT;
 import coder.aihui.data.bean.INSPECT_GROUP;
@@ -41,6 +43,8 @@ import coder.aihui.data.bean.gen.INSPECT_GROUPDao;
 import coder.aihui.data.bean.gen.INSPECT_PLANDao;
 import coder.aihui.data.bean.gen.PUB_DICTIONARY_ITEMDao;
 import coder.aihui.data.bean.gen.REPAIR_PLACEDao;
+
+import static coder.aihui.app.MyApplication.mContext;
 
 /**
  * @ 创建者   zhou
@@ -484,16 +488,17 @@ public class AndroidUtils {
 
     /**
      * 方便渲染 数据转换
+     *
      * @param bean 模板表对象
      * @return reps
      */
-    public static INSPECT_REPS changIti2Reps(InspectTempletItem bean){
+    public static INSPECT_REPS changIti2Reps(InspectTempletItem bean) {
 
         INSPECT_REPS reps = new INSPECT_REPS();
         reps.setINSPR_REP_ID(-1);                           //设置为-1就是已确认的
-        try{
-            reps.setINSPR_CYCLE(bean.getITEM_EXT_NUM2()+"");
-        }catch (Exception e){
+        try {
+            reps.setINSPR_CYCLE(bean.getITEM_EXT_NUM2() + "");
+        } catch (Exception e) {
             reps.setINSPR_CYCLE("");
         }
         reps.setINSPR_WX_NEED(0);
@@ -502,9 +507,9 @@ public class AndroidUtils {
         reps.setINSPR_PCONTENT(bean.getITEM_NAME());
 
         reps.setINSPR_RE_VALUE(bean.getITEM_EXT_STRING6());
-        try{
-            reps.setINSPR_IS_FILL_IN(bean.getITEM_EXT_NUM1()+"");
-        }catch (Exception e){
+        try {
+            reps.setINSPR_IS_FILL_IN(bean.getITEM_EXT_NUM1() + "");
+        } catch (Exception e) {
             reps.setINSPR_IS_FILL_IN("");
         }
 
@@ -515,9 +520,47 @@ public class AndroidUtils {
         reps.setINSPR_UNIT(bean.getITEM_EXT_STRING3());
         reps.setINSPR_HG_VAL(bean.getITEM_EXT_STRING2());
         reps.setModelId(bean.getITEM_ID());
-
-
+        reps.setPDAID(getImei());                       //需要唯一标识
         return reps;
     }
 
+    public static String getImei() {
+        TelephonyManager telephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        final String imei = telephonyManager.getDeviceId();//机器的IMEI
+        return imei;
+    }
+
+    public static String getStringNoBlank(String str) {
+        if (str != null && !"".equals(str)) {
+            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+            Matcher m = p.matcher(str);
+            String strNoBlank = m.replaceAll("");
+            return strNoBlank;
+        } else {
+            return str;
+        }
+    }
+
+    public static String getRfidString(String needTag) {
+        String needMsg = "";
+        if (needTag.indexOf("A") == 0) {
+            //												System.out.println("巡检点17位");
+            needMsg = needTag.substring(0, 17);//截取字符串
+        } else if (needTag.indexOf("B") == 0) {
+            //分组标签
+            needMsg = needTag.substring(0, 17);//截取字符串
+        } else if (needTag.indexOf("D") == 0) {
+            //												System.out.println("地理位置17位");
+            needMsg = needTag.substring(0, 17);//截取字符串
+        } else if (needTag.indexOf("A") > 0) {
+            //												System.out.println("配件23位");
+            needMsg = needTag.substring(0, 23);//截取字符串
+        } else if (!TextUtils.isEmpty(needTag) && needTag.length() > 19) {
+            //												System.out.println("台账19位");
+            needMsg = needTag.substring(0, 19);//截取字符串
+        }
+        return needMsg;
+    }
+
 }
+

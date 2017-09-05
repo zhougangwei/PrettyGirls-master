@@ -499,7 +499,7 @@ public class InspectDetailActivity extends AppActivity {
     private void gotoSave(Integer savetype) {
         INSPECT_PLAN planBean = new INSPECT_PLAN();
         INSPECT_REP inspectRep = new INSPECT_REP();
-        INSPECT_PLANDao pDao = daoSession.getINSPECT_PLANDao();
+        INSPECT_PLANDao pDao = mDaoSession.getINSPECT_PLANDao();
         //先保存大的
         if (isNew == 1) {
             //过期或者没到
@@ -635,6 +635,9 @@ public class InspectDetailActivity extends AppActivity {
             Log.v("MYTAG", planId + "修改的ID");
         }
         inspectRep.setISCHECK(1);
+        inspectRep.setPDAID(AndroidUtils.getImei());
+
+
 
         //这个因为关系到Pm所以一定要有计划的 才能改变ISCHECK 的状态
         if (inspectRep.getINSR_FK_ID() != null && inspectRep.getINSR_FK_ID() > 0) {

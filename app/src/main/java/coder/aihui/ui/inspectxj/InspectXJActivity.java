@@ -5,8 +5,10 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,6 +40,7 @@ import coder.aihui.data.bean.LoadingBean;
 import coder.aihui.data.bean.gen.INSPECT_PLANDao;
 import coder.aihui.data.bean.gen.INSPECT_REPDao;
 import coder.aihui.data.bean.gen.INSPECT_REPSDao;
+import coder.aihui.data.bean.gen.InspectTempletItemDao;
 import coder.aihui.ui.main.DownPresenter;
 import coder.aihui.ui.main.DownView;
 import coder.aihui.ui.main.UpBean;
@@ -45,6 +48,7 @@ import coder.aihui.util.AndroidUtils;
 import coder.aihui.util.SPUtil;
 import coder.aihui.util.viewutil.ProcessDialogUtil;
 import coder.aihui.widget.CircleImageView;
+import coder.aihui.widget.MyArrayAdapter;
 import coder.aihui.widget.MyProgressDialog;
 import coder.aihui.widget.popwindow.MenuPopup;
 import coder.aihui.widget.popwindow.SlideFromTopPopup;
@@ -54,8 +58,8 @@ import rx.schedulers.Schedulers;
 
 import static coder.aihui.base.Content.INSPECT_START_REQUESET_CODE;
 import static coder.aihui.ui.main.DownFragment.mBigType;
-import static coder.aihui.ui.main.DownPresenter.HTTP;
 import static coder.aihui.ui.main.DownPresenter.INSPECT_UP;
+import static coder.aihui.ui.main.DownPresenter.WEB_SERVICE;
 
 public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSelectedListener, DownView {
 
@@ -132,7 +136,7 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     private String       dicType     = "";//字典ID 字典类别,巡检分类 0 查询全部
     private int          jhls        = 0;//0 全部，1计划，2临时
     private int          searchCycle = 1;//查询周期  1 今天，2本周 3 本月 4当天向前15天 5当天向前三十天 6当天向前45天 7一个周期 目前是两个月
-    private int          searchType  = 1;//"1">RFID "2">二维码 "3">名称  默认1  "6">摄像头
+    private int          searchType  = 1;//"1">名称 "2">新资产编号 "3">RFID  默认1  "6">摄像头
     private List<String> mUpDownList = new ArrayList<>();
     private List<String> mPzList     = new ArrayList<>();
     private MenuPopup mPzPopup;
@@ -144,8 +148,11 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     private List<View> mTabViewList = new ArrayList<>();
     private DownPresenter mDownPresenter;
     private int mWhichSelect = 0;               //当前选中的是哪个
-    private MyProgressDialog  mProgressDialog;
-    private SlideFromTopPopup mPopWindow;
+    private MyProgressDialog       mProgressDialog;
+    private SlideFromTopPopup      mPopWindow;
+    private MyArrayAdapter<String> mSearchAdapter;
+    private String                 mSearchTypeString;
+    private String                 mSearchType;
 
 
     @Override
@@ -162,6 +169,7 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     protected void initView() {
 
         mProgressDialog = ProcessDialogUtil.createNoCancelDialog("上传巡检数据", this);
+        mProgressDialog.create();
         mDownPresenter = new DownPresenter(this, mDaoSession);
         mPagerAdapter = new InspectPagerAdapter(mTitleList, mViewList, this);
         mVp.setAdapter(mPagerAdapter);
@@ -182,9 +190,30 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
         getFirstTime();
         initRecycleView();
 
+        initSpinner();
+
         //变更tab显示
         changeTextOfTab();
         initdata();
+
+    }
+
+    private void initSpinner() {
+        mSearchAdapter = new MyArrayAdapter<String>(this, R.layout.mysimple_spinner_item, getResources().getStringArray(R.array.inspect));
+        mSearchAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpSearch.setAdapter(mSearchAdapter);
+
+        mSpSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mSearchType = InspectXJActivity.this.getResources().getStringArray(R.array.inspect)[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                mSearchType = InspectXJActivity.this.getResources().getStringArray(R.array.inspect)[0];
+            }
+        });
     }
 
     private void initgetIntent() {
@@ -434,13 +463,12 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
                 intent.putExtra("mEndDate", mEndDate);
                 startActivityForResult(intent, INSPECT_START_REQUESET_CODE);
                 break;
-
         }
     }
 
     //搜索
     private void gotoSearch() {
-
+        queryAllCount(mWhichSelect, 0, 10);
     }
 
     //配置
@@ -466,7 +494,6 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
                     switch (string) {
                         case "上传巡检数据":
                             gotoUpData();
-
                             break;
                         case "巡检初始":
                             break;
@@ -490,6 +517,29 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     }
 
     private void gotoClearData() {
+        if ("XJ".equals(insrType)) {
+            mDaoSession.getINSPECT_PLANDao().queryBuilder().where(INSPECT_PLANDao.Properties.INSP_TYPE.eq("XJ"))
+                    .buildDelete().executeDeleteWithoutDetachingEntities();
+
+            mDaoSession.getInspectTempletItemDao().queryBuilder().where(InspectTempletItemDao.Properties.ITEM_TYPE.eq(1))        //巡检是1
+                    .buildDelete().executeDeleteWithoutDetachingEntities();
+
+            mDaoSession.getINSPECT_REPDao().queryBuilder().where(INSPECT_REPDao.Properties.INSR_TYPE.eq("XJ")).buildDelete()
+                    .executeDeleteWithoutDetachingEntities();
+            mDaoSession.getINSPECT_REPSDao().queryBuilder().where(INSPECT_REPSDao.Properties.INSR_TYPE.eq("XJ")).buildDelete()
+                    .executeDeleteWithoutDetachingEntities();
+
+        } else if ("PM".equals(insrType)) {
+            mDaoSession.getINSPECT_PLANDao().queryBuilder().where(INSPECT_PLANDao.Properties.INSP_TYPE.eq("PM"))
+                    .buildDelete().executeDeleteWithoutDetachingEntities();
+            mDaoSession.getInspectTempletItemDao().queryBuilder().where(InspectTempletItemDao.Properties.ITEM_TYPE.eq(2))        //巡检是1
+                    .buildDelete().executeDeleteWithoutDetachingEntities();
+            mDaoSession.getINSPECT_REPDao().queryBuilder().where(INSPECT_REPDao.Properties.INSR_TYPE.eq("PM")).buildDelete()
+                    .executeDeleteWithoutDetachingEntities();
+            mDaoSession.getINSPECT_REPSDao().queryBuilder().where(INSPECT_REPSDao.Properties.INSR_TYPE.eq("PM")).buildDelete()
+                    .executeDeleteWithoutDetachingEntities();
+
+        }
 
     }
 
@@ -500,11 +550,11 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
         upBean.setMethods("uploadPdaRepDataJSON");
         upBean.setPars(null);
         upBean.setType(INSPECT_UP);
-        upBean.setWay(HTTP);
+        upBean.setWay(WEB_SERVICE);
         upBean.setName("主表");
         upBean.setCount(0);
         upBean.setBigType(mBigType[2]);
-        upBean.setPropertie(new Property[]{INSPECT_REPDao.Properties.SYNC_FLAG});
+        upBean.setOrderPropertie(new Property[]{INSPECT_REPDao.Properties.INSR_ID});
         upBean.setWhereconditions(new WhereCondition[]{INSPECT_REPDao.Properties.INSR_TYPE.eq("XJ"), INSPECT_REPDao.Properties.SYNC_FLAG.isNull()});
 
         UpBean upBean2 = new UpBean();
@@ -512,11 +562,11 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
         upBean2.setMethods("uploadPdaRepsDataJSON");
         upBean2.setPars(null);
         upBean2.setType(INSPECT_UP);
-        upBean2.setWay(HTTP);
+        upBean2.setWay(WEB_SERVICE);
         upBean2.setName("明细表");
         upBean2.setCount(0);
         upBean2.setBigType(mBigType[2]);
-        upBean2.setPropertie(new Property[]{INSPECT_REPSDao.Properties.SYNC_FLAG});
+        upBean2.setOrderPropertie(new Property[]{INSPECT_REPSDao.Properties.INSPR_ID});
         upBean2.setWhereconditions(new WhereCondition[]{INSPECT_REPSDao.Properties.INSR_TYPE.eq("XJ"), INSPECT_REPSDao.Properties.SYNC_FLAG.isNull()});
 
         list.add(upBean);
@@ -529,7 +579,9 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     private void gotoConfig() {
         Intent intent = new Intent(this, InspectConfigActivity.class);
         intent.putExtra("mEndDate", mEndDate);
+        intent.putExtra("mStartDate", mStartDate);
         intent.putExtra("mAllDlwzIds", mAllDlwzIds);
+        intent.putExtra("insrType",insrType);
         startActivityForResult(intent, Content.INSPECT_CONFIG_REQUESET_CODE);
     }
 
@@ -561,7 +613,6 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
     }
 
     public void queryAllCount(final int which, int i_start, int i_count) {
-
         searchText = mEtSearch.getText().toString();
         try {
             INSPECT_PLANDao planDao = mDaoSession.getINSPECT_PLANDao();
@@ -592,10 +643,7 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
                         INSPECT_PLANDao.Properties.INSP_EXEC_DATE.le(mEndDate));
             }
             qb2.where(INSPECT_PLANDao.Properties.INSP_TYPE.eq(insrType));
-            if (!"".equals(searchText) && searchType == 3) {
-                qb2.where(INSPECT_PLANDao.Properties.WZMC
-                        .like("%" + searchText + "%"));
-            }
+
             long num = -1;
 
             switch (which) {
@@ -621,6 +669,14 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
             //如果数目都没变的话 肯定是不对的
             if (num == -1) {
                 return;
+            }
+
+            if (!TextUtils.isEmpty(searchText) && searchType == 1) {
+                qb2.where(INSPECT_PLANDao.Properties.WZMC
+                        .like("%" + searchText + "%"));
+            } else if (!TextUtils.isEmpty(searchText) && searchType == 2) {
+                qb2.where(INSPECT_PLANDao.Properties.RFID_CODE
+                        .like("%" + searchText + "%"));
             }
 
             qb2.limit(i_count).offset(i_start).rx().list().subscribeOn(Schedulers.io()).compose(this.<List<INSPECT_PLAN>>bindToLife()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<List<INSPECT_PLAN>>() {
@@ -661,7 +717,7 @@ public class InspectXJActivity extends AppActivity implements TabLayout.OnTabSel
         mWhichSelect = tab.getPosition();
         View customView = tab.getCustomView();
         if (customView != null) {
-            TextView mtv = (TextView)customView .findViewById(R.id.tv_name);
+            TextView mtv = (TextView) customView.findViewById(R.id.tv_name);
             String s = mtv.getText().toString();
             String substring = s.substring(s.indexOf("(") + 1, s.indexOf(")"));//获得数字 渲染下面的数字
             mTvAllNum.setText(substring + "");

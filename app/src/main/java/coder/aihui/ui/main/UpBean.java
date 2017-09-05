@@ -25,7 +25,7 @@ public class UpBean {
     private Integer          count;      //数目
     private String           bigType;      //主体是哪个模块的 如资产清点 巡检...
     private WhereCondition[] whereconditions;   //数据上传条件
-    private Property[]         propertie;   //排序条件
+    private Property[]       propertie;   //排序条件
 
     public String getEnties() {
         return enties;
@@ -39,6 +39,9 @@ public class UpBean {
         return methods;
     }
 
+    /**
+     * @param methods 上传的方法 例如"uploadPdaRepDataJSON"
+     */
     public void setMethods(String methods) {
         this.methods = methods;
     }
@@ -47,6 +50,10 @@ public class UpBean {
         return pars;
     }
 
+
+    /**
+     * @param pars 上传的参数
+     */
     public void setPars(String[] pars) {
         this.pars = pars;
     }
@@ -55,6 +62,24 @@ public class UpBean {
         return type;
     }
 
+    /**
+     * @param type 上传的类型 对应的是之类
+     *             ASSET_DOWN   = 1;         //台账
+     *             INIT_DOWN    = 0;         //初始化
+     *             COMPANY_DOWN = 2;         //下载公司
+     *             INSPECT_PLAN_DOWN        = 3;         //下载巡检计划
+     *             INSPECT_INIT_DOWN        = 4;         //下载巡检初始化
+     *             INSPECT_TEMPLETITEM_DOWN = 5;         //下载巡检模板
+     *             AZYS_DOWN                = 6;         //下载安装验收
+     *             PXGL_SB_DOWN             = 7;         //下载培训管理设备
+     *             PUR_CONTRACT_PLAN_UP = 8;         //上传安装验收
+     *             INSPECT_UP           = 9;         //上传巡检数据
+     *             INSPECT_PM_PLAN_DOWN        = 10;         //下载PM计划
+     *             INSPECT_PM_INIT_DOWN        = 11;         //下载PM初始化
+     *             INSPECT_PM_TEMPLETITEM_DOWN = 12;         //下载PM模板
+     *             ASSET_CORRECT_UP            = 13;         //上传修改台账的数据
+     *             PXGL_UP                     = 14;         //培训管理上传
+     */
     public void setType(Integer type) {
         this.type = type;
     }
@@ -63,6 +88,12 @@ public class UpBean {
         return way;
     }
 
+    /**
+     * @param way 上传走HTTP还是webService
+     *            <p>
+     *            public static final int WEB_SERVICE = 1;        //用webservie下载
+     *            public static final int HTTP        = 2;               //用http下载
+     */
     public void setWay(Integer way) {
         this.way = way;
     }
@@ -71,6 +102,10 @@ public class UpBean {
         return name;
     }
 
+    /**
+     * 上传时进度条显示的文字
+     *  @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
@@ -87,6 +122,9 @@ public class UpBean {
         return bigType;
     }
 
+    /**
+     * @param bigType 上传的大类型 主要用于downfragment
+     */
     public void setBigType(String bigType) {
         this.bigType = bigType;
     }
@@ -95,6 +133,9 @@ public class UpBean {
         return whereconditions;
     }
 
+    /**
+     * @param whereconditions  上传数据的过滤条件 因为需要到数据库取数据
+     */
     public void setWhereconditions(WhereCondition[] whereconditions) {
         this.whereconditions = whereconditions;
     }
@@ -103,7 +144,10 @@ public class UpBean {
         return propertie;
     }
 
-    public void setPropertie(Property[] propertie) {
+    /**
+     * @param propertie 上传数据的排序条件 默认升序 以后可以再改进
+     */
+    public void setOrderPropertie(Property[] propertie) {
         this.propertie = propertie;
     }
 }
