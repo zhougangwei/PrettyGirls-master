@@ -20,23 +20,23 @@ public class InstallDetailListHolder$$ViewBinder<T extends InstallDetailListHold
   protected static class InnerUnbinder<T extends InstallDetailListHolder> implements Unbinder {
     protected T target;
 
-    private View view2131755476;
+    private View view2131755495;
 
     protected InnerUnbinder(final T target, Finder finder, Object source) {
       this.target = target;
 
       View view;
-      target.mTvName = finder.findRequiredViewAsType(source, 2131755440, "field 'mTvName'", TextView.class);
-      view = finder.findRequiredView(source, 2131755476, "field 'mLlChoose' and method 'onViewClicked'");
-      target.mLlChoose = finder.castView(view, 2131755476, "field 'mLlChoose'");
-      view2131755476 = view;
+      target.mTvName = finder.findRequiredViewAsType(source, 2131755458, "field 'mTvName'", TextView.class);
+      view = finder.findRequiredView(source, 2131755495, "field 'mLlChoose' and method 'onViewClicked'");
+      target.mLlChoose = finder.castView(view, 2131755495, "field 'mLlChoose'");
+      view2131755495 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked();
         }
       });
-      target.mTvResult = finder.findRequiredViewAsType(source, 2131755477, "field 'mTvResult'", TextView.class);
+      target.mTvResult = finder.findRequiredViewAsType(source, 2131755496, "field 'mTvResult'", TextView.class);
     }
 
     @Override
@@ -48,8 +48,8 @@ public class InstallDetailListHolder$$ViewBinder<T extends InstallDetailListHold
       target.mLlChoose = null;
       target.mTvResult = null;
 
-      view2131755476.setOnClickListener(null);
-      view2131755476 = null;
+      view2131755495.setOnClickListener(null);
+      view2131755495 = null;
 
       this.target = null;
     }

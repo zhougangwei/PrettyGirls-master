@@ -15,7 +15,7 @@ import coder.aihui.data.bean.DqxqOutBean;
 /** 
  * DAO for table "DQXQ_OUT_BEAN".
 */
-public class DqxqOutBeanDao extends AbstractDao<DqxqOutBean, Integer> {
+public class DqxqOutBeanDao extends AbstractDao<DqxqOutBean, Long> {
 
     public static final String TABLENAME = "DQXQ_OUT_BEAN";
 
@@ -24,7 +24,7 @@ public class DqxqOutBeanDao extends AbstractDao<DqxqOutBean, Integer> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property ID = new Property(0, Integer.class, "ID", true, "ID");
+        public final static Property ID = new Property(0, Long.class, "ID", true, "_id");
         public final static Property GGXH = new Property(1, String.class, "GGXH", false, "GGXH");
         public final static Property TEMPLET_NAME = new Property(2, String.class, "TEMPLET_NAME", false, "TEMPLET_NAME");
         public final static Property JCYQ = new Property(3, String.class, "JCYQ", false, "JCYQ");
@@ -46,7 +46,7 @@ public class DqxqOutBeanDao extends AbstractDao<DqxqOutBean, Integer> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"DQXQ_OUT_BEAN\" (" + //
-                "\"ID\" INTEGER PRIMARY KEY ," + // 0: ID
+                "\"_id\" INTEGER PRIMARY KEY ," + // 0: ID
                 "\"GGXH\" TEXT," + // 1: GGXH
                 "\"TEMPLET_NAME\" TEXT," + // 2: TEMPLET_NAME
                 "\"JCYQ\" TEXT," + // 3: JCYQ
@@ -65,7 +65,7 @@ public class DqxqOutBeanDao extends AbstractDao<DqxqOutBean, Integer> {
     protected final void bindValues(DatabaseStatement stmt, DqxqOutBean entity) {
         stmt.clearBindings();
  
-        Integer ID = entity.getID();
+        Long ID = entity.getID();
         if (ID != null) {
             stmt.bindLong(1, ID);
         }
@@ -105,7 +105,7 @@ public class DqxqOutBeanDao extends AbstractDao<DqxqOutBean, Integer> {
     protected final void bindValues(SQLiteStatement stmt, DqxqOutBean entity) {
         stmt.clearBindings();
  
-        Integer ID = entity.getID();
+        Long ID = entity.getID();
         if (ID != null) {
             stmt.bindLong(1, ID);
         }
@@ -142,14 +142,14 @@ public class DqxqOutBeanDao extends AbstractDao<DqxqOutBean, Integer> {
     }
 
     @Override
-    public Integer readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0);
+    public Long readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public DqxqOutBean readEntity(Cursor cursor, int offset) {
         DqxqOutBean entity = new DqxqOutBean( //
-            cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0), // ID
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // ID
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // GGXH
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // TEMPLET_NAME
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // JCYQ
@@ -162,7 +162,7 @@ public class DqxqOutBeanDao extends AbstractDao<DqxqOutBean, Integer> {
      
     @Override
     public void readEntity(Cursor cursor, DqxqOutBean entity, int offset) {
-        entity.setID(cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0));
+        entity.setID(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setGGXH(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setTEMPLET_NAME(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setJCYQ(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
@@ -172,12 +172,13 @@ public class DqxqOutBeanDao extends AbstractDao<DqxqOutBean, Integer> {
      }
     
     @Override
-    protected final Integer updateKeyAfterInsert(DqxqOutBean entity, long rowId) {
-        return entity.getID();
+    protected final Long updateKeyAfterInsert(DqxqOutBean entity, long rowId) {
+        entity.setID(rowId);
+        return rowId;
     }
     
     @Override
-    public Integer getKey(DqxqOutBean entity) {
+    public Long getKey(DqxqOutBean entity) {
         if(entity != null) {
             return entity.getID();
         } else {

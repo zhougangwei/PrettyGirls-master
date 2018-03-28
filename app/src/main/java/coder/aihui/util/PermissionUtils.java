@@ -29,9 +29,7 @@ import coder.aihui.R;
  * @ 更新描述  ${TODO}
  */
 
-    /**
-     * Created by qianxiaoai on 2016/7/7.
-     */
+
     public class PermissionUtils {
 
         private static final String TAG = PermissionUtils.class.getSimpleName();

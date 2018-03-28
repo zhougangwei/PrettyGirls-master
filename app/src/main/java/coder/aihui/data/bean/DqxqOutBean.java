@@ -1,9 +1,9 @@
 package coder.aihui.data.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
+import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * @ 创建者   zhou
@@ -17,7 +17,7 @@ import org.greenrobot.greendao.annotation.Property;
 public class DqxqOutBean {
 
     @Id
-    private Integer ID;                //id
+    private Long ID;                //id
 
     @Property(nameInDb = "GGXH")
     private String  GGXH;
@@ -33,8 +33,8 @@ public class DqxqOutBean {
     private String  REMARK;            //备注
     @Property(nameInDb = "ZFBZ")
     private Integer ZFBZ;               //作废标志
-    @Generated(hash = 1129004542)
-    public DqxqOutBean(Integer ID, String GGXH, String TEMPLET_NAME, String JCYQ,
+    @Generated(hash = 2059478375)
+    public DqxqOutBean(Long ID, String GGXH, String TEMPLET_NAME, String JCYQ,
             String SCCJ, String REMARK, Integer ZFBZ) {
         this.ID = ID;
         this.GGXH = GGXH;
@@ -44,85 +44,50 @@ public class DqxqOutBean {
         this.REMARK = REMARK;
         this.ZFBZ = ZFBZ;
     }
-
     @Generated(hash = 1603351983)
     public DqxqOutBean() {
     }
-    public Integer getID() {
-        return ID;
+    public Long getID() {
+        return this.ID;
     }
-
-    public void setID(Integer ID) {
+    public void setID(Long ID) {
         this.ID = ID;
     }
-
-    public String getREMARK() {
-        return REMARK;
-    }
-
-    public void setREMARK(String REMARK) {
-        this.REMARK = REMARK;
-    }
-
-    public Integer getZFBZ() {
-        return ZFBZ;
-    }
-
-    public void setZFBZ(Integer ZFBZ) {
-        this.ZFBZ = ZFBZ;
-    }
-
-    /**
-     * GGXH :
-     * TEMPLET_NAME : 医疗设备电气安全质量检测原始记录
-     * JCYQ : 电气安全检测仪
-     * SCCJ : Fluke
-
-     */
-
-
     public String getGGXH() {
-        return GGXH;
+        return this.GGXH;
     }
-
     public void setGGXH(String GGXH) {
         this.GGXH = GGXH;
     }
-
     public String getTEMPLET_NAME() {
-        return TEMPLET_NAME;
+        return this.TEMPLET_NAME;
     }
-
     public void setTEMPLET_NAME(String TEMPLET_NAME) {
         this.TEMPLET_NAME = TEMPLET_NAME;
     }
-
     public String getJCYQ() {
-        return JCYQ;
+        return this.JCYQ;
     }
-
     public void setJCYQ(String JCYQ) {
         this.JCYQ = JCYQ;
     }
-
     public String getSCCJ() {
-        return SCCJ;
+        return this.SCCJ;
     }
-
     public void setSCCJ(String SCCJ) {
         this.SCCJ = SCCJ;
     }
-
-    @Override
-    public String toString() {
-        return "DqxqOutBean{" +
-                "ID=" + ID +
-                ", GGXH='" + GGXH + '\'' +
-                ", TEMPLET_NAME='" + TEMPLET_NAME + '\'' +
-                ", JCYQ='" + JCYQ + '\'' +
-                ", SCCJ='" + SCCJ + '\'' +
-                ", REMARK='" + REMARK + '\'' +
-                ", ZFBZ=" + ZFBZ +
-                '}';
+    public String getREMARK() {
+        return this.REMARK;
     }
+    public void setREMARK(String REMARK) {
+        this.REMARK = REMARK;
+    }
+    public Integer getZFBZ() {
+        return this.ZFBZ;
+    }
+    public void setZFBZ(Integer ZFBZ) {
+        this.ZFBZ = ZFBZ;
+    }
+  
 }

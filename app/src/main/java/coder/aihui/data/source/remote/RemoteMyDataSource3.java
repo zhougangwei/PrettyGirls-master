@@ -1,0 +1,736 @@
+/*
+package coder.aihui.data.source.remote;
+
+import android.database.Cursor;
+import android.os.AsyncTask;
+import android.support.annotation.Nullable;
+import android.util.Log;
+
+import com.blankj.utilcode.utils.TimeUtils;
+
+import org.greenrobot.greendao.Property;
+import org.greenrobot.greendao.database.Database;
+import org.greenrobot.greendao.query.QueryBuilder;
+import org.greenrobot.greendao.query.WhereCondition;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import coder.aihui.base.Content;
+import coder.aihui.data.bean.DownLoadBean;
+import coder.aihui.data.bean.DqxqOutBean;
+import coder.aihui.data.bean.gen.DaoSession;
+import coder.aihui.data.source.MyDataSource;
+import coder.aihui.http.AiHuiLoginServices;
+import coder.aihui.http.MyRetrofit;
+import coder.aihui.http.WebServiceUtil;
+import coder.aihui.ui.main.UpBean;
+import coder.aihui.util.GsonUtil;
+import coder.aihui.util.LogUtil;
+import coder.aihui.util.SPUtil;
+import coder.aihui.util.ToastUtil;
+import coder.aihui.widget.MyProgressDialog;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
+import rx.Observable;
+import rx.Observer;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
+
+import static android.R.id.list;
+import static coder.aihui.app.MyApplication.daoSession;
+import static coder.aihui.app.MyApplication.mContext;
+import static coder.aihui.ui.main.DownPresenter.ASSET_CORRECT_UP;
+import static coder.aihui.ui.main.DownPresenter.AZYS_DOWN;
+import static coder.aihui.ui.main.DownPresenter.COMPANY_DOWN;
+import static coder.aihui.ui.main.DownPresenter.PUR_CONTRACT_PLAN_UP;
+import static coder.aihui.ui.main.DownPresenter.PXGL_SB_DOWN;
+import static coder.aihui.ui.main.DownPresenter.PXGL_UP;
+
+*/
+/**
+ * Created by oracleen on 2016/6/29.
+ *//*
+
+public class RemoteMyDataSource implements MyDataSource {
+    private MyProgressDialog  mProgressDialog;
+    private LoadDatasCallback mCallBack;
+
+    private DaoSession mDaossion;
+
+
+    private HashMap<String, Integer> mCountHashMap  = new HashMap();
+    private HashMap<String, Integer> mTotalsHashMap = new HashMap();
+
+
+    public RemoteMyDataSource( DaoSession mDaossion) {
+
+        this.mDaossion = mDaossion;
+
+
+    }
+
+    public RemoteMyDataSource() {
+    }
+
+    */
+/**
+     * 保存电气的数据
+     *
+     * @param callback
+     *//*
+
+    public void saveDqDatas(final LoadDatasCallback callback) {
+        mCallBack = callback;
+        MyRetrofit.getRetrofit()
+                .create(AiHuiServices.class)
+                .getDatas()
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        //  mProgressDialog = ProcessDialogUtil.createNoCancelDialog("正在下载", mActivity);
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObsever<DqxqOutBean>() {
+                    @Override
+                    public void onNext(DqxqOutBean bean) {
+                        mDaossion.getDqxqOutBeanDao().insertOrReplace(bean);
+                        // mCallBack.onDatasLoadedProgress(bean);
+                    }
+                });
+
+    }
+
+
+
+
+
+    */
+/**
+     * @param bean     封装的下载对象
+     * @param callback 回调显示视图
+     *//*
+
+    //保存台账的
+    public Observable saveDatas(final DownLoadBean bean, final LoadDatasCallback callback) {
+        return Observable.range(0,bean.getEnties().length)
+                .doOnNext(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer k) {
+                        final String[] entitys = bean.getEnties();
+                        final List<String[]> pars = bean.getPars();
+                        final String[] methods = bean.getMethods();
+                        final String url = SPUtil.getString(mContext, Content.WS_ADDRESS, "");
+
+                        mTotalsHashMap.remove(entitys[k]);
+                        final ArrayList list = new ArrayList();
+                        list.add(1);// 第一页
+                        list.add(1);            //几个
+                        list.add("");           //pdaId
+                        if (pars != null && pars.size() > k && pars.get(k) != null && pars.get(k).length > 0) {
+                            for (String s : pars.get(k)) {
+                                list.add(s);
+                            }
+                        }
+                        callback.onLoadingData();  //显示进度圈
+                        try {
+                            WebServiceUtil ws = new WebServiceUtil();
+                            String recode = ws.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url, methods[k], list).get();
+                            Log.d("RemoteMyDataSource", recode);
+
+                            if (recode.startsWith("0")) {
+                                ToastUtil.showToast("" + recode);
+                                callback.onDataNotAvailable(1 + recode);
+                                return;
+                            }
+                            JSONObject jsonObject = new JSONObject(recode);
+                            JSONArray results = jsonObject.getJSONArray("results");
+                            int mTotals = jsonObject.getInt("totals");
+
+                            if (results == null && mTotals == 0) {
+                                return;
+                            }
+                            mTotalsHashMap.put(entitys[k], mTotals);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            callback.onDataNotAvailable(2 + e.getMessage());
+                        }
+                    }
+                }).concatMap(new Func1() {
+                    @Override
+                    public Object call(Object o) {
+                        int mTotals = mTotalsHashMap.get(entitys[finalK]);
+                        int downSize = 500;        //每次下载几条
+                        int loopSize = mTotals % downSize == 0 ? mTotals
+                                / downSize : mTotals / downSize + 1;
+                        for (int i = 0; i < loopSize; i++) {
+                            WebServiceUtil ws2 = new WebServiceUtil();
+                            ArrayList list2 = new ArrayList();
+                            list2.add(i + 1);// 第一页
+                            list2.add(downSize);            //几个
+                            list2.add("");           //pdaId
+                            if (pars != null && pars.size() > finalK && pars.get(finalK) != null && pars.get(finalK).length > 0) {
+                                for (String s : pars.get(finalK)) {
+                                    list2.add(s);
+                                }
+                            }
+                            String recode2 = ws2.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url, methods[finalK], list2).get();
+
+                            JSONObject jsonObject = new JSONObject(recode2);
+                            JSONArray results = jsonObject.getJSONArray("results");
+                            subscriber.onNext(results);
+                        }
+                        subscriber.onCompleted();
+
+                        return null;
+                    }
+                }).observeOn(Schedulers.io())
+                .filter(new Func1<JSONArray, Boolean>() {
+                    @Override
+                    public Boolean call(JSONArray jsonArray) {
+                        if (jsonArray == null) {
+                            callback.onDataNotAvailable("错误4,数组为空");
+                        }
+                        return jsonArray != null;
+                    }
+                })
+
+                .observeOn(Schedulers.io())
+                .map(new Func1<JSONArray, List>() {
+                    @Override
+                    public List call(JSONArray jsonArray) {
+                        List list = new ArrayList();
+                        try {
+                            Class entity = Class.forName(entitys[finalK]);
+                            list = GsonUtil.parseJsonArray(jsonArray.toString(), entity);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            callback.onDataNotAvailable(5 + e.getMessage());
+                        }
+                        return list;
+                    }
+                })
+                .observeOn(Schedulers.io())
+
+
+                .subscribe(new Action1<List>() {
+                    @Override
+                    public void call(List datas) {
+
+                        //多线程下载保持 每一个 下载的数目 总数都是独立的
+                        int mDownNum = mCountHashMap.get(entitys[finalK]) == null ? 0 : mCountHashMap.get(entitys[finalK]);
+                        int mTotals = mTotalsHashMap.get(entitys[finalK]) == null ? 0 : mTotalsHashMap.get(entitys[finalK]);
+
+                        callback.onGetData();       //显示获取到数据
+                        if (mTotals == 0) {
+                            callback.onDataFinished();
+                            return;
+                        }
+                        for (int j = 0; j < datas.size(); j++) {
+                            mDaossion.insertOrReplace(datas.get(j));
+                            int i = 100 * (mDownNum + j + 1) / mTotals;
+                            callback.onDatasLoadedProgress(i, entitys[finalK]);
+                        }
+                        mDownNum += datas.size() + 1;
+                        mCountHashMap.put(entitys[finalK], mDownNum);
+                        if (mDownNum >= mTotals) {
+                            callback.onDataFinished();
+                        }
+
+                    }
+                });
+
+
+
+            Observable.create(new Observable.OnSubscribe<JSONArray>() {
+                @Override
+                public void call(Subscriber<? super JSONArray> subscriber) {
+                    try {
+                        int mTotals = mTotalsHashMap.get(entitys[finalK]);
+                        int downSize = 500;        //每次下载几条
+                        int loopSize = mTotals % downSize == 0 ? mTotals
+                                / downSize : mTotals / downSize + 1;
+                        for (int i = 0; i < loopSize; i++) {
+                            WebServiceUtil ws2 = new WebServiceUtil();
+                            ArrayList list2 = new ArrayList();
+                            list2.add(i + 1);// 第一页
+                            list2.add(downSize);            //几个
+                            list2.add("");           //pdaId
+                            if (pars != null && pars.size() > finalK && pars.get(finalK) != null && pars.get(finalK).length > 0) {
+                                for (String s : pars.get(finalK)) {
+                                    list2.add(s);
+                                }
+                            }
+                            String recode2 = ws2.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url, methods[finalK], list2).get();
+
+                            JSONObject jsonObject = new JSONObject(recode2);
+                            JSONArray results = jsonObject.getJSONArray("results");
+                            subscriber.onNext(results);
+                        }
+                        subscriber.onCompleted();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        callback.onDataNotAvailable("错误3" + e.getMessage());
+                    }
+                }
+            })
+                    .subscribeOn(Schedulers.io())
+                    .filter(new Func1<JSONArray, Boolean>() {
+                        @Override
+                        public Boolean call(JSONArray jsonArray) {
+
+                            if (jsonArray == null) {
+                                callback.onDataNotAvailable("错误4,数组为空");
+                            }
+                            return jsonArray != null;
+                        }
+                    })
+
+                    .observeOn(Schedulers.io())
+                    .map(new Func1<JSONArray, List>() {
+                        @Override
+                        public List call(JSONArray jsonArray) {
+                            List list = new ArrayList();
+                            try {
+                                Class entity = Class.forName(entitys[finalK]);
+                                list = GsonUtil.parseJsonArray(jsonArray.toString(), entity);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                callback.onDataNotAvailable(5 + e.getMessage());
+                            }
+                            return list;
+                        }
+                    })
+                    .filter(new Func1<List, Boolean>() {
+                        @Override
+                        public Boolean call(List ts) {
+                            boolean a = (list != null && list.size() != 0);
+                            if (!a) {
+                                callback.onDataNotAvailable("错误6,集合为空");
+                            }
+                            return a;
+                        }
+                    })
+                    .observeOn(Schedulers.io())
+                    .subscribe(new Action1<List>() {
+                        @Override
+                        public void call(List datas) {
+
+                            //多线程下载保持 每一个 下载的数目 总数都是独立的
+                            int mDownNum = mCountHashMap.get(entitys[finalK]) == null ? 0 : mCountHashMap.get(entitys[finalK]);
+                            int mTotals = mTotalsHashMap.get(entitys[finalK]) == null ? 0 : mTotalsHashMap.get(entitys[finalK]);
+
+                            callback.onGetData();       //显示获取到数据
+                            if (mTotals == 0) {
+                                callback.onDataFinished();
+                                return;
+                            }
+                            for (int j = 0; j < datas.size(); j++) {
+                                mDaossion.insertOrReplace(datas.get(j));
+                                int i = 100 * (mDownNum + j + 1) / mTotals;
+                                callback.onDatasLoadedProgress(i, entitys[finalK]);
+                            }
+                            mDownNum += datas.size() + 1;
+                            mCountHashMap.put(entitys[finalK], mDownNum);
+                            if (mDownNum >= mTotals) {
+                                callback.onDataFinished();
+                            }
+
+                        }
+                    });
+
+
+    }
+
+
+
+
+    */
+/**
+     * @param upDatas  //封装的集合
+     * @param callback 接口回调渲染视图
+     *//*
+
+    public void gotoUp(List<UpBean> upDatas, final LoadDatasCallback callback) {
+
+
+        final String wsAddress = SPUtil.getWsAddress(mContext);
+        //找到所有未上传的数据
+        Observable.from(upDatas)
+                .concatMap(new Func1<UpBean, Observable<StringListBean>>() {
+                    @Override
+                    public Observable<StringListBean> call(UpBean upBean) {
+                        return getUpdatas(upBean);          //获取未上传的数据
+                    }
+                }).filter(new Func1<StringListBean, Boolean>() {
+            @Override
+            public Boolean call(StringListBean bean) {
+                boolean b = bean.datas != null && bean.datas.size() != 0;
+                if (!b) {
+                    callback.onDataFinished();
+                }
+                return b;
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<StringListBean>() {
+                    @Override
+                    public void call(StringListBean bean) {
+                        int updateSize = 20;
+                        List list = bean.datas;
+                        try {
+                            if (list.size() != 0) {
+                                for (int i = 0; i < list.size(); i = i + updateSize) {
+                                    List list1 = list.subList(i, (list.size()) > updateSize ? updateSize : (list.size()));
+                                    WebServiceUtil ws = new WebServiceUtil();
+
+                                    List<Object> list2 = new ArrayList<Object>();           //先试试
+                                    //list.add("DATA_RECORD");//
+                                    list2.add(GsonUtil.parseListToJson(list1));//
+
+                                    String recode = ws.execute(wsAddress, bean.method, list2).get();
+                                    JSONObject resJson = new JSONObject(recode);
+
+                                    if (resJson.getLong("recode") != 0) {// 返回码不等于
+                                        callback.onDatasLoadedProgress(i, null);
+                                    } else {
+                                        callback.onDataNotAvailable(resJson.toString() + "");
+                                    }
+                                }
+                                gotoChangeFlag(bean.upBean, list);
+                                callback.onDataFinished();
+                            } else {
+                                callback.onDataFinished();
+                            }
+                        } catch (Exception e) {
+                            callback.onDataNotAvailable(e.getMessage());
+                        }
+                    }
+                });
+    }
+
+    private void gotoChangeFlag(UpBean upBean, List list) {
+
+        try {
+            String enties = upBean.getEnties();
+            Class clazz = Class.forName(enties);
+            Method m2 = clazz.getDeclaredMethod("setSYNC_DATE", Date.class);
+            Method m3 = clazz.getDeclaredMethod("setSYNC_FLAG", Integer.class);
+            for (int i = 0; i < list.size(); i++) {
+                m2.invoke(list.get(i), new Date());
+                m3.invoke(list.get(i), 1);
+            }
+            mDaossion.getDao(clazz).insertOrReplaceInTx(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    @Nullable
+    private synchronized Observable<StringListBean> getUpdatas(final UpBean upBean) {
+        return Observable.create(new Observable.OnSubscribe<StringListBean>() {
+            @Override
+            public void call(Subscriber<? super StringListBean> subscriber) {
+                try {
+                    String entity = upBean.getEnties();
+                    String method = upBean.getMethods();
+                    WhereCondition[] whereconditions1 = upBean.getWhereconditions();
+                    Property[] propertie = upBean.getPropertie();
+                    Class cls = Class.forName(entity);
+                    QueryBuilder qb = daoSession.queryBuilder(cls);
+                    if (whereconditions1 != null) {
+                        for (WhereCondition whereCondition : whereconditions1) {
+                            qb.where(whereCondition);
+                        }
+                    }
+                    if (propertie != null && propertie.length != 0) {
+                        qb.orderAsc(propertie);
+                    }
+                    List list = qb.list();
+                    StringListBean stringListBean = new StringListBean();
+                    stringListBean.method = method;
+                    stringListBean.datas = list;
+                    stringListBean.upBean = upBean;
+                    subscriber.onNext(stringListBean);
+                } catch (Exception e) {
+                    subscriber.onNext(null);
+                }
+                subscriber.onCompleted();
+            }
+        }).subscribeOn(Schedulers.io());
+
+    }
+
+
+    class StringListBean {
+        String method;          //方法
+        List   datas;           //上传照片的耳机和
+        UpBean upBean;          //对象
+    }
+
+
+    */
+/**
+     * @param view     视图
+     * @param entite   实体类
+     * @param method   方法
+     * @param callback 回传
+     *//*
+
+
+  */
+/*  public void saveDatas(DownView view, String[] entite, String[] method, final LoadDatasCallback callback) {
+        this.saveDatas(view, entite, method, null, callback);
+    }
+*//*
+
+
+    */
+/**
+     * @param type     下载类型
+     * @param callback
+     *//*
+
+
+    public void saveHttpDatas(Integer type, final LoadDatasCallback callback) {
+        getRetrofitObserbe(type)
+                .subscribeOn(Schedulers.io())
+                .filter(new Func1<List, Boolean>() {
+                    @Override
+                    public Boolean call(List list) {
+                        if (list == null || list.size() == 0) {
+                            callback.onDataNotAvailable("下载错误4:数据为空");
+                        }
+                        return list != null && list.size() != 0;
+                    }
+                }).observeOn(Schedulers.io())
+                .subscribe(new Subscriber<List>() {
+                               @Override
+                               public void onCompleted() {
+                                   callback.onDataFinished();
+                               }
+
+                               @Override
+                               public void onError(Throwable e) {
+                                   e.printStackTrace();
+                                   callback.onDataNotAvailable("下载错误3,网络错误" + e.getMessage());
+                               }
+
+                               @Override
+                               public void onNext(List list) {
+                                   try {
+                                       for (int i = 0; i < list.size(); i++) {
+                                           Log.d("RemoteMyDataSource", "i:" + list.get(i).getClass().getName() + Thread.currentThread());
+                                           mDaossion.insertOrReplace(list.get(i));
+                                           callback.onDatasLoadedProgress((100 * i / list.size()), null);
+                                       }
+                                   } catch (Exception e) {
+                                       callback.onDataNotAvailable("下载错误26" + e.getMessage());
+                                       e.printStackTrace();
+                                   }
+                               }
+                           }
+                );
+    }
+
+    public void gotoUpJson(final Integer type, Map<String, String> jsonMap, final LoadDatasCallback callback) {
+        Observable.just(jsonMap)
+                .map(new Func1<Map<String, String>, RequestBody>() {
+                    @Override
+                    public RequestBody call(Map<String, String> map) {
+                        FormBody.Builder builder = new FormBody.Builder();
+                        for (String k : map.keySet()) {
+                            builder.add(k, map.get(k));
+                        }
+                        FormBody body = builder.build();
+                        return body;
+                    }
+                })
+                .observeOn(Schedulers.io())
+                .flatMap(new Func1<RequestBody, Observable<String>>() {
+                    @Override
+                    public Observable<String> call(RequestBody requestBody) {
+                        return getRetrofitObserbe(type, requestBody);
+                    }
+                }).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+                        callback.onDataFinished();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onDataNotAvailable(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        //{"code":200,"msg":"success"}  上传台账修改的
+                        Log.d("RemoteMyDataSourceJson", s);
+                    }
+                });
+
+
+    }
+
+    public void gotoUpJson(final String url, final Integer type, Map<String, String> jsonMap, final LoadDatasCallback callback) {
+        Observable.just(jsonMap)
+                .observeOn(Schedulers.io())
+                .map(new Func1<Map<String, String>, RequestBody>() {
+                    @Override
+                    public RequestBody call(Map<String, String> map) {
+                        FormBody.Builder builder = new FormBody.Builder();
+                        for (String k : map.keySet()) {
+                            builder.add(k, map.get(k));
+                        }
+                        FormBody body = builder.build();
+                        return body;
+                    }
+                }).flatMap(new Func1<RequestBody, Observable<String>>() {
+            @Override
+            public Observable<String> call(RequestBody requestBody) {
+                return getRetrofitObserbe(url, type, requestBody);
+            }
+        }).observeOn(Schedulers.io())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+                        callback.onDataFinished();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onDataNotAvailable(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        Log.d("RemoteMyDataSourceJson", s);
+                    }
+                });
+
+
+    }
+
+    Observable getRetrofitObserbe(int type, RequestBody requestBody) {
+        switch (type) {
+            case PXGL_UP:           //培训管理
+                return MyRetrofit.getStringRetrofit()
+                        .create(AiHuiServices.class)
+                        .upLoadPurPlan(requestBody);
+            case PUR_CONTRACT_PLAN_UP:
+                return MyRetrofit.getStringRetrofit()
+                        .create(AiHuiServices.class)
+                        .upPxjl(requestBody);
+            case ASSET_CORRECT_UP:
+                return MyRetrofit.getStringRetrofit()
+                        .create(AiHuiServices.class)
+                        .upAssetCorrect(requestBody);
+        }
+        return null;
+    }
+
+
+    Observable getRetrofitObserbe(String url, int type, RequestBody requestBody) {
+        return MyRetrofit.getStringRetrofit()
+                .create(AiHuiServices.class)
+                .upJson(url, requestBody);
+    }
+
+
+    Observable getRetrofitObserbe(int type) {
+        switch (type) {
+            case COMPANY_DOWN:
+                return MyRetrofit.getRetrofit()
+                        .create(AiHuiServices.class)
+                        .getComPanies(4);
+            case AZYS_DOWN:
+                return Observable.mergeDelayError(
+                        MyRetrofit.getRetrofit()
+                                .create(AiHuiServices.class)
+                                .getAzysDatas(getMaxAzystime(), 1),         //安装验收数据
+                        MyRetrofit.getRetrofit()
+                                .create(AiHuiServices.class)           //验收明细的数据
+                                .getAzysMx(),
+                        MyRetrofit.getRetrofit()
+                                .create(AiHuiServices.class)           //验收明细的数据
+                                .getAzysYsr()
+                );
+            case PXGL_SB_DOWN:
+                return Observable.mergeDelayError(
+                        MyRetrofit.getRetrofit()
+                                .create(AiHuiServices.class)
+                                .getPpmc(),
+                        MyRetrofit.getRetrofit()
+                                .create(AiHuiServices.class)
+                                .getWzmc());
+        }
+        return null;
+
+    }
+
+
+    //获取本地数据库最大时间
+    private String getMaxAzystime() {
+
+        long createDate = 0;
+        Database db = mDaossion.getDatabase();
+        String sql = "select max(CREATE__TIME) as CREATE__TIME from PUR__CONTRACT__PLAN ";
+        Cursor cursor = db.rawQuery(sql, new String[]{});
+        cursor.moveToFirst();
+        while (cursor.getPosition() != cursor.getCount()) {
+            createDate = cursor.getLong(0);
+            cursor.moveToNext();
+        }
+        if (createDate != 0) {
+            return TimeUtils.milliseconds2String(createDate);
+        } else {
+            return "2010-10-25 12:00:00";
+        }
+    }
+
+
+    //抽取
+    abstract class BaseObsever<T> implements Observer<T> {
+
+        @Override
+        public void onCompleted() {
+            //如果进度圈在转就关了
+           */
+/* if (mCallBack != null) {
+                mCallBack.onDataFinished();
+            }
+*//*
+
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            if (mCallBack != null) {
+                mCallBack.onDataNotAvailable(9 + e.getMessage());
+            }
+        }
+
+        @Override
+        public abstract void onNext(T t);
+    }
+
+
+}
+*/

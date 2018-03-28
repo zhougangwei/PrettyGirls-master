@@ -108,6 +108,11 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements BaseVie
         unbinder.unbind();
     }
 
+    @Override
+    public boolean onBackPressed() {
+        return false;
+    }
+
     class ActivityBean {
         String  name;
         Class   className;

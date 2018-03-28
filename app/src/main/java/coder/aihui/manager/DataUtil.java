@@ -27,6 +27,9 @@ public class DataUtil {
 
 
     public static Observable getDatas(final DaoSession daosession, final String sql, final String[] par) {
+
+
+
         return Observable.create(new Observable.OnSubscribe<IN_ASSET>() {
             @Override
             public void call(Subscriber<? super IN_ASSET> subscriber) {

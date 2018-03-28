@@ -7,7 +7,7 @@ import rx.functions.Action1;
  * Created by long on 2016/9/2.
  * RxBus Presenter
  */
-public interface RxBusPresenter extends BasePresenter {
+public interface RxBusPresenter extends IBasePresenter {
 
     public RxBus mRxBus = RxBus.getInstance();
 

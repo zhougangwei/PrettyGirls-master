@@ -21,18 +21,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import coder.aihui.app.BaseView;
 import coder.aihui.base.Content;
 import coder.aihui.data.bean.DownLoadBean;
 import coder.aihui.data.bean.DqxqOutBean;
 import coder.aihui.data.bean.gen.DaoSession;
 import coder.aihui.data.source.MyDataSource;
-import coder.aihui.http.AiHuiLoginServices;
+import coder.aihui.http.AiHuiServices;
 import coder.aihui.http.MyRetrofit;
 import coder.aihui.http.WebServiceUtil;
-import coder.aihui.ui.main.DownView;
 import coder.aihui.ui.main.UpBean;
 import coder.aihui.util.GsonUtil;
+import coder.aihui.util.LogUtil;
 import coder.aihui.util.SPUtil;
 import coder.aihui.util.ToastUtil;
 import coder.aihui.widget.MyProgressDialog;
@@ -64,16 +63,16 @@ public class RemoteMyDataSource implements MyDataSource {
     private LoadDatasCallback mCallBack;
 
     private DaoSession mDaossion;
-    private BaseView   mView;
+
 
     private HashMap<String, Integer> mCountHashMap  = new HashMap();
     private HashMap<String, Integer> mTotalsHashMap = new HashMap();
 
 
-    public RemoteMyDataSource(DownView view, DaoSession mDaossion) {
+    public RemoteMyDataSource(DaoSession mDaossion) {
 
         this.mDaossion = mDaossion;
-        mView = view;
+
 
     }
 
@@ -88,9 +87,8 @@ public class RemoteMyDataSource implements MyDataSource {
     public void saveDqDatas(final LoadDatasCallback callback) {
         mCallBack = callback;
         MyRetrofit.getRetrofit()
-                .create(AiHuiLoginServices.class)
+                .create(AiHuiServices.class)
                 .getDatas()
-                .compose(mView.<DqxqOutBean>bindToLife())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -111,12 +109,18 @@ public class RemoteMyDataSource implements MyDataSource {
     }
 
 
+
+
+
     /**
      * @param bean     封装的下载对象
      * @param callback 回调显示视图
      */
     //保存台账的
     public void saveDatas(DownLoadBean bean, final LoadDatasCallback callback) {
+
+        LogUtil.e("saveData",Thread.currentThread().getName());
+
         for (int k = 0; k < bean.getEnties().length; k++) {
             final String[] entitys = bean.getEnties();
             final List<String[]> pars = bean.getPars();
@@ -161,7 +165,6 @@ public class RemoteMyDataSource implements MyDataSource {
 
             final int finalK = k;
 
-
             Observable.create(new Observable.OnSubscribe<JSONArray>() {
                 @Override
                 public void call(Subscriber<? super JSONArray> subscriber) {
@@ -182,7 +185,6 @@ public class RemoteMyDataSource implements MyDataSource {
                                 }
                             }
                             String recode2 = ws2.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url, methods[finalK], list2).get();
-                            Log.d("RemoteMyDataSource2", recode2);
 
                             JSONObject jsonObject = new JSONObject(recode2);
                             JSONArray results = jsonObject.getJSONArray("results");
@@ -249,7 +251,6 @@ public class RemoteMyDataSource implements MyDataSource {
                             for (int j = 0; j < datas.size(); j++) {
                                 mDaossion.insertOrReplace(datas.get(j));
                                 int i = 100 * (mDownNum + j + 1) / mTotals;
-
                                 callback.onDatasLoadedProgress(i, entitys[finalK]);
                             }
                             mDownNum += datas.size() + 1;
@@ -263,6 +264,8 @@ public class RemoteMyDataSource implements MyDataSource {
         }
 
     }
+
+
 
 
     /**
@@ -407,7 +410,7 @@ public class RemoteMyDataSource implements MyDataSource {
      */
 
     public void saveHttpDatas(Integer type, final LoadDatasCallback callback) {
-        getRetrofitObserbe(type).compose(mView.<List>bindToLife())
+        getRetrofitObserbe(type)
                 .subscribeOn(Schedulers.io())
                 .filter(new Func1<List, Boolean>() {
                     @Override
@@ -531,15 +534,15 @@ public class RemoteMyDataSource implements MyDataSource {
         switch (type) {
             case PXGL_UP:           //培训管理
                 return MyRetrofit.getStringRetrofit()
-                        .create(AiHuiLoginServices.class)
+                        .create(AiHuiServices.class)
                         .upLoadPurPlan(requestBody);
             case PUR_CONTRACT_PLAN_UP:
                 return MyRetrofit.getStringRetrofit()
-                        .create(AiHuiLoginServices.class)
+                        .create(AiHuiServices.class)
                         .upPxjl(requestBody);
             case ASSET_CORRECT_UP:
                 return MyRetrofit.getStringRetrofit()
-                        .create(AiHuiLoginServices.class)
+                        .create(AiHuiServices.class)
                         .upAssetCorrect(requestBody);
         }
         return null;
@@ -548,7 +551,7 @@ public class RemoteMyDataSource implements MyDataSource {
 
     Observable getRetrofitObserbe(String url, int type, RequestBody requestBody) {
         return MyRetrofit.getStringRetrofit()
-                .create(AiHuiLoginServices.class)
+                .create(AiHuiServices.class)
                 .upJson(url, requestBody);
     }
 
@@ -557,27 +560,27 @@ public class RemoteMyDataSource implements MyDataSource {
         switch (type) {
             case COMPANY_DOWN:
                 return MyRetrofit.getRetrofit()
-                        .create(AiHuiLoginServices.class)
+                        .create(AiHuiServices.class)
                         .getComPanies(4);
             case AZYS_DOWN:
                 return Observable.mergeDelayError(
                         MyRetrofit.getRetrofit()
-                                .create(AiHuiLoginServices.class)
+                                .create(AiHuiServices.class)
                                 .getAzysDatas(getMaxAzystime(), 1),         //安装验收数据
                         MyRetrofit.getRetrofit()
-                                .create(AiHuiLoginServices.class)           //验收明细的数据
+                                .create(AiHuiServices.class)           //验收明细的数据
                                 .getAzysMx(),
                         MyRetrofit.getRetrofit()
-                                .create(AiHuiLoginServices.class)           //验收明细的数据
+                                .create(AiHuiServices.class)           //验收明细的数据
                                 .getAzysYsr()
                 );
             case PXGL_SB_DOWN:
                 return Observable.mergeDelayError(
                         MyRetrofit.getRetrofit()
-                                .create(AiHuiLoginServices.class)
+                                .create(AiHuiServices.class)
                                 .getPpmc(),
                         MyRetrofit.getRetrofit()
-                                .create(AiHuiLoginServices.class)
+                                .create(AiHuiServices.class)
                                 .getWzmc());
         }
         return null;

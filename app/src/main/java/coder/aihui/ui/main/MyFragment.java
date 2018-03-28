@@ -160,4 +160,9 @@ public class MyFragment extends BaseFragment<MyPresenter> {
         }
 
     }
+
+    @Override
+    public boolean onBackPressed() {
+        return false;
+    }
 }

@@ -19,7 +19,7 @@ import coder.aihui.R;
 import coder.aihui.base.AppActivity;
 import coder.aihui.base.BaseFragment;
 import coder.aihui.base.Content;
-import coder.aihui.http.WebService2000Util;
+import coder.aihui.http.WebServiceCallBackUtil;
 import coder.aihui.data.bean.DownLoadBean;
 import coder.aihui.ui.main.DownPresenter;
 import coder.aihui.ui.main.DownView;
@@ -128,7 +128,7 @@ public class ConfigActivity extends AppActivity implements DownView {
             String METHOD = "testConnect";
 
 
-            WebService2000Util ws2 = new WebService2000Util(new WebService2000Util.OnCallBack() {
+            WebServiceCallBackUtil ws2 = new WebServiceCallBackUtil(new WebServiceCallBackUtil.OnCallBack() {
                 @Override
                 public void callBack(String recode) {
                     if (recode.substring(0, 1).equals("0")) {

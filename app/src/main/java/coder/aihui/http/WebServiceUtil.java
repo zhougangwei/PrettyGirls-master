@@ -15,8 +15,8 @@ public class WebServiceUtil extends AsyncTask<Object, Object, String> {
 
     // WSDL文档中的命名空间
     //默认
-    public static String targetNameSpace = "http://intf.service.hrp.iwell";
-    public static String wsdlUrl         = "/services/pdaws";
+    public  String targetNameSpace = "http://intf.service.hrp.iwell";
+    public  String wsdlUrl         = "/services/pdaws";
 
 /*
     private OnCallBack mOnCallBack;

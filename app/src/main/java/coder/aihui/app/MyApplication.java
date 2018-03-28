@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.multidex.MultiDex;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -49,7 +50,7 @@ public class MyApplication extends Application /*implements ReactApplication */ 
         mContext = this;
 
         //配置是否显示log
-        LogUtil.isDebug = false;
+        LogUtil.isDebug = true;
 
         mRefWatcher = LeakCanary.install(this);
 
@@ -131,7 +132,10 @@ public class MyApplication extends Application /*implements ReactApplication */ 
         MyApplication application = (MyApplication) context.getApplicationContext();
         return application.mRefWatcher;
     }
-
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base); MultiDex.install(this);
+    }
    /* @Override
     public ReactNativeHost getReactNativeHost() {
         return mReactNativeHost;

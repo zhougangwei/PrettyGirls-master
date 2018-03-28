@@ -21,6 +21,7 @@ public class INSPECT_EXT {
     private String  INSE_TEMPLATE_ID;
     private Integer INSE_CYCLE;
     private String  INSE_CYCLE_TYPE;
+
     @Generated(hash = 1063400222)
     public INSPECT_EXT(Long INSE_ID, String INSE_FK_ID, String INSE_TYPE, String INSE_TEMPLATE_ID,
             Integer INSE_CYCLE, String INSE_CYCLE_TYPE) {

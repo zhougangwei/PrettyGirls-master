@@ -6,5 +6,9 @@
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\raw\\beep.ogg",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\raw\\beep.ogg"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\raw\\msg.mp3",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\raw\\msg.mp3"
     }
 ]

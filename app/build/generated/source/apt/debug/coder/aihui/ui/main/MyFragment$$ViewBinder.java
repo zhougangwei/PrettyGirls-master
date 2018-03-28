@@ -20,55 +20,47 @@ public class MyFragment$$ViewBinder<T extends MyFragment> implements ViewBinder<
   protected static class InnerUnbinder<T extends MyFragment> implements Unbinder {
     protected T target;
 
-    private View view2131755435;
+    private View view2131755449;
 
-    private View view2131755432;
+    private View view2131755450;
 
-    private View view2131755433;
-
-    private View view2131755434;
+    private View view2131755452;
 
     protected InnerUnbinder(final T target, Finder finder, Object source) {
       this.target = target;
 
       View view;
-      view = finder.findRequiredView(source, 2131755435, "field 'mLlSet' and method 'onClick'");
-      target.mLlSet = finder.castView(view, 2131755435, "field 'mLlSet'");
-      view2131755435 = view;
-      view.setOnClickListener(new DebouncingOnClickListener() {
-        @Override
-        public void doClick(View p0) {
-          target.onClick();
-        }
-      });
-      target.mTvSum = finder.findRequiredViewAsType(source, 2131755431, "field 'mTvSum'", TextView.class);
-      view = finder.findRequiredView(source, 2131755432, "field 'mRlUse' and method 'onViewClicked'");
-      target.mRlUse = finder.castView(view, 2131755432, "field 'mRlUse'");
-      view2131755432 = view;
+      target.mTvSum = finder.findRequiredViewAsType(source, 2131755446, "field 'mTvSum'", TextView.class);
+      view = finder.findRequiredView(source, 2131755449, "field 'mRlUse' and method 'onViewClicked'");
+      target.mRlUse = finder.castView(view, 2131755449, "field 'mRlUse'");
+      view2131755449 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
-      view = finder.findRequiredView(source, 2131755433, "field 'mRlVersion' and method 'onViewClicked'");
-      target.mRlVersion = finder.castView(view, 2131755433, "field 'mRlVersion'");
-      view2131755433 = view;
+      view = finder.findRequiredView(source, 2131755450, "field 'mRlVersion' and method 'onViewClicked'");
+      target.mRlVersion = finder.castView(view, 2131755450, "field 'mRlVersion'");
+      view2131755450 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
-      view = finder.findRequiredView(source, 2131755434, "field 'mTvExit' and method 'onViewClicked'");
-      target.mTvExit = finder.castView(view, 2131755434, "field 'mTvExit'");
-      view2131755434 = view;
+      view = finder.findRequiredView(source, 2131755452, "field 'mTvExit' and method 'onViewClicked'");
+      target.mTvExit = finder.castView(view, 2131755452, "field 'mTvExit'");
+      view2131755452 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
+      target.mTvCheck = finder.findRequiredViewAsType(source, 2131755447, "field 'mTvCheck'", TextView.class);
+      target.mTvUncheck = finder.findRequiredViewAsType(source, 2131755448, "field 'mTvUncheck'", TextView.class);
+      target.mTvVersion = finder.findRequiredViewAsType(source, 2131755451, "field 'mTvVersion'", TextView.class);
     }
 
     @Override
@@ -76,20 +68,20 @@ public class MyFragment$$ViewBinder<T extends MyFragment> implements ViewBinder<
       T target = this.target;
       if (target == null) throw new IllegalStateException("Bindings already cleared.");
 
-      target.mLlSet = null;
       target.mTvSum = null;
       target.mRlUse = null;
       target.mRlVersion = null;
       target.mTvExit = null;
+      target.mTvCheck = null;
+      target.mTvUncheck = null;
+      target.mTvVersion = null;
 
-      view2131755435.setOnClickListener(null);
-      view2131755435 = null;
-      view2131755432.setOnClickListener(null);
-      view2131755432 = null;
-      view2131755433.setOnClickListener(null);
-      view2131755433 = null;
-      view2131755434.setOnClickListener(null);
-      view2131755434 = null;
+      view2131755449.setOnClickListener(null);
+      view2131755449 = null;
+      view2131755450.setOnClickListener(null);
+      view2131755450 = null;
+      view2131755452.setOnClickListener(null);
+      view2131755452 = null;
 
       this.target = null;
     }

@@ -1,12 +1,6 @@
 package coder.aihui;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * @ 创建者   zhou
@@ -18,16 +12,11 @@ import rx.schedulers.Schedulers;
  */
 
 public class RxPresenter {
+
+    
+
+
     public void testRxJava(List arr) {
-        Observable.from(arr).subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .delay(1, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<String>() {
-                    @Override
-                    public void call(String s) {
-                        System.out.println(s);
-                    }
-                });
+
     }
 }

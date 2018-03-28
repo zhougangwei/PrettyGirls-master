@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PrettyGirls-master.iml" filepath="$PROJECT_DIR$/PrettyGirls-master.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RecyclerViewHelper/RecyclerViewHelper.iml" filepath="$PROJECT_DIR$/RecyclerViewHelper/RecyclerViewHelper.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/koltlin/koltlin.iml" filepath="$PROJECT_DIR$/koltlin/koltlin.iml" />
     </modules>
   </component>
 </project>

@@ -16,7 +16,7 @@ import coder.aihui.data.bean.DownLoadBean;
 import coder.aihui.data.bean.gen.DaoSession;
 import coder.aihui.data.source.MyDataSource;
 import coder.aihui.data.source.remote.RemoteMyDataSource;
-import coder.aihui.http.WebService2000Util;
+import coder.aihui.http.WebServiceCallBackUtil;
 import coder.aihui.rxbus.RxBus;
 import coder.aihui.util.AndroidUtils;
 import coder.aihui.util.LogUtil;
@@ -98,10 +98,14 @@ public class DownPresenter implements RxBusPresenter {
 
     public DownPresenter(DownView view, DaoSession mDaossion) {
         mView = view;
-        mRemoteMyDataSource = new RemoteMyDataSource(mView, mDaossion);
+        mRemoteMyDataSource = new RemoteMyDataSource( mDaossion);
         this.mDaoSession = mDaossion;
     }
-
+   /* public DownPresenter(DownView view) {
+        mView = view;
+        mRemoteMyDataSource = new RemoteMyDataSource( mDaossion);
+        this.mDaoSession = mDaossion;
+    }*/
 
     @Override
     public void onStart() {
@@ -220,7 +224,7 @@ public class DownPresenter implements RxBusPresenter {
                 String wsAddress = SPUtil.getWsAddress(mContext);
                 List list1 = new ArrayList();
                 list1.add(userId);
-                WebService2000Util ws2 = new WebService2000Util(new WebService2000Util.OnCallBack() {
+                WebServiceCallBackUtil ws2 = new WebServiceCallBackUtil(new WebServiceCallBackUtil.OnCallBack() {
                     @Override
                     public void callBack(String result) {
                         subscriber.onNext(result);

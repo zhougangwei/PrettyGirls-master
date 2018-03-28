@@ -36,6 +36,10 @@
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\drawable-xhdpi\\btn_normal.9.png"
     },
     {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\ic_zhengfangxing_blue.9.png",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\drawable-xhdpi\\ic_zhengfangxing_blue.9.png"
+    },
+    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\mm_pre.png",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\drawable-xhdpi\\mm_pre.png"
     }

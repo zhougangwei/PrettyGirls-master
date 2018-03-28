@@ -1,139 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-
-<LinearLayout
-    android:orientation="vertical"
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/login_form"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/login_form">
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48px">
 
     </LinearLayout>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bgBlue"
-    >
-    <ImageView
-        android:layout_width="321px"
-        android:layout_height="321px"
-        android:layout_centerHorizontal="true"
 
-        android:layout_marginTop="165px"
-        android:src="@mipmap/ic_logo"/>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="475px"
-        android:gravity="center"
-        android:text="医工云服PDA"
-        android:textColor="@color/textBlue"
-        android:textSize="40px"/>
-
-    <EditText
-        android:id="@+id/et_user"
-        android:layout_width="640px"
-        android:layout_height="113px"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="642px"
-
-        android:background="@drawable/btn_normal"
-        android:drawableLeft="@mipmap/yhm_pre"
-        android:drawablePadding="33px"
-        android:hint="@string/prompt_username"
-        android:maxLines="1"
-        android:paddingLeft="33px"
-        android:singleLine="true"
-        android:textColor="@color/editBlue"
-        android:textSize="32px"/>
-
-
-    <EditText
-        android:paddingLeft="33px"
-        android:id="@+id/et_password"
-        android:layout_width="640px"
-        android:layout_height="113px"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="808px"
-        android:background="@drawable/btn_normal"
-        android:drawableLeft="@mipmap/mm_pre"
-        android:drawablePadding="33px"
-        android:hint="@string/prompt_password"
-        android:imeActionLabel="@string/action_sign_in_short"
-        android:imeOptions="actionUnspecified"
-        android:inputType="textPassword"
-        android:textColor="@color/editBlue"/>
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="90px"
-        android:layout_marginTop="920px"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:background="@color/bgBlue"
+        >
 
-        <RadioButton
-            android:id="@+id/rb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="40px"
-            android:text="记住密码"
-            android:textSize="30px"
-
-            />
+        <ImageView
+            android:layout_width="321px"
+            android:layout_height="321px"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="165px"
+            android:src="@mipmap/ic_logo"
+            app:layout_auto_baseheight="width"/>
 
         <TextView
-            android:id="@+id/tv_config"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="318px"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="475px"
+            android:gravity="center"
+            android:text="医工云服PDA"
+            android:textColor="@color/textBlue"
+            android:textSize="40px"/>
+
+        <EditText
+            android:id="@+id/et_user"
+            android:layout_width="640px"
+            android:layout_height="113px"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="642px"
+
+            android:background="@drawable/btn_normal"
+            android:drawableLeft="@mipmap/yhm_pre"
+            android:drawablePadding="33px"
+            android:hint="@string/prompt_username"
+            android:maxLines="1"
+            android:paddingLeft="33px"
             android:singleLine="true"
-            android:text="新用户配置"
-            android:textSize="30px"/>
+            android:textColor="@color/editBlue"
+            android:textSize="32px"/>
 
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="640px"
+            android:layout_height="113px"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="808px"
+            android:background="@drawable/btn_normal"
+            android:drawableLeft="@mipmap/mm_pre"
+            android:drawablePadding="33px"
+            android:hint="@string/prompt_password"
+            android:imeActionLabel="@string/action_sign_in_short"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textPassword"
+            android:paddingLeft="33px"
+            android:textColor="@color/editBlue"
+            android:textSize="32px"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90px"
+            android:layout_marginTop="920px"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="40px"
+                android:text="记住密码"
+                android:textSize="30px"
+
+                />
+
+            <TextView
+                android:id="@+id/tv_config"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="318px"
+                android:singleLine="true"
+                android:text="新用户配置"
+                android:textSize="30px"/>
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/button"
+            style="@style/btn_blue_big"
+            android:layout_alignParentBottom="true"
+            android:text="登 录"/>
+
+
+        <ImageView
+            android:id="@+id/circleImageView"
+            android:layout_width="64px"
+            android:layout_height="64px"
+            android:layout_marginLeft="31px"
+            android:layout_marginTop="24px"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_logo"
+            app:layout_auto_baseheight="width"></ImageView>
+
+        <TextView
+            android:id="@+id/tv_hos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="105px"
+            android:layout_marginTop="41px"
+            android:text="爱惠医院"
+            android:textColor="@color/textGrey"
+            android:textSize="29px"/>
+
+        <ProgressBar
+            android:id="@+id/login_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
     </LinearLayout>
-
-
-    <Button
-        android:id="@+id/button"
-        style="@style/btn_blue_big"
-        android:layout_alignParentBottom="true"
-        android:text="登 录"/>
-
-
-    <coder.aihui.widget.CircleImageView
-        android:id="@+id/circleImageView"
-        android:layout_width="64px"
-        android:layout_height="64px"
-        android:layout_marginLeft="31px"
-        android:layout_marginTop="24px"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/ic_logo"></coder.aihui.widget.CircleImageView>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="105px"
-        android:layout_marginTop="41px"
-        android:text="XXXXXXXXXX医院"
-        android:textColor="@color/textGrey"
-        android:textSize="29px"/>
-
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone"/>
-
 </RelativeLayout>
-</LinearLayout>

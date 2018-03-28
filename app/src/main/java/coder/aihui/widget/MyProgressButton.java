@@ -53,6 +53,8 @@ public class MyProgressButton extends Button implements ProgressListener {
     private static String[] statusString = new String[]{"download", "pause", "complete", "error", "delete"};
     private String resultString;
     private static final String TAG = "CProgressButton";
+    private int mulTimes;                                   //几次
+    private int currentTimes=1;
 
     public MyProgressButton(Context context) {
         this(context, (AttributeSet) null);
@@ -100,6 +102,23 @@ public class MyProgressButton extends Button implements ProgressListener {
                 this.normal(0);
             }
         }
+    }
+
+    //设置为可以多次下载模式
+    public int getMulTimes() {
+        return mulTimes;
+    }
+
+    public void setMulTimes(int mulTimes) {
+        this.mulTimes = mulTimes;
+    }
+
+    public int getCurrentTimes() {
+        return currentTimes;
+    }
+
+    public void setCurrentTimes(int currentTimes) {
+        this.currentTimes = currentTimes;
     }
 
     public static void initStatusString(String[] status) {
@@ -172,6 +191,8 @@ public class MyProgressButton extends Button implements ProgressListener {
 
     private void setProgress(int progress) {
         this.mProgress = progress;
+
+        //无变化
         if (!this.morphingCircle && !this.morphingNormal) {
             if (this.mState != MyProgressButton.STATE.PROGRESS) {
                 this.mState = MyProgressButton.STATE.PROGRESS;
@@ -231,6 +252,8 @@ public class MyProgressButton extends Button implements ProgressListener {
             public void onAnimationEnd(Animator animation) {
                 MyProgressButton.this.morphingNormal = false;
                 MyProgressButton.this.setText(MyProgressButton.this.resultString);
+
+
             }
 
             public void onAnimationCancel(Animator animation) {
@@ -319,6 +342,7 @@ public class MyProgressButton extends Button implements ProgressListener {
     }
 
     public void startDownLoad() {
+        setCurrentTimes(1);
         this.resultString = "";
         this.setState(MyProgressButton.STATE.PROGRESS, true);
     }

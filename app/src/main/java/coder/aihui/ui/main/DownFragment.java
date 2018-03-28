@@ -291,7 +291,7 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
 
 
     //下载成功的
-    public void showNormal(int type) {
+    public synchronized void showNormal(int type) {
         Observable.just(type)
                 .compose(this.<Integer>bindToLife())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Integer>() {
@@ -306,7 +306,16 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
                     //"下载","暂停","完成","错误","删除","更新"
                     mcp.setMorphingCircle(false);
                     mcp.setMorphingNormal(false);
-                    mcp.normal(2);
+
+                    int mulTimes = mcp.getMulTimes();
+                    int currentTimes = mcp.getCurrentTimes();
+
+                    if(mulTimes!=0&&mulTimes!=1&&currentTimes<mulTimes){
+                        mcp.setCurrentTimes(currentTimes+1);
+                    } else  {
+                        mcp.normal(2);
+                        mcp.setCurrentTimes(1);
+                    }
                     if (!DownSet.contains(type)) {
                         Integer anInt = SPUtil.getInt(mContext, Content.UnDownDatas, mDatas.size());
                         DownSet.add(type);
@@ -354,30 +363,33 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
 
     //显示进度条
     @Override
-    public void showProgress(int num, final int type) {
-        int[] ints = {num, type};
-        Observable.just(ints)
-                .compose(this.<int[]>bindToLife())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        new Action1<int[]>() {
-                            @Override
-                            public void call(int[] ints) {
-                                int num = ints[0];
-                                int type = ints[1];
-                                int i = mTypeList.indexOf(type + "");
-                                //保证是对的控件在渲染数据
-                                View view = ListViewUtil.getViewByPosition(i, mRv);
-                                if (view == null) {
-                                    mDatas.get(i).setState(DownLoadBean.ON_PROGRESS);
-                                } else {
-                                    MyProgressButton mcp = (MyProgressButton) view.findViewById(R.id.CP_down);
-                                    //"下载","暂停","完成","错误","删除","更新"
-                                    mcp.download(num);
+    public  void showProgress(int num, final int type) {
+        synchronized (this){
+            Log.d("showProgress", "index+mBean.getType():" + (num + ":" + type) + "(" + Thread.currentThread().getName());
+            int[] ints = {num, type};
+            Observable.just(ints)
+                    .compose(this.<int[]>bindToLife())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            new Action1<int[]>() {
+                                @Override
+                                public void call(int[] ints) {
+                                    int num = ints[0];
+                                    int type = ints[1];
+                                    int i = mTypeList.indexOf(type + "");
+                                    //保证是对的控件在渲染数据
+                                    View view = ListViewUtil.getViewByPosition(i, mRv);
+                                    if (view == null) {
+                                        mDatas.get(i).setState(DownLoadBean.ON_PROGRESS);
+                                    } else {
+                                        MyProgressButton mcp = (MyProgressButton) view.findViewById(R.id.CP_down);
+                                        //"下载","暂停","完成","错误","删除","更新"
+                                        mcp.download(num);
+                                    }
                                 }
                             }
-                        }
-                );
+                    );
+        }
     }
 
 
@@ -407,6 +419,10 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
             protected void convert(final ViewHolder holder, final DownLoadBean bean, int position) {
                 final MyProgressButton cb = holder.getView(R.id.CP_down);
                 //(new String[]{"下载","暂停","完成","错误","删除","更新"};
+
+
+                cb.setMulTimes(bean.methods==null?0:bean.methods.length);
+
                 if (bean.count == 0) {
                     cb.normal(0); //max value is String[].length - 1;  call anytime;
                 } else {
@@ -442,6 +458,7 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
                                 "完成".equals(cb.getText())
                                 ) {
                             //视图
+
                             cb.startDownLoad();
                             //下载之前先清空
                             try {
@@ -500,4 +517,8 @@ public class DownFragment extends BaseFragment<DownPresenter> implements DownVie
     }
 
 
+    @Override
+    public boolean onBackPressed() {
+        return false;
+    }
 }

@@ -1,5 +1,7 @@
 package coder.aihui.rfid;
 
+import android.content.Context;
+
 /**
  * @ 创建者   zhou
  * @ 创建时间   2017/9/5 17:11
@@ -10,7 +12,7 @@ package coder.aihui.rfid;
  */
 
 public interface PdaView {
-   void pdaInit();
+
 
     /**
      * 当前pda已开启
@@ -18,7 +20,7 @@ public interface PdaView {
     void pdaStartSearch();
 
     /**
-     * 当前pda已关闭
+     * 当前pda已关闭,开始走数据
      */
     void pdaStopSearch();
 
@@ -28,5 +30,9 @@ public interface PdaView {
     void sendMessage(String needMsg);
 
 
+    /**
+     * 因为必须要有Context 所以就写这儿
+     */
+    Context getPdaContext();
 
 }

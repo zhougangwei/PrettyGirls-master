@@ -128,10 +128,11 @@ public class MainActivity extends AppActivity implements BottomNavigationBar.OnT
         //底边栏主页
         BottomNavigationItem MainItem = new BottomNavigationItem(R.mipmap.sy_pre, titleIds[0]);
 
-
              /* MainItem.setActiveColorResource(R.color.btn_normal);//选中的颜色
                 MainItem.setActiveColorResource();//没选中的颜色*/
         mBottomNavigationBar.addItem(MainItem);
+
+
 
         //底边栏下载
         BottomNavigationItem DownItem = new BottomNavigationItem(R.mipmap.xz_pre, titleIds[1]);

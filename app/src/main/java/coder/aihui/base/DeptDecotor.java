@@ -47,6 +47,7 @@ public class DeptDecotor implements DeptView {
 
 
 
+    @Override
     public void getDept() {
             mDeptDialog = new BottomDialog(activity);
             Selector selector = new Selector(activity, 3);
@@ -115,7 +116,7 @@ public class DeptDecotor implements DeptView {
             mDeptDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
-                    ToastUtil.showToast("111");
+
                 }
             });
 
@@ -140,6 +141,7 @@ public class DeptDecotor implements DeptView {
         mDeptView.onAddressSelected(selectAbles);
     }
 
+    @Override
     public void closeDiaLog() {
         if (mDeptDialog != null) {
             mDeptDialog.dismiss();

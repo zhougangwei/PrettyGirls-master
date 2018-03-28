@@ -51,6 +51,7 @@ import coder.aihui.util.viewutil.ProcessDialogUtil;
 import coder.aihui.widget.AlertListDialogUtil;
 import coder.aihui.widget.MyArrayAdapter;
 import coder.aihui.widget.MyProgressDialog;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -596,14 +597,28 @@ public class AssetQueryActivity extends AppActivity implements TabLayout.OnTabSe
 
     @Override
     public void showSuccess(int type) {
-        mProgressDialog.dismiss();
-        ToastUtil.showToast("下载成功");
+        Observable.empty()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Object>() {
+                    @Override
+                    public void call(Object o) {
+                        mProgressDialog.dismiss();
+                        ToastUtil.showToast("下载成功");
+                    }
+                });
     }
 
     @Override
     public void showFault(int type, String wrong) {
-        mProgressDialog.dismiss();
-        AndroidUtils.showErrorMsg("下载失败", wrong, this);
+        Observable.just(wrong)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String msg) {
+                        mProgressDialog.dismiss();
+                        AndroidUtils.showErrorMsg("下载失败", msg, AssetQueryActivity.this);
+                    }
+                });
     }
 
     @Override

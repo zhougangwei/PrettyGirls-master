@@ -3,23 +3,25 @@ package coder.aihui.ui.login;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import coder.aihui.R;
 import coder.aihui.base.AppActivity;
@@ -28,6 +30,7 @@ import coder.aihui.base.Content;
 import coder.aihui.data.bean.SYS_USER;
 import coder.aihui.data.bean.gen.SYS_USERDao;
 import coder.aihui.ui.main.MainActivity;
+import coder.aihui.util.Inpututils;
 import coder.aihui.util.MD5Util;
 import coder.aihui.util.SPUtil;
 import coder.aihui.util.ToastUtil;
@@ -44,17 +47,19 @@ public class LoginActivity extends AppActivity {
     TextView mTvConfig;
 
     @BindView(R.id.tv_hos)
-    TextView     mTvHos;
+    TextView       mTvHos;
     @BindView(R.id.button)
-    Button       mButton;
+    Button         mButton;
     @BindView(R.id.login_progress)
-    ProgressBar  mProgressView;
+    ProgressBar    mProgressView;
     @BindView(R.id.login_form)
-    LinearLayout mLoginFormView;
+    RelativeLayout mLoginFormView;
     @BindView(R.id.rb)
-    RadioButton  mRb;
+    RadioButton    mRb;
     @BindView(R.id.circleImageView)
-    ImageView    mCircleImageView;
+    ImageView      mCircleImageView;
+    @BindView(R.id.ll_content)
+    LinearLayout   mLlContent;
 
     private UserLoginTask mAuthTask = null;
     private boolean       isLogin   = false;
@@ -62,9 +67,9 @@ public class LoginActivity extends AppActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+
     }
 
     @Override
@@ -101,8 +106,9 @@ public class LoginActivity extends AppActivity {
     @Override
     protected void initView() {
 
-        isLogin = SPUtil.getBoolean(this, "isLogin", false);
 
+        keepLoginBtnNotOver(mLoginFormView, mLlContent);
+        isLogin = SPUtil.getBoolean(this, "isLogin", false);
         //如果是已经登录的 就直接进去了
         if (isLogin) {
             startActivity(new Intent(LoginActivity.this
@@ -306,6 +312,36 @@ public class LoginActivity extends AppActivity {
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    /**
+     * 保持登录按钮始终不会被覆盖
+     *
+     * @param root
+     * @param subView
+     */
+    private void keepLoginBtnNotOver(final View root, final View subView) {
+        root.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect rect = new Rect();
+                // 获取root在窗体的可视区域
+                root.getWindowVisibleDisplayFrame(rect);
+                // 获取root在窗体的不可视区域高度(被其他View遮挡的区域高度)
+                int rootInvisibleHeight = root.getRootView().getHeight() - rect.bottom;
+                // 若不可视区域高度大于200，则键盘显示,其实相当于键盘的高度
+                if (rootInvisibleHeight > 200) {
+                    // 显示键盘时
+                    int srollHeight = rootInvisibleHeight - (root.getHeight() - subView.getHeight()) - Inpututils.getNavigationBarHeight(root.getContext());
+                    if (srollHeight > 0) {
+                        root.scrollTo(0, srollHeight);
+                    }
+                } else {
+                    // 隐藏键盘时
+                    root.scrollTo(0, 0);
+                }
+            }
+        });
     }
 
 }

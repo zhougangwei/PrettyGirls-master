@@ -3,8 +3,12 @@ package coder.aihui.ui.login;
 
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import butterknife.Unbinder;
 import butterknife.internal.DebouncingOnClickListener;
 import butterknife.internal.Finder;
@@ -22,36 +26,40 @@ public class LoginActivity$$ViewBinder<T extends LoginActivity> implements ViewB
   protected static class InnerUnbinder<T extends LoginActivity> implements Unbinder {
     protected T target;
 
-    private View view2131755335;
+    private View view2131755349;
 
-    private View view2131755336;
+    private View view2131755350;
 
     protected InnerUnbinder(final T target, Finder finder, Object source) {
       this.target = target;
 
       View view;
-      target.mEtUser = finder.findRequiredViewAsType(source, 2131755332, "field 'mEtUser'", EditText.class);
-      target.mEtPassword = finder.findRequiredViewAsType(source, 2131755333, "field 'mEtPassword'", EditText.class);
-      view = finder.findRequiredView(source, 2131755335, "field 'mTvConfig' and method 'onViewClicked'");
-      target.mTvConfig = finder.castView(view, 2131755335, "field 'mTvConfig'");
-      view2131755335 = view;
+      target.mEtUser = finder.findRequiredViewAsType(source, 2131755347, "field 'mEtUser'", EditText.class);
+      target.mEtPassword = finder.findRequiredViewAsType(source, 2131755348, "field 'mEtPassword'", EditText.class);
+      view = finder.findRequiredView(source, 2131755349, "field 'mTvConfig' and method 'onViewClicked'");
+      target.mTvConfig = finder.castView(view, 2131755349, "field 'mTvConfig'");
+      view2131755349 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
-      view = finder.findRequiredView(source, 2131755336, "field 'mButton' and method 'onViewClicked'");
-      target.mButton = finder.castView(view, 2131755336, "field 'mButton'");
-      view2131755336 = view;
+      target.mTvHos = finder.findRequiredViewAsType(source, 2131755352, "field 'mTvHos'", TextView.class);
+      view = finder.findRequiredView(source, 2131755350, "field 'mButton' and method 'onViewClicked'");
+      target.mButton = finder.castView(view, 2131755350, "field 'mButton'");
+      view2131755350 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
           target.onViewClicked(p0);
         }
       });
-      target.mProgressView = finder.findRequiredViewAsType(source, 2131755184, "field 'mProgressView'", ProgressBar.class);
-      target.mLoginFormView = finder.findRequiredViewAsType(source, 2131755185, "field 'mLoginFormView'", LinearLayout.class);
+      target.mProgressView = finder.findRequiredViewAsType(source, 2131755200, "field 'mProgressView'", ProgressBar.class);
+      target.mLoginFormView = finder.findRequiredViewAsType(source, 2131755201, "field 'mLoginFormView'", RelativeLayout.class);
+      target.mRb = finder.findRequiredViewAsType(source, 2131755313, "field 'mRb'", RadioButton.class);
+      target.mCircleImageView = finder.findRequiredViewAsType(source, 2131755351, "field 'mCircleImageView'", ImageView.class);
+      target.mLlContent = finder.findRequiredViewAsType(source, 2131755345, "field 'mLlContent'", LinearLayout.class);
     }
 
     @Override
@@ -62,14 +70,18 @@ public class LoginActivity$$ViewBinder<T extends LoginActivity> implements ViewB
       target.mEtUser = null;
       target.mEtPassword = null;
       target.mTvConfig = null;
+      target.mTvHos = null;
       target.mButton = null;
       target.mProgressView = null;
       target.mLoginFormView = null;
+      target.mRb = null;
+      target.mCircleImageView = null;
+      target.mLlContent = null;
 
-      view2131755335.setOnClickListener(null);
-      view2131755335 = null;
-      view2131755336.setOnClickListener(null);
-      view2131755336 = null;
+      view2131755349.setOnClickListener(null);
+      view2131755349 = null;
+      view2131755350.setOnClickListener(null);
+      view2131755350 = null;
 
       this.target = null;
     }

@@ -13,6 +13,16 @@
         <!--全局activity切换动画-->
         <!--<item name="android:windowAnimationStyle">@style/ActivityAnimation</item>-->
     </style>
+    <style name="AppTheme.FlashTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@drawable/apptheme</item>
+
+        <!--全局activity切换动画-->
+        <!--<item name="android:windowAnimationStyle">@style/ActivityAnimation</item>-->
+    </style>
+
+
+
 
     <style name="bottom_dialog" parent="android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
@@ -472,4 +482,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">34px</item>
     </style>
+
+
+
 </resources>

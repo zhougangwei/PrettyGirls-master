@@ -100,6 +100,10 @@
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\drawable-xhdpi-v4\\abc_textfield_search_default_mtrl_alpha.9.png"
     },
     {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\selector_shade.xml",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\drawable-xhdpi\\selector_shade.xml"
+    },
+    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\selector_menu_popup.xml",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\drawable-xhdpi\\selector_menu_popup.xml"
     },
@@ -224,6 +228,10 @@
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\drawable-xhdpi-v4\\abc_ic_star_half_black_16dp.png"
     },
     {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\apptheme.xml",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\drawable-xhdpi\\apptheme.xml"
+    },
+    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_btn_check_to_on_mtrl_015.png",
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\drawable-xhdpi-v4\\abc_btn_check_to_on_mtrl_015.png"
     },
@@ -288,12 +296,12 @@
         "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\drawable-xhdpi-v4\\abc_ic_star_half_black_36dp.png"
     },
     {
-        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_ic_star_black_36dp.png",
-        "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\drawable-xhdpi-v4\\abc_ic_star_black_36dp.png"
-    },
-    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\item_selector.xml",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\drawable-xhdpi\\item_selector.xml"
+    },
+    {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_ic_star_black_36dp.png",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\b0b413a334b3f7eeef331a7053515d5f7bca0910\\output\\res\\drawable-xhdpi-v4\\abc_ic_star_black_36dp.png"
     },
     {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\shape_button_plan.xml",

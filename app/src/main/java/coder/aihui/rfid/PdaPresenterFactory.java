@@ -1,7 +1,5 @@
 package coder.aihui.rfid;
 
-import android.content.Context;
-
 /**
  * @ 创建者   zhou
  * @ 创建时间   2017/9/5 16:26
@@ -15,19 +13,19 @@ public class PdaPresenterFactory {
 
     public static HandHeldPdaPresenter mHandHeldPdaPresenter;
 
-    public static PdaMachine provideRfidSupport(Context mContext,String machineName) throws Exception {
+    public static PdaMachine provideRfidSupport(PdaView pdaView,String machineName) throws Exception {
 
         if (machineName.equals("汉德霍尔清点机")) {
             if (mHandHeldPdaPresenter == null) {
-                return new HandHeldPdaPresenter.PdaBuilder(mContext).create();
+                return new HandHeldPdaPresenter(pdaView);
             }
         } else if (machineName.equals("汉德霍尔清点机")) {         //存着
             if (mHandHeldPdaPresenter == null) {
-                return new HandHeldPdaPresenter.PdaBuilder(mContext).create();
+                return new HandHeldPdaPresenter(pdaView);
             }
         } else if (machineName.equals("汉德霍尔清点机")) {         //存着
             if (mHandHeldPdaPresenter == null) {
-                return new HandHeldPdaPresenter.PdaBuilder(mContext).create();
+                return new HandHeldPdaPresenter(pdaView);
             }
         } else {
             throw new Exception("没有该产品");

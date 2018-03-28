@@ -16,6 +16,11 @@ import java.util.List;
 
 public class ListUtils {
 
+    /**
+     * 将List转成String 规则是 1,2,3,4,5
+     * @param datas
+     * @return
+     */
     public static String listToStrings(List datas) {
         if (datas == null || datas.size() == 0) {
             return "";

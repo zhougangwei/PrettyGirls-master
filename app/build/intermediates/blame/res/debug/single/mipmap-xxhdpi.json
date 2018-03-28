@@ -12,6 +12,10 @@
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xxhdpi\\bbxx.png"
     },
     {
+        "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_not_network.png",
+        "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_not_network.png"
+    },
+    {
         "merged": "H:\\PrettyGirls-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_show_more.png",
         "source": "H:\\PrettyGirls-master\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_show_more.png"
     },

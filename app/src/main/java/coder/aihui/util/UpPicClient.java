@@ -6,7 +6,7 @@ import java.util.List;
 
 import coder.aihui.app.MyApplication;
 import coder.aihui.data.normalbean.UpPicBean;
-import coder.aihui.http.AiHuiLoginServices;
+import coder.aihui.http.AiHuiServices;
 import coder.aihui.http.MyRetrofit;
 import coder.aihui.widget.MyProgressDialog;
 import okhttp3.MediaType;
@@ -154,7 +154,7 @@ public class UpPicClient {
                         MultipartBody build = builder.build();
 
                         return MyRetrofit.getRetrofit()
-                                .create(AiHuiLoginServices.class)
+                                .create(AiHuiServices.class)
                                 .uploadFiles(build, fileFolder);
                     }
                 }).observeOn(AndroidSchedulers.mainThread())

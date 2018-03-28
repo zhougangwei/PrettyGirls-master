@@ -12,12 +12,12 @@ public final class R {
         public static final int __leak_canary_notification = 0x7f020001;
     }
     public static final class id {
-        public static final int __leak_canary_action = 0x7f100079;
-        public static final int __leak_canary_display_leak_list = 0x7f100078;
-        public static final int __leak_canary_row_connector = 0x7f10007c;
-        public static final int __leak_canary_row_more = 0x7f10007d;
-        public static final int __leak_canary_row_text = 0x7f10007a;
-        public static final int __leak_canary_row_time = 0x7f10007b;
+        public static final int __leak_canary_action = 0x7f100089;
+        public static final int __leak_canary_display_leak_list = 0x7f100088;
+        public static final int __leak_canary_row_connector = 0x7f10008c;
+        public static final int __leak_canary_row_more = 0x7f10008d;
+        public static final int __leak_canary_row_text = 0x7f10008a;
+        public static final int __leak_canary_row_time = 0x7f10008b;
     }
     public static final class integer {
         public static final int __leak_canary_max_stored_leaks = 0x7f0d0001;

@@ -3,6 +3,7 @@ package coder.aihui.ui.login;
 
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.Unbinder;
@@ -23,25 +24,37 @@ public class ConfigActivity$$ViewBinder<T extends ConfigActivity> implements Vie
   protected static class InnerUnbinder<T extends ConfigActivity> implements Unbinder {
     protected T target;
 
-    private View view2131755299;
+    private View view2131755314;
+
+    private View view2131755456;
 
     protected InnerUnbinder(final T target, Finder finder, Object source) {
       this.target = target;
 
       View view;
-      target.mTvTitle = finder.findRequiredViewAsType(source, 2131755236, "field 'mTvTitle'", TextView.class);
-      view = finder.findRequiredView(source, 2131755299, "field 'mBtSure' and method 'onViewClicked'");
-      target.mBtSure = finder.castView(view, 2131755299, "field 'mBtSure'");
-      view2131755299 = view;
+      target.mTvTitle = finder.findRequiredViewAsType(source, 2131755249, "field 'mTvTitle'", TextView.class);
+      view = finder.findRequiredView(source, 2131755314, "field 'mBtSure' and method 'onViewClicked'");
+      target.mBtSure = finder.castView(view, 2131755314, "field 'mBtSure'");
+      view2131755314 = view;
       view.setOnClickListener(new DebouncingOnClickListener() {
         @Override
         public void doClick(View p0) {
-          target.onViewClicked();
+          target.onViewClicked(p0);
         }
       });
-      target.mEtAddress = finder.findRequiredViewAsType(source, 2131755298, "field 'mEtAddress'", EditText.class);
-      target.mDonutProgress = finder.findRequiredViewAsType(source, 2131755301, "field 'mDonutProgress'", DonutProgress.class);
-      target.mRlProgress = finder.findRequiredViewAsType(source, 2131755300, "field 'mRlProgress'", RelativeLayout.class);
+      target.mEtAddress = finder.findRequiredViewAsType(source, 2131755312, "field 'mEtAddress'", EditText.class);
+      target.mDonutProgress = finder.findRequiredViewAsType(source, 2131755316, "field 'mDonutProgress'", DonutProgress.class);
+      target.mRlProgress = finder.findRequiredViewAsType(source, 2131755315, "field 'mRlProgress'", RelativeLayout.class);
+      view = finder.findRequiredView(source, 2131755456, "field 'mIvBack' and method 'onViewClicked'");
+      target.mIvBack = finder.castView(view, 2131755456, "field 'mIvBack'");
+      view2131755456 = view;
+      view.setOnClickListener(new DebouncingOnClickListener() {
+        @Override
+        public void doClick(View p0) {
+          target.onViewClicked(p0);
+        }
+      });
+      target.mRb = finder.findRequiredViewAsType(source, 2131755313, "field 'mRb'", RadioButton.class);
     }
 
     @Override
@@ -54,9 +67,13 @@ public class ConfigActivity$$ViewBinder<T extends ConfigActivity> implements Vie
       target.mEtAddress = null;
       target.mDonutProgress = null;
       target.mRlProgress = null;
+      target.mIvBack = null;
+      target.mRb = null;
 
-      view2131755299.setOnClickListener(null);
-      view2131755299 = null;
+      view2131755314.setOnClickListener(null);
+      view2131755314 = null;
+      view2131755456.setOnClickListener(null);
+      view2131755456 = null;
 
       this.target = null;
     }

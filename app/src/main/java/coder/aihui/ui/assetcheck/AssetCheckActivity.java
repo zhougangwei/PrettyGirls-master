@@ -35,7 +35,7 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.OnClick;
 import coder.aihui.R;
-import coder.aihui.base.AppActivity;
+import coder.aihui.RfidActivity;
 import coder.aihui.base.BaseFragment;
 import coder.aihui.base.Content;
 import coder.aihui.data.bean.INSPECT_GROUP;
@@ -49,8 +49,6 @@ import coder.aihui.data.bean.gen.PDA_ASSET_CHECKDao;
 import coder.aihui.data.bean.gen.PUB_DICTIONARY_ITEMDao;
 import coder.aihui.data.bean.gen.REPAIR_PLACEDao;
 import coder.aihui.manager.DataUtil;
-import coder.aihui.rfid.HandHeldPdaPresenter;
-import coder.aihui.rfid.PdaView;
 import coder.aihui.ui.main.DownPresenter;
 import coder.aihui.ui.main.DownView;
 import coder.aihui.util.AndroidUtils;
@@ -70,7 +68,7 @@ import rx.schedulers.Schedulers;
 import static coder.aihui.R.id.iv_back;
 
 
-public class AssetCheckActivity extends AppActivity implements DownView, PdaView {
+public class AssetCheckActivity extends RfidActivity implements DownView {
 
     @BindView(R.id.linearLayout)
     LinearLayout mLinearLayout;
@@ -136,19 +134,19 @@ public class AssetCheckActivity extends AppActivity implements DownView, PdaView
     private CommonAdapter<IN_ASSET> mMainAdapter;
 
     private List<String> mUpDownList = new ArrayList<>();//上传下载按钮的数据填充
-
+    HashSet<String> mDataSet = new HashSet<>(); //存储rfid
 
     private String searchState = "234";//默认
 
-    ArrayList<String> searchList = new ArrayList();
+    private ArrayList<String> mSearchList = new ArrayList();    //改变颜色的集合
 
     private String qcid;           //期次Id
     private Integer pdaType = 1;        //1是rfid 2是红外 6是摄像头
-    boolean IsCheckAll;         //全选
+    private  boolean IsCheckAll;         //全选
     //下载的标题
-    ArrayList<IN_ASSET> mDatas       = new ArrayList<IN_ASSET>() {
+    private  ArrayList<IN_ASSET> mDatas       = new ArrayList<IN_ASSET>() {
     };
-    ArrayList<IN_ASSET> mLinshiDatas = new ArrayList<IN_ASSET>() {
+    private ArrayList<IN_ASSET> mLinshiDatas = new ArrayList<IN_ASSET>() {
     };
 
     private Map<String, TextView> mTvMap = new HashMap<>();
@@ -160,7 +158,10 @@ public class AssetCheckActivity extends AppActivity implements DownView, PdaView
     private MenuPopup     mUpdownPopup;
     private DownPresenter mDownPresenter;
     private boolean needRefresh = false;        //是否需要重新刷新数据
-    private HandHeldPdaPresenter mHandHeldPdaPresenter;
+
+
+
+
 
     @Override
     protected BaseFragment getFirstFragment() {
@@ -171,7 +172,6 @@ public class AssetCheckActivity extends AppActivity implements DownView, PdaView
     protected int getContentViewId() {
         return (R.layout.activity_asset_check);
     }
-
 
     @Override
     protected void initView() {
@@ -191,15 +191,10 @@ public class AssetCheckActivity extends AppActivity implements DownView, PdaView
         queryAssetInfo();
         //先给初始信息
 
-        try {
-            mHandHeldPdaPresenter = new HandHeldPdaPresenter.PdaBuilder(this)
-                    .setUiView(this)
-                    .registerDefultKeyReciver()
-                    .create();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    }
 
+    @Override
+    public void sendMessage(String needMsg) {
 
     }
 
@@ -214,13 +209,13 @@ public class AssetCheckActivity extends AppActivity implements DownView, PdaView
 
     //获取数据
     private void initData() {
-        searchList.add("1");
-        searchList.add("2");
-        searchList.add("3");
-        searchList.add("4");
+        mSearchList.add("1");
+        mSearchList.add("2");
+        mSearchList.add("3");
+        mSearchList.add("4");
 
-        for (int i = 0; i < searchList.size(); i++) {
-            showCheckType(searchList.get(i));
+        for (int i = 0; i < mSearchList.size(); i++) {
+            showCheckType(mSearchList.get(i));
         }
         changeShow("1");
     }
@@ -296,9 +291,9 @@ public class AssetCheckActivity extends AppActivity implements DownView, PdaView
                         new AlertDialog.Builder(AssetCheckActivity.this).setMessage("确定手动清点吗?").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                HashSet<String> set = new HashSet<>();
-                                set.add(bean.getRFID_CODE());
-                                doSaveListData(set);
+
+                                mDataSet.add(bean.getRFID_CODE());
+                                doSaveListData(mDataSet);
                             }
                         }).create().show();
 
@@ -315,7 +310,7 @@ public class AssetCheckActivity extends AppActivity implements DownView, PdaView
                 int totalItemCount = mLayoutManager.getItemCount();
                 //lastVisibleItem >= totalItemCount - 4 表示剩下4个item自动加载，各位自由选择
                 // dy>0 表示向下滑动
-                if (lastVisibleItem >= totalItemCount - 4 && dy > 0&& lastVisibleItem != totalItemCount - 1) {
+                if (lastVisibleItem >= totalItemCount - 4 && dy > 0 && lastVisibleItem != totalItemCount - 1) {
                     if (isLoadingMore) {
                         //不做操作
                     } else {
@@ -396,7 +391,6 @@ public class AssetCheckActivity extends AppActivity implements DownView, PdaView
     }
 
     private void gotoUpdata() {
-
 
 
     }
@@ -506,19 +500,19 @@ public class AssetCheckActivity extends AppActivity implements DownView, PdaView
     //改变颜色的逻辑
     private void changeShow(String type) {
         TextView tv = mTvMap.get(type);
-        if (searchList.contains(type)) {
-            searchList.remove(type);
+        if (mSearchList.contains(type)) {
+            mSearchList.remove(type);
             tv.setTextColor(getResources().getColor(R.color.textGrey));
             tv.setBackgroundResource(R.drawable.btn_normal);
         } else {
-            searchList.add(type);
+            mSearchList.add(type);
             tv.setBackgroundResource(R.drawable.shape_blue_normal);
             tv.setTextColor(getResources().getColor(R.color.tv_tv_blue));
         }
         //根据不同的按钮  显示不同的数据
-        Collections.sort(searchList);
+        Collections.sort(mSearchList);
         StringBuilder sb = new StringBuilder();
-        for (String str : searchList) {
+        for (String str : mSearchList) {
             sb.append(str);
         }
         searchState = sb.toString();
@@ -958,7 +952,7 @@ public class AssetCheckActivity extends AppActivity implements DownView, PdaView
                     @Override
                     public void onCompleted() {
                         Log.d("AssetQueryActivity2", "mLinshiDatas.size():" + mLinshiDatas.toString());
-                        if(needRefresh){                //如果是需要重新加载数据的是要清空的,如果不是 则是叠加
+                        if (needRefresh) {                //如果是需要重新加载数据的是要清空的,如果不是 则是叠加
                             mDatas.clear();
                             needRefresh = !needRefresh;
                         }
@@ -1115,23 +1109,6 @@ public class AssetCheckActivity extends AppActivity implements DownView, PdaView
      */
 
 
-    @Override
-    public void pdaInit() {
 
-    }
 
-    @Override
-    public void pdaStartSearch() {
-        ToastUtil.showToast("当前RFID模式开启中.");
-    }
-
-    @Override
-    public void pdaStopSearch() {
-        ToastUtil.showToast("当前RFID已关闭!");
-    }
-
-    @Override
-    public void sendMessage(String needMsg) {
-
-    }
 }

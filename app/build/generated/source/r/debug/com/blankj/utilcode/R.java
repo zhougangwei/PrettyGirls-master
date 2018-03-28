@@ -8,14 +8,14 @@ package com.blankj.utilcode;
 
 public final class R {
     public static final class drawable {
-        public static final int snackbar_action_bg = 0x7f020092;
-        public static final int snackbar_action_bg_focused = 0x7f020093;
+        public static final int snackbar_action_bg = 0x7f020096;
+        public static final int snackbar_action_bg_focused = 0x7f020097;
     }
     public static final class id {
-        public static final int snackbar_action = 0x7f100182;
-        public static final int snackbar_text = 0x7f100181;
+        public static final int snackbar_action = 0x7f100191;
+        public static final int snackbar_text = 0x7f100190;
     }
     public static final class layout {
-        public static final int design_layout_snackbar_include = 0x7f04004b;
+        public static final int design_layout_snackbar_include = 0x7f04004a;
     }
 }

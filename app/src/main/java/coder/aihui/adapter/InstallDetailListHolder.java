@@ -75,10 +75,6 @@ public class InstallDetailListHolder extends BaseHolder<AZYS_MX> {
         });
 
 
-
-
-
-
     }
 
 

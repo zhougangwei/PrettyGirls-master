@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 
+import com.github.ikidou.fragmentBackHandler.FragmentBackHandler;
 import com.squareup.leakcanary.RefWatcher;
 import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.components.support.RxFragment;
@@ -22,7 +23,7 @@ import coder.aihui.data.bean.gen.DaoSession;
 /**
  * Created by renlei on 2016/5/23.
  */
-public abstract class BaseFragment<P extends BasePresenter> extends RxFragment implements BaseView {
+public abstract class BaseFragment<P extends IBasePresenter> extends RxFragment implements BaseView , FragmentBackHandler {
 
     protected P mPresenter;
 

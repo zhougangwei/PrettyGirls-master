@@ -170,14 +170,14 @@ public class AzysDetailActivity extends AppActivity {
     protected void initView() {
         mInstallDetailListAdapter = new InstallDetailListAdapter(mMXList, AzysDetailActivity.this);
         mSlDt.setAdapter(mInstallDetailListAdapter);
-        initPhoto();
+        initPhotoText();
         initData();
         initGetIntent();
         backShow();
     }
 
     //初始化照片
-    private void initPhoto() {
+    private void initPhotoText() {
         ImageView iv_Zmz = (ImageView) mRlZmz.findViewById(R.id.iv_pic);
         ImageView iv_Cmz = (ImageView) mRlCmz.findViewById(R.id.iv_pic);
         ImageView iv_Mpz = (ImageView) mRlMpz.findViewById(R.id.iv_pic);

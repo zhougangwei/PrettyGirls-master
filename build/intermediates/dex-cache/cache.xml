@@ -3,12 +3,12 @@
 
     <item
         is-multidex="true"
-        jar="H:\PrettyGirls-master\app\libs\ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar"
-        jumboMode="true"
+        jar="C:\Users\Administrator\.android\build-cache\46e5e5cd47989d2a37ead46d9dac744aeb77db5b\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.0"
-        sha1="62681b8212ca52278feafec31775fd0cb096d99a">
-        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\2\ksoap2-android-assembly-3.3.0-jar-with-dependencies_541203689b628c39a62efff82dd0331fdfa24765\classes.dex" />
+        sha1="57e0ef2a88702e623130d33d2590fb7b78521c83">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_d25880a031ea40884e9ab489fce980bdf2528288\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -21,21 +21,642 @@
     </item>
     <item
         is-multidex="true"
-        jar="H:\PrettyGirls-master\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
+        jar="C:\Users\Administrator\.android\build-cache\cddf670850db41e22200136034d47dce9b4003da\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.0"
-        sha1="5477613f896735942345a866c84d5ba33604aa65">
-        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_d6a329c67056f4f01a5e00fb959a3c4005bda331\classes.dex" />
+        sha1="df451c6f391e3e32022fc964ed87bd57a5869128">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b72e355450576f8e9fd5f83ff7fd0d983bd0a959\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="H:\PrettyGirls-master\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="C:\Users\Administrator\.android\build-cache\d5a1cd54089cb080e55f0c59772bddbb8300e3ec\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="32c0bf3a62b3f92a29e778953d1929c378aab264">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_c240997f5b10229599aadb807479719dc8028550\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="H:\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.3.1_aa2c4c0b71e3ecdeffe166d9dc616fd434346ba3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\97ed056a26ec5ea81e2475d812235c5758f48d65\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b2ef3c729a69412c9c63aa9b7c3120c501ed471c">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_14bd32a94a22a15521c976566271c2762d4c6bab\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\9beb3023e7ce5aa4f82865d32d99f25f9be8e200\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="5a2386ad9bfff580b206a7fe305cdccd00798159">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3ac51f420f4f59a417c0aad8c26b08d7d527f48b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="H:\PrettyGirls-master\app\libs\uhf_r_v1.0.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
-        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_cb0db0bf6257365089a0ec2f03fc94e97f5e0146\classes.dex" />
+        sha1="07db2f4ba05020d4b922abd42240a9277f8556c7">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\2\uhf_r_v1.0_648f48050ced32195b04a131b973570d2ad6e9a6\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\687d7aa5c45df1755297869d655dcd81b7099101\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f200454bd6851899efe021d2a4673959986edaed">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_1a65acba18128810d95ba1dfac4935af4a64e6ba\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\feedd766447e676e804e7526196887586fcb2eb1\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b32c2324baa75a12968b466b74064c49841a0018">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_49b5fe11775819465fdefb1c1b9202aa277b0d88\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\28835677e8d6ed8fe7a4e6a7fc42d8d7c04993af\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="379a48c2da13ffb7ec7134f2c715663834357670">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_eb1f35743bb87d000ce6b05c91fc75201aff45ab\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\converter-gson\2.0.2\f8d87f15b94b8d74e7ccf61d7eedb558811cdb30\converter-gson-2.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f8d87f15b94b8d74e7ccf61d7eedb558811cdb30">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\converter-gson-2.0.2_a272ca635fc898c2fccb5c2ded7d1ab1115e881f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\d7c13752dba210086dd09c301db36b615611c2ff\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_35efc6a426f04874687d87fde35c78bc19a010c5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\cc320f624feef855c7c25d561827fad34612111f\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_7b1960ebe64e00891e64baef6f37b5e3efa35de3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\7f8dc59bd00045de0b1f4f5b202d4ae5d0e6255a\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="ffc09f4e5bdebe068e5101f587dadc42b60fbfe4">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_a0ae99326af0c84baa42be8dcd1c273458130b65\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.3.1\19047bdb6a4fc00a44124f64ca98e88fc204e7e3\okhttp-3.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="19047bdb6a4fc00a44124f64ca98e88fc204e7e3">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\okhttp-3.3.1_2ea39afb3973a142a4b831a99bc4e2df1de6a0a5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\2a6a8d96dc6baf13bd8c48ca38824f6057e4ae5b\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="21c0f1b0de29bfe601028757c5cb125c343f5164">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_5a29b6381726d3ad1ec3264a75bdfad26487fb14\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\77f8c9109644fe92d3d8418ce9e2dd561ad85031\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e82910dd72a1f446acb523c10abbb2ba330e9c9f">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_adf3d83d095da124cf1fcc50a3249a3b43872865\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.aliyun.ams\alicloud-android-utdid\1.1.5.3\989c3bb13060da1e3154bfe00236f76453a2725f\alicloud-android-utdid-1.1.5.3.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="989c3bb13060da1e3154bfe00236f76453a2725f">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\alicloud-android-utdid-1.1.5.3_ef6fd57b7844f4e345e7aa67a01f483429d976a4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.squareup.leakcanary\leakcanary-analyzer\1.3\c5399b18a672f7973c8a9b9d6b731a3a36e590cc\leakcanary-analyzer-1.3.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c5399b18a672f7973c8a9b9d6b731a3a36e590cc">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\leakcanary-analyzer-1.3_ba89375cab49ca20c49552e2a0972df338206a91\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="H:\PrettyGirls-master\app\libs\ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="62681b8212ca52278feafec31775fd0cb096d99a">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\2\ksoap2-android-assembly-3.3.0-jar-with-dependencies_541203689b628c39a62efff82dd0331fdfa24765\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.trello\rxlifecycle\1.0\6a38e2cd80f46ecaf6553b2eb5a05eee6d472fdb\rxlifecycle-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6a38e2cd80f46ecaf6553b2eb5a05eee6d472fdb">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\rxlifecycle-1.0_312719db61004e01c00ed151ca12bd3fdb2265ba\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\49159aaa5a1e2c121904cc5a17b5a88ca9f090d1\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_36874d94e25ac1add316c72093004b308479b8c1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\016128b09f90b974fff43b6fc2bea0121679c293\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_6fcb1073567f913eeb307e414d506bb1d8acb209\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\ded5cbc02dd392e804d7a4b991af149990188c47\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="38a5b284ef5e83b8738b80134d2afa89dacd453f">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_d8dbe00019b8d04f91fc0d5ee3067b95de56b0ca\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife-annotations\8.1.0\d6854f42bfb4098d3d2358d93201307b9f1cc95d\butterknife-annotations-8.1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d6854f42bfb4098d3d2358d93201307b9f1cc95d">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\butterknife-annotations-8.1.0_aeb99314c09e0fb69e42caa74095952585e86ea3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.aliyun.ams\alicloud-android-utils\1.0.3\626735e82687be89e3ba1ac481540fcab031c\alicloud-android-utils-1.0.3.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="000626735e82687be89e3ba1ac481540fcab031c">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\alicloud-android-utils-1.0.3_22bd232cf2ff3723d9334c1fd3f1a362bf0f9cdb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\273918775b310ed0e38e3101d0fa6cb929701d8c\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="78ea232052df889856dcb7b7b542707c89bb3bfb">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_021e95a45fd5cd305dd8c3435919a0e66a009e4b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\272bb9aa98583887ac7fd31e644054d967880e48\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="2cbc8ceae92e222a35983d47df2d6b5d9e028278">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_09cd81ddf17935598366f39dbadea9c34572ebb5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\b0b413a334b3f7eeef331a7053515d5f7bca0910\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_5d170b319631ec7e6b037d54e1109711470ff5aa\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\9d9285a44ccd47600658884a1c0eb6ad8f5456f3\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3b269c894455b6fc5f489e7ba38d39c43bba0662\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\333028900651585908ea3a16f0136e2e0c652b6f\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d4ab8678882571a0a6f19c47a826ecbce5b4f42b">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ee55aa1f4fccbd9af0e7270cbc7a63728d6e2dfa\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\fe39b8d9820d890e45b2dc3f4ae95c811e17d375\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="524dbb5c53295c006c7aa1a209aae0407d6ebc53">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ce41540945cb5c52bf619042cb3260d99979d0b2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="H:\PrettyGirls-master\app\libs\zxing.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e88c14e6e7daa0fa65172a62b54ee6a16ff4162d">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\2\zxing_a35b38b885f239db2a751e1d70d3d4d94e7afb20\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="H:\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\constraint-layout-solver-1.0.2_4010ec5aa8f179d293d01dffc4d47921c2607518\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\glide-3.7.0_1f3ddf859a86296da03fddcf50d19f29d652df81\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\bc3cba3fe44fb1fac8da05d9485e27db33073191\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c84446b3e55d81d6e2cb63ccccfe0868d12f9baa">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_da958bebf9fc32b8ac6f35e17eed0f35a5a2b4ac\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\6d228e3bba743f9ead3f17fa5d01360b0e662849\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_76a0985bec7709de01cb8eaaca17758521067d42\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\0642afa8409fcbf7bbe2bfaa564f912c743e0f56\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="5db4505b366d1bdf9c7fe858119c119236cc1c5c">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_010ee1b5fee423f6cbf6ba3475f834c504d56e57\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\2a6a8d96dc6baf13bd8c48ca38824f6057e4ae5b\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="21c0f1b0de29bfe601028757c5cb125c343f5164">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_5a29b6381726d3ad1ec3264a75bdfad26487fb14\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.github.ikidou\FragmentBackHandler\2.1\d521fedc058d0347ea591c4f43c6f7db6fab7337\FragmentBackHandler-2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d521fedc058d0347ea591c4f43c6f7db6fab7337">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\FragmentBackHandler-2.1_a1189e8b7e163c99dd02dfc7a39b260605053fd3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\5e677ebffcb10928c5cc41ca4a288e6fee383f80\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="67d5a9b53bf1769128c99b25add3bc0b90576f05">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_8b0d478e248e9d014127b88f563d73b756c5cab1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\8e748c5d23310490e2cdd3543a6324a163e1e2e3\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e39dd45427d2ba136c82ed1946f80dd3dff16695">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_c495222a252772ec6ca11208148c0a7945e04a27\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\org.greenrobot\greendao-api\3.2.0\c6d610abe1d75d758431c9234917a349abc0a0ac\greendao-api-3.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c6d610abe1d75d758431c9234917a349abc0a0ac">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\greendao-api-3.2.0_bcb0f0d31e328b5ad99ce3d5063ea26fb25ba869\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\6f6f3bf43ac436ebfb3683f0bd89179ccefded2b\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_9304736beac1aa71251a1b0c02460c88d7fa8066\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\e22668f596914ff37d303a503a2dc6e06ddbb21f\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="914f5d3e3ace66080e59613708f06d129a222e25">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_733dd0f0c278593414854e9ca663f6d8cc70835e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="H:\PrettyGirls-master\app\libs\uhf_r_v1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="07db2f4ba05020d4b922abd42240a9277f8556c7">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\2\uhf_r_v1.0_648f48050ced32195b04a131b973570d2ad6e9a6\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\d0b67e3cc23d50589919fd1b200a94b9766e8ed0\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="216603b10b1fd9aef486c5507743d1b6619be57a">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_77a8622d7396f591acf5798eb18bfc627f771031\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.google.code.findbugs\jsr305\3.0.1\f7be08ec23c21485b9b5a1cf1654c2ec8c58168d\jsr305-3.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f7be08ec23c21485b9b5a1cf1654c2ec8c58168d">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\jsr305-3.0.1_b629f06a974d8a52776eaf08b3d7e7de95a0263a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\8a6796cb4f0edb2a460b7658a4610989f4431f83\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_9de468528b3f677a23b8c4fc70e11a865a356f2f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\5b0efc51b15b9d4630d83c5b346032ca90624bf4\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="883cf3955d9a25b3a983e63c24930d325e431e4f">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_8b70c239b2b1464309378869d5fd38e2237b823b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="H:\PrettyGirls-master\RecyclerViewHelper\build\intermediates\bundles\default\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="582a0ce7e933cf5e74b650d49132abe06cd0fd77">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\4\classes_577c6357e4d25223e98a84f56ca38e5b182e54c5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\bc084985d12a9ee62e2eb2df37d53abd45f5a430\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f8bdb4b37932315d29ce1a4788db32ec6a54c381\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.github.promeg\tinypinyin\1.0.0\a48301534bbc8eea481f61fa8fbdee80eca49d15\tinypinyin-1.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="a48301534bbc8eea481f61fa8fbdee80eca49d15">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\tinypinyin-1.0.0_770c699beaa8c196ecc67ee04a6d8c48c307ad09\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\2f05ce1d9c2a40ea2d34241bbaac7f0c3c741cd3\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_4d62e3a1b2e186d762c41c518f76ec803c04cb93\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\bc70e1cb4d34135f45f20bae93a0996d8c01a93a\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="dd241918b5db23520988aaa103564e93f2a0253a">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_026a4fe74d0020b0f934d476117208efc34f997c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.8.0\5ea7af56cc7c567ed9856d99efb30740e9b17ff\okio-1.8.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="05ea7af56cc7c567ed9856d99efb30740e9b17ff">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\okio-1.8.0_06f7f952010e37a20e0067d81e65675288b9e24f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.squareup.leakcanary\leakcanary-watcher\1.3\632482a61ad24b7ec864072945d221369f9a606\leakcanary-watcher-1.3.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="0632482a61ad24b7ec864072945d221369f9a606">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\leakcanary-watcher-1.3_846c5f07ba85ee25c438724ac68b7355bbd7d802\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.6.1\b9d63507329a7178e026fc334f87587ee5070ac5\gson-2.6.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b9d63507329a7178e026fc334f87587ee5070ac5">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\gson-2.6.1_7cd154ea7948a4454c775db22bc00deb7ba667b3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\d1a42fb6f7848bc8e2a0017e6a5d768e37d3d5f7\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="73ac82ebe4d7cb7cd61faf4623f84e56c2b8001f">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_18c03fc73b428c5778d762a306535f16c2b39efe\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\357b9e6ff35d150c9b6752ff313a8d2a82fcadac\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f4e7adebf49e683db82fb6efac2caaf3d768b8d4">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_4d4fcd5cf92b45ac56bf72077cc1a82f4ef1dbbd\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\io.reactivex\rxjava\1.2.1\4e4cfa4adc74521d5966799fa5ab70b733552f68\rxjava-1.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="4e4cfa4adc74521d5966799fa5ab70b733552f68">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\rxjava-1.2.1_aa891a92fd7005674dbfb16a988b401dae763c6b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\org.greenrobot\greendao\3.2.0\e70040568b2929b8e5869ad1ffca8e4386dc53bc\greendao-3.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e70040568b2929b8e5869ad1ffca8e4386dc53bc">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\greendao-3.2.0_a584c16f448569ed72551d6057e0354366b3f6ad\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\adapter-rxjava\2.0.2\a60c039ba54c73d1133b72178e1b04133c73d13d\adapter-rxjava-2.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="a60c039ba54c73d1133b72178e1b04133c73d13d">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\adapter-rxjava-2.0.2_90b5adc83674072dffd251412472ef5d02e42ab2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\4b7bbc3eb780e9ef386128ede43e83242ccefb72\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_9b38a6bf47ec1de872bfb009b81cf70b6f5ef13e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\3be186b8c9a5566969bedc3cdb7534a3c550609b\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_df9bac69b49bf2ed5c0b75232998afb577b538be\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\94ee907a3c7bd49da43ac7ec9c574ef536033dd9\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6ef76bb895770207d2d490296a083d4de78bc5a9">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3e8c0446b2a9ceecb5010b0fa14292334f399647\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\3b023765b2fb22e787d82358b624533c2789bee8\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="9b69b69f0f434b79d767329fcf1ca6ba1540c509">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_9af32514dd339d0e80b2af7c16051f635bc0fbc5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="H:\PrettyGirls-master\app\libs\ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="62681b8212ca52278feafec31775fd0cb096d99a">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\2\ksoap2-android-assembly-3.3.0-jar-with-dependencies_541203689b628c39a62efff82dd0331fdfa24765\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.squareup.haha\haha\1.1\b7b2e61ee1ad2d1ac6ae3122de9c940fb0d0e635\haha-1.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b7b2e61ee1ad2d1ac6ae3122de9c940fb0d0e635">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\haha-1.1_9ac8f5f28e6e98d439b65504875c6168c04653bb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\e31d5c215cdedf0d915a33db9c3862b448629a5a\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="808deed0b600a65b805b642c2234feb6992dec88">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_bd0372bf86f80f1b7eacb98e5b4648c47116f712\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\120b9eb0768acaed967bf9bd5a29f274c6c84a42\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="71872425abfbafad50b8d77dcea70dd0657a6a17">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_25fc497a62b41616bc46cf328f6210dbe6f41c28\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\retrofit\2.0.2\43eeae0b9fb087bb3194ba59ab63a38a32fbf3e\retrofit-2.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="043eeae0b9fb087bb3194ba59ab63a38a32fbf3e">
+        <dex dex="H:\PrettyGirls-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\retrofit-2.0.2_ef69ae1c75e8c0b59eb461cacb0ae52e449cf07a\classes.dex" />
     </item>
 
 </items>

@@ -36,6 +36,9 @@ public class MySQLiteOpenHelper extends DaoMaster.OpenHelper {
     @Override
     public void onUpgrade(Database db, int oldVersion, int newVersion) {
 
+        /*
+        * 删除重建 一张表 添加字段  想用原来的 执行sql也行
+        * */
         Log.d("数据库升级", "oldVersion:" + oldVersion + "newVersion" + newVersion);
         MigrationHelper.getInstance().migrate(db, INSPECT_PLANDao.class, InspectTempletItemDao.class, PUR_CONTRACT_PLANDao.class
         , CORRECT_ASSETDao.class

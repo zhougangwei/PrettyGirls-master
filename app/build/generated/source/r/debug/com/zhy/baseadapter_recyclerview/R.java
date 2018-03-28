@@ -8,10 +8,10 @@ package com.zhy.baseadapter_recyclerview;
 
 public final class R {
     public static final class attr {
-        public static final int layoutManager = 0x7f01016e;
-        public static final int reverseLayout = 0x7f010170;
-        public static final int spanCount = 0x7f01016f;
-        public static final int stackFromEnd = 0x7f010171;
+        public static final int layoutManager = 0x7f010170;
+        public static final int reverseLayout = 0x7f010172;
+        public static final int spanCount = 0x7f010171;
+        public static final int stackFromEnd = 0x7f010173;
     }
     public static final class dimen {
         public static final int item_touch_helper_max_drag_scroll_per_frame = 0x7f0a009d;
@@ -22,7 +22,7 @@ public final class R {
         public static final int item_touch_helper_previous_elevation = 0x7f100010;
     }
     public static final class styleable {
-        public static final int[] RecyclerView = { 0x010100c4, 0x010100f1, 0x7f01016e, 0x7f01016f, 0x7f010170, 0x7f010171 };
+        public static final int[] RecyclerView = { 0x010100c4, 0x010100f1, 0x7f010170, 0x7f010171, 0x7f010172, 0x7f010173 };
         public static final int RecyclerView_android_orientation = 0;
         public static final int RecyclerView_layoutManager = 2;
         public static final int RecyclerView_reverseLayout = 4;
